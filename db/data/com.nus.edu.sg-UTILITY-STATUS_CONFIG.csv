@@ -1,0 +1,56 @@
+STATUS_CODE,STATUS_TYPE,STATUS_ALIAS,STATUS_COLOR_CODE,STATUS_DESC,STATUS_STATE,SHOW_INBOX
+01,ECLAIMS,Save As Draft,0,Initial Draft,,N
+02,ECLAIMS,Pending for Check,1,Status for CA check,,N
+03,ECLAIMS,Pending Verification,9,Status for Verifier,,Y
+04,ECLAIMS,Pending for Additional Approval 1,5,Status for Additional Approver 1,,Y
+05,ECLAIMS,Pending for Additional Approval 2,5,Status for Additional Approver 2,,Y
+06,ECLAIMS,Pending for Approval,6,Status for Approver,,Y
+07,ECLAIMS,Rejected,3,Status for Rejected for Claimant by CA,,Y
+08,ECLAIMS,Rejected,3,Status for Rejected for CA,,Y
+09,ECLAIMS,Approved,8,Status for Approved Requests,,Y
+10,ECLAIMS,Withdrawn by Claimant,2,Status when Claimant Withdraws,,N
+11,ECLAIMS,Withdrawn by Administrator,2,Status when Admin Withdraws,,N
+12,ECLAIMS,Withdrawn by Claim Assistant,2,Status when CA Withdraws,,N
+13,ECLAIMS,Transferred to Payroll System,9,Status when Claims moved to ECP,,Y
+14,ECLAIMS,Posted for Payment Processing,7,Status when Claims Posted to ECP,,Y
+15,ECLAIMS,Save As Draft,0,Status when Claimant Retracts,,N
+16,ECLAIMS,Pending for Check,1,Status when CA Retracts,,N
+17,ECLAIMS,Save As Draft,0,Status when CA Retracts Non-ESS Request,,N
+18,ECLAIMS,Rejected by System,3,Status when Claim Request passes Cutoff Date,,Y
+19,ECLAIMS,Pending for Check,1,Status when Super Admin Retracts,,N
+20,ECLAIMS,Withdrawn by Administrator,2,Status updated by ECP when Admin Withdraws,,N
+31,CW,Draft,0,Initial Draft,,N
+32,CW,Pending OHRSS,1,Pending Status for OHRSS,,Y
+33,CW,Pending Reporting Manager,9,Pending Status for RM,,Y
+34,CW,Pending Reporting Manager's Manager,5,Pending Status for Manager's Manager,,Y
+35,CW,Rejected by OHRSS,3,Rejected Status by OHRSS,,Y
+36,CW,Rejected by Manager,3,Status for Rejected by Manager,,Y
+37,CW,Rejected by Manager's Manager,3,Status for Rejected by Manager's Manager,,Y
+38,CW,Approved,8,Status for Approved Requests,,Y
+39,CW,Withdrawn,2,Status when Requestor or Admin Withdraws,,N
+40,CW,Pending Program Manager,9,Pending Status for Program Manager Approval,,Y
+41,CW,Rejected by Program Manager,3,Rejected Payment Status,,Y
+42,CW,Payment Transferred,9,Payment Transferred to EC/Payroll System,,N
+43,CW,Payment Processed,7,Payment Processed in EC/Payroll System,,N
+44,CW,Draft,0,Status when Staff Retracts,,N
+45,CW,Draft,0,Status when Department Admin Retracts,,N
+46,CW,Draft,0,Status when Program Admin Retracts,,N
+47,CW,Open,7,Open Request,,N
+48,CW,Closed,10,Closed Request,,N
+49,CW,Deleted,10,Marked for Deletion,,N
+50,CW,Varied to OPWN,2,Status for Internal CW,,N
+51,OPWN,Not Paid,1,Payment Not Paid,Warning,N
+52,OPWN,NA,2,Back Dated Payment,None,N
+53,OPWN,Error,3,Error in Processing Payment,Error,N
+54,OPWN,Posted for Payroll Processing,4,Payment Processed,Success,N
+81,EMAIL,Active,5,Active Email Status,,N
+82,EMAIL,Inactive,3,Inactive Email Status,,N
+91,PROCESS,In Progress,1,Status for In progress Processes,,N
+92,PROCESS,Cancelled,2,Status for Cancelled Process,,N
+93,PROCESS,Suspended,3,Status for Suspended Process,,N
+94,PROCESS,Completed,8,Status for Completed Process,,N
+95,TASK,Active,5,Status for Active Task,,N
+96,TASK,Inactive,3,Status for Inactive Task,,N
+97,TASK,Completed,8,Status for Completed Task,,N
+98,TASK,Reserved,1,Status for Reserved Task,,N
+99,TASK,Cancelled,2,Status for Cancelled Task,,N
