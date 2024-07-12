@@ -4,5 +4,6 @@
   "src/gen/**/*.hdbconstraint",
   "src/gen/**/*.hdbcalculationview",
   "src/gen/**/*.hdbtable",
+  "src/gen/**/*.hdbtabledata",
   "src/**/*.hdbview"
 ]
