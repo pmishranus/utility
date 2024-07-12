@@ -29,8 +29,8 @@ service CatalogService @(path: '/catalog') {
   entity emailtemplate_data    as projection on db.UTILITY.EMAIL_TEMPLATES;
   entity feedback_data        as projection on db.UTILITY.FEEDBACK_DETAILS;
   @readonly entity notiflog_data        as projection on db.UTILITY.NOTIFICATION_LOG_DATA;
-  @readonly entity holidays_data        as projection on db.UTILITY.NUS_CHRS_HOLIDAYS;
-  @readonly entity processcfg_data   as projection on db.UTILITY.PROCESS_CONFIG;
+  entity holidays_data        as projection on db.UTILITY.NUS_CHRS_HOLIDAYS;
+  entity processcfg_data   as projection on db.UTILITY.PROCESS_CONFIG;
   entity processdetails_data  as projection on db.UTILITY.PROCESS_DETAILS;
   entity processparticipants_data as projection on db.UTILITY.PROCESS_PARTICIPANTS;
   entity remarks_data        as projection on db.UTILITY.REMARKS_DATA;
