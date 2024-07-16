@@ -7,14 +7,8 @@
       "type": "node",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "cds",
-      "args": [
-        "serve",
-        "--with-mocks",
-        "--in-memory?"
-      ],
-      "skipFiles": [
-        "<node_internals>/**"
-      ]
+      "args": ["serve", "--with-mocks", "--in-memory?"],
+      "skipFiles": ["<node_internals>/**"]
     },
     {
       "type": "node",
@@ -24,10 +18,7 @@
       "args": ["watch", "--profile", "hybrid"],
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "node",
-      "runtimeArgs": [
-        "--nolazy",
-        "--inspect-brk=9229"
-      ],
+      "runtimeArgs": ["--nolazy", "--inspect-brk=9229"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
     }

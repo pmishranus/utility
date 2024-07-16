@@ -1,0 +1,17 @@
+{    
+  "xsappname": "utility",
+  "tenant-mode": "dedicated",
+  "scopes": [],
+  "attributes": [],
+  "role-templates": [],
+  "oauth2-configuration": {
+        "token-validity": 1800,
+        "redirect-uris": [
+            "https://*.eu10.applicationstudio.cloud.sap",
+            "https://national-university-of-singapore-nus-ariba-dev-px55m7l54cff7a03.cfapps.eu10-004.hana.ondemand.com/**",
+            "https://national-university-of-singapore-nus-ariba-prd-w3k72cx23a82c4fb.cfapps.eu10-004.hana.ondemand.com/**",
+            "http://localhost:4004",
+            "http://localhost:5000"
+        ]
+    }
+}

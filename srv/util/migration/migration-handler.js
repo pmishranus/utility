@@ -1,6 +1,6 @@
 "use strict";
 const Connection = require("../../util/request/connection.class");
-const ExternalApiCall = require("../../srv/external/external-api-call");
+const ExternalApiCall = require("../../external/external-api-call");
 const UpsertHandler = require("../databaseOperations/upsert-handler.class");
 const TableConfig = require("../migration/migration-table-config");
 const hanaDbHost =
@@ -63,7 +63,7 @@ module.exports = {
       const response = await ExternalApiCall._fnAxiosCall("POST",url, oPayload, config);
 
       let responseData = response.data.result;
-      let oUpsertEclaimHeaderDataResult;
+      // let oUpsertEclaimHeaderDataResult;
       if (responseData) {
         switch (Tablename) {
           case "ECLAIMS_DATA":
@@ -114,20 +114,4 @@ module.exports = {
       }
     }
   },
-
-  // checkEclaimDataRecordExist = async (req, srv, whereClause) => {
-  //     const oConnection = new Connection(req, db, srv);
-  //     const db = await cds.connect.to('db')
-  //     let query = SELECT.one.from(srv.entities["HEADER_DATA"]).where(whereClause)
-  //     const aEclaimData = await cds.run(query);
-  //     return aEclaimData;
-  // }
-};
-
-// const insertEclaimDataRecord = async (req, srv, oEclaimHeaderData) => {
-
-//     const db = await cds.connect.to('db')
-//     let query = INSERT.into(srv.entities["HEADER_DATA"]).entries([oEclaimHeaderData])
-//     const aEclaimData = await cds.run(query);
-//     return aEclaimData;
-// }
+}

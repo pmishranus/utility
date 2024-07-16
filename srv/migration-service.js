@@ -2,7 +2,7 @@
  * Implementation for DataMigrationService defined in ./migration-service.cds
  */
 const cds = require("@sap/cds");
-const migrationHandler = require("../util/migration/migration-handler");
+const migrationHandler = require("./util/migration/migration-handler");
 
 /**
  * Hooks for srv application

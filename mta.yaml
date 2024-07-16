@@ -9,27 +9,34 @@ build-parameters:
     - builder: custom
       commands:
         - npm ci
-        - npx cds build --production
+        - node ./node_modules/@sap/cds-dk/bin/cds.js build --production
+#       - npx cds build --production
 modules:
   - name: utility-srv
     type: nodejs
     path: gen/srv
     parameters:
       buildpack: nodejs_buildpack
-      readiness-health-check-type: http
-      readiness-health-check-http-endpoint: /health
+#      readiness-health-check-type: http
+#      readiness-health-check-http-endpoint: /health
     build-parameters:
-      builder: npm
+      builder: npm-ci
     provides:
       - name: srv-api # required by consumers of CAP services (e.g. approuter)
         properties:
           srv-url: ${default-url}
     requires:
       - name: utility-db
+      - name: utility-uaa
 
   - name: utility-db-deployer
     type: hdb
     path: gen/db
+    build-parameters:
+      ignore:
+        - default-*.json
+        - .env
+        - "*node_modules*"
     parameters:
       buildpack: nodejs_buildpack
     requires:
@@ -41,3 +48,14 @@ resources:
     parameters:
       service: hana
       service-plan: hdi-shared
+    properties:
+      hdi-service-name: ${service-name}
+  # ----------------------- UAA SERVICE ------------------------
+  - name: utility-uaa
+  # ------------------------------------------------------------      
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+#C:/Users/PMISHRA/Documents/GitHub/utility
