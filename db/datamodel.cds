@@ -1,4 +1,4 @@
-namespace com.nus.edu.sg;
+namespace nusext;
 
 context REUSE_CONTEXT_TYPES {
 

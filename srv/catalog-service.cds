@@ -1,10 +1,12 @@
-using {com.nus.edu.sg as db} from '../db/datamodel';
+using {nusext as db} from '../db/datamodel';
 
 service CatalogService @(path: '/catalog') {
-
+  @requires: 'authenticated-user'
   @readonly
   entity eclaims_data             as projection on db.ECLAIMS.HEADER_DATA;
 
+  @requires: 'Admin'
+  @restrict: [{grant: 'READ'}]
   @readonly
   entity eclaims_items_data       as projection on db.ECLAIMS.ITEMS_DATA;
 

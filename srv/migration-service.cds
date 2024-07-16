@@ -1,4 +1,4 @@
-using {com.nus.edu.sg as db} from '../db/datamodel';
+using {nusext as db} from '../db/datamodel';
 
 @protocol       : 'rest'
 @cds.query.limit: {default: 1000}

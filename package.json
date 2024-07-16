@@ -9,7 +9,7 @@
     "@sap/cds": "7.9.3",
     "@sap/cds-hana": "^2",
     "@sap/cds-odata-v2-adapter-proxy": "1.9.21",
-    "@sap/xssec": "^3.6.1",
+    "@sap/xssec": "^3",
     "express": "^4",
     "sap-hdbext-promisfied": "^2.202405.1"
   },
@@ -20,7 +20,9 @@
     "eslint": "^9"
   },
   "scripts": {
-    "start": "cds-serve"
+    "start": "cds-serve",
+    "approuter" : "npm start --prefix app",
+    "profile" : "cds watch --profile hybrid"
   },
   "cds": {
     "requires": {
