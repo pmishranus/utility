@@ -42,9 +42,9 @@ modules:
     requires:
       - name: utility-db
 
-  - name: utility
+  - name: app
     type: approuter.nodejs
-    path: app\router
+    path: app/router
     parameters:
       keep-existing-routes: true
       disk-quota: 256M
@@ -72,6 +72,6 @@ resources:
     type: org.cloudfoundry.managed-service
     parameters:
       service: xsuaa
-      service-plan: application
+      service-plan: default
       path: ./xs-security.json
 
