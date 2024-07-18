@@ -17,6 +17,12 @@ Utility Module
 # 5. CDS bind services
 - cds bind -2 <servicename>
 
+# 6. Running app router and node js api together
+- cds bind --exec npm run approuter
+
+# 7. Proxy entity for the calculation view
+- hana-cli inspectView -v APPROVAL_MATRIX -o cds
+
 
 // {
 //   "authenticationMethod": "route",

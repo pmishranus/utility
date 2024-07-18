@@ -1,5 +1,7 @@
 using {nusext as db} from '../db/datamodel';
 
+using {APPROVAL_MATRIX} from '../db/redefinemodel';
+
 service CatalogService @(path: '/catalog') {
   @requires: 'authenticated-user'
   @readonly
@@ -98,6 +100,19 @@ service CatalogService @(path: '/catalog') {
   entity repjobinfo_data          as projection on db.MASTER_DATA.CHRS_REPLICATION_JOB_INFO;
 
 
+
+/******************************************************************** Calculation Views Exposed *********************************************************************************/
+
+@readonly
+entity v_approval_maxtrix         as projection on APPROVAL_MATRIX;
+
+/********************************************************************************************************************************************************************************/
+
+
+
+
+
+
   // Handling user info with the authentication and user scopes
 
   type userScopes {
@@ -116,3 +131,4 @@ service CatalogService @(path: '/catalog') {
   function userInfo() returns userType;
 
 }
+

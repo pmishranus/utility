@@ -21,13 +21,27 @@
   },
   "scripts": {
     "start": "cds-serve",
-    "approuter" : "npm start --prefix app",
-    "profile" : "cds watch --profile hybrid"
+    "approuter": "npm start --prefix app/router",
+    "profile": "cds watch --profile hybrid",
+    "hanadeploy" : "cds deploy --to hana:utility-db"
   },
   "cds": {
     "requires": {
-      "db": "hana",
-      "auth": "xsuaa"
+      "db": {
+        "kind": "hana",
+        "model": [
+          "gen/db"
+        ]
+      },
+      "auth": {
+        "kind": "xsuaa"
+      },
+      "srv": {
+        "model": [
+          "srv",
+          "db"
+        ]
+      }
     }
   }
 }
