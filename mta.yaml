@@ -19,7 +19,7 @@ modules:
     builder: npm-ci
 - name: utility-db-deployer
   type: hdb
-  path: db
+  path: gen/db
   requires:
   - name: utility-db
     properties:
