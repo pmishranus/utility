@@ -2,7 +2,7 @@
 const TableConfig = require("../../util/databaseOperations/table-config.class");
 
 module.exports = {
-  getTargetTableConfig: function (srv, tablename) {
+  getTargetTableConfig: function (srv, tablename,) {
     let oTableConfig = {
       sTableName: "nusext_",
       sType: "root",
@@ -16,11 +16,13 @@ module.exports = {
     switch (tablename) {
       case "ECLAIMS_DATA":
         contextName = "ECLAIMS_";
+        tablename = "HEADER_DATA";
         oTableConfig.aPrimaryKeys = ["DRAFT_ID"];
         oTableConfig.oTable = srv.entities.HEADER_DATA;
         break;
       case "ECLAIMS_ITEMS_DATA":
         contextName = "ECLAIMS_";
+        tablename = "ITEMS_DATA";
         oTableConfig.aPrimaryKeys = ["ITEM_ID"];
         oTableConfig.oTable = srv.entities.ITEMS_DATA;
         break;
@@ -46,13 +48,38 @@ module.exports = {
         break;
       case "CHRS_COMP_INFO":
         contextName = "MASTER_DATA_";
-        oTableConfig.aPrimaryKeys = ["SF_STF_NUMBER", "START_DATE", "END_DATE", "RATE_TYPE_C"];
+        oTableConfig.aPrimaryKeys = ["FDLU", "START_DATE", "END_DATE", "RATE_TYPE_C"];
         oTableConfig.oTable = srv.entities.CHRS_COMP_INFO;
+        break;
+      case "CHRS_FDLU_ULU":
+        contextName = "MASTER_DATA_";
+        oTableConfig.aPrimaryKeys = ["FDLU_C"];
+        oTableConfig.oTable = srv.entities.CHRS_FDLU_ULU;
+        break;
+      case "CHRS_ROLE_MASTER":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["ROLE_ID"];
+        oTableConfig.oTable = srv.entities.CHRS_ROLE_MASTER;
+        break;
+      case "CHRS_EXTERNAL_USERS":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["STF_NUMBER", "SF_STF_NUMBER", "START_DATE", "END_DATE"];
+        oTableConfig.oTable = srv.entities.CHRS_EXTERNAL_USERS;
+        break;
+      case "PROCESS_CONFIG":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["PROCESS_CODE"];
+        oTableConfig.oTable = srv.entities.PROCESS_CONFIG;
         break;
       case "APP_CONFIGS":
         contextName = "UTILITY_";
         oTableConfig.aPrimaryKeys = ["ACFG_ID"];
         oTableConfig.oTable = srv.entities.APP_CONFIGS;
+        break;
+      case "CWS_APP_CONFIGS":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["CWS_ACFG_ID"];
+        oTableConfig.oTable = srv.entities.CWS_APP_CONFIGS;
         break;
       case "CHRS_APPROVER_MATRIX":
         contextName = "UTILITY_";

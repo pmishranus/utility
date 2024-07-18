@@ -24,7 +24,7 @@ module.exports = {
   handleTableDataUpdate: async function (oConnection) {
     const { Tablename } = oConnection.request.data;
     let oPayload = {};
-    let relativePath = "/eclaims/services/migration.xsjs?cmd=";
+    let relativePath = "/eclaims/services/migration_node.xsjs?cmd=";
 
     if (!Tablename) {
       const error = new Error("Please provide Tablename parameter..!!");
@@ -47,17 +47,21 @@ module.exports = {
         case "CHRS_COST_DIST":
         case "CHRS_HRP_INFO":
         case "CHRS_FDLU_ULU":
-          relativePath += "fetchFullData";
+          relativePath += "fetchData";
           oPayload = {
             SCHEMA: "NUS_BTP_EC_MASTERDATA",
             TABLE: "nusmasterdata::Tables." + Tablename
           };
           break;
         case "APP_CONFIGS":
+        case "CWS_APP_CONFIGS":
         case "CHRS_APPROVER_MATRIX":
-          relativePath += "fetchFullData";
+        case "CHRS_ROLE_MASTER":
+        case "PROCESS_CONFIG":
+        case "CHRS_EXTERNAL_USERS":
+          relativePath += "fetchData";
           oPayload = {
-            SCHEMA: "NUS_BTP_UTILITIES",
+            SCHEMA: "NUS_BTP_UTILS",
             TABLE: "utilities::Tables." + Tablename
           };
           break;
