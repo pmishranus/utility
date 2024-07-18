@@ -9,6 +9,7 @@ module.exports = class TableConfig {
 		this.sCardinality = oTableConfig.sCardinality; //single or many
 		this.sDelete = oTableConfig.sDelete; //hard|flag|none -> hard deletion/set deletion flag/no deletion
 		this.sTimestamps = oTableConfig.sTimestamps; //standard|none -> standard = modifiedAt/createdAt/lastSeenAt timestamps |none = no timestamps
+		this.exists = oTableConfig.exists;
 		
 	}
 };
