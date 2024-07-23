@@ -9,8 +9,10 @@
     "@sap/cds": "^8",
     "@sap/cds-hana": "^2",
     "@sap/cds-odata-v2-adapter-proxy": "1.9.21",
-    "@sap/xssec": "^3",
+    "@sap/xsenv": "^5.1.0",
+    "@sap/xssec": "^3.6.1",
     "express": "^4",
+    "passport": "^0.7.0",
     "sap-hdbext-promisfied": "^2.202405.1"
   },
   "devDependencies": {
@@ -22,7 +24,7 @@
     "start": "cds-serve",
     "approuter": "npm start --prefix app",
     "profile": "cds watch --profile hybrid",
-    "hanadeploy" : "cds deploy --to hana:utility-db"
+    "hanadeploy": "cds deploy --to hana:utility-db"
   },
   "cds": {
     "requires": {
