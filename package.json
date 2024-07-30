@@ -24,7 +24,9 @@
     "start": "cds-serve",
     "approuter": "npm start --prefix app",
     "profile": "cds watch --profile hybrid",
-    "hanadeploy": "cds deploy --to hana:utility-db"
+    "hanadeploy": "cds deploy --to hana:utility-db",
+    "currtcp" : "lsof -i tcp:4004",
+    "runlib": "npm install && cd app && npm install & cd .."
   },
   "cds": {
     "requires": {

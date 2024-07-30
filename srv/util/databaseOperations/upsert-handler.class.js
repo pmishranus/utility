@@ -17,7 +17,7 @@ module.exports = class UpsertHandler extends DBOperations {
 	 * @param {object} oConnection Connection Class 
 	 * @param {object} oDeltaHandler DeltaHandler Class
 	 */
-	constructor(aData, oConnection, oTableConfig, oDeltaHandler = DeltaHandler) {
+	 constructor(aData, oConnection, oTableConfig, oDeltaHandler = DeltaHandler) {
 		super();
 		//libs
 		// this.compareObjects = compareObjects;

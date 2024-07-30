@@ -15,4 +15,6 @@ module.exports = cds.service.impl(async (srv) => {
     results.scopes.Viewer = req.user.is("Viewer");
     return results;
   });
+
+  
 });

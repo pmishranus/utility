@@ -7,20 +7,54 @@
       "type": "node",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "cds",
-      "args": ["serve", "--with-mocks", "--in-memory?"],
-      "skipFiles": ["<node_internals>/**"]
+      "args": [
+        "serve",
+        "--with-mocks",
+        "--in-memory?"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Debug CDS Watch",
       "program": "${workspaceFolder}/node_modules/@sap/cds-dk/bin/cds.js",
-      "args": ["watch", "--profile", "hybrid"],
+      "args": [
+        "run",
+        "--profile",
+        "hybrid"
+      ],
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "node",
-      "runtimeArgs": ["--nolazy", "--inspect-brk=9229"],
+      "runtimeArgs": [
+        "--nolazy",
+        "--inspect-brk=9229"
+      ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Run utility-2",
+      "request": "launch",
+      "type": "node",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "cds",
+      "args": [
+        "serve",
+        "--in-memory?"
+      ],
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "envFile": "${workspaceFolder}/.env2",
+      "env": {
+        "NODE_ENV": "development",
+        "run.config": "{\"handlerId\":\"cap_run_config_handler_id\",\"runnableId\":\"{\\\"projectPath\\\":\\\"/home/user/projects/utility\\\",\\\"profileName\\\":\\\"development\\\"}\"}"
+      }
     }
   ]
 }

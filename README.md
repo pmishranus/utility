@@ -23,6 +23,12 @@ Utility Module
 # 7. Proxy entity for the calculation view
 - hana-cli inspectView -v APPROVAL_MATRIX -o cds
 
+# 8. Get the active port
+- C
+
+# 9. Kill the process id
+-  kill -9 22447
+
 
 // {
 //   "authenticationMethod": "route",

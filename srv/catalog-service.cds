@@ -130,5 +130,7 @@ entity v_approval_maxtrix         as projection on APPROVAL_MATRIX;
 
   function userInfo() returns userType;
 
+  
+
 }
 
