@@ -78,6 +78,7 @@ type userType {
 };
 
 using {nusext as db} from '../db/datamodel';
+// using {CHECK_COST_DIST_EXISTS_F} from '../db/redefinemodel';
 
 
 service UtilService @(path: '/util') {
@@ -86,21 +87,8 @@ service UtilService @(path: '/util') {
   entity CHRS_EXTERNAL_USERS                                                         as select * from db.UTILITY.CHRS_EXTERNAL_USERS;
   entity CHRS_COST_DIST                                                              as select * from db.MASTER_DATA.CHRS_COST_DIST;
 
-  entity CHECK_COST_DIST_EXISTS(nusnetId : String, startDate : Date, endDate : Date) as
-    select from CHRS_COST_DIST
-    where
-          STF_NUMBER in (
-        select STF_NUMBER from CHRS_JOB_INFO
-        where
-          (
-               UPPER(NUSNET_ID) = UPPER(
-              :nusnetId
-            )
-            or STF_NUMBER       = :nusnetId
-          )
-      )
-      and START_DATE <= :endDate
-      and END_DATE   >= :startDate;
+  // entity CHECK_COST_DIST_EXISTS(nusnetId : String, startDate: Date, endDate : Date)
+  //  as select * from CHECK_COST_DIST_EXISTS_F where NUSNET_ID = :nusnetId and START_DATE <= :endDate and END_DATE >= :startDate;
 
   function userInfo()       returns userType;
   function getUserDetails() returns UtilResponse;

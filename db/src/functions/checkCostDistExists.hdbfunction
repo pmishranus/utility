@@ -1,0 +1,35 @@
+FUNCTION  CHECK_COST_DIST_EXISTS_F(IN INP_NUSNET_ID VARCHAR(100), IN INP_START_DATE DATE, IN  INP_END_DATE DATE)
+    RETURNS TABLE (
+        STF_NUMBER NVARCHAR(15),
+        SF_STF_NUMBER NVARCHAR(50),
+        COST_DIST_FLG NVARCHAR(10),
+        START_DATE DATE,
+        END_DATE DATE,
+        NUSNET_ID NVARCHAR(100)
+    )
+    LANGUAGE SQLSCRIPT
+    READS SQL DATA AS
+BEGIN
+    /*****************************
+        Write your function logic
+    ****************************/
+    -- Constant definition
+
+
+    RETURN 
+        SELECT
+        c.STF_NUMBER,
+        c.SF_STF_NUMBER,
+        c.COST_DIST_FLG,
+        c.START_DATE,
+        c.END_DATE,
+        j.NUSNET_ID
+    FROM 
+    "NUSEXT_MASTER_DATA_CHRS_COST_DIST" c
+    INNER JOIN "NUSEXT_MASTER_DATA_CHRS_JOB_INFO" AS j
+    ON c.STF_NUMBER = j.STF_NUMBER
+    WHERE
+    ( UPPER(j.NUSNET_ID) = UPPER(:INP_NUSNET_ID) OR j.STF_NUMBER = :INP_NUSNET_ID )
+        AND c.START_DATE <= :INP_END_DATE
+        AND c.END_DATE >= :INP_START_DATE;
+END;

@@ -1,0 +1,36 @@
+PROCEDURE "SEQ_NUMBER_GENERATION"(in pattern nvarchar(50),in counter INTEGER,
+out  runningNoResult nvarchar(50) )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER AS
+   --DEFAULT SCHEMA <default_schema_name>
+   --READS SQL DATA AS
+    found INT := 1;
+BEGIN
+   /*************************************
+       Write your procedure logic
+   *************************************/
+     DECLARE pid NVARCHAR(50);
+     DECLARE runningSeqChar NVARCHAR(50);
+     DECLARE runno INTEGER;
+     
+      SELECT COUNT(*) INTO found FROM "NUSEXT_UTILITY_SEQ_GEN" WHERE PATTERN = :pattern; 
+     
+     IF :found = 0 THEN
+        runno := 1;
+ 	    INSERT INTO  "NUSEXT_UTILITY_SEQ_GEN" VALUES (:pattern, :runno);
+ 	  /* error = select 301 as http_status_code, 'record created' as error_message,
+        :runNo  as detail from dummy; */
+     ELSE
+     
+         lt_seq = select PATTERN, RUNNINGNO  from "NUSEXT_UTILITY_SEQ_GEN"
+                    where PATTERN = :pattern;
+                
+        SELECT RUNNINGNO INTO runNo FROM :lt_seq;
+        runno := runno + 1;
+        UPDATE  "NUSEXT_UTILITY_SEQ_GEN" SET RUNNINGNO = :runno where PATTERN = :pattern;  
+        /*error = select 304 as http_status_code, 'record updated' as error_message,
+        :runNo as detail from dummy;   */    
+     END IF; 
+        runningNoResult := LPAD (CAST(runno AS VARCHAR), :counter, '0');
+        runningNoResult := CONCAT (:pattern,:runningNoResult);
+END

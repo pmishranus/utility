@@ -3,6 +3,7 @@ const Connection = require("../../util/request/connection.class");
 const ApplicationConstants = require("../app-constant");
 const QueryRepo = require("../query-repo");
 const cds = require("@sap/cds");
+const queryRepo = require("../query-repo");
 module.exports = {
   /**
    *
@@ -26,51 +27,57 @@ module.exports = {
         throw new Error("User not found..!!");
       }
 
-      return await this._fnFetchLoggedInUserDetails(userName, oConnection.srv);
+      return await this._fnFetchLoggedInUserDetails(userName, oConnection, oConnection.srv);
     } catch (oError) {
       this.handleError(oConnection.request, oError);
     }
   },
 
-  _fnFetchLoggedInUserDetails: async function (userName, srv) {
+  _fnFetchLoggedInUserDetails: async function (userName, oConnection, srv) {
     let utilResponse = {
       is_external_user: '',
       staffInfo: {
-        otherAssignment : []
+        otherAssignment: []
       }
     };
 
     const upperNusNetId = userName.toUpperCase();
-    
-    // let staffInfo = await cds.run(SELECT.from(srv.entities["chrs_job_info"])
-    //   .where(stfInfoQueryParameter)
-    // );
-    let staffInfo = await QueryRepo.fetchStaffInfo(upperNusNetId);
+    let staffInfo = await QueryRepo.fetchStaffInfo(oConnection, srv, upperNusNetId);
     if (!staffInfo || Object.keys(staffInfo).length === 0) {
-      staffInfo = await QueryRepo.fetchExternalUser(upperNusNetId);
+      staffInfo = await QueryRepo.fetchExternalUser(oConnection, srv, upperNusNetId);
       utilResponse.is_external_user = ApplicationConstants.X;
     } else {
-      utilResponse.staffInfo = actualUser;
+      // utilResponse.staffInfo = staffInfo;
+      // staffInfo = [];
     }
 
-    for (let i = 0; i < utilResponse.staffInfo.length; i++) {
-      let oStaffInfo = utilResponse.staffInfo[i];
+    for (let i = 0; i < staffInfo.length; i++) {
+      let oStaffInfo = staffInfo[i];
       utilResponse.staffInfo.FULL_NM = oStaffInfo.FULL_NM;
       utilResponse.staffInfo.EMAIL = oStaffInfo.EMAIL;
       utilResponse.staffInfo.FIRST_NM = oStaffInfo.FIRST_NM;
       utilResponse.staffInfo.LAST_NM = oStaffInfo.LAST_NM;
-      utilResponse.staffInfo.STAFF_ID = oStaffInfo.STAFF_ID;
+      utilResponse.staffInfo.STAFF_ID = oStaffInfo.STF_NUMBER;
 
       if ((!oStaffInfo.BANK_INFO_FLG || oStaffInfo.BANK_INFO_FLG.trim() === '') && oStaffInfo.BANK_INFO_FLG !== ApplicationConstants.X) {
         utilResponse.staffInfo.BANK_INFO_FLG = ApplicationConstants.N;
-      }else{
+      } else {
         utilResponse.staffInfo.BANK_INFO_FLG = ApplicationConstants.Y
       }
 
 
       // Cost Distribution implementation
+      let aCostDist = await QueryRepo.fetchCostDist(oConnection, srv, upperNusNetId, oStaffInfo.START_DATE, oStaffInfo.END_DATE);
+      if (!aCostDist || Object.keys(aCostDist).length === 0) {
+        utilResponse.staffInfo.COST_DIST_FLG = ApplicationConstants.N;
+      } else {
+        aCostDist.forEach(element => {
+          if (element.COST_DIST_FLG === ApplicationConstants.X) {
+            utilResponse.staffInfo.COST_DIST_FLG = ApplicationConstants.Y;
+          }
+        });
+      }
 
-      utilResponse.staffInfo.COST_DIST_FLG = oStaffInfo.FULL_NM;
 
       //primary assignment implementation
       if (oStaffInfo.STF_NUMBER === oStaffInfo.SF_STF_NUMBER) {
@@ -94,7 +101,7 @@ module.exports = {
           END_DATE: oStaffInfo.END_DATE
         }
         utilResponse.staffInfo.primaryAssignment = primaryAssignment
-      }else{
+      } else {
         let otherAssignment = {
           SF_STF_NUMBER: oStaffInfo.SF_STF_NUMBER,
           STF_NUMBER: oStaffInfo.STF_NUMBER,
@@ -118,7 +125,77 @@ module.exports = {
 
     }
 
-    return { Name: "Pnakaj" };
+    // fetch approval matrix
+
+    let approvalMatrixList = await QueryRepo.fetchAuthDetails(oConnection, srv, utilResponse.staffInfo.STAFF_ID);
+    let inboxApprovalMatrixList = await QueryRepo.fetchInboxApproverMatrix(oConnection, srv, utilResponse.staffInfo.STAFF_ID);
+    let adminList = await QueryRepo.fetchAdminDetails(oConnection, srv, utilResponse.staffInfo.STAFF_ID);
+    if (!approvalMatrixList || Object.keys(approvalMatrixList).length === 0) {
+      approvalMatrixList = [];
+    }
+
+    approvalMatrixList = [...approvalMatrixList, ...adminList];
+
+    let authorizationList = [];
+    if (approvalMatrixList && approvalMatrixList.length > 0) {
+      approvalMatrixList.forEach(eam => {
+        let approvalMatrix = {
+          ULU_C: eam.ULU_C,
+          FDLU_C: eam.FDLU_C,
+          ULU_T: eam.ULU_T,
+          FDLU_T: eam.FDLU_T,
+          STAFF_USER_GRP: eam.STAFF_USER_GRP,
+          VALID_FROM: eam.VALID_FROM,
+          VALID_TO: eam.VALID_TO,
+          PROCESS_CODE: eam.PROCESS_CODE
+        };
+        authorizationList.push(approvalMatrix);
+      });
+    }
+    utilResponse.staffInfo.claimAuthorizations = authorizationList;
+
+    let approverMatrixList = [];
+    if (approvalMatrixList && approvalMatrixList.length > 0) {
+      approvalMatrixList.forEach(eam => {
+        let approverMatrix = {
+          ULU_C: eam.ULU_C,
+          FDLU_C: eam.FDLU_C,
+          ULU_T: eam.ULU_T,
+          FDLU_T: eam.FDLU_T,
+          STAFF_USER_GRP: eam.STAFF_USER_GRP,
+          VALID_FROM: eam.VALID_FROM,
+          VALID_TO: eam.VALID_TO,
+          PROCESS_CODE: eam.PROCESS_CODE
+        };
+        approverMatrixList.push(approverMatrix);
+      });
+    }
+
+    utilResponse.staffInfo.approverMatrix = approverMatrixList;
+
+
+    let inboxApproverMatrixList = [];
+    if (inboxApprovalMatrixList && inboxApprovalMatrixList.length > 0) {
+      inboxApprovalMatrixList.forEach(eam => {
+        let inboxApproverMatrix = {
+          ULU_C: eam.ULU_C,
+          FDLU_C: eam.FDLU_C,
+          // ULU_T: eam.ULU_T,
+          // FDLU_T: eam.FDLU_T,
+          STAFF_USER_GRP: eam.STAFF_USER_GRP,
+          VALID_FROM: eam.VALID_FROM,
+          VALID_TO: eam.VALID_TO,
+          PROCESS_CODE: eam.PROCESS_CODE
+        };
+        inboxApproverMatrixList.push(inboxApproverMatrix);
+      });
+    }
+
+    utilResponse.staffInfo.inboxApproverMatrix = inboxApproverMatrixList;
+    utilResponse.isError = "false";
+    utilResponse.message = "success"
+
+    return utilResponse;
   },
 
   handleError: function (request, oError) {

@@ -6,5 +6,9 @@
   "src/gen/**/*.hdbtable",
   "src/gen/**/*.hdbtabledata",
   "src/**/*.hdbview",
-  "*.hdbcalculationview"
+  "*.hdbcalculationview",
+  "src/gen/**/*.hdbfunction",
+  "*.hdbfunction",
+  "src/gen/**/*.hdbprocedure",
+  "*.hdbprocedure"
 ]
