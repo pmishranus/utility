@@ -26,7 +26,8 @@
     "profile": "cds watch --profile hybrid",
     "hanadeploy": "cds deploy --to hana:utility-db",
     "currtcp" : "lsof -i tcp:4004",
-    "runlib": "npm install && cd app && npm install & cd .."
+    "runlib": "npm install && cd app && npm install & cd ..",
+    "deploy" : "mbt build && cf deploy /home/user/projects/utility/mta_archives/utility_1.0.0.mtar -f"
   },
   "cds": {
     "requires": {

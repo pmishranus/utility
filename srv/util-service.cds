@@ -63,6 +63,27 @@ type UtilResponse {
   ![IS_EXTERNAL_USER] : String;
 }
 
+type appConfigurationRequests {
+  ACFG_ID          : String;
+  CWS_ACFG_ID      : String;
+  SRC_CONFIG       : String;
+  PROCESS_CODE     : String;
+  CONFIG_DESC      : String;
+  CONFIG_KEY       : String;
+  REFERENCE_KEY    : String;
+  REFERENCE_VALUE  : String;
+  CFG_TYPE         : String;
+  CONFIG_VALUE     : String;
+  IS_MAINT_BY_USER : String;
+  IS_ACTIVE        : String;
+  UPDATED_BY       : String;
+  UPDATED_BY_NID   : String;
+  UPDATED_ON       : Date;
+  STATUS_CODE      : String;
+  MESSAGE          : String;
+
+}
+
 
 type userScopes {
   identified    : Boolean;
@@ -83,14 +104,16 @@ using {nusext as db} from '../db/datamodel';
 
 service UtilService @(path: '/util') {
 
-  entity CHRS_JOB_INFO                                                               as select * from db.MASTER_DATA.CHRS_JOB_INFO;
-  entity CHRS_EXTERNAL_USERS                                                         as select * from db.UTILITY.CHRS_EXTERNAL_USERS;
-  entity CHRS_COST_DIST                                                              as select * from db.MASTER_DATA.CHRS_COST_DIST;
+  entity CHRS_JOB_INFO       as select * from db.MASTER_DATA.CHRS_JOB_INFO;
+  entity CHRS_EXTERNAL_USERS as select * from db.UTILITY.CHRS_EXTERNAL_USERS;
+  entity CHRS_COST_DIST      as select * from db.MASTER_DATA.CHRS_COST_DIST;
 
   // entity CHECK_COST_DIST_EXISTS(nusnetId : String, startDate: Date, endDate : Date)
   //  as select * from CHECK_COST_DIST_EXISTS_F where NUSNET_ID = :nusnetId and START_DATE <= :endDate and END_DATE >= :startDate;
 
   function userInfo()       returns userType;
   function getUserDetails() returns UtilResponse;
+
+  action appConfigCreateEntry(data : appConfigurationRequests) returns String;
 
 }

@@ -216,6 +216,231 @@ const ApplicationConstants = {
     TASK_STATUS: "TASK_STATUS",
     MINUTES: "MINUTES",
 
+    CLAIMANT_RETRACT_STATUS: "15",
+  CLAIM_ASSISTANT_RETRACT_STATUS: "16",
+
+  STATUS_SUCCESS: "S",
+  STATUS_ERROR: "E",
+  STATUS_WARNING: "W",
+
+  DEFAULT_DOUBLE_VALUE: "0.00",
+
+  DEFAULT_DOUBLE: 0.00,
+
+  ALL: "ALL",
+
+  LOCK: "LOCK",
+  UNLOCK: "UNLOCK",
+
+  EVSTATUS: "EvStatus",
+  STATUS_E: "E",
+  ITEM: "item",
+  ETOUTPUT: "EtOutput",
+  EVWBS: "EvWbs",
+  EVMSG: "EvMsg",
+
+  RATE_TYPE_HOURLY: "10",
+  RATE_TYPE_HOURLY_19: "19",
+
+  // Open Text Properties
+  FOLDER_TYPE: "0",
+  FILE_TYPE: "144",
+
+  CLAIM_START_DATE: "CLAIM_START_DATE",
+  CLAIM_END_DATE: "CLAIM_END_DATE",
+  RATE_TYPE: "RATE_TYPE",
+  START_TIME_END_TIME: "START_TIME_END_TIME",
+  HOURS_UNIT: "HOURS_UNIT",
+  TOTAL_AMOUNT: "TOTAL_AMOUNT",
+  WBS: "WBS",
+  CLAIM_EXISTS: "CLAIM_EXISTS",
+  CLAIM_OVERLAP: "CLAIM_OVERLAP",
+
+  SLASH: "/",
+
+  OTSTICKET: "otcsticket",
+
+  // Dashboard Properties
+  QUICK_LINKS: "QUICK_LINKS",
+  PHOTO_PREFIX: "data:image/png;base64,",
+  D: "d",
+  V: "v",
+  RESULTS: "results",
+  PHOTO: "photo",
+  HEADER: "HEADER",
+  REQUEST_HEADER: "REQUEST_HEADER",
+  ULU_FDLU: "ULU / FDLU",
+  TOTAL_REQUESTS: "Total Requests",
+  URL: "url",
+  TRUE: "true",
+  NEW_LINE: "\n\n",
+  ROLE: "ROLE",
+  YYYY_MM_dd_HH_mm: "yyyy-MM-dd HH:mm",
+  COMPLETED_REQUEST: "COMPLETED_REQUEST",
+  COMPLETED_TASKS: "Completed Tasks",
+  DELEGATED_TASKS: "Delegated Tasks",
+  INBOX: "inbox",
+  DISPLAY: "Display",
+  NAV_TO_COMPLETED: "completed",
+  NAV_TO_DELEGATED: "delegated",
+  NAV_TO_PENDING: "pending",
+  NAV_TO_DEFAULT: "default",
+  LEGEND: "LEGEND",
+  ICON: "sap-icon://desktop-mobile",
+  CANCEL_TASK_ICON: "sap-icon://sys-cancel-2",
+  TYPE_08: "Type08",
+  MANAGER_DATA: "MANAGER_DATA",
+  CLAIMREQUEST: "claimrequest",
+  TBCLAIMS: "tbclaims",
+  d_DISPLAY: "display",
+  ROLE_CLMNT: "CLMNT",
+  ROLE_CMASST: "CMASST",
+  ROLE_TBASST: "TBASST",
+  NUS_CHRS_ECLAIMS_CA: "NUS_CHRS_ECLAIMS_CA",
+  MONTHLY: "MONTHLY",
+  USEFULLINKS: "USEFULLINKS",
+  MATRIX_ADMIN_ROLE: "MATRIX_ADMIN",
+  SUPER_ADMIN_ROLE: "SUPER_ADMIN",
+  DM_CW_Admin: "DM_CW_Admin",
+
+  // Opentext Properties
+  ECLAIMS_OPNTXT: "ECLAIMS_OPNTXT",
+  CW_OPNTXT: "CW_OPNTXT",
+  CW_ZIP_OPNTXT: "CW_MASS_ZIP_OPNTXT",
+  CW_MASS_ZIP_ATTACHMENT: "CW_MASS_ZIP_ATTACHMENT",
+
+  INVALID_ZIP: "Invalid ZIP attachment",
+  INCORRECT_FILE_STRUCTURE: "Incorrect file structure. Attachments have to be directly uploaded and maintained in the zip.",
+  VALIDATE_ZIP_REQ_NODE: "No attachments for Requests",
+  VALIDATE_NO_REQ_EXISTS_NODE: "No Request Exists for files",
+  VALIDATE_ATTCH_ERROR: "No attachments allowed for requests in Error",
+  VALIDATE_ATT_TYPE_NODE: "No valid Document Type",
+  VALIDATE_FILEEXT_NODE: "File extensions not allowed",
+  VALIDATE_INVALID_FILENAME: "Invalid Filename",
+  VALIDATE_FILENAME_NODE: "Filename has special characters",
+  VALIDATE_REQ_FILE_SIZE: "Maximum filesize allowed per request is 10 MB",
+  VALIDATE_REQ_FILE_SIZE_ZERO: "No Content In File",
+  ALLOWED_FILE_EXTN: "jpg,jpeg,png,pdf,doc,docx,xls,xlsx",
+  REQ_FILE_SIZE: 10.00,
+
+  // BTP System User Properties
+  BTP_SYS_USER: "BTP_SYS_USER",
+
+  ATT_TYPE_REF_CWNED: "ATTACHMENT_TYPE",
+  ATT_TYPE_REF_OPWN: "ATTACHMENT_TYPE_OPWN",
+
+  OPNTEXT_END_POINT_REF: "OPENTEXT",
+  OPNTEXT_EWSPACE_POINT_REF: "OPENTEXT_EWSPACE",
+
+  // ECP System User Properties
+  ECP_SYS_USER: "ECP_SYSTEM",
+
+  // Job info claim type code
+  PTT_CODE: "46",
+  CW_CODE: "45",
+  OT_CODE: "31",
+  APP_TRACT_CODE: "27",
+  EMP_CAT_PTT: "46",
+
+  GENERIC_EXCEPTION: "Due to technical issues, the page cannot be displayed. Please contact us at itcare@nus.edu.sg",
+
+  CWS_NED_SEMANTIC: "cwsnedrequestscreen",
+  CW_ESS: "CW_ESS",
+  CLAIM_TYPE_101: "101",
+  CLAIM_TYPE_102: "102",
+  CLAIM_TYPE_103: "103",
+  CLAIM_TYPE_104: "104",
+  CLAIM_TYPE_105: "105",
+
+  CW_OVERALL_PROCESS: "200",
+  ECLAIMS_OVERALL_PROCESS: "100",
+
+  CW_PROCESS: "201",
+  NED_PROCESS: "202",
+  OPWN_PROCESS: "203",
+
+  OPWN_FILE_NAME: "OPWN_Request",
+
+  CW_SUBMISSION_TYPE: "SUBMISSION_TYPE",
+  NEW_SUBMISSION_TYPE: "I",
+  CHANGE_SUBMISSION_TYPE: "U",
+  DELETE_SUBMISSION_TYPE: "D",
+
+  DELETE_P: "P",
+  DELETE_T: "T",
+
+  // OPWN Payment Type Properties
+  PAYMENT_TYPE: "PAYMENT_TYPE",
+  OW: "OW",
+  AW: "AW",
+  CW: "CW",
+  CWS: "CWS",
+  DURATION_DAYS: "DURATION_DAYS",
+  DURATION_DAYS_201: "201_DURATION_DAYS",
+  CW_TEACHING: "ST01",
+  PYROLLAREA_EXC: "SE",
+  CW_PAYMENT_R: "R",
+  CW_PAYMENT_A: "A",
+
+  ackMessageRetract: "Task has been retracted successfully.",
+  ackMessageReject: "Task has been rejected successfully.",
+  ackMessageApprove: "Task has been completed successfully.",
+  ackMessageWithdrawn: "Task has been withdrawn successfully.",
+  ackMessageRevision: "Task has been sent for revision successfully.",
+
+  SOURCE_MG: "MG",
+  SOURCE_MC: "MC",
+
+  CPI_SYS_USER: "CPI_SYSTEM",
+  OTP_PAYMENT_STATUS_OK: "OK",
+
+  DELEGATED_FOR: "DELEGATED_FOR",
+  DELEGATED_TO: "DELEGATED_TO",
+  OPWN_SHEET_NAME: "OPWN_Request",
+  CW_NED_SHEET_NAME: "CW_NED_Request",
+
+  EMP_TERMINATED_STS: "T",
+  EMP_ACTIVE_STS: "A",
+
+  CUTOFFDAY_PROP: "CUTOFFDAY",
+  TERMINATION_CTR: "TERMINATION_COUNTER",
+  EXEC_DAY_DIFF: "EXEC_DAY_DIFF",
+
+  WeekDayAllowedValues: [4.0, 8.5, 0.0],
+  FridayAllowedValues: [4.0, 8.0, 0.0],
+
+  ADMIN_FEE_EFFDATE: "ADMIN_FEE_EFFDATE",
+  INT_LEVY_0: "LVY05",
+  INT_LEVY_10: "LVY04",
+  CURRENCY_SGD: "SGD",
+
+  STAFF_LDS_LIMIT: "STAFF_LDS_LIMIT",
+  
+  DELETE_ZIP_ATTACHMENT_MONTH: "DELETE_ZIP_ATTACHMENT_MONTH",
+  DELETE_RETRACTED_REJECTED_REQ_DAYS: "DELETE_RETRACTED_REJECTED_REQ_DAYS",
+  DELETE_RETRACTED_REJECTED_REQ_STATUS: "DELETE_RETRACTED_REJECTED_REQ_STATUS",
+  BENEFIT_AUTO_REJECT_DAYS: "BENEFIT_AUTO_REJECT_DAYS",
+  
+  SRC_APP_CONFIG: "APP",
+  SRC_CWS_APP_CONFIG: "CWS_APP",
+  
+  CW_NED: "CW_NED",
+  ZA: "ZA",
+  N001: "N001",
+  YYYYMMDD_FORMAT: "yyyyMMdd",
+  ACC_TYPE_D: "D",
+  ACC_TYPE_S: "S",
+  ACC_TYPE_T: "T",
+  
+  GL_ACC_NO: "5300410",
+  PT00: "PT00",
+  GL_WBS: "E-143-00-0001-01",
+  NUS_CONST_EMAIL: "ofnar@nus.edu.sg",
+  TC_09: "O9",
+  DEPT_LEVY_SPLIT_PERCENT: "DEPT_LEVY_SPLIT_PERCENT",
+  TAX_PERCENT: "TAX_PERCENT",
+  MESSAGE_TYPE_CLR: "ZFICLEARDOC",
+
     // Custom Logging Constants
     LOGGING_LEVEL_INFO: "INFO",
     LOGGING_LEVEL_ERROR: "ERROR",
