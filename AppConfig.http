@@ -1,0 +1,23 @@
+[
+    {
+        "__metadata": {
+            "id": "https://nusbtpblduxmssmjjx.ap1.hana.ondemand.com:443/nusbtpbl/odata/AppConfigurations('ACFG0054')",
+            "uri": "https://nusbtpblduxmssmjjx.ap1.hana.ondemand.com:443/nusbtpbl/odata/AppConfigurations('ACFG0054')",
+            "type": "default.AppConfiguration"
+        },
+        "ACFG_ID": "ACFG0054",
+        "CONFIG_DESC": "Cutoff Days for OPWN Requests",
+        "CONFIG_KEY": "CUTOFFDAY",
+        "CONFIG_VALUE": "2",
+        "IS_MAINT_BY_USER": 1,
+        "PROCESS_CODE": "203",
+        "UPDATED_BY": "150812",
+        "UPDATED_BY_NID": "arunsoni",
+        "UPDATED_ON": "2024-07-22T00:00:00.000Z",
+        "ProcessConfigDetails": {
+            "__ref": "ProcessConfigs('203')"
+        },
+        "SRC_CONFIG": "APP",
+        "processCodeTitleChange": "Other Paid Work in NUS"
+    }
+]
