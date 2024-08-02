@@ -1,4 +1,4 @@
-// utils.js
+const _ = require('lodash');
 
 /**
  * Checks if two strings are equal, ignoring case.
@@ -12,6 +12,16 @@ function equalsIgnoreCase(str1, str2) {
     }
     return false;
   }
+
+   // Example utility function to get a value or a default if it's empty
+   function getOrDefault (value, defaultValue) {
+    return _.isEmpty(value) ? defaultValue : value;
+  }
+
+  function isEmpty(value){
+    return _.isEmpty(value);
+  }
+
   
   /**
    * Checks if a string is null, undefined, or empty.
@@ -72,7 +82,26 @@ function equalsIgnoreCase(str1, str2) {
   function isEmptyObject(obj) {
     return Object.keys(obj).length === 0;
   }
-  
+  /**
+ * Copies properties from the source object to the target object,
+ * skipping any properties specified in the skipProps array.
+ * 
+ * @param {Object} source - The source object to copy properties from.
+ * @param {Object} target - The target object to copy properties to.
+ * @param {Array<string>} [skipProps] - Optional array of properties to skip.
+ * @return {Object} The modified target object with copied properties.
+ */
+function copyObjectProperties(source, target, skipProps = []) {
+  const skipSet = new Set(skipProps);
+
+  for (const key in source) {
+    if (source.hasOwnProperty(key) && !skipSet.has(key)) {
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
   module.exports = {
     equalsIgnoreCase,
     isNullOrEmpty,
@@ -80,6 +109,9 @@ function equalsIgnoreCase(str1, str2) {
     deepClone,
     formatDate,
     getRandomInt,
-    isEmptyObject
+    isEmptyObject,
+    copyObjectProperties,
+    getOrDefault,
+    isEmpty
   };
   

@@ -13,10 +13,6 @@ module.exports = {
             .where(stfInfoQueryParameter));
         return fetchExternalUser;
     },
-    // fetchCostDist : function(oConnection,srv,upperNusNetId,startDate,endDate){
-    //     let fetchCostDist = cds.run(SELECT.from(oConnection.srv.entities["CHECK_COST_DIST_EXISTS"](upperNusNetId,startDate,endDate)));
-    //     return fetchCostDist;
-    // },
     fetchCostDist: function (oConnection, srv, upperNusNetId, startDate, endDate) {
         const stfInfoQueryParameter = ` ( J.NUSNET_ID = '${upperNusNetId}' OR J.STF_NUMBER = '${upperNusNetId}') AND C.START_DATE <= CURRENT_DATE AND C.END_DATE >= CURRENT_DATE`
         let fetchCostDist = cds.run(

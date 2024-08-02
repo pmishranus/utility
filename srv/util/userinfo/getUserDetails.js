@@ -1,9 +1,8 @@
 const { application } = require("express");
 const Connection = require("../../util/request/connection.class");
 const ApplicationConstants = require("../app-constant");
-const QueryRepo = require("../query-repo");
+const QueryRepo = require("../../query/query-repo");
 const cds = require("@sap/cds");
-const queryRepo = require("../query-repo");
 module.exports = {
   /**
    *
@@ -180,8 +179,6 @@ module.exports = {
         let inboxApproverMatrix = {
           ULU_C: eam.ULU_C,
           FDLU_C: eam.FDLU_C,
-          // ULU_T: eam.ULU_T,
-          // FDLU_T: eam.FDLU_T,
           STAFF_USER_GRP: eam.STAFF_USER_GRP,
           VALID_FROM: eam.VALID_FROM,
           VALID_TO: eam.VALID_TO,

@@ -12,6 +12,7 @@
     "@sap/xsenv": "^5.1.0",
     "@sap/xssec": "^3.6.1",
     "express": "^4",
+    "lodash": "^4.17.21",
     "passport": "^0.7.0",
     "sap-hdbext-promisfied": "^2.202405.1"
   },
@@ -25,9 +26,9 @@
     "approuter": "npm start --prefix app",
     "profile": "cds watch --profile hybrid",
     "hanadeploy": "cds deploy --to hana:utility-db",
-    "currtcp" : "lsof -i tcp:4004",
+    "currtcp": "lsof -i tcp:4004",
     "runlib": "npm install && cd app && npm install & cd ..",
-    "deploy" : "mbt build && cf deploy /home/user/projects/utility/mta_archives/utility_1.0.0.mtar -f"
+    "deploy": "mbt build && cf deploy /home/user/projects/utility/mta_archives/utility_1.0.0.mtar -f"
   },
   "cds": {
     "requires": {
