@@ -1,0 +1,188 @@
+# POST https://nus-ariba-dev-px55m7l5.authentication.eu10.hana.ondemand.com/oauth/token
+# Content-Type: application/x-www-form-urlencoded
+
+# grant_type=client_credentials&client_id=sb-utility!t169063&client_secret=9b11f754-fdb1-42e6-81cd-52d4651bce07\$9-KY5TBNWPelbQmqYo5xuS5s22uIQ4CmTFtRgJqMUdg=
+
+# > {% client.log('TOKEN: ' + response.body.access_token) %}
+# > {% client.global.set("auth_token","eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vbnVzLWFyaWJhLWRldi1weDU1bTdsNS5hdXRoZW50aWNhdGlvbi5ldTEwLmhhbmEub25kZW1hbmQuY29tL3Rva2VuX2tleXMiLCJraWQiOiJkZWZhdWx0LWp3dC1rZXktMTg5NzgxOTg2NyIsInR5cCI6IkpXVCIsImppZCI6ICJxejhYZm5EMTRkQ0IvZGtsTmZmbnRMR3poTmNrZWkrdmtVV2U4U1BoOXJnPSJ9.eyJqdGkiOiIzZmZjODJhNTIzOWU0MWMxOTA5NGE0N2U0ZTIxZGUxZSIsImV4dF9hdHRyIjp7ImVuaGFuY2VyIjoiWFNVQUEiLCJzdWJhY2NvdW50aWQiOiIzZmI2OWY3Ny01NzAzLTRhYzItYjIzNS00ODFhZmNlZDliOWUiLCJ6ZG4iOiJudXMtYXJpYmEtZGV2LXB4NTVtN2w1In0sInN1YiI6InNiLXV0aWxpdHkhdDE2OTA2MyIsImF1dGhvcml0aWVzIjpbInVhYS5yZXNvdXJjZSJdLCJzY29wZSI6WyJ1YWEucmVzb3VyY2UiXSwiY2xpZW50X2lkIjoic2ItdXRpbGl0eSF0MTY5MDYzIiwiY2lkIjoic2ItdXRpbGl0eSF0MTY5MDYzIiwiYXpwIjoic2ItdXRpbGl0eSF0MTY5MDYzIiwiZ3JhbnRfdHlwZSI6ImNsaWVudF9jcmVkZW50aWFscyIsInJldl9zaWciOiIzNTIyMDU2YyIsImlhdCI6MTcyMjkzMjAyNSwiZXhwIjoxNzIyOTMzODI1LCJpc3MiOiJodHRwczovL251cy1hcmliYS1kZXYtcHg1NW03bDUuYXV0aGVudGljYXRpb24uZXUxMC5oYW5hLm9uZGVtYW5kLmNvbS9vYXV0aC90b2tlbiIsInppZCI6IjNmYjY5Zjc3LTU3MDMtNGFjMi1iMjM1LTQ4MWFmY2VkOWI5ZSIsImF1ZCI6WyJ1YWEiLCJzYi11dGlsaXR5IXQxNjkwNjMiXX0.X_PbKGYfYQlI7Px5U0IUInGHAKpeT_2pvkRFC9Rw6HBIzKmPa0ln8Y7kvJyJT_899XsGaj_Jyq0b8i0xxUKJVvLYweokirRli6wn5zclw1TS4_1sf-FuWO33yNT7N1-9KhAg_EandpVY57kl8j_Lb1gcS3azfu1s-ZhO34b2v7FIdntP0OgP2MmBv01tZY4ii2rrzxHtCeMoR93Bk2Fzo1WMcVy0Cqz1u0WEEirN6F2ViA3UUW6vGZ5naCvFjt9n2cQcLmn133Ej22uPiV0olfePH4gcpqujxK-L9IiKryvX3qYBj9Qwdcq6y_5dWFionnA_VN8zjpFWN3FeppKXsQ") %}
+
+
+POST http://localhost:4004/approvermatrix/createEntry
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vbnVzLWFyaWJhLWRldi1weDU1bTdsNS5hdXRoZW50aWNhdGlvbi5ldTEwLmhhbmEub25kZW1hbmQuY29tL3Rva2VuX2tleXMiLCJraWQiOiJkZWZhdWx0LWp3dC1rZXktMTg5NzgxOTg2NyIsInR5cCI6IkpXVCIsImppZCI6ICJkenBoQ0MvbFhzQkZGMGFyWHpoTXBJSmpWRkhNNTZiYWNkVmVRQ0N1WjBnPSJ9.eyJqdGkiOiIyMWNhOGJhNjg0YWI0OTA4YTMxY2NlMDg2OTk5NzRiNCIsImV4dF9hdHRyIjp7ImVuaGFuY2VyIjoiWFNVQUEiLCJzdWJhY2NvdW50aWQiOiIzZmI2OWY3Ny01NzAzLTRhYzItYjIzNS00ODFhZmNlZDliOWUiLCJ6ZG4iOiJudXMtYXJpYmEtZGV2LXB4NTVtN2w1In0sInN1YiI6InNiLXV0aWxpdHkhdDE2OTA2MyIsImF1dGhvcml0aWVzIjpbInVhYS5yZXNvdXJjZSJdLCJzY29wZSI6WyJ1YWEucmVzb3VyY2UiXSwiY2xpZW50X2lkIjoic2ItdXRpbGl0eSF0MTY5MDYzIiwiY2lkIjoic2ItdXRpbGl0eSF0MTY5MDYzIiwiYXpwIjoic2ItdXRpbGl0eSF0MTY5MDYzIiwiZ3JhbnRfdHlwZSI6ImNsaWVudF9jcmVkZW50aWFscyIsInJldl9zaWciOiIzNTIyMDU2YyIsImlhdCI6MTcyMjkzOTMxMiwiZXhwIjoxNzIyOTQxMTEyLCJpc3MiOiJodHRwczovL251cy1hcmliYS1kZXYtcHg1NW03bDUuYXV0aGVudGljYXRpb24uZXUxMC5oYW5hLm9uZGVtYW5kLmNvbS9vYXV0aC90b2tlbiIsInppZCI6IjNmYjY5Zjc3LTU3MDMtNGFjMi1iMjM1LTQ4MWFmY2VkOWI5ZSIsImF1ZCI6WyJ1YWEiLCJzYi11dGlsaXR5IXQxNjkwNjMiXX0.NLI03PHqROloEXNxUQcrXTLPhpGAcNgXRYeeHiWhLbO130stPb6rP5Ju2rihBtCpSrxDabj6YmZwXEBqQd8Rkcg0GaeFGENIgVorPCZ0Pis-3dfS8vJSdx6F7T2uHzqwuOCf8vfsNVF163v0qYT8b6eFlsBFVc1h_TKT3Fx7iFaLw6Aw4TcxxqgXbXS5zmX2eVOGV_SZxuLTTm_Q5E2OjP5dN9-nom3u8rEMVo-CNf3cZ9mRFZGLbk2GAt4I_zViQ0Pu4Cy5uLHoXIbZ00yXjsbkUZRC-At-hq0XSAYkAtnL53X3w9L0aZXdqgMvww1V1CgoQUnNwpBUGZ8sh9Jn6A
+
+ {
+    "data" : [
+  {
+    "isStaffEnabled": true,
+    "isDelimitScenario": false,
+    "isEditScenario": false,
+    "isSingleSubmissionSelected": true,
+    "isMassUploadSelected": false,
+    "isAllUluVisible": false,
+    "isAllFdluVisible": false,
+    "isMassUploadVisible": false,
+    "isSubmitVisible": true,
+    "isValidFromEnabled": true,
+    "isValidToEnabled": true,
+    "isFormEditable": true,
+    "isFDLUEnabled": false,
+    "isULUEnabled": false,
+    "isDesignationVisible": true,
+    "isULUVisible": true,
+    "isValidityVisible": true,
+    "isStaffSelectionVisible": true,
+    "isFDLUVisible": true,
+    "VALID_FROM": "2024-08-06",
+    "VALID_TO": "9999-12-31",
+    "PROCESS_CODE": "201",
+    "designationList": [
+      {
+        "DESIGNATION_CODE": "CWS_CONFIG_ADMIN",
+        "DESIGNATION_DESC": "Config Admin"
+      },
+      {
+        "DESIGNATION_CODE": "CW_DEPARTMENT_ADMIN",
+        "DESIGNATION_DESC": "Department Admin"
+      },
+      {
+        "DESIGNATION_CODE": "CW_OHRSS",
+        "DESIGNATION_DESC": "OHR Shared Services"
+      },
+      {
+        "DESIGNATION_CODE": "CW_PROGRAM_ADMIN",
+        "DESIGNATION_DESC": "Program Admin"
+      },
+      {
+        "DESIGNATION_CODE": "CW_PROGRAM_MANAGER",
+        "DESIGNATION_DESC": "Program Manager"
+      },
+      {
+        "DESIGNATION_CODE": "CW_HRP_REPORT_ADMIN",
+        "DESIGNATION_DESC": "HRP ULU"
+      },
+      {
+        "DESIGNATION_CODE": "CW_FINANCE_ADMIN",
+        "DESIGNATION_DESC": "Finance Admin"
+      },
+      {
+        "DESIGNATION_CODE": "CW_AUTO_APPROVAL",
+        "DESIGNATION_DESC": "Auto Approval"
+      },
+      {
+        "DESIGNATION_CODE": "CW_APP_ADMIN",
+        "DESIGNATION_DESC": "Application Admin"
+      },
+      {
+        "DESIGNATION_CODE": "OFN_ADMIN",
+        "DESIGNATION_DESC": "OFN Admin"
+      },
+      {
+        "DESIGNATION_CODE": "CWS_WF_ADMIN",
+        "DESIGNATION_DESC": "Workflow Admin"
+      }
+    ],
+    "processCodeList": [
+      {
+        "__metadata": {
+          "id": "https://nusbtpblduxmssmjjx.ap1.hana.ondemand.com:443/nusbtpbl/odata/ProcessConfigs('201')",
+          "uri": "https://nusbtpblduxmssmjjx.ap1.hana.ondemand.com:443/nusbtpbl/odata/ProcessConfigs('201')",
+          "type": "default.ProcessConfig"
+        },
+        "PROCESS_CODE": "201",
+        "PROCESS_NAME": "CWS",
+        "PROCESS_SLA_DAYS": 10,
+        "PROCESS_TITLE": "Consultation Work",
+        "REFERENCE_KEY": "200",
+        "ProcessDetailsDetails": {
+          "__deferred": {
+            "uri": "https://nusbtpblduxmssmjjx.ap1.hana.ondemand.com:443/nusbtpbl/odata/ProcessConfigs('201')/ProcessDetailsDetails"
+          }
+        },
+        "TasksConfigDetails": {
+          "__deferred": {
+            "uri": "https://nusbtpblduxmssmjjx.ap1.hana.ondemand.com:443/nusbtpbl/odata/ProcessConfigs('201')/TasksConfigDetails"
+          }
+        }
+      },
+      {
+        "__metadata": {
+          "id": "https://nusbtpblduxmssmjjx.ap1.hana.ondemand.com:443/nusbtpbl/odata/ProcessConfigs('202')",
+          "uri": "https://nusbtpblduxmssmjjx.ap1.hana.ondemand.com:443/nusbtpbl/odata/ProcessConfigs('202')",
+          "type": "default.ProcessConfig"
+        },
+        "PROCESS_CODE": "202",
+        "PROCESS_NAME": "NED",
+        "PROCESS_SLA_DAYS": 10,
+        "PROCESS_TITLE": "Non Executive Directorship",
+        "REFERENCE_KEY": "200",
+        "ProcessDetailsDetails": {
+          "__deferred": {
+            "uri": "https://nusbtpblduxmssmjjx.ap1.hana.ondemand.com:443/nusbtpbl/odata/ProcessConfigs('202')/ProcessDetailsDetails"
+          }
+        },
+        "TasksConfigDetails": {
+          "__deferred": {
+            "uri": "https://nusbtpblduxmssmjjx.ap1.hana.ondemand.com:443/nusbtpbl/odata/ProcessConfigs('202')/TasksConfigDetails"
+          }
+        }
+      },
+      {
+        "__metadata": {
+          "id": "https://nusbtpblduxmssmjjx.ap1.hana.ondemand.com:443/nusbtpbl/odata/ProcessConfigs('203')",
+          "uri": "https://nusbtpblduxmssmjjx.ap1.hana.ondemand.com:443/nusbtpbl/odata/ProcessConfigs('203')",
+          "type": "default.ProcessConfig"
+        },
+        "PROCESS_CODE": "203",
+        "PROCESS_NAME": "OPWN",
+        "PROCESS_SLA_DAYS": 10,
+        "PROCESS_TITLE": "Other Paid Work in NUS",
+        "REFERENCE_KEY": "200",
+        "ProcessDetailsDetails": {
+          "__deferred": {
+            "uri": "https://nusbtpblduxmssmjjx.ap1.hana.ondemand.com:443/nusbtpbl/odata/ProcessConfigs('203')/ProcessDetailsDetails"
+          }
+        },
+        "TasksConfigDetails": {
+          "__deferred": {
+            "uri": "https://nusbtpblduxmssmjjx.ap1.hana.ondemand.com:443/nusbtpbl/odata/ProcessConfigs('203')/TasksConfigDetails"
+          }
+        }
+      },
+      {
+        "__metadata": {
+          "id": "https://nusbtpblduxmssmjjx.ap1.hana.ondemand.com:443/nusbtpbl/odata/ProcessConfigs('204')",
+          "uri": "https://nusbtpblduxmssmjjx.ap1.hana.ondemand.com:443/nusbtpbl/odata/ProcessConfigs('204')",
+          "type": "default.ProcessConfig"
+        },
+        "PROCESS_CODE": "204",
+        "PROCESS_NAME": "INT_CWS",
+        "PROCESS_SLA_DAYS": 10,
+        "PROCESS_TITLE": "Internal Consultation Work",
+        "REFERENCE_KEY": "200",
+        "ProcessDetailsDetails": {
+          "__deferred": {
+            "uri": "https://nusbtpblduxmssmjjx.ap1.hana.ondemand.com:443/nusbtpbl/odata/ProcessConfigs('204')/ProcessDetailsDetails"
+          }
+        },
+        "TasksConfigDetails": {
+          "__deferred": {
+            "uri": "https://nusbtpblduxmssmjjx.ap1.hana.ondemand.com:443/nusbtpbl/odata/ProcessConfigs('204')/TasksConfigDetails"
+          }
+        }
+      }
+    ],
+    "STAFF_USER_GRP": "CWS_CONFIG_ADMIN",
+    "STAFF_ID": "150812",
+    "FULL_NM": "Arun Soni",
+    "NUSNET_ID": "",
+    "ULU": "ALL",
+    "ULU_T": "ALL",
+    "FDLU": "ALL",
+    "FDLU_T": "ALL",
+    "ALL_FDLU": true,
+    "ALL_ULU": true,
+    "STAFF_NUSNET_ID": "arunsoni"
+  }
+]
+ }

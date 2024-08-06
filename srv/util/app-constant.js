@@ -116,6 +116,9 @@ const ApplicationConstants = {
     Z: "Z",
     A : "A",
     INT_ACTIVE : "1",
+    E : "E",
+    S:"S",
+    W:"W",
 
     PREFIX_ZERO_TWO_DIGITS: "%02d",
     PREFIX_ZERO_THREE_DIGITS: "%03d",
