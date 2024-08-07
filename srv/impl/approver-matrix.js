@@ -7,6 +7,7 @@ const dateUtils = require("../util/date-utils");
 const commonQuery = require("../query/query-common");
 const queryApproverMatrix = require("../query/query-approver-matrix");
 const { config } = require("@sap/xssec");
+const { ApplicationException } = require("../util/customErrors");
 module.exports = {
     /**
      *
@@ -17,7 +18,7 @@ module.exports = {
      */
     createConfigEntry: function (request, db, srv) {
         const oConnection = new Connection(request, db, srv);
-        return  this.persistAppConfigEntry(oConnection);
+        return this.persistAppConfigEntry(oConnection);
     },
 
     persistAppConfigEntry: async function (oConnection) {
@@ -30,7 +31,7 @@ module.exports = {
 
             //fetch logged in user information
 
-            let loggedInUserDetails = await commonQuery.fetchLoggedInUser(userName,oConnection);
+            let loggedInUserDetails = await commonQuery.fetchLoggedInUser(userName, oConnection);
 
             if (!userName) {
                 throw new Error("User not found..!!");
@@ -43,10 +44,9 @@ module.exports = {
 
             const formattedRequestMonth = requestMonth.toString().padStart(2, '0');
             const formattedRequestYear = requestYear.toString();
-          
 
-            // inputRequest.forEach(async configRequest => {
-                for (const configRequest of inputRequest) {
+
+            for (const configRequest of inputRequest) {
                 try {
                     let response = await this.checkForDuplicateWhileCreation(configRequest);
 
@@ -84,20 +84,14 @@ module.exports = {
 
                     await commonQuery.upsertOperationChained(tx, "NUSEXT_UTILITY_CHRS_APPROVER_MATRIX", approverMatrix);
                     config.frameResponse = CommonUtils.frameResponse(ApplicationConstants.S, "The Configuration is successfully done");
-                } catch ( error) {
-                   
+                } catch (error) {
+
                     if (error instanceof ApplicationException) {
-                        // Handle ApplicationException
-                        console.error('Application Exception:', error.message);
-                        configRequest.frameResponse = CommonUtils.frameResponse(ApplicationConstants.E, oAppError.message);
+                        configRequest.frameResponse = CommonUtils.frameResponse(ApplicationConstants.E, error.message);
                     } else if (error instanceof TypeError) {
-                        // Handle TypeError
-                        console.error('Type Error:', error.message);
-                        configRequest.frameResponse = CommonUtils.frameResponse(ApplicationConstants.E, oAppError.message);
+                        configRequest.frameResponse = CommonUtils.frameResponse(ApplicationConstants.E, error.message);
                     } else {
-                        // Handle all other errors
-                        console.error('General Error:', error.message);
-                        configRequest.frameResponse = CommonUtils.frameResponse(ApplicationConstants.E, oAppError.message);
+                        configRequest.frameResponse = CommonUtils.frameResponse(ApplicationConstants.E, error.message);
                     }
                 }
                 configResponse.push(configRequest);
@@ -106,18 +100,11 @@ module.exports = {
         } catch (error) {
             await tx.rollback();
             if (error instanceof ApplicationException) {
-                // Handle ApplicationException
-                console.error('Application Exception:', error.message);
             } else if (error instanceof TypeError) {
-                // Handle TypeError
                 console.error('Type Error:', error.message);
             } else {
-                // Handle all other errors
                 console.error('General Error:', error.message);
             }
-            // this.handleError(oConnection.request, oError);
-            
-
         }
         tx.commit();
         return configResponse;
@@ -137,7 +124,7 @@ module.exports = {
                 validTo
             );
             if (existingMatrixList && existingMatrixList.length > 0) {
-                throw new Error( 'ApplicationException',
+                throw new ApplicationException(
                     "This is a Duplicate Configuration, please modify the existing configuration"
                 );
             }
@@ -188,7 +175,7 @@ module.exports = {
                 validTo);
 
             if (existingConfigurations && existingConfigurations.length > 0) {
-                throw new Error('ApplicationException',
+                throw new ApplicationException(
                     designationAlias + " can't be " + targetDesignationAlias
                     + ", you may also check for overlapping entry")
 
