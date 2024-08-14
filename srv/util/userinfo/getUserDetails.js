@@ -2,6 +2,7 @@ const { application } = require("express");
 const Connection = require("../../util/request/connection.class");
 const ApplicationConstants = require("../app-constant");
 const QueryRepo = require("../../query/query-repo");
+const commonQuery = require("../../query/query-common");
 const cds = require("@sap/cds");
 module.exports = {
   /**
@@ -41,9 +42,9 @@ module.exports = {
     };
 
     const upperNusNetId = userName.toUpperCase();
-    let staffInfo = await QueryRepo.fetchStaffInfo(oConnection, srv, upperNusNetId);
+    let staffInfo = await QueryRepo.fetchStaffInfo(upperNusNetId);
     if (!staffInfo || Object.keys(staffInfo).length === 0) {
-      staffInfo = await QueryRepo.fetchExternalUser(oConnection, srv, upperNusNetId);
+      staffInfo = await QueryRepo.fetchExternalUser(upperNusNetId);
       utilResponse.is_external_user = ApplicationConstants.X;
     } else {
       // utilResponse.staffInfo = staffInfo;
@@ -126,7 +127,7 @@ module.exports = {
 
     // fetch approval matrix
 
-    let approvalMatrixList = await QueryRepo.fetchAuthDetails(oConnection, srv, utilResponse.staffInfo.STAFF_ID);
+    let approvalMatrixList = await QueryRepo.fetchAuthDetails(utilResponse.staffInfo.STAFF_ID);
     let inboxApprovalMatrixList = await QueryRepo.fetchInboxApproverMatrix(oConnection, srv, utilResponse.staffInfo.STAFF_ID);
     let adminList = await QueryRepo.fetchAdminDetails(oConnection, srv, utilResponse.staffInfo.STAFF_ID);
     if (!approvalMatrixList || Object.keys(approvalMatrixList).length === 0) {
@@ -208,4 +209,19 @@ module.exports = {
       });
     }
   },
+
+  _userInformationBasedOnNusnetIdOrStaffId: async function (upperNusNetId) {
+    let userDetails = await QueryRepo.fetchStaffInfo(upperNusNetId);
+    if (!userDetails || Object.keys(userDetails).length === 0) {
+      userDetails = await QueryRepo.fetchExternalUser(upperNusNetId);
+      userDetails.EXTERNAL_USER = ApplicationConstants.X;
+    } else {
+      userDetails.EXTERNAL_USER = "";
+    }
+    userDetails.ULU_T = await commonQuery.fetchDistinctULU(userDetails.ULU_C);
+    userDetails.FDLU_T = await commonQuery.fetchDistinctFDLU(userDetails.FDLU_C);
+
+    return userDetails;
+  }
+
 };

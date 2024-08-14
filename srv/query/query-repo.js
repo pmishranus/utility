@@ -1,15 +1,15 @@
 const cds = require("@sap/cds");
 const { SELECT } = require("@sap/cds/lib/ql/cds-ql");
 module.exports = {
-    fetchStaffInfo: function (oConnection, srv, upperNusNetId) {
+    fetchStaffInfo: async function (upperNusNetId) {
         const stfInfoQueryParameter = ` ( NUSNET_ID = '${upperNusNetId}' OR STF_NUMBER = '${upperNusNetId}') AND START_DATE <= CURRENT_DATE AND END_DATE >= CURRENT_DATE`
-        let fetchStaffInfo = cds.run(SELECT.from(oConnection.srv.entities["CHRS_JOB_INFO"])
+        let fetchStaffInfo = await cds.run(SELECT.one.from("NUSEXT_MASTER_DATA_CHRS_JOB_INFO")
             .where(stfInfoQueryParameter));
         return fetchStaffInfo;
     },
-    fetchExternalUser: function (oConnection, srv, upperNusNetId) {
+    fetchExternalUser: async function (upperNusNetId) {
         const stfInfoQueryParameter = ` ( NUSNET_ID = '${upperNusNetId}' OR STF_NUMBER = '${upperNusNetId}') AND START_DATE <= CURRENT_DATE AND END_DATE >= CURRENT_DATE`
-        let fetchExternalUser = cds.run(SELECT.from(oConnection.srv.entities["CHRS_EXTERNAL_USERS"])
+        let fetchExternalUser = await cds.run(SELECT.one.from("NUSEXT_UTILITY_CHRS_EXTERNAL_USERS")
             .where(stfInfoQueryParameter));
         return fetchExternalUser;
     },
@@ -25,7 +25,7 @@ module.exports = {
         );
         return fetchCostDist;
     },
-    fetchAuthDetails: function (oConnection, srv, staffId) {
+    fetchAuthDetails: function (staffId) {
         let queryParameter = ` (UPPER(eam.STAFF_NUSNET_ID) = '${staffId}' or eam.STAFF_ID = '${staffId}')
           and eam.ULU = u.ULU_C and u.FDLU_C = CASE WHEN eam.FDLU = 'ALL' THEN u.FDLU_C ELSE eam.FDLU END 
          and eam.VALID_FROM <= CURRENT_DATE and eam.VALID_TO >= CURRENT_DATE and eam.IS_DELETED='N'`

@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const { MESSAGE } = require('./app-constant');
+const ValidationResultsDto = require("../dto/ValidationResultsDto")
 
 function frameResponse(errorCode, message) {
   return {
@@ -30,6 +31,10 @@ function isEmpty(value) {
   return _.isEmpty(value);
 }
 
+function isNotBlank(value){
+  return !_.isEmpty(value)
+}
+
 
 /**
  * Checks if a string is null, undefined, or empty.
@@ -38,6 +43,10 @@ function isEmpty(value) {
  */
 function isNullOrEmpty(str) {
   return str === null || str === undefined || str.trim().length === 0;
+}
+
+function isNotNullOrEmpty(str) {
+  return !(str === null || str === undefined || str.trim().length === 0)
 }
 
 /**
@@ -88,7 +97,7 @@ function getRandomInt(min, max) {
  * @returns {boolean} - True if the object is empty, false otherwise.
  */
 function isEmptyObject(obj) {
-  return Object.keys(obj).length === 0;
+  return obj === null || obj === undefined || Object.keys(obj).length === 0;
 }
 /**
 * Copies properties from the source object to the target object,
@@ -110,10 +119,46 @@ function copyObjectProperties(source, target, skipProps = []) {
 
   return target;
 }
+
+const checkIsNumericOptional = /^\d*$/;
+const checkIsStringOptional = /^[a-zA-Z]*$/;
+const checkIsNumericMandatory = /^\d+$/;
+const checkIsStringMandatory = /^[a-zA-Z]+$/;
+
+function numberToText(number) {
+  if (number === null || number === undefined) {
+      return '';
+  }
+  return number.toString();
+}
+
+// Helper function to group by a specified key
+function groupBy(array, key) {
+  return array.reduce((result, item) => {
+      const value = item[key];
+      if (!result[value]) {
+          result[value] = [];
+      }
+      result[value].push(item);
+      return result;
+  }, {});
+}
+
+// Validation utility function
+function frameValidationMessage(type, message) {
+  return {
+    type: type,
+    message: message
+  };
+}
+
+
+
 module.exports = {
   frameResponse,
   equalsIgnoreCase,
   isNullOrEmpty,
+  isNotNullOrEmpty,
   capitalizeWords,
   deepClone,
   formatDate,
@@ -121,5 +166,13 @@ module.exports = {
   isEmptyObject,
   copyObjectProperties,
   getOrDefault,
-  isEmpty
+  isEmpty,
+  isNotBlank,
+  checkIsNumericOptional,
+  checkIsStringOptional,
+  checkIsNumericMandatory,
+  checkIsStringMandatory,
+  numberToText,
+  groupBy,
+  frameValidationMessage
 };
