@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="PROCESS_DETAILS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="PROCESS_DETAILS"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="NUSEXT_UTILITY_PROCESS_DETAILS">
+    <resourceUri>NUSEXT_UTILITY_PROCESS_DETAILS</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_UTILITY_STATUS_CONFIG">
+    <resourceUri>NUSEXT_UTILITY_STATUS_CONFIG</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_UTILITY_PROCESS_DETAILS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+    <viewAttributes>
+      <viewAttribute id="STATUS_ALIAS"/>
+      <viewAttribute id="STATUS_CODE"/>
+      <viewAttribute id="STATUS_COLOR_CODE"/>
+      <viewAttribute id="STATUS_TYPE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_UTILITY_STATUS_CONFIG"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="STATUS_ALIAS"/>
+      <viewAttribute id="STATUS_COLOR_CODE" aggregationType="sum"/>
+      <viewAttribute hidden="true" id="JOIN$PROCESS_STATUS$STATUS_CODE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_STATUS$STATUS_CODE" source="PROCESS_STATUS"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_ALIAS" source="STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_COLOR_CODE" source="STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_STATUS$STATUS_CODE" source="STATUS_CODE"/>
+    </input>
+    <joinAttribute name="JOIN$PROCESS_STATUS$STATUS_CODE"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="PROCESS_INST_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_INST_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="PROCESS_INST_ID"/>
+    </attribute>
+    <attribute id="REFERENCE_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REFERENCE_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="REFERENCE_ID"/>
+    </attribute>
+    <attribute id="PROCESS_CODE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_CODE"/>
+      <keyMapping columnObjectName="Join_1" columnName="PROCESS_CODE"/>
+    </attribute>
+    <attribute id="PROCESS_STATUS" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_STATUS"/>
+      <keyMapping columnObjectName="Join_1" columnName="PROCESS_STATUS"/>
+    </attribute>
+    <attribute id="PROCESS_ACTUAL_DOC" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_ACTUAL_DOC"/>
+      <keyMapping columnObjectName="Join_1" columnName="PROCESS_ACTUAL_DOC"/>
+    </attribute>
+    <attribute id="STATUS_ALIAS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATUS_ALIAS"/>
+      <keyMapping columnObjectName="Join_1" columnName="STATUS_ALIAS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="STATUS_COLOR_CODE" order="7" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="STATUS_COLOR_CODE"/>
+      <measureMapping columnObjectName="Join_1" columnName="STATUS_COLOR_CODE"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-249" y="475"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="421" y="475"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="293"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="136.0234375"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="136.0234375"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

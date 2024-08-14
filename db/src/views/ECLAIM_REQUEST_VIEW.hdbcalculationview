@@ -1,0 +1,1539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="ECLAIM_REQUEST_VIEW" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="ECLAIM_REQUEST_VIEW"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="NUSEXT_UTILITY_PROCESS_PARTICIPANTS">
+    <resourceUri>NUSEXT_UTILITY_PROCESS_PARTICIPANTS</resourceUri>
+  </DataSource>
+  <DataSource id="ADD_APP_1$$$$NUSEXT_UTILITY_PROCESS_PARTICIPANTS$$">
+    <resourceUri>NUSEXT_UTILITY_PROCESS_PARTICIPANTS</resourceUri>
+  </DataSource>
+  <DataSource id="ADD_APP_2$$$$NUSEXT_UTILITY_PROCESS_PARTICIPANTS$$">
+    <resourceUri>NUSEXT_UTILITY_PROCESS_PARTICIPANTS</resourceUri>
+  </DataSource>
+  <DataSource id="PROCESS_DETAILS">
+    <resourceUri>PROCESS_DETAILS</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_UTILITY_REQUEST_LOCK_DETAILS">
+    <resourceUri>NUSEXT_UTILITY_REQUEST_LOCK_DETAILS</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_MASTER_DATA_CHRS_FDLU_ULU">
+    <resourceUri>NUSEXT_MASTER_DATA_CHRS_FDLU_ULU</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_MASTER_DATA_CHRS_JOB_INFO">
+    <resourceUri>NUSEXT_MASTER_DATA_CHRS_JOB_INFO</resourceUri>
+  </DataSource>
+  <DataSource id="BASE_ECLAIM_REQUEST_VIEW">
+    <resourceUri>BASE_ECLAIM_REQUEST_VIEW</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="VERIFIER" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="VERIFIER_PPNT_ID"/>
+      <viewAttribute id="VERIFIER_REFERENCE_ID"/>
+      <viewAttribute id="VERIFIER_USER_DESIGNATION"/>
+      <viewAttribute id="VERIFIER_STAFF_ID"/>
+      <viewAttribute id="VERIFIER_NUSNET_ID"/>
+      <viewAttribute id="VERIFIER_STAFF_FULL_NAME"/>
+      <viewAttribute id="IS_DELETED"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_UTILITY_PROCESS_PARTICIPANTS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_PPNT_ID" source="PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_USER_DESIGNATION" source="USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_NUSNET_ID" source="NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_STAFF_FULL_NAME" source="STAFF_FULL_NAME"/>
+    </input>
+    <filter>&quot;VERIFIER_USER_DESIGNATION&quot; = 'VERIFIER' AND &quot;IS_DELETED&quot; = 'N'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ADD_APP_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="ADD_APP_1_PPNT_ID"/>
+      <viewAttribute id="ADD_APP_1_REFERENCE_ID"/>
+      <viewAttribute id="ADD_APP_1_USER_DESIGNATION"/>
+      <viewAttribute id="ADD_APP_1_STAFF_ID"/>
+      <viewAttribute id="ADD_APP_1_NUSNET_ID"/>
+      <viewAttribute id="ADD_APP_1_STAFF_FULL_NAME"/>
+      <viewAttribute id="IS_DELETED"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="ADD_APP_1$$$$NUSEXT_UTILITY_PROCESS_PARTICIPANTS$$">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_PPNT_ID" source="PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_USER_DESIGNATION" source="USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_NUSNET_ID" source="NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_STAFF_FULL_NAME" source="STAFF_FULL_NAME"/>
+    </input>
+    <filter>&quot;ADD_APP_1_USER_DESIGNATION&quot;='ADDITIONAL_APP_1' AND &quot;IS_DELETED&quot; = 'N'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ADD_APP_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="ADD_APP_2_PPNT_ID"/>
+      <viewAttribute id="ADD_APP_2_REFERENCE_ID"/>
+      <viewAttribute id="ADD_APP_2_USER_DESIGNATION"/>
+      <viewAttribute id="ADD_APP_2_STAFF_ID"/>
+      <viewAttribute id="ADD_APP_2_NUSNET_ID"/>
+      <viewAttribute id="ADD_APP_2_STAFF_FULL_NAME"/>
+      <viewAttribute id="IS_DELETED"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="ADD_APP_2$$$$NUSEXT_UTILITY_PROCESS_PARTICIPANTS$$">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_PPNT_ID" source="PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_USER_DESIGNATION" source="USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_NUSNET_ID" source="NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_STAFF_FULL_NAME" source="STAFF_FULL_NAME"/>
+    </input>
+    <filter>&quot;ADD_APP_2_USER_DESIGNATION&quot;='ADDITIONAL_APP_2' AND &quot;IS_DELETED&quot; = 'N'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+    <viewAttributes>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="PROCESS_DETAILS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="STATUS_COLOR_CODE"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="LOCK_INST_ID"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="IS_LOCKED"/>
+      <viewAttribute id="LOCKED_BY_USER_NID"/>
+      <viewAttribute id="LOCKED_STAFF_USER_GRP"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_UTILITY_REQUEST_LOCK_DETAILS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCKED_STAFF_USER_GRP" source="STAFF_USER_GRP"/>
+    </input>
+    <filter>&quot;IS_LOCKED&quot; = 'X'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="MASTER_ULU_FDLU">
+    <viewAttributes>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="ULU_T"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_MASTER_DATA_CHRS_FDLU_ULU"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_6" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="FULL_NM"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_MASTER_DATA_CHRS_JOB_INFO"/>
+    <filter>&quot;SF_STF_NUMBER&quot; = &quot;STF_NUMBER&quot;</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="DRAFT_ID"/>
+      <viewAttribute id="REQUEST_ID"/>
+      <viewAttribute id="CLAIM_TYPE"/>
+      <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="CONCURRENT_STAFF_ID"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="FDLU"/>
+      <viewAttribute id="EMPLOYEE_GRP"/>
+      <viewAttribute id="DATE_JOINED"/>
+      <viewAttribute id="EMP_RATE_TYPE"/>
+      <viewAttribute id="CLAIM_YEAR"/>
+      <viewAttribute id="CLAIM_MONTH"/>
+      <viewAttribute id="REQUEST_STATUS"/>
+      <viewAttribute id="SUBMITTED_ON"/>
+      <viewAttribute id="SUBMITTED_BY"/>
+      <viewAttribute id="SUBMITTED_BY_NID"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+      <viewAttribute id="CREATED_ON"/>
+      <viewAttribute id="CLAIM_REQUEST_TYPE"/>
+      <viewAttribute id="MODIFIED_BY_NID"/>
+      <viewAttribute id="MODIFIED_ON"/>
+      <viewAttribute id="WORKING_HOURS"/>
+      <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
+      <viewAttribute id="APPOINTMENT_TRACK"/>
+      <viewAttribute id="CLAIM_TYPE_T"/>
+      <viewAttribute id="STATUS_CODE"/>
+      <viewAttribute id="STATUS_TYPE"/>
+      <viewAttribute id="STATUS_ALIAS"/>
+      <viewAttribute id="STATUS_COLOR_CODE" aggregationType="sum"/>
+      <viewAttribute id="EMP_GP_C"/>
+      <viewAttribute id="EMP_GP_T"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="JOIN_DATE"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="VERIFIER_PPNT_ID"/>
+      <viewAttribute id="VERIFIER_REFERENCE_ID"/>
+      <viewAttribute id="VERIFIER_USER_DESIGNATION"/>
+      <viewAttribute id="VERIFIER_STAFF_ID"/>
+      <viewAttribute id="VERIFIER_NUSNET_ID"/>
+      <viewAttribute id="VERIFIER_STAFF_FULL_NAME"/>
+      <viewAttribute hidden="true" id="JOIN$DRAFT_ID$VERIFIER_REFERENCE_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="BASE_ECLAIM_REQUEST_VIEW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DRAFT_ID" source="DRAFT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE" source="CLAIM_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONCURRENT_STAFF_ID" source="CONCURRENT_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPLOYEE_GRP" source="EMPLOYEE_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_JOINED" source="DATE_JOINED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_RATE_TYPE" source="EMP_RATE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_YEAR" source="CLAIM_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_MONTH" source="CLAIM_MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS" source="REQUEST_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON" source="SUBMITTED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY" source="SUBMITTED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_NID" source="SUBMITTED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTOR_GRP" source="REQUESTOR_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_ON" source="CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_REQUEST_TYPE" source="CLAIM_REQUEST_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY_NID" source="MODIFIED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_ON" source="MODIFIED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORKING_HOURS" source="WORKING_HOURS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_CLAIM_TYPE_CAT" source="STF_CLAIM_TYPE_CAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE_T" source="CLAIM_TYPE_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_CODE" source="STATUS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_TYPE" source="STATUS_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_ALIAS" source="STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_COLOR_CODE" source="STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_C" source="EMP_GP_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_T" source="EMP_GP_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$VERIFIER_REFERENCE_ID" source="DRAFT_ID"/>
+    </input>
+    <input node="VERIFIER">
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_PPNT_ID" source="VERIFIER_PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_REFERENCE_ID" source="VERIFIER_REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_USER_DESIGNATION" source="VERIFIER_USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_STAFF_ID" source="VERIFIER_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_NUSNET_ID" source="VERIFIER_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_STAFF_FULL_NAME" source="VERIFIER_STAFF_FULL_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$VERIFIER_REFERENCE_ID" source="VERIFIER_REFERENCE_ID"/>
+    </input>
+    <joinAttribute name="JOIN$DRAFT_ID$VERIFIER_REFERENCE_ID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="LOCKED_USER_FULL_NM"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_6">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCKED_USER_FULL_NM" source="FULL_NM"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="CN_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="DRAFT_ID"/>
+      <viewAttribute id="REQUEST_ID"/>
+      <viewAttribute id="CLAIM_TYPE"/>
+      <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="CONCURRENT_STAFF_ID"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="FDLU"/>
+      <viewAttribute id="EMPLOYEE_GRP"/>
+      <viewAttribute id="DATE_JOINED"/>
+      <viewAttribute id="EMP_RATE_TYPE"/>
+      <viewAttribute id="CLAIM_YEAR"/>
+      <viewAttribute id="CLAIM_MONTH"/>
+      <viewAttribute id="REQUEST_STATUS"/>
+      <viewAttribute id="SUBMITTED_ON"/>
+      <viewAttribute id="SUBMITTED_BY"/>
+      <viewAttribute id="SUBMITTED_BY_NID"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+      <viewAttribute id="CREATED_ON"/>
+      <viewAttribute id="CLAIM_REQUEST_TYPE"/>
+      <viewAttribute id="MODIFIED_BY_NID"/>
+      <viewAttribute id="MODIFIED_ON"/>
+      <viewAttribute id="WORKING_HOURS"/>
+      <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
+      <viewAttribute id="APPOINTMENT_TRACK"/>
+      <viewAttribute id="CLAIM_TYPE_T"/>
+      <viewAttribute id="STATUS_CODE"/>
+      <viewAttribute id="STATUS_TYPE"/>
+      <viewAttribute id="STATUS_ALIAS"/>
+      <viewAttribute id="STATUS_COLOR_CODE" aggregationType="sum"/>
+      <viewAttribute id="EMP_GP_C"/>
+      <viewAttribute id="EMP_GP_T"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="JOIN_DATE"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="VERIFIER_PPNT_ID"/>
+      <viewAttribute id="VERIFIER_REFERENCE_ID"/>
+      <viewAttribute id="VERIFIER_USER_DESIGNATION"/>
+      <viewAttribute id="VERIFIER_STAFF_ID"/>
+      <viewAttribute id="VERIFIER_NUSNET_ID"/>
+      <viewAttribute id="VERIFIER_STAFF_FULL_NAME"/>
+      <viewAttribute id="ADD_APP_1_PPNT_ID"/>
+      <viewAttribute id="ADD_APP_1_REFERENCE_ID"/>
+      <viewAttribute id="ADD_APP_1_USER_DESIGNATION"/>
+      <viewAttribute id="ADD_APP_1_STAFF_ID"/>
+      <viewAttribute id="ADD_APP_1_NUSNET_ID"/>
+      <viewAttribute id="ADD_APP_1_STAFF_FULL_NAME"/>
+      <viewAttribute hidden="true" id="JOIN$DRAFT_ID$ADD_APP_1_REFERENCE_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DRAFT_ID" source="DRAFT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE" source="CLAIM_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONCURRENT_STAFF_ID" source="CONCURRENT_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPLOYEE_GRP" source="EMPLOYEE_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_JOINED" source="DATE_JOINED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_RATE_TYPE" source="EMP_RATE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_YEAR" source="CLAIM_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_MONTH" source="CLAIM_MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS" source="REQUEST_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON" source="SUBMITTED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY" source="SUBMITTED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_NID" source="SUBMITTED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTOR_GRP" source="REQUESTOR_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_ON" source="CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_REQUEST_TYPE" source="CLAIM_REQUEST_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY_NID" source="MODIFIED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_ON" source="MODIFIED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORKING_HOURS" source="WORKING_HOURS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_CLAIM_TYPE_CAT" source="STF_CLAIM_TYPE_CAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE_T" source="CLAIM_TYPE_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_CODE" source="STATUS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_TYPE" source="STATUS_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_ALIAS" source="STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_COLOR_CODE" source="STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_C" source="EMP_GP_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_T" source="EMP_GP_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_PPNT_ID" source="VERIFIER_PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_REFERENCE_ID" source="VERIFIER_REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_USER_DESIGNATION" source="VERIFIER_USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_STAFF_ID" source="VERIFIER_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_NUSNET_ID" source="VERIFIER_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_STAFF_FULL_NAME" source="VERIFIER_STAFF_FULL_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$ADD_APP_1_REFERENCE_ID" source="DRAFT_ID"/>
+    </input>
+    <input node="ADD_APP_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_PPNT_ID" source="ADD_APP_1_PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_REFERENCE_ID" source="ADD_APP_1_REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_USER_DESIGNATION" source="ADD_APP_1_USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_STAFF_ID" source="ADD_APP_1_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_NUSNET_ID" source="ADD_APP_1_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_STAFF_FULL_NAME" source="ADD_APP_1_STAFF_FULL_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$ADD_APP_1_REFERENCE_ID" source="ADD_APP_1_REFERENCE_ID"/>
+    </input>
+    <joinAttribute name="JOIN$DRAFT_ID$ADD_APP_1_REFERENCE_ID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="CN_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="DRAFT_ID"/>
+      <viewAttribute id="REQUEST_ID"/>
+      <viewAttribute id="CLAIM_TYPE"/>
+      <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="CONCURRENT_STAFF_ID"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="FDLU"/>
+      <viewAttribute id="EMPLOYEE_GRP"/>
+      <viewAttribute id="DATE_JOINED"/>
+      <viewAttribute id="EMP_RATE_TYPE"/>
+      <viewAttribute id="CLAIM_YEAR"/>
+      <viewAttribute id="CLAIM_MONTH"/>
+      <viewAttribute id="REQUEST_STATUS"/>
+      <viewAttribute id="SUBMITTED_ON"/>
+      <viewAttribute id="SUBMITTED_BY"/>
+      <viewAttribute id="SUBMITTED_BY_NID"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+      <viewAttribute id="CREATED_ON"/>
+      <viewAttribute id="CLAIM_REQUEST_TYPE"/>
+      <viewAttribute id="MODIFIED_BY_NID"/>
+      <viewAttribute id="MODIFIED_ON"/>
+      <viewAttribute id="WORKING_HOURS"/>
+      <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
+      <viewAttribute id="APPOINTMENT_TRACK"/>
+      <viewAttribute id="CLAIM_TYPE_T"/>
+      <viewAttribute id="STATUS_CODE"/>
+      <viewAttribute id="STATUS_TYPE"/>
+      <viewAttribute id="STATUS_ALIAS"/>
+      <viewAttribute id="STATUS_COLOR_CODE" aggregationType="sum"/>
+      <viewAttribute id="EMP_GP_C"/>
+      <viewAttribute id="EMP_GP_T"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="JOIN_DATE"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="VERIFIER_PPNT_ID"/>
+      <viewAttribute id="VERIFIER_REFERENCE_ID"/>
+      <viewAttribute id="VERIFIER_USER_DESIGNATION"/>
+      <viewAttribute id="VERIFIER_STAFF_ID"/>
+      <viewAttribute id="VERIFIER_NUSNET_ID"/>
+      <viewAttribute id="VERIFIER_STAFF_FULL_NAME"/>
+      <viewAttribute id="ADD_APP_1_PPNT_ID"/>
+      <viewAttribute id="ADD_APP_1_REFERENCE_ID"/>
+      <viewAttribute id="ADD_APP_1_USER_DESIGNATION"/>
+      <viewAttribute id="ADD_APP_1_STAFF_ID"/>
+      <viewAttribute id="ADD_APP_1_NUSNET_ID"/>
+      <viewAttribute id="ADD_APP_1_STAFF_FULL_NAME"/>
+      <viewAttribute id="ADD_APP_2_PPNT_ID"/>
+      <viewAttribute id="ADD_APP_2_REFERENCE_ID"/>
+      <viewAttribute id="ADD_APP_2_USER_DESIGNATION"/>
+      <viewAttribute id="ADD_APP_2_STAFF_ID"/>
+      <viewAttribute id="ADD_APP_2_NUSNET_ID"/>
+      <viewAttribute id="ADD_APP_2_STAFF_FULL_NAME"/>
+      <viewAttribute hidden="true" id="JOIN$DRAFT_ID$ADD_APP_2_REFERENCE_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DRAFT_ID" source="DRAFT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE" source="CLAIM_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONCURRENT_STAFF_ID" source="CONCURRENT_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPLOYEE_GRP" source="EMPLOYEE_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_JOINED" source="DATE_JOINED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_RATE_TYPE" source="EMP_RATE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_YEAR" source="CLAIM_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_MONTH" source="CLAIM_MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS" source="REQUEST_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON" source="SUBMITTED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY" source="SUBMITTED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_NID" source="SUBMITTED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTOR_GRP" source="REQUESTOR_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_ON" source="CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_REQUEST_TYPE" source="CLAIM_REQUEST_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY_NID" source="MODIFIED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_ON" source="MODIFIED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORKING_HOURS" source="WORKING_HOURS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_CLAIM_TYPE_CAT" source="STF_CLAIM_TYPE_CAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE_T" source="CLAIM_TYPE_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_CODE" source="STATUS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_TYPE" source="STATUS_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_ALIAS" source="STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_COLOR_CODE" source="STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_C" source="EMP_GP_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_T" source="EMP_GP_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_PPNT_ID" source="VERIFIER_PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_REFERENCE_ID" source="VERIFIER_REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_USER_DESIGNATION" source="VERIFIER_USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_STAFF_ID" source="VERIFIER_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_NUSNET_ID" source="VERIFIER_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_STAFF_FULL_NAME" source="VERIFIER_STAFF_FULL_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_PPNT_ID" source="ADD_APP_1_PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_REFERENCE_ID" source="ADD_APP_1_REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_USER_DESIGNATION" source="ADD_APP_1_USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_STAFF_ID" source="ADD_APP_1_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_NUSNET_ID" source="ADD_APP_1_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_STAFF_FULL_NAME" source="ADD_APP_1_STAFF_FULL_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$ADD_APP_2_REFERENCE_ID" source="DRAFT_ID"/>
+    </input>
+    <input node="ADD_APP_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_PPNT_ID" source="ADD_APP_2_PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_REFERENCE_ID" source="ADD_APP_2_REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_USER_DESIGNATION" source="ADD_APP_2_USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_STAFF_ID" source="ADD_APP_2_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_NUSNET_ID" source="ADD_APP_2_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_STAFF_FULL_NAME" source="ADD_APP_2_STAFF_FULL_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$ADD_APP_2_REFERENCE_ID" source="ADD_APP_2_REFERENCE_ID"/>
+    </input>
+    <joinAttribute name="JOIN$DRAFT_ID$ADD_APP_2_REFERENCE_ID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_4" cardinality="CN_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="DRAFT_ID"/>
+      <viewAttribute id="REQUEST_ID"/>
+      <viewAttribute id="CLAIM_TYPE"/>
+      <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="CONCURRENT_STAFF_ID"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="FDLU"/>
+      <viewAttribute id="EMPLOYEE_GRP"/>
+      <viewAttribute id="DATE_JOINED"/>
+      <viewAttribute id="EMP_RATE_TYPE"/>
+      <viewAttribute id="CLAIM_YEAR"/>
+      <viewAttribute id="CLAIM_MONTH"/>
+      <viewAttribute id="REQUEST_STATUS"/>
+      <viewAttribute id="SUBMITTED_ON"/>
+      <viewAttribute id="SUBMITTED_BY"/>
+      <viewAttribute id="SUBMITTED_BY_NID"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+      <viewAttribute id="CREATED_ON"/>
+      <viewAttribute id="CLAIM_REQUEST_TYPE"/>
+      <viewAttribute id="MODIFIED_BY_NID"/>
+      <viewAttribute id="MODIFIED_ON"/>
+      <viewAttribute id="WORKING_HOURS"/>
+      <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
+      <viewAttribute id="APPOINTMENT_TRACK"/>
+      <viewAttribute id="CLAIM_TYPE_T"/>
+      <viewAttribute id="STATUS_CODE"/>
+      <viewAttribute id="STATUS_TYPE"/>
+      <viewAttribute id="STATUS_ALIAS"/>
+      <viewAttribute id="STATUS_COLOR_CODE" aggregationType="sum"/>
+      <viewAttribute id="EMP_GP_C"/>
+      <viewAttribute id="EMP_GP_T"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="JOIN_DATE"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="VERIFIER_PPNT_ID"/>
+      <viewAttribute id="VERIFIER_REFERENCE_ID"/>
+      <viewAttribute id="VERIFIER_USER_DESIGNATION"/>
+      <viewAttribute id="VERIFIER_STAFF_ID"/>
+      <viewAttribute id="VERIFIER_NUSNET_ID"/>
+      <viewAttribute id="VERIFIER_STAFF_FULL_NAME"/>
+      <viewAttribute id="ADD_APP_1_PPNT_ID"/>
+      <viewAttribute id="ADD_APP_1_REFERENCE_ID"/>
+      <viewAttribute id="ADD_APP_1_USER_DESIGNATION"/>
+      <viewAttribute id="ADD_APP_1_STAFF_ID"/>
+      <viewAttribute id="ADD_APP_1_NUSNET_ID"/>
+      <viewAttribute id="ADD_APP_1_STAFF_FULL_NAME"/>
+      <viewAttribute id="ADD_APP_2_PPNT_ID"/>
+      <viewAttribute id="ADD_APP_2_REFERENCE_ID"/>
+      <viewAttribute id="ADD_APP_2_USER_DESIGNATION"/>
+      <viewAttribute id="ADD_APP_2_STAFF_ID"/>
+      <viewAttribute id="ADD_APP_2_NUSNET_ID"/>
+      <viewAttribute id="ADD_APP_2_STAFF_FULL_NAME"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
+      <viewAttribute hidden="true" id="JOIN$DRAFT_ID$REFERENCE_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DRAFT_ID" source="DRAFT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE" source="CLAIM_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONCURRENT_STAFF_ID" source="CONCURRENT_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPLOYEE_GRP" source="EMPLOYEE_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_JOINED" source="DATE_JOINED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_RATE_TYPE" source="EMP_RATE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_YEAR" source="CLAIM_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_MONTH" source="CLAIM_MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS" source="REQUEST_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON" source="SUBMITTED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY" source="SUBMITTED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_NID" source="SUBMITTED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTOR_GRP" source="REQUESTOR_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_ON" source="CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_REQUEST_TYPE" source="CLAIM_REQUEST_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY_NID" source="MODIFIED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_ON" source="MODIFIED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORKING_HOURS" source="WORKING_HOURS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_CLAIM_TYPE_CAT" source="STF_CLAIM_TYPE_CAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE_T" source="CLAIM_TYPE_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_CODE" source="STATUS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_TYPE" source="STATUS_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_ALIAS" source="STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_COLOR_CODE" source="STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_C" source="EMP_GP_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_T" source="EMP_GP_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_PPNT_ID" source="VERIFIER_PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_REFERENCE_ID" source="VERIFIER_REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_USER_DESIGNATION" source="VERIFIER_USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_STAFF_ID" source="VERIFIER_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_NUSNET_ID" source="VERIFIER_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_STAFF_FULL_NAME" source="VERIFIER_STAFF_FULL_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_PPNT_ID" source="ADD_APP_1_PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_REFERENCE_ID" source="ADD_APP_1_REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_USER_DESIGNATION" source="ADD_APP_1_USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_STAFF_ID" source="ADD_APP_1_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_NUSNET_ID" source="ADD_APP_1_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_STAFF_FULL_NAME" source="ADD_APP_1_STAFF_FULL_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_PPNT_ID" source="ADD_APP_2_PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_REFERENCE_ID" source="ADD_APP_2_REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_USER_DESIGNATION" source="ADD_APP_2_USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_STAFF_ID" source="ADD_APP_2_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_NUSNET_ID" source="ADD_APP_2_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_STAFF_FULL_NAME" source="ADD_APP_2_STAFF_FULL_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$REFERENCE_ID" source="DRAFT_ID"/>
+    </input>
+    <input node="Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$REFERENCE_ID" source="REFERENCE_ID"/>
+    </input>
+    <joinAttribute name="JOIN$DRAFT_ID$REFERENCE_ID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Handling-Draft_IdInsteadOfProcessId">
+    <viewAttributes>
+      <viewAttribute id="DRAFT_ID"/>
+      <viewAttribute id="REQUEST_ID"/>
+      <viewAttribute id="CLAIM_TYPE"/>
+      <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="CONCURRENT_STAFF_ID"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="FDLU"/>
+      <viewAttribute id="EMPLOYEE_GRP"/>
+      <viewAttribute id="DATE_JOINED"/>
+      <viewAttribute id="EMP_RATE_TYPE"/>
+      <viewAttribute id="CLAIM_YEAR"/>
+      <viewAttribute id="CLAIM_MONTH"/>
+      <viewAttribute id="REQUEST_STATUS"/>
+      <viewAttribute id="SUBMITTED_ON"/>
+      <viewAttribute id="SUBMITTED_BY"/>
+      <viewAttribute id="SUBMITTED_BY_NID"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+      <viewAttribute id="CREATED_ON"/>
+      <viewAttribute id="CLAIM_REQUEST_TYPE"/>
+      <viewAttribute id="MODIFIED_BY_NID"/>
+      <viewAttribute id="MODIFIED_ON"/>
+      <viewAttribute id="WORKING_HOURS"/>
+      <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
+      <viewAttribute id="APPOINTMENT_TRACK"/>
+      <viewAttribute id="CLAIM_TYPE_T"/>
+      <viewAttribute id="STATUS_CODE"/>
+      <viewAttribute id="STATUS_TYPE"/>
+      <viewAttribute id="STATUS_ALIAS"/>
+      <viewAttribute id="STATUS_COLOR_CODE"/>
+      <viewAttribute id="EMP_GP_C"/>
+      <viewAttribute id="EMP_GP_T"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="JOIN_DATE"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="VERIFIER_PPNT_ID"/>
+      <viewAttribute id="VERIFIER_REFERENCE_ID"/>
+      <viewAttribute id="VERIFIER_USER_DESIGNATION"/>
+      <viewAttribute id="VERIFIER_STAFF_ID"/>
+      <viewAttribute id="VERIFIER_NUSNET_ID"/>
+      <viewAttribute id="VERIFIER_STAFF_FULL_NAME"/>
+      <viewAttribute id="ADD_APP_1_PPNT_ID"/>
+      <viewAttribute id="ADD_APP_1_REFERENCE_ID"/>
+      <viewAttribute id="ADD_APP_1_USER_DESIGNATION"/>
+      <viewAttribute id="ADD_APP_1_STAFF_ID"/>
+      <viewAttribute id="ADD_APP_1_NUSNET_ID"/>
+      <viewAttribute id="ADD_APP_1_STAFF_FULL_NAME"/>
+      <viewAttribute id="ADD_APP_2_PPNT_ID"/>
+      <viewAttribute id="ADD_APP_2_REFERENCE_ID"/>
+      <viewAttribute id="ADD_APP_2_USER_DESIGNATION"/>
+      <viewAttribute id="ADD_APP_2_STAFF_ID"/>
+      <viewAttribute id="ADD_APP_2_NUSNET_ID"/>
+      <viewAttribute id="ADD_APP_2_STAFF_FULL_NAME"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CAL_PROCESS_INST_ID" datatype="NVARCHAR" length="12" expressionLanguage="COLUMN_ENGINE">
+        <formula>if(isnull(&quot;PROCESS_INST_ID&quot;),&quot;DRAFT_ID&quot;,&quot;PROCESS_INST_ID&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Join_4"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_5" cardinality="CN_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="DRAFT_ID"/>
+      <viewAttribute id="REQUEST_ID"/>
+      <viewAttribute id="CLAIM_TYPE"/>
+      <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="CONCURRENT_STAFF_ID"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="FDLU"/>
+      <viewAttribute id="EMPLOYEE_GRP"/>
+      <viewAttribute id="DATE_JOINED"/>
+      <viewAttribute id="EMP_RATE_TYPE"/>
+      <viewAttribute id="CLAIM_YEAR"/>
+      <viewAttribute id="CLAIM_MONTH"/>
+      <viewAttribute id="REQUEST_STATUS"/>
+      <viewAttribute id="SUBMITTED_ON"/>
+      <viewAttribute id="SUBMITTED_BY"/>
+      <viewAttribute id="SUBMITTED_BY_NID"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+      <viewAttribute id="CREATED_ON"/>
+      <viewAttribute id="CLAIM_REQUEST_TYPE"/>
+      <viewAttribute id="MODIFIED_BY_NID"/>
+      <viewAttribute id="MODIFIED_ON"/>
+      <viewAttribute id="WORKING_HOURS"/>
+      <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
+      <viewAttribute id="APPOINTMENT_TRACK"/>
+      <viewAttribute id="CLAIM_TYPE_T"/>
+      <viewAttribute id="STATUS_CODE"/>
+      <viewAttribute id="STATUS_TYPE"/>
+      <viewAttribute id="STATUS_ALIAS"/>
+      <viewAttribute id="STATUS_COLOR_CODE" aggregationType="sum"/>
+      <viewAttribute id="EMP_GP_C"/>
+      <viewAttribute id="EMP_GP_T"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="JOIN_DATE"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="VERIFIER_PPNT_ID"/>
+      <viewAttribute id="VERIFIER_REFERENCE_ID"/>
+      <viewAttribute id="VERIFIER_USER_DESIGNATION"/>
+      <viewAttribute id="VERIFIER_STAFF_ID"/>
+      <viewAttribute id="VERIFIER_NUSNET_ID"/>
+      <viewAttribute id="VERIFIER_STAFF_FULL_NAME"/>
+      <viewAttribute id="ADD_APP_1_PPNT_ID"/>
+      <viewAttribute id="ADD_APP_1_REFERENCE_ID"/>
+      <viewAttribute id="ADD_APP_1_USER_DESIGNATION"/>
+      <viewAttribute id="ADD_APP_1_STAFF_ID"/>
+      <viewAttribute id="ADD_APP_1_NUSNET_ID"/>
+      <viewAttribute id="ADD_APP_1_STAFF_FULL_NAME"/>
+      <viewAttribute id="ADD_APP_2_PPNT_ID"/>
+      <viewAttribute id="ADD_APP_2_REFERENCE_ID"/>
+      <viewAttribute id="ADD_APP_2_USER_DESIGNATION"/>
+      <viewAttribute id="ADD_APP_2_STAFF_ID"/>
+      <viewAttribute id="ADD_APP_2_NUSNET_ID"/>
+      <viewAttribute id="ADD_APP_2_STAFF_FULL_NAME"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
+      <viewAttribute id="CAL_PROCESS_INST_ID"/>
+      <viewAttribute id="IS_LOCKED"/>
+      <viewAttribute id="LOCKED_BY_USER_NID"/>
+      <viewAttribute id="LOCKED_STAFF_USER_GRP"/>
+      <viewAttribute hidden="true" id="JOIN$DRAFT_ID$REFERENCE_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Handling-Draft_IdInsteadOfProcessId">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DRAFT_ID" source="DRAFT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE" source="CLAIM_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONCURRENT_STAFF_ID" source="CONCURRENT_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPLOYEE_GRP" source="EMPLOYEE_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_JOINED" source="DATE_JOINED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_RATE_TYPE" source="EMP_RATE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_YEAR" source="CLAIM_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_MONTH" source="CLAIM_MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS" source="REQUEST_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON" source="SUBMITTED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY" source="SUBMITTED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_NID" source="SUBMITTED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTOR_GRP" source="REQUESTOR_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_ON" source="CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_REQUEST_TYPE" source="CLAIM_REQUEST_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY_NID" source="MODIFIED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_ON" source="MODIFIED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORKING_HOURS" source="WORKING_HOURS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_CLAIM_TYPE_CAT" source="STF_CLAIM_TYPE_CAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE_T" source="CLAIM_TYPE_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_CODE" source="STATUS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_TYPE" source="STATUS_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_ALIAS" source="STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_COLOR_CODE" source="STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_C" source="EMP_GP_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_T" source="EMP_GP_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_PPNT_ID" source="VERIFIER_PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_REFERENCE_ID" source="VERIFIER_REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_USER_DESIGNATION" source="VERIFIER_USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_STAFF_ID" source="VERIFIER_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_NUSNET_ID" source="VERIFIER_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_STAFF_FULL_NAME" source="VERIFIER_STAFF_FULL_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_PPNT_ID" source="ADD_APP_1_PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_REFERENCE_ID" source="ADD_APP_1_REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_USER_DESIGNATION" source="ADD_APP_1_USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_STAFF_ID" source="ADD_APP_1_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_NUSNET_ID" source="ADD_APP_1_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_STAFF_FULL_NAME" source="ADD_APP_1_STAFF_FULL_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_PPNT_ID" source="ADD_APP_2_PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_REFERENCE_ID" source="ADD_APP_2_REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_USER_DESIGNATION" source="ADD_APP_2_USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_STAFF_ID" source="ADD_APP_2_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_NUSNET_ID" source="ADD_APP_2_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_STAFF_FULL_NAME" source="ADD_APP_2_STAFF_FULL_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAL_PROCESS_INST_ID" source="CAL_PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$REFERENCE_ID" source="DRAFT_ID"/>
+    </input>
+    <input node="Projection_4">
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_LOCKED" source="IS_LOCKED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCKED_BY_USER_NID" source="LOCKED_BY_USER_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCKED_STAFF_USER_GRP" source="LOCKED_STAFF_USER_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$REFERENCE_ID" source="REFERENCE_ID"/>
+    </input>
+    <joinAttribute name="JOIN$DRAFT_ID$REFERENCE_ID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_6" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="DRAFT_ID"/>
+      <viewAttribute id="REQUEST_ID"/>
+      <viewAttribute id="CLAIM_TYPE"/>
+      <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="CONCURRENT_STAFF_ID"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="FDLU"/>
+      <viewAttribute id="EMPLOYEE_GRP"/>
+      <viewAttribute id="DATE_JOINED"/>
+      <viewAttribute id="EMP_RATE_TYPE"/>
+      <viewAttribute id="CLAIM_YEAR"/>
+      <viewAttribute id="CLAIM_MONTH"/>
+      <viewAttribute id="REQUEST_STATUS"/>
+      <viewAttribute id="SUBMITTED_ON"/>
+      <viewAttribute id="SUBMITTED_BY"/>
+      <viewAttribute id="SUBMITTED_BY_NID"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+      <viewAttribute id="CREATED_ON"/>
+      <viewAttribute id="CLAIM_REQUEST_TYPE"/>
+      <viewAttribute id="MODIFIED_BY_NID"/>
+      <viewAttribute id="MODIFIED_ON"/>
+      <viewAttribute id="WORKING_HOURS"/>
+      <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
+      <viewAttribute id="APPOINTMENT_TRACK"/>
+      <viewAttribute id="CLAIM_TYPE_T"/>
+      <viewAttribute id="STATUS_CODE"/>
+      <viewAttribute id="STATUS_TYPE"/>
+      <viewAttribute id="STATUS_ALIAS"/>
+      <viewAttribute id="STATUS_COLOR_CODE" aggregationType="sum"/>
+      <viewAttribute id="EMP_GP_C"/>
+      <viewAttribute id="EMP_GP_T"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="JOIN_DATE"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="VERIFIER_PPNT_ID"/>
+      <viewAttribute id="VERIFIER_REFERENCE_ID"/>
+      <viewAttribute id="VERIFIER_USER_DESIGNATION"/>
+      <viewAttribute id="VERIFIER_STAFF_ID"/>
+      <viewAttribute id="VERIFIER_NUSNET_ID"/>
+      <viewAttribute id="VERIFIER_STAFF_FULL_NAME"/>
+      <viewAttribute id="ADD_APP_1_PPNT_ID"/>
+      <viewAttribute id="ADD_APP_1_REFERENCE_ID"/>
+      <viewAttribute id="ADD_APP_1_USER_DESIGNATION"/>
+      <viewAttribute id="ADD_APP_1_STAFF_ID"/>
+      <viewAttribute id="ADD_APP_1_NUSNET_ID"/>
+      <viewAttribute id="ADD_APP_1_STAFF_FULL_NAME"/>
+      <viewAttribute id="ADD_APP_2_PPNT_ID"/>
+      <viewAttribute id="ADD_APP_2_REFERENCE_ID"/>
+      <viewAttribute id="ADD_APP_2_USER_DESIGNATION"/>
+      <viewAttribute id="ADD_APP_2_STAFF_ID"/>
+      <viewAttribute id="ADD_APP_2_NUSNET_ID"/>
+      <viewAttribute id="ADD_APP_2_STAFF_FULL_NAME"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
+      <viewAttribute id="CAL_PROCESS_INST_ID"/>
+      <viewAttribute id="IS_LOCKED"/>
+      <viewAttribute id="LOCKED_BY_USER_NID"/>
+      <viewAttribute id="LOCKED_STAFF_USER_GRP"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute hidden="true" id="JOIN$ULU$ULU_C"/>
+      <viewAttribute hidden="true" id="JOIN$FDLU$FDLU_C"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_5">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DRAFT_ID" source="DRAFT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE" source="CLAIM_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONCURRENT_STAFF_ID" source="CONCURRENT_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPLOYEE_GRP" source="EMPLOYEE_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_JOINED" source="DATE_JOINED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_RATE_TYPE" source="EMP_RATE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_YEAR" source="CLAIM_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_MONTH" source="CLAIM_MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS" source="REQUEST_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON" source="SUBMITTED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY" source="SUBMITTED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_NID" source="SUBMITTED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTOR_GRP" source="REQUESTOR_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_ON" source="CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_REQUEST_TYPE" source="CLAIM_REQUEST_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY_NID" source="MODIFIED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_ON" source="MODIFIED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORKING_HOURS" source="WORKING_HOURS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_CLAIM_TYPE_CAT" source="STF_CLAIM_TYPE_CAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE_T" source="CLAIM_TYPE_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_CODE" source="STATUS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_TYPE" source="STATUS_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_ALIAS" source="STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_COLOR_CODE" source="STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_C" source="EMP_GP_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_T" source="EMP_GP_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_PPNT_ID" source="VERIFIER_PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_REFERENCE_ID" source="VERIFIER_REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_USER_DESIGNATION" source="VERIFIER_USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_STAFF_ID" source="VERIFIER_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_NUSNET_ID" source="VERIFIER_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_STAFF_FULL_NAME" source="VERIFIER_STAFF_FULL_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_PPNT_ID" source="ADD_APP_1_PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_REFERENCE_ID" source="ADD_APP_1_REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_USER_DESIGNATION" source="ADD_APP_1_USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_STAFF_ID" source="ADD_APP_1_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_NUSNET_ID" source="ADD_APP_1_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_STAFF_FULL_NAME" source="ADD_APP_1_STAFF_FULL_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_PPNT_ID" source="ADD_APP_2_PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_REFERENCE_ID" source="ADD_APP_2_REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_USER_DESIGNATION" source="ADD_APP_2_USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_STAFF_ID" source="ADD_APP_2_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_NUSNET_ID" source="ADD_APP_2_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_STAFF_FULL_NAME" source="ADD_APP_2_STAFF_FULL_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAL_PROCESS_INST_ID" source="CAL_PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_LOCKED" source="IS_LOCKED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCKED_BY_USER_NID" source="LOCKED_BY_USER_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCKED_STAFF_USER_GRP" source="LOCKED_STAFF_USER_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ULU$ULU_C" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FDLU$FDLU_C" source="FDLU"/>
+    </input>
+    <input node="MASTER_ULU_FDLU">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_T" source="ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ULU$ULU_C" source="ULU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FDLU$FDLU_C" source="FDLU_C"/>
+    </input>
+    <joinAttribute name="JOIN$ULU$ULU_C"/>
+    <joinAttribute name="JOIN$FDLU$FDLU_C"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_7" cardinality="CN_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="DRAFT_ID"/>
+      <viewAttribute id="REQUEST_ID"/>
+      <viewAttribute id="CLAIM_TYPE"/>
+      <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="CONCURRENT_STAFF_ID"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="FDLU"/>
+      <viewAttribute id="EMPLOYEE_GRP"/>
+      <viewAttribute id="DATE_JOINED"/>
+      <viewAttribute id="EMP_RATE_TYPE"/>
+      <viewAttribute id="CLAIM_YEAR"/>
+      <viewAttribute id="CLAIM_MONTH"/>
+      <viewAttribute id="REQUEST_STATUS"/>
+      <viewAttribute id="SUBMITTED_ON"/>
+      <viewAttribute id="SUBMITTED_BY"/>
+      <viewAttribute id="SUBMITTED_BY_NID"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+      <viewAttribute id="CREATED_ON"/>
+      <viewAttribute id="CLAIM_REQUEST_TYPE"/>
+      <viewAttribute id="MODIFIED_BY_NID"/>
+      <viewAttribute id="MODIFIED_ON"/>
+      <viewAttribute id="WORKING_HOURS"/>
+      <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
+      <viewAttribute id="APPOINTMENT_TRACK"/>
+      <viewAttribute id="CLAIM_TYPE_T"/>
+      <viewAttribute id="STATUS_CODE"/>
+      <viewAttribute id="STATUS_TYPE"/>
+      <viewAttribute id="STATUS_ALIAS"/>
+      <viewAttribute id="STATUS_COLOR_CODE" aggregationType="sum"/>
+      <viewAttribute id="EMP_GP_C"/>
+      <viewAttribute id="EMP_GP_T"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="JOIN_DATE"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="VERIFIER_PPNT_ID"/>
+      <viewAttribute id="VERIFIER_REFERENCE_ID"/>
+      <viewAttribute id="VERIFIER_USER_DESIGNATION"/>
+      <viewAttribute id="VERIFIER_STAFF_ID"/>
+      <viewAttribute id="VERIFIER_NUSNET_ID"/>
+      <viewAttribute id="VERIFIER_STAFF_FULL_NAME"/>
+      <viewAttribute id="ADD_APP_1_PPNT_ID"/>
+      <viewAttribute id="ADD_APP_1_REFERENCE_ID"/>
+      <viewAttribute id="ADD_APP_1_USER_DESIGNATION"/>
+      <viewAttribute id="ADD_APP_1_STAFF_ID"/>
+      <viewAttribute id="ADD_APP_1_NUSNET_ID"/>
+      <viewAttribute id="ADD_APP_1_STAFF_FULL_NAME"/>
+      <viewAttribute id="ADD_APP_2_PPNT_ID"/>
+      <viewAttribute id="ADD_APP_2_REFERENCE_ID"/>
+      <viewAttribute id="ADD_APP_2_USER_DESIGNATION"/>
+      <viewAttribute id="ADD_APP_2_STAFF_ID"/>
+      <viewAttribute id="ADD_APP_2_NUSNET_ID"/>
+      <viewAttribute id="ADD_APP_2_STAFF_FULL_NAME"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
+      <viewAttribute id="CAL_PROCESS_INST_ID"/>
+      <viewAttribute id="IS_LOCKED"/>
+      <viewAttribute id="LOCKED_BY_USER_NID"/>
+      <viewAttribute id="LOCKED_STAFF_USER_GRP"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="LOCKED_USER_FULL_NM"/>
+      <viewAttribute hidden="true" id="JOIN$LOCKED_BY_USER_NID$STF_NUMBER"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_6">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DRAFT_ID" source="DRAFT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE" source="CLAIM_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONCURRENT_STAFF_ID" source="CONCURRENT_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPLOYEE_GRP" source="EMPLOYEE_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_JOINED" source="DATE_JOINED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_RATE_TYPE" source="EMP_RATE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_YEAR" source="CLAIM_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_MONTH" source="CLAIM_MONTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS" source="REQUEST_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON" source="SUBMITTED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY" source="SUBMITTED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_NID" source="SUBMITTED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTOR_GRP" source="REQUESTOR_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_ON" source="CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_REQUEST_TYPE" source="CLAIM_REQUEST_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY_NID" source="MODIFIED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_ON" source="MODIFIED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORKING_HOURS" source="WORKING_HOURS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_CLAIM_TYPE_CAT" source="STF_CLAIM_TYPE_CAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE_T" source="CLAIM_TYPE_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_CODE" source="STATUS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_TYPE" source="STATUS_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_ALIAS" source="STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_COLOR_CODE" source="STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_C" source="EMP_GP_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_T" source="EMP_GP_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_PPNT_ID" source="VERIFIER_PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_REFERENCE_ID" source="VERIFIER_REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_USER_DESIGNATION" source="VERIFIER_USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_STAFF_ID" source="VERIFIER_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_NUSNET_ID" source="VERIFIER_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERIFIER_STAFF_FULL_NAME" source="VERIFIER_STAFF_FULL_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_PPNT_ID" source="ADD_APP_1_PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_REFERENCE_ID" source="ADD_APP_1_REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_USER_DESIGNATION" source="ADD_APP_1_USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_STAFF_ID" source="ADD_APP_1_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_NUSNET_ID" source="ADD_APP_1_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_1_STAFF_FULL_NAME" source="ADD_APP_1_STAFF_FULL_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_PPNT_ID" source="ADD_APP_2_PPNT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_REFERENCE_ID" source="ADD_APP_2_REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_USER_DESIGNATION" source="ADD_APP_2_USER_DESIGNATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_STAFF_ID" source="ADD_APP_2_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_NUSNET_ID" source="ADD_APP_2_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APP_2_STAFF_FULL_NAME" source="ADD_APP_2_STAFF_FULL_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAL_PROCESS_INST_ID" source="CAL_PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_LOCKED" source="IS_LOCKED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCKED_BY_USER_NID" source="LOCKED_BY_USER_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCKED_STAFF_USER_GRP" source="LOCKED_STAFF_USER_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_T" source="ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LOCKED_BY_USER_NID$STF_NUMBER" source="LOCKED_BY_USER_NID"/>
+    </input>
+    <input node="Aggregation_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCKED_USER_FULL_NM" source="LOCKED_USER_FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LOCKED_BY_USER_NID$STF_NUMBER" source="STF_NUMBER"/>
+    </input>
+  
+    <joinAttribute name="JOIN$LOCKED_BY_USER_NID$STF_NUMBER"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_7">
+  <attributes>
+    <attribute id="DRAFT_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DRAFT_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="DRAFT_ID"/>
+    </attribute>
+    <attribute id="REQUEST_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REQUEST_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="REQUEST_ID"/>
+    </attribute>
+    <attribute id="CLAIM_TYPE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLAIM_TYPE"/>
+      <keyMapping columnObjectName="Join_7" columnName="CLAIM_TYPE"/>
+    </attribute>
+    <attribute id="STAFF_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAFF_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="STAFF_ID"/>
+    </attribute>
+    <attribute id="STAFF_NUSNET_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAFF_NUSNET_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="STAFF_NUSNET_ID"/>
+    </attribute>
+    <attribute id="CONCURRENT_STAFF_ID" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONCURRENT_STAFF_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="CONCURRENT_STAFF_ID"/>
+    </attribute>
+    <attribute id="ULU" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ULU"/>
+      <keyMapping columnObjectName="Join_7" columnName="ULU"/>
+    </attribute>
+    <attribute id="FDLU" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FDLU"/>
+      <keyMapping columnObjectName="Join_7" columnName="FDLU"/>
+    </attribute>
+    <attribute id="EMPLOYEE_GRP" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMPLOYEE_GRP"/>
+      <keyMapping columnObjectName="Join_7" columnName="EMPLOYEE_GRP"/>
+    </attribute>
+    <attribute id="DATE_JOINED" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DATE_JOINED"/>
+      <keyMapping columnObjectName="Join_7" columnName="DATE_JOINED"/>
+    </attribute>
+    <attribute id="EMP_RATE_TYPE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMP_RATE_TYPE"/>
+      <keyMapping columnObjectName="Join_7" columnName="EMP_RATE_TYPE"/>
+    </attribute>
+    <attribute id="CLAIM_YEAR" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLAIM_YEAR"/>
+      <keyMapping columnObjectName="Join_7" columnName="CLAIM_YEAR"/>
+    </attribute>
+    <attribute id="CLAIM_MONTH" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLAIM_MONTH"/>
+      <keyMapping columnObjectName="Join_7" columnName="CLAIM_MONTH"/>
+    </attribute>
+    <attribute id="REQUEST_STATUS" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REQUEST_STATUS"/>
+      <keyMapping columnObjectName="Join_7" columnName="REQUEST_STATUS"/>
+    </attribute>
+    <attribute id="SUBMITTED_ON" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUBMITTED_ON"/>
+      <keyMapping columnObjectName="Join_7" columnName="SUBMITTED_ON"/>
+    </attribute>
+    <attribute id="SUBMITTED_BY" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUBMITTED_BY"/>
+      <keyMapping columnObjectName="Join_7" columnName="SUBMITTED_BY"/>
+    </attribute>
+    <attribute id="SUBMITTED_BY_NID" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUBMITTED_BY_NID"/>
+      <keyMapping columnObjectName="Join_7" columnName="SUBMITTED_BY_NID"/>
+    </attribute>
+    <attribute id="REQUESTOR_GRP" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REQUESTOR_GRP"/>
+      <keyMapping columnObjectName="Join_7" columnName="REQUESTOR_GRP"/>
+    </attribute>
+    <attribute id="CREATED_ON" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREATED_ON"/>
+      <keyMapping columnObjectName="Join_7" columnName="CREATED_ON"/>
+    </attribute>
+    <attribute id="CLAIM_REQUEST_TYPE" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLAIM_REQUEST_TYPE"/>
+      <keyMapping columnObjectName="Join_7" columnName="CLAIM_REQUEST_TYPE"/>
+    </attribute>
+    <attribute id="MODIFIED_BY_NID" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MODIFIED_BY_NID"/>
+      <keyMapping columnObjectName="Join_7" columnName="MODIFIED_BY_NID"/>
+    </attribute>
+    <attribute id="MODIFIED_ON" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MODIFIED_ON"/>
+      <keyMapping columnObjectName="Join_7" columnName="MODIFIED_ON"/>
+    </attribute>
+    <attribute id="WORKING_HOURS" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WORKING_HOURS"/>
+      <keyMapping columnObjectName="Join_7" columnName="WORKING_HOURS"/>
+    </attribute>
+    <attribute id="STF_CLAIM_TYPE_CAT" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STF_CLAIM_TYPE_CAT"/>
+      <keyMapping columnObjectName="Join_7" columnName="STF_CLAIM_TYPE_CAT"/>
+    </attribute>
+    <attribute id="APPOINTMENT_TRACK" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPOINTMENT_TRACK"/>
+      <keyMapping columnObjectName="Join_7" columnName="APPOINTMENT_TRACK"/>
+    </attribute>
+    <attribute id="CLAIM_TYPE_T" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLAIM_TYPE_T"/>
+      <keyMapping columnObjectName="Join_7" columnName="CLAIM_TYPE_T"/>
+    </attribute>
+    <attribute id="STATUS_CODE" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATUS_CODE"/>
+      <keyMapping columnObjectName="Join_7" columnName="STATUS_CODE"/>
+    </attribute>
+    <attribute id="STATUS_TYPE" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATUS_TYPE"/>
+      <keyMapping columnObjectName="Join_7" columnName="STATUS_TYPE"/>
+    </attribute>
+    <attribute id="STATUS_ALIAS" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATUS_ALIAS"/>
+      <keyMapping columnObjectName="Join_7" columnName="STATUS_ALIAS"/>
+    </attribute>
+    <attribute id="EMP_GP_C" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMP_GP_C"/>
+      <keyMapping columnObjectName="Join_7" columnName="EMP_GP_C"/>
+    </attribute>
+    <attribute id="EMP_GP_T" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMP_GP_T"/>
+      <keyMapping columnObjectName="Join_7" columnName="EMP_GP_T"/>
+    </attribute>
+    <attribute id="FDLU_C" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FDLU_C"/>
+      <keyMapping columnObjectName="Join_7" columnName="FDLU_C"/>
+    </attribute>
+    <attribute id="FULL_NM" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FULL_NM"/>
+      <keyMapping columnObjectName="Join_7" columnName="FULL_NM"/>
+    </attribute>
+    <attribute id="JOIN_DATE" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOIN_DATE"/>
+      <keyMapping columnObjectName="Join_7" columnName="JOIN_DATE"/>
+    </attribute>
+    <attribute id="SF_STF_NUMBER" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SF_STF_NUMBER"/>
+      <keyMapping columnObjectName="Join_7" columnName="SF_STF_NUMBER"/>
+    </attribute>
+    <attribute id="VERIFIER_PPNT_ID" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VERIFIER_PPNT_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="VERIFIER_PPNT_ID"/>
+    </attribute>
+    <attribute id="VERIFIER_REFERENCE_ID" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VERIFIER_REFERENCE_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="VERIFIER_REFERENCE_ID"/>
+    </attribute>
+    <attribute id="VERIFIER_USER_DESIGNATION" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VERIFIER_USER_DESIGNATION"/>
+      <keyMapping columnObjectName="Join_7" columnName="VERIFIER_USER_DESIGNATION"/>
+    </attribute>
+    <attribute id="VERIFIER_STAFF_ID" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VERIFIER_STAFF_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="VERIFIER_STAFF_ID"/>
+    </attribute>
+    <attribute id="VERIFIER_NUSNET_ID" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VERIFIER_NUSNET_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="VERIFIER_NUSNET_ID"/>
+    </attribute>
+    <attribute id="VERIFIER_STAFF_FULL_NAME" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VERIFIER_STAFF_FULL_NAME"/>
+      <keyMapping columnObjectName="Join_7" columnName="VERIFIER_STAFF_FULL_NAME"/>
+    </attribute>
+    <attribute id="ADD_APP_1_PPNT_ID" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADD_APP_1_PPNT_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="ADD_APP_1_PPNT_ID"/>
+    </attribute>
+    <attribute id="ADD_APP_1_REFERENCE_ID" order="44" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADD_APP_1_REFERENCE_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="ADD_APP_1_REFERENCE_ID"/>
+    </attribute>
+    <attribute id="ADD_APP_1_USER_DESIGNATION" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADD_APP_1_USER_DESIGNATION"/>
+      <keyMapping columnObjectName="Join_7" columnName="ADD_APP_1_USER_DESIGNATION"/>
+    </attribute>
+    <attribute id="ADD_APP_1_STAFF_ID" order="46" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADD_APP_1_STAFF_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="ADD_APP_1_STAFF_ID"/>
+    </attribute>
+    <attribute id="ADD_APP_1_NUSNET_ID" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADD_APP_1_NUSNET_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="ADD_APP_1_NUSNET_ID"/>
+    </attribute>
+    <attribute id="ADD_APP_1_STAFF_FULL_NAME" order="48" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADD_APP_1_STAFF_FULL_NAME"/>
+      <keyMapping columnObjectName="Join_7" columnName="ADD_APP_1_STAFF_FULL_NAME"/>
+    </attribute>
+    <attribute id="ADD_APP_2_PPNT_ID" order="49" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADD_APP_2_PPNT_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="ADD_APP_2_PPNT_ID"/>
+    </attribute>
+    <attribute id="ADD_APP_2_REFERENCE_ID" order="50" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADD_APP_2_REFERENCE_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="ADD_APP_2_REFERENCE_ID"/>
+    </attribute>
+    <attribute id="ADD_APP_2_USER_DESIGNATION" order="51" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADD_APP_2_USER_DESIGNATION"/>
+      <keyMapping columnObjectName="Join_7" columnName="ADD_APP_2_USER_DESIGNATION"/>
+    </attribute>
+    <attribute id="ADD_APP_2_STAFF_ID" order="52" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADD_APP_2_STAFF_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="ADD_APP_2_STAFF_ID"/>
+    </attribute>
+    <attribute id="ADD_APP_2_NUSNET_ID" order="53" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADD_APP_2_NUSNET_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="ADD_APP_2_NUSNET_ID"/>
+    </attribute>
+    <attribute id="ADD_APP_2_STAFF_FULL_NAME" order="54" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADD_APP_2_STAFF_FULL_NAME"/>
+      <keyMapping columnObjectName="Join_7" columnName="ADD_APP_2_STAFF_FULL_NAME"/>
+    </attribute>
+    <attribute id="PROCESS_INST_ID" order="55" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_INST_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="PROCESS_INST_ID"/>
+    </attribute>
+    <attribute id="PROCESS_CODE" order="56" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_CODE"/>
+      <keyMapping columnObjectName="Join_7" columnName="PROCESS_CODE"/>
+    </attribute>
+    <attribute id="PROCESS_STATUS" order="57" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_STATUS"/>
+      <keyMapping columnObjectName="Join_7" columnName="PROCESS_STATUS"/>
+    </attribute>
+    <attribute id="PROCESS_ACTUAL_DOC" order="58" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_ACTUAL_DOC"/>
+      <keyMapping columnObjectName="Join_7" columnName="PROCESS_ACTUAL_DOC"/>
+    </attribute>
+    <attribute id="PROCESS_STATUS_ALIAS" order="59" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_STATUS_ALIAS"/>
+      <keyMapping columnObjectName="Join_7" columnName="PROCESS_STATUS_ALIAS"/>
+    </attribute>
+    <attribute id="CAL_PROCESS_INST_ID" order="61" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CAL_PROCESS_INST_ID"/>
+      <keyMapping columnObjectName="Join_7" columnName="CAL_PROCESS_INST_ID"/>
+    </attribute>
+    <attribute id="IS_LOCKED" order="62" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="IS_LOCKED"/>
+      <keyMapping columnObjectName="Join_7" columnName="IS_LOCKED"/>
+    </attribute>
+    <attribute id="LOCKED_BY_USER_NID" order="63" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LOCKED_BY_USER_NID"/>
+      <keyMapping columnObjectName="Join_7" columnName="LOCKED_BY_USER_NID"/>
+    </attribute>
+    <attribute id="LOCKED_STAFF_USER_GRP" order="64" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LOCKED_STAFF_USER_GRP"/>
+      <keyMapping columnObjectName="Join_7" columnName="LOCKED_STAFF_USER_GRP"/>
+    </attribute>
+    <attribute id="FDLU_T" order="65" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FDLU_T"/>
+      <keyMapping columnObjectName="Join_7" columnName="FDLU_T"/>
+    </attribute>
+    <attribute id="ULU_T" order="66" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ULU_T"/>
+      <keyMapping columnObjectName="Join_7" columnName="ULU_T"/>
+    </attribute>
+    <attribute id="LOCKED_USER_FULL_NM" order="67" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LOCKED_USER_FULL_NM"/>
+      <keyMapping columnObjectName="Join_7" columnName="LOCKED_USER_FULL_NM"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="STATUS_COLOR_CODE" order="30" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="STATUS_COLOR_CODE"/>
+      <measureMapping columnObjectName="Join_7" columnName="STATUS_COLOR_CODE"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="PROCESS_STATUS_COLOR_CODE" order="60" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="PROCESS_STATUS_COLOR_CODE"/>
+      <measureMapping columnObjectName="Join_7" columnName="PROCESS_STATUS_COLOR_CODE"/>
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="449" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="VERIFIER" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="1441"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ADD_APP_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="1301"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ADD_APP_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="404" y="1141"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="529" y="981"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="317" y="676"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="MASTER_ULU_FDLU" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="209" y="516"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="631" y="516"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="1301"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="BASE_ECLAIM_REQUEST_VIEW" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="920" y="30"/>
+      <rectangleSize width="252"/>
+    </shape>
+    <shape modelObjectName="VERIFIER" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="1220" y="30"/>
+      <rectangleSize width="254"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="235" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_5" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="MASTER_ULU_FDLU" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="184.66796875"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="553" y="374"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="118" y="1141"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="254"/>
+    </shape>
+    <shape modelObjectName="ADD_APP_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="267"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_7" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="449" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_6" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="380" y="953"/>
+      <rectangleSize width="224.1552734375"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="145" y="981"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="267"/>
+    </shape>
+    <shape modelObjectName="ADD_APP_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="267"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="502" y="821"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="267"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="219"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Handling-Draft_IdInsteadOfProcessId" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="527" y="686"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="421" y="516"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Handling-Draft_IdInsteadOfProcessId" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="277"/>
+    </shape>
+    <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="758" y="30"/>
+      <rectangleSize width="238.001953125"/>
+    </shape></shapes>
+</layout>
+</Calculation:scenario>

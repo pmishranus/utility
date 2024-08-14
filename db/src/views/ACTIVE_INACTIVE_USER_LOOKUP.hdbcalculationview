@@ -147,7 +147,7 @@
       <calculatedViewAttribute id="END_DATE_CAL" datatype="TIMESTAMP" expressionLanguage="SQL">
         <formula>TO_TIMESTAMP(&quot;END_DATE&quot;)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="IS_EXTERNAL" datatype="INTEGER" length="" expressionLanguage="COLUMN_ENGINE">
+      <calculatedViewAttribute id="IS_EXTERNAL" datatype="INTEGER" length="NaN" expressionLanguage="COLUMN_ENGINE">
         <formula>1</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
