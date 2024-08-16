@@ -18,6 +18,20 @@
       "service": "sap-approuter-userapi"
     },
     {
+      "source": "^/eclaims/(.*)$",
+      "target": "$1",
+      "destination": "eclaims-api",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true
+    },
+    {
+      "source": "^/cws/(.*)$",
+      "target": "$1",
+      "destination": "cws-api",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true
+    },
+    {
       "source": "^/(.*)$",
       "target": "$1",
       "destination": "srv-api",

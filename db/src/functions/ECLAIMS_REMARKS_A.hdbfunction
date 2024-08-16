@@ -1,0 +1,22 @@
+FUNCTION "ECLAIMS_REMARKS_AGG_F"
+    RETURNS TABLE (
+        REFERENCE_ID NVARCHAR(20),
+        STAFF_USER_TYPE NVARCHAR(40),
+        REMARKS NVARCHAR(5000),
+        REMARKS_LENGTH INTEGER
+    )
+    LANGUAGE SQLSCRIPT
+    SQL SECURITY INVOKER AS
+BEGIN
+    /*****************************
+        Write your function logic
+    ****************************/
+    RETURN 
+        SELECT 
+            "REFERENCE_ID",
+            "STAFF_USER_TYPE",
+            STRING_AGG("REMARKS",' &#13;&#10; 'ORDER BY "REMARKS_UPDATE_ON" DESC) AS REMARKS,
+            LENGTH(STRING_AGG("REMARKS",' &#13;&#10; 'ORDER BY "REMARKS_UPDATE_ON" DESC)) AS REMARKS_LENGTH
+        FROM "NUSEXT_UTILITY_REMARKS_DATA"
+        GROUP BY "REFERENCE_ID","STAFF_USER_TYPE"; 
+END;

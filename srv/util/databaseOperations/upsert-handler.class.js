@@ -32,7 +32,7 @@ module.exports = class UpsertHandler extends DBOperations {
 
 
 		//config for bulk select (how many entries should be used in where statement in one select query)
-		this.iBulkSelect = 100;
+		this.iBulkSelect = 10000;
 
 	}
 	/**

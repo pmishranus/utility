@@ -28,7 +28,7 @@ service MigrationService {
     entity CHRS_EXTERNAL_USERS  as select * from db.UTILITY.CHRS_EXTERNAL_USERS;
     entity CHRS_ROLE_MASTER     as select * from db.UTILITY.CHRS_ROLE_MASTER;
     entity PROCESS_CONFIG       as select * from db.UTILITY.PROCESS_CONFIG;
-
+    entity MASTER_CLAIM_TYPE    as select * from db.MASTER_DATA.MASTER_CLAIM_TYPE;
 
     @open
     type object {};

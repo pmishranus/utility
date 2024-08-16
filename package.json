@@ -58,6 +58,14 @@
           "db"
         ]
       }
+    },
+    "build": {
+      "tasks": [
+        { "for": "hana", "src": "db", "options": {"model": ["db","srv"] } },
+        { "for": "nodejs", "src": "srv","dest":"srv", "options": {"model": ["db","srv"] } },
+        { "for": "nodejs", "src": "eclaims","dest":"eclaims","options": {"model": ["db","eclaims"] } },
+        { "for": "nodejs", "src": "cws","dest":"cws","options": {"model": ["db","cws"] } }
+      ]
     }
   }
 }

@@ -19,7 +19,7 @@
 </dataSources>
 <snapshotProcedures/>
 <calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+  <calculationView xsi:type="Calculation:ProjectionView" id="ECLAIMS_DATA">
     <viewAttributes>
       <viewAttribute id="CLAIM_TYPE_C"/>
       <viewAttribute id="CLAIM_TYPE_T"/>
@@ -27,7 +27,7 @@
     <calculatedViewAttributes/>
     <input node="NUSEXT_MASTER_DATA_MASTER_CLAIM_TYPE"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+  <calculationView xsi:type="Calculation:ProjectionView" id="MASTER_CLAIM">
     <viewAttributes>
       <viewAttribute id="DRAFT_ID"/>
       <viewAttribute id="REQUEST_ID"/>
@@ -58,7 +58,7 @@
     <calculatedViewAttributes/>
     <input node="NUSEXT_ECLAIMS_HEADER_DATA"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+  <calculationView xsi:type="Calculation:ProjectionView" id="REQUEST_STATUS">
     <viewAttributes>
       <viewAttribute id="STATUS_CODE"/>
       <viewAttribute id="STATUS_TYPE"/>
@@ -85,7 +85,7 @@
     <calculatedViewAttributes/>
     <input node="NUSEXT_MASTER_DATA_CHRS_JOB_INFO"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+  <calculationView xsi:type="Calculation:JoinView" id="CLAIMS_WITH_CLAIM_TYPE" cardinality="CN_N" joinType="inner">
     <viewAttributes>
       <viewAttribute id="DRAFT_ID"/>
       <viewAttribute id="REQUEST_ID"/>
@@ -116,7 +116,7 @@
       <viewAttribute hidden="true" id="JOIN$CLAIM_TYPE$CLAIM_TYPE_C"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="Projection_2">
+    <input node="MASTER_CLAIM">
       <mapping xsi:type="Calculation:AttributeMapping" target="DRAFT_ID" source="DRAFT_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE" source="CLAIM_TYPE"/>
@@ -144,7 +144,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CLAIM_TYPE$CLAIM_TYPE_C" source="CLAIM_TYPE"/>
     </input>
-    <input node="Projection_1">
+    <input node="ECLAIMS_DATA">
       <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE_T" source="CLAIM_TYPE_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CLAIM_TYPE$CLAIM_TYPE_C" source="CLAIM_TYPE_C"/>
     </input>
@@ -185,7 +185,7 @@
       <viewAttribute hidden="true" id="JOIN$REQUEST_STATUS$STATUS_CODE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="Join_1">
+    <input node="CLAIMS_WITH_CLAIM_TYPE">
       <mapping xsi:type="Calculation:AttributeMapping" target="DRAFT_ID" source="DRAFT_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE" source="CLAIM_TYPE"/>
@@ -214,7 +214,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE_T" source="CLAIM_TYPE_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$REQUEST_STATUS$STATUS_CODE" source="REQUEST_STATUS"/>
     </input>
-    <input node="Projection_3">
+    <input node="REQUEST_STATUS">
       <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_CODE" source="STATUS_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_TYPE" source="STATUS_TYPE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_ALIAS" source="STATUS_ALIAS"/>
@@ -223,7 +223,7 @@
     </input>
     <joinAttribute name="JOIN$REQUEST_STATUS$STATUS_CODE"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4" filterExpressionLanguage="SQL">
     <viewAttributes>
       <viewAttribute id="DRAFT_ID"/>
       <viewAttribute id="REQUEST_ID"/>
@@ -258,8 +258,10 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Join_2"/>
+  
+    <filter>&quot;CLAIM_TYPE&quot; ='105'</filter>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_5" filterExpressionLanguage="SQL">
+  <calculationView xsi:type="Calculation:ProjectionView" id="BENEFITS" filterExpressionLanguage="SQL">
     <viewAttributes>
       <viewAttribute id="DRAFT_ID"/>
       <viewAttribute id="REQUEST_ID"/>
@@ -432,7 +434,7 @@
       <viewAttribute hidden="true" id="JOIN$STAFF_ID$SF_STF_NUMBER"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="Projection_5">
+    <input node="BENEFITS">
       <mapping xsi:type="Calculation:AttributeMapping" target="DRAFT_ID" source="DRAFT_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE" source="CLAIM_TYPE"/>
@@ -516,7 +518,7 @@
       <viewAttribute id="SF_STF_NUMBER"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="Join_3">
+    <input node="Join_3" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="DRAFT_ID" source="DRAFT_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE" source="CLAIM_TYPE"/>
@@ -554,7 +556,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SF_STF_NUMBER" source="SF_STF_NUMBER"/>
     </input>
-    <input node="Join_4">
+    <input node="Join_4" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="DRAFT_ID" source="DRAFT_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE" source="CLAIM_TYPE"/>
@@ -753,62 +755,62 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="347.93468936388234" y="112"/>
+      <upperLeftCorner x="347" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     
   
-    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="98.25934373921007" y="961.9999940395355"/>
+    <shape expanded="true" modelObjectName="ECLAIMS_DATA" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="98" y="961"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="308.25934373921007" y="961.9999940395355"/>
+    <shape expanded="true" modelObjectName="MASTER_CLAIM" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="308" y="961"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="124.92601040587674" y="801.9999952316284"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="221.4697265625"/>
-    </shape>
-    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="168.52685546875"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="395.9887740621686" y="801.9999952316284"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="369.3221073955019" y="641.9999964237213"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="250"/>
-    </shape>
-    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="210.89404296875"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="511.9999999999999" y="506.9999976158142"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="91.99999999999989" y="496.9999976158142"/>
+    <shape expanded="true" modelObjectName="REQUEST_STATUS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="395" y="801"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="301.9999999999999" y="496.9999976158142"/>
+      <upperLeftCorner x="301" y="496"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="CLAIMS_WITH_CLAIM_TYPE" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="124" y="801"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="MASTER_CLAIM" modelObjectNameSpace="CLAIMS_WITH_CLAIM_TYPE" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="221"/>
+    </shape>
+    <shape modelObjectName="ECLAIMS_DATA" modelObjectNameSpace="CLAIMS_WITH_CLAIM_TYPE" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="168"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="369" y="641"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="CLAIMS_WITH_CLAIM_TYPE" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="REQUEST_STATUS" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="210"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="511" y="506"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="BENEFITS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91" y="496"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="411.13182672143" y="356.9999988079071"/>
+      <upperLeftCorner x="411" y="356"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
@@ -820,19 +822,19 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="118.66666666666657" y="356.9999988079071"/>
+      <upperLeftCorner x="118" y="356"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="Projection_5" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="BENEFITS" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="221.4697265625"/>
+      <rectangleSize width="221"/>
     </shape>
     <shape modelObjectName="Projection_6" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="180.7353515625"/>
+      <rectangleSize width="180"/>
     </shape>
     <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="347.93468936388234" y="217"/>
+      <upperLeftCorner x="347" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>

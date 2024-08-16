@@ -47,6 +47,7 @@ module.exports = {
         case "CHRS_COST_DIST":
         case "CHRS_HRP_INFO":
         case "CHRS_FDLU_ULU":
+        case "MASTER_CLAIM_TYPE":
           relativePath += "fetchData";
           oPayload = {
             SCHEMA: "NUS_BTP_EC_MASTERDATA",

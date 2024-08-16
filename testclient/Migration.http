@@ -1,0 +1,42 @@
+@xsuaaHostname = https://nus-ariba-dev-px55m7l5.authentication.eu10.hana.ondemand.com
+@xsuaaClient = sb-utility!t169063
+@xsuaaSecret = 200f9efb-45ab-47d8-a8a0-b05226829404$MIAtezZiJmLYjC8JJSNVVeSB0QrIG-6bNtDHugEUntc=
+@host = localhost:4004
+@protocol = https
+@unsecureProtocol = http
+
+### Request-1 Get xsuaa token
+#==================================================================#
+# @name getXsuaaToken
+
+POST {{xsuaaHostname}}/oauth/token
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic {{xsuaaClient}}:{{xsuaaSecret}}
+
+client_id={{xsuaaClient}}
+&client_secret={{xsuaaSecret}}
+&grant_type=client_credentials
+
+### Store access token 
+@access_token = {{getXsuaaToken.response.body.$.access_token}}
+
+### Request-1 Get eclaims header data
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/catalog/eclaims_data
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-2 MASTER_CLAIM_TYPE
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='MASTER_CLAIM_TYPE')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-3 ECLAIMS_DATA
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='ECLAIMS_DATA')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+

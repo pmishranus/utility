@@ -56,6 +56,11 @@ module.exports = {
         oTableConfig.aPrimaryKeys = ["FDLU_C"];
         oTableConfig.oTable = srv.entities.CHRS_FDLU_ULU;
         break;
+      case "MASTER_CLAIM_TYPE":
+        contextName = "MASTER_DATA_";
+        oTableConfig.aPrimaryKeys = ["CLAIM_TYPE_C"];
+        oTableConfig.oTable = srv.entities.MASTER_CLAIM_TYPE;
+        break;
       case "CHRS_ROLE_MASTER":
         contextName = "UTILITY_";
         oTableConfig.aPrimaryKeys = ["ROLE_ID"];
