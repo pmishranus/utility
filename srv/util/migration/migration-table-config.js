@@ -91,6 +91,11 @@ module.exports = {
         oTableConfig.aPrimaryKeys = ["AUTH_ID"];
         oTableConfig.oTable = srv.entities.CHRS_APPROVER_MATRIX;
         break;
+        case "REMARKS_DATA":
+          contextName = "UTILITY_";
+          oTableConfig.aPrimaryKeys = ["ID"];
+          oTableConfig.oTable = srv.entities.REMARKS_DATA;
+          break;
       default:
         oTableConfig.exists = false;
         break;

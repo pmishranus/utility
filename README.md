@@ -22,7 +22,9 @@ Utility Module
 
 # 7. Proxy entity for the calculation view
 - hana-cli inspectView -v APPROVAL_MATRIX -o cds
+- hana-cli inspectView -v ECLAIMS_ITEM_VIEW -o cds
 - hana-cli inspectFunction -f CHECK_COST_DIST_EXIST_F -o
+
 
 # 8. Get the active port
 - C

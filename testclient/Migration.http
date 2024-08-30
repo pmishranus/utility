@@ -1,6 +1,6 @@
 @xsuaaHostname = https://nus-ariba-dev-px55m7l5.authentication.eu10.hana.ondemand.com
 @xsuaaClient = sb-utility!t169063
-@xsuaaSecret = 200f9efb-45ab-47d8-a8a0-b05226829404$MIAtezZiJmLYjC8JJSNVVeSB0QrIG-6bNtDHugEUntc=
+@xsuaaSecret = bf4c3ad8-d7bf-487c-b4b6-169f3f6705fe$-1yEaPXHKdEavLT2Dqd20ha6k-wCZ9FA5OekR7b4TvA=
 @host = localhost:4004
 @protocol = https
 @unsecureProtocol = http
@@ -36,6 +36,25 @@ Authorization: Bearer {{access_token}}
 ### Request-3 ECLAIMS_DATA
 #==================================================================#
 GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='ECLAIMS_DATA')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-3 ECLAIMS_DATA
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='ECLAIMS_ITEMS_DATA')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Request-3 REMARKS_DATA
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='REMARKS_DATA')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-4 Get User Detail
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/util/getUserDetails()
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
