@@ -61,6 +61,8 @@ module.exports = {
         case "PROCESS_CONFIG":
         case "CHRS_EXTERNAL_USERS":
         case "REMARKS_DATA":
+        case "PROCESS_DETAILS":
+        case "TASK_DETAILS":
           relativePath += "fetchData";
           oPayload = {
             SCHEMA: "NUS_BTP_UTILS",

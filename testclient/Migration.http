@@ -1,6 +1,6 @@
 @xsuaaHostname = https://nus-ariba-dev-px55m7l5.authentication.eu10.hana.ondemand.com
 @xsuaaClient = sb-utility!t169063
-@xsuaaSecret = bf4c3ad8-d7bf-487c-b4b6-169f3f6705fe$-1yEaPXHKdEavLT2Dqd20ha6k-wCZ9FA5OekR7b4TvA=
+@xsuaaSecret = 12aa6326-21f8-408e-93b3-96549df8d9e7$tl2XEjKEiH7OP5nDqSLHJXGSa-GP69d9JdTPWwFm0L4=
 @host = localhost:4004
 @protocol = https
 @unsecureProtocol = http
@@ -52,6 +52,18 @@ GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='REMA
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
+
+### Request-3 PROCESS_DETAILS
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='PROCESS_DETAILS')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-3 TASK_DETAILS
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='TASK_DETAILS')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
 ### Request-4 Get User Detail
 #==================================================================#
 GET {{unsecureProtocol}}://{{host}}/util/getUserDetails()

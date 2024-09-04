@@ -55,7 +55,9 @@
       "srv": {
         "model": [
           "srv",
-          "db"
+          "db",
+          "eclaims",
+          "cws"
         ]
       }
     },

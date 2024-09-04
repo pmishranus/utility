@@ -1,6 +1,6 @@
 @xsuaaHostname = https://nus-ariba-dev-px55m7l5.authentication.eu10.hana.ondemand.com
 @xsuaaClient = sb-utility!t169063
-@xsuaaSecret = bf4c3ad8-d7bf-487c-b4b6-169f3f6705fe$-1yEaPXHKdEavLT2Dqd20ha6k-wCZ9FA5OekR7b4TvA=
+@xsuaaSecret = 606f8bda-ed4a-458d-ba53-927554a3c61c$Fq-f7jr_uYV2ONwMzuVZfaDLRDn7sRXDmSJn68Tzizg=
 @host = localhost:4004
 @protocol = https
 @unsecureProtocol = http
@@ -23,6 +23,13 @@ client_id={{xsuaaClient}}
 
 ### Request-1 Get eclaims header data
 #==================================================================#
-GET {{unsecureProtocol}}://{{host}}/v2/util/$metadata
+GET {{unsecureProtocol}}://{{host}}/eclaims/eclaims/v_base_eclaim_request_view
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Request-1 Get eclaims header data
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/v2/catalog/v_approval_maxtrix?$filter=(STAFF_USER_GRP eq 'VERIFIER' and APM_VALID_FROM le '2024-09-04T06:54:58.069')
 Content-Type: application/json
 Authorization: Bearer {{access_token}}

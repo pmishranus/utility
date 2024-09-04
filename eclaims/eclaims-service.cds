@@ -1,24 +1,28 @@
 using {nusext as db} from '../db/datamodel';
 
 using {
-  BASE_ECLAIM_REQUEST_VIEW,
+  PRJ_BASE_ECLAIM_REQUEST_VIEW,
   ECLAIM_REQUEST_VIEW,
-  ECLAIMS_ITEM_VIEW
+  ECLAIMS_ITEM_VIEW,
+  OT_VERIFIER_APPROVER_LIST
 } from '../db/redefinemodel';
 
-service Eclaims @(path: '/eclaims') {
+service EclaimsService @(path: '/eclaims') {
 
 
   /******************************************************************** Calculation Views Exposed *********************************************************************************/
 
   @readonly
-  entity v_base_eclaim_request_view as projection on BASE_ECLAIM_REQUEST_VIEW;
+  entity v_base_eclaim_request_view as projection on PRJ_BASE_ECLAIM_REQUEST_VIEW;
 
   @readonly
   entity v_eclaim_request_view      as projection on ECLAIM_REQUEST_VIEW;
 
   @readonly
-  entity v_eclaims_item_view        as projection on ECLAIMS_ITEM_VIEW;
+  entity v_eclaim_item_view         as projection on ECLAIMS_ITEM_VIEW;
+
+  @readonly
+  entity v_ot_approver_lists        as projection on OT_VERIFIER_APPROVER_LIST;
 
   /********************************************************************************************************************************************************************************/
 
@@ -73,7 +77,7 @@ service Eclaims @(path: '/eclaims') {
           B.CLAIM_TYPE,
           TO_VARCHAR(
             B.DATE_JOINED, 'DD.MM.YYYY'
-          )                                as DATE_JOINED : Date,
+          )                                as DATE_JOINED  : Date,
           B.EMPLOYEE_GRP,
           B.FDLU,
           B.FULL_NM,
@@ -90,10 +94,10 @@ service Eclaims @(path: '/eclaims') {
           A.RATE_TYPE_AMOUNT,
           SUM(
             A.HOURS_UNIT
-          )                                as HOURS_UNIT : Int64,
+          )                                as HOURS_UNIT   : Int64,
           SUM(
             A.TOTAL_AMOUNT
-          )                                as TOTAL_AMOUNT : Decimal(10,2),
+          )                                as TOTAL_AMOUNT : Decimal(10, 2),
           PROCESS.PROCESS_INST_ID,
           TASKS.TASK_COMPLETED_BY          as APPROVER_STAFF_ID,
           TASKS.TASK_COMPLETED_BY_NID      as APPROVER_NUSNET_ID,
@@ -157,24 +161,6 @@ service Eclaims @(path: '/eclaims') {
       STATUS_CONFIG.STATUS_CODE;
 
 
-  /********************************************************************************************************************************************************************************/
-
-  // Handling user info with the authentication and user scopes
-
-  type userScopes {
-    identified    : Boolean;
-    authenticated : Boolean;
-    Viewer        : Boolean;
-    Admin         : Boolean;
-  };
-
-  type userType {
-    user   : String;
-    locale : String;
-    scopes : userScopes;
-  };
-
-  function userInfo() returns userType;
-
+/********************************************************************************************************************************************************************************/
 
 }

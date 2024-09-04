@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="OT_VERIFIER_APPROVER_LIST" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="OT_VERIFIER_APPROVER_LIST"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="NUSEXT_UTILITY_TASK_DETAILS">
+    <resourceUri>NUSEXT_UTILITY_TASK_DETAILS</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_UTILITY_PROCESS_DETAILS">
+    <resourceUri>NUSEXT_UTILITY_PROCESS_DETAILS</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_MASTER_DATA_CHRS_JOB_INFO">
+    <resourceUri>NUSEXT_MASTER_DATA_CHRS_JOB_INFO</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="TASK_DETAILS" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TASK_ASSGN_TO_STF_NUMBER"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+    
+      <viewAttribute id="TASK_ASSGN_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_UTILITY_TASK_DETAILS"/>
+    <filter>(&quot;TASK_NAME&quot; = 'REPORTING_MGR' OR &quot;TASK_NAME&quot; = 'FINANCE_LEAD') AND &quot;TASK_ASSGN_TO_STF_NUMBER&quot; != ''</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="PROCESS_DETAILS" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="REFERENCE_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_UTILITY_PROCESS_DETAILS"/>
+    <filter>(&quot;PROCESS_CODE&quot; = '103' OR &quot;PROCESS_CODE&quot; = '104' OR &quot;PROCESS_CODE&quot; = '102' OR &quot;PROCESS_CODE&quot; = '105')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="CHRS_JOB_INFO" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="START_DATE"/>
+      <viewAttribute id="END_DATE"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_MASTER_DATA_CHRS_JOB_INFO"/>
+    <filter>(&quot;START_DATE&quot; &lt;= now() and &quot;END_DATE&quot; &gt;= now()) and &quot;SF_STF_NUMBER&quot; = &quot;STF_NUMBER&quot;</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="PROCESS_TASK_INFO" cardinality="C1_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TASK_ASSGN_TO_STF_NUMBER"/>
+      <viewAttribute id="TASK_ASSGN_TO"/>
+      <viewAttribute hidden="true" id="JOIN$PROCESS_INST_ID$PROCESS_INST_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="PROCESS_DETAILS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_INST_ID$PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+    </input>
+    <input node="TASK_DETAILS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_NAME" source="TASK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO_STF_NUMBER" source="TASK_ASSGN_TO_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO" source="TASK_ASSGN_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_INST_ID$PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+    </input>
+    <joinAttribute name="JOIN$PROCESS_INST_ID$PROCESS_INST_ID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="AGG_CHRS_JOB_INFO">
+    <viewAttributes>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="FULL_NM"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="CHRS_JOB_INFO"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="GET_NAME" cardinality="CN_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TASK_ASSGN_TO_STF_NUMBER"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="TASK_ASSGN_TO"/>
+      <viewAttribute hidden="true" id="JOIN$TASK_ASSGN_TO_STF_NUMBER$STF_NUMBER"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="PROCESS_TASK_INFO">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_NAME" source="TASK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO_STF_NUMBER" source="TASK_ASSGN_TO_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO" source="TASK_ASSGN_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_ASSGN_TO_STF_NUMBER$STF_NUMBER" source="TASK_ASSGN_TO_STF_NUMBER"/>
+    </input>
+    <input node="AGG_CHRS_JOB_INFO">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_ASSGN_TO_STF_NUMBER$STF_NUMBER" source="STF_NUMBER"/>
+    </input>
+    <joinAttribute name="JOIN$TASK_ASSGN_TO_STF_NUMBER$STF_NUMBER"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="GET_NAME">
+  <attributes>
+    <attribute id="PROCESS_CODE" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_CODE"/>
+      <keyMapping columnObjectName="GET_NAME" columnName="PROCESS_CODE"/>
+    </attribute>
+    <attribute id="TASK_NAME" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_NAME"/>
+      <keyMapping columnObjectName="GET_NAME" columnName="TASK_NAME"/>
+    </attribute>
+    <attribute id="TASK_ASSGN_TO_STF_NUMBER" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_ASSGN_TO_STF_NUMBER"/>
+      <keyMapping columnObjectName="GET_NAME" columnName="TASK_ASSGN_TO_STF_NUMBER"/>
+    </attribute>
+    <attribute id="FULL_NM" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FULL_NM"/>
+      <keyMapping columnObjectName="GET_NAME" columnName="FULL_NM"/>
+    </attribute>
+  
+    <attribute id="TASK_ASSGN_TO" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_ASSGN_TO"/>
+      <keyMapping columnObjectName="GET_NAME" columnName="TASK_ASSGN_TO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/></logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="TASK_DETAILS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-183" y="455"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="PROCESS_DETAILS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-422" y="468"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="CHRS_JOB_INFO" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="133" y="468"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="PROCESS_TASK_INFO" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-320" y="317"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="PROCESS_DETAILS" modelObjectNameSpace="PROCESS_TASK_INFO" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="179"/>
+    </shape>
+    <shape modelObjectName="TASK_DETAILS" modelObjectNameSpace="PROCESS_TASK_INFO" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="260"/>
+    </shape>
+    <shape expanded="true" modelObjectName="AGG_CHRS_JOB_INFO" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="123" y="375"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="GET_NAME" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="249"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="PROCESS_TASK_INFO" modelObjectNameSpace="GET_NAME" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="AGG_CHRS_JOB_INFO" modelObjectNameSpace="GET_NAME" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

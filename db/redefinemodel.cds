@@ -26,7 +26,7 @@ entity APPROVAL_MATRIX {
         ULU_T           : String(100) @title: 'ULU_T: ULU_T';
         PROCESS_TITLE   : String(100) @title: 'PROCESS_TITLE: PROCESS_TITLE';
         ROLE_CODE_LBL   : String(100) @title: 'ROLE_CODE_LBL: ROLE_CODE_LBL';
-}
+};
 
 @cds.persistence.exists
 @cds.persistence.calcview
@@ -67,7 +67,9 @@ entity BASE_ECLAIM_REQUEST_VIEW {
     key FULL_NM             : String(256) @title: 'FULL_NM: FULL_NM';
     key JOIN_DATE           : Date        @title: 'JOIN_DATE: JOIN_DATE';
     key SF_STF_NUMBER       : String(100) @title: 'SF_STF_NUMBER: SF_STF_NUMBER';
-}
+};
+
+define view PRJ_BASE_ECLAIM_REQUEST_VIEW as select * from BASE_ECLAIM_REQUEST_VIEW;
 
 
 @cds.persistence.exists
@@ -140,7 +142,7 @@ entity ECLAIM_REQUEST_VIEW {
     key FDLU_T                     : String(100) @title: 'FDLU_T: FDLU_T';
     key ULU_T                      : String(100) @title: 'ULU_T: ULU_T';
     key LOCKED_USER_FULL_NM        : String(256) @title: 'LOCKED_USER_FULL_NM: LOCKED_USER_FULL_NM';
-}
+};
 
 
 @cds.persistence.exists
@@ -235,18 +237,28 @@ entity ECLAIMS_ITEM_VIEW {
     key ADD_APRV_2_ON              : String       @title: 'ADD_APRV_2_ON: ADD_APRV_2_ON';
     key APPROVED_ON                : String       @title: 'APPROVED_ON: APPROVED_ON';
     key APPROVED_BY                : String(15)   @title: 'APPROVED_BY: APPROVED_BY';
-    key CA_REMARKS                 : String(8000) @title: 'CA_REMARKS: CA_REMARKS';
-    key VERIFIER_REMARKS           : String(8000) @title: 'VERIFIER_REMARKS: VERIFIER_REMARKS';
-    key ADD_APP_1_REMARKS          : String(8000) @title: 'ADD_APP_1_REMARKS: ADD_APP_1_REMARKS';
-    key ADD_APP_2_REMARKS          : String(8000) @title: 'ADD_APP_2_REMARKS: ADD_APP_2_REMARKS';
-    key APP_REMARKS                : String(8000) @title: 'APP_REMARKS: APP_REMARKS';
+    key CA_REMARKS                 : String(5000) @title: 'CA_REMARKS: CA_REMARKS';
+    key VERIFIER_REMARKS           : String(5000) @title: 'VERIFIER_REMARKS: VERIFIER_REMARKS';
+    key ADD_APP_1_REMARKS          : String(5000) @title: 'ADD_APP_1_REMARKS: ADD_APP_1_REMARKS';
+    key ADD_APP_2_REMARKS          : String(5000) @title: 'ADD_APP_2_REMARKS: ADD_APP_2_REMARKS';
+    key APP_REMARKS                : String(5000) @title: 'APP_REMARKS: APP_REMARKS';
     key RATE_DESC                  : String(20)   @title: 'RATE_DESC: RATE_DESC';
     key APPROVER_STAFF_FULL_NM     : String(256)  @title: 'APPROVER_STAFF_FULL_NM: APPROVER_STAFF_FULL_NM';
     key BEN_TYPE                   : String(2)    @title: 'BEN_TYPE: BEN_TYPE';
     key TITLE                      : String(250)  @title: 'TITLE: TITLE';
     key BEN_GROUP                  : String(4)    @title: 'BEN_GROUP: BEN_GROUP';
     key OBJECT_NAME                : String(256)  @title: 'OBJECT_NAME: FULL_NM1';
-}
+};
+
+@cds.persistence.exists
+@cds.persistence.calcview
+entity OT_VERIFIER_APPROVER_LIST {
+    key PROCESS_CODE             : String(6)   @title: 'PROCESS_CODE: PROCESS_CODE';
+    key TASK_NAME                : String(40)  @title: 'TASK_NAME: TASK_NAME';
+    key TASK_ASSGN_TO_STF_NUMBER : String(15)  @title: 'TASK_ASSGN_TO_STF_NUMBER: TASK_ASSGN_TO_STF_NUMBER';
+        FULL_NM                  : String(256) @title: 'FULL_NM: FULL_NM';
+    key TASK_ASSGN_TO            : String(15)  @title: 'TASK_ASSGN_TO: TASK_ASSGN_TO';
+};
 
 
 @cds.persistence.exists

@@ -30,6 +30,9 @@ service MigrationService {
     entity PROCESS_CONFIG       as select * from db.UTILITY.PROCESS_CONFIG;
     entity MASTER_CLAIM_TYPE    as select * from db.MASTER_DATA.MASTER_CLAIM_TYPE;
     entity REMARKS_DATA         as select * from db.UTILITY.REMARKS_DATA;
+    entity PROCESS_DETAILS      as select * from db.UTILITY.PROCESS_DETAILS;
+    entity TASK_DETAILS         as select * from db.UTILITY.TASK_DETAILS;
+
     @open
     type object {};
 
