@@ -28,6 +28,14 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 
+### Request-2 Get eclaims header data
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/util/getUserDetails(userId='PTT_CA9')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+
+
 ### Request-1 Get eclaims header data
 #==================================================================#
 GET {{unsecureProtocol}}://{{host}}/v2/catalog/v_approval_maxtrix?$filter=(STAFF_USER_GRP eq 'VERIFIER' and APM_VALID_FROM le '2024-09-04T06:54:58.069')

@@ -7,6 +7,7 @@ using {
   OT_VERIFIER_APPROVER_LIST
 } from '../db/redefinemodel';
 
+
 service EclaimsService @(path: '/eclaims') {
 
 
@@ -16,7 +17,13 @@ service EclaimsService @(path: '/eclaims') {
   entity v_base_eclaim_request_view as projection on PRJ_BASE_ECLAIM_REQUEST_VIEW;
 
   @readonly
-  entity v_eclaim_request_view      as projection on ECLAIM_REQUEST_VIEW;
+  entity v_eclaim_request_view      as
+    projection on ECLAIM_REQUEST_VIEW {
+      *,
+      ![MasterClaimTypeDetails] : Association to many db.MASTER_DATA.MASTER_CLAIM_TYPE on ![MasterClaimTypeDetails].CLAIM_TYPE_C = CLAIM_TYPE,
+      ![EclaimsItemDataDetails] : Association to many db.ECLAIMS.ITEMS_DATA on ![EclaimsItemDataDetails].DRAFT_ID = DRAFT_ID,
+      ![StatusConfigDetails]    : Association to many db.UTILITY.STATUS_CONFIG on ![StatusConfigDetails].STATUS_CODE = REQUEST_STATUS
+    }
 
   @readonly
   entity v_eclaim_item_view         as projection on ECLAIMS_ITEM_VIEW;

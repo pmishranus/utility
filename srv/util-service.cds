@@ -112,7 +112,7 @@ service UtilService @(path: '/util') {
   //  as select * from CHECK_COST_DIST_EXISTS_F where NUSNET_ID = :nusnetId and START_DATE <= :endDate and END_DATE >= :startDate;
 
   function userInfo()       returns userType;
-  function getUserDetails() returns UtilResponse;
+  function getUserDetails(userId : String) returns UtilResponse;
 
   action appConfigCreateEntry(data : appConfigurationRequests) returns String;
 

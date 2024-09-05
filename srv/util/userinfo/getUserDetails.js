@@ -22,8 +22,9 @@ module.exports = {
   _fnGetStaffInfo: async function (oConnection) {
     try {
       const user = oConnection.request.user.id;
+      let userName = oConnection.request.data.userId ? oConnection.request.data.userId : "PTT_CA1";
       // const userName = user.split('@')[0];
-      const userName = "PTT_CA1";
+      // const userName = "PTT_CA1";
 
       if (!userName) {
         throw new Error("User not found..!!");

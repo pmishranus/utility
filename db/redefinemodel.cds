@@ -1,3 +1,5 @@
+using {nusext as db} from './datamodel';
+
 @cds.persistence.exists
 @cds.persistence.calcview
 entity APPROVAL_MATRIX {
@@ -248,6 +250,7 @@ entity ECLAIMS_ITEM_VIEW {
     key TITLE                      : String(250)  @title: 'TITLE: TITLE';
     key BEN_GROUP                  : String(4)    @title: 'BEN_GROUP: BEN_GROUP';
     key OBJECT_NAME                : String(256)  @title: 'OBJECT_NAME: FULL_NM1';
+
 };
 
 @cds.persistence.exists

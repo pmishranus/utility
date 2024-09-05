@@ -2819,7 +2819,7 @@
     </input>
     <joinAttribute name="JOIN$RATE_TYPE$BEN_TYPE"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_10" cardinality="CN_N" joinType="inner">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_10" cardinality="CN_N" joinType="leftOuter">
     <viewAttributes>
       <viewAttribute id="PROCESS_CODE"/>
       <viewAttribute id="PROCESS_STATUS"/>
@@ -3461,46 +3461,67 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="148.45103447095664" y="112"/>
+      <upperLeftCorner x="148" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     
   
     <shape expanded="true" modelObjectName="EclaimsRequestView" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="932.7281113031593" y="2436.9999845027924"/>
+      <upperLeftCorner x="932" y="2436"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="EclaimsItemData" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="512.728111303159" y="2436.9999845027924"/>
+      <upperLeftCorner x="512" y="2436"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Verifier_Task_details" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="961.6340027780916" y="2276.9999856948853"/>
+      <upperLeftCorner x="961" y="2276"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="aDD_aPP_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="740.9884048653886" y="2116.999986886978"/>
+      <upperLeftCorner x="740" y="2116"/>
       <rectangleSize width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="aDD_aPP_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="681.1176805732574" y="1956.999988079071"/>
+      <upperLeftCorner x="681" y="1956"/>
       <rectangleSize width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="PrjAprvdOn" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="1012.4972199370709" y="1796.999989271164"/>
+      <upperLeftCorner x="1012" y="1796"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="722.7281113031593" y="2436.9999845027924"/>
+      <upperLeftCorner x="722" y="2436"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Remarks_CA" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="772.1827973713439" y="1636.9999904632568"/>
+      <upperLeftCorner x="772" y="1636"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="REMARKS_VERIFIER" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="689" y="1476"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="REMAKRS_ADD_APR_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="575" y="1316"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="REMARKS_ADD_APR_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="444" y="1156"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="REMARKS_APPROVER" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="996"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="RATE_TYPE_MASTER_DATA" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="996"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="751.3528366805149" y="2276.9999856948853"/>
+      <upperLeftCorner x="751" y="2276"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="EclaimsRequestView" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -3511,8 +3532,12 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="203"/>
     </shape>
+    <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="854"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
     <shape expanded="true" modelObjectName="VERIFIER_ON_DETAILS" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="950.9884048653885" y="2116.999986886978"/>
+      <upperLeftCorner x="950" y="2116"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_1" modelObjectNameSpace="VERIFIER_ON_DETAILS" modelObjectType="JoinNodeInput">
@@ -3524,7 +3549,7 @@
       <rectangleSize width="260"/>
     </shape>
     <shape expanded="true" modelObjectName="AddAprv1On" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="891.1176805732573" y="1956.999988079071"/>
+      <upperLeftCorner x="891" y="1956"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="VERIFIER_ON_DETAILS" modelObjectNameSpace="AddAprv1On" modelObjectType="JoinNodeInput">
@@ -3537,7 +3562,7 @@
     </shape>
   
     <shape expanded="true" modelObjectName="aDDaPRV2oN" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="801.9304779623199" y="1796.999989271164"/>
+      <upperLeftCorner x="801" y="1796"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="AddAprv1On" modelObjectNameSpace="aDDaPRV2oN" modelObjectType="JoinNodeInput">
@@ -3549,7 +3574,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Approved_On" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="982.182797371344" y="1636.9999904632568"/>
+      <upperLeftCorner x="982" y="1636"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="aDDaPRV2oN" modelObjectNameSpace="Approved_On" modelObjectType="JoinNodeInput">
@@ -3561,7 +3586,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="899.0070161554733" y="1476.9999916553497"/>
+      <upperLeftCorner x="899" y="1476"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Approved_On" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
@@ -3572,37 +3597,20 @@
       <upperLeftCorner x="359" y="449"/>
       <rectangleSize width="191"/>
     </shape>
-  
-    <shape expanded="true" modelObjectName="REMARKS_VERIFIER" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="689.0070161554736" y="1476.9999916553497"/>
-      <rectangleSize width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="REMAKRS_ADD_APR_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="575.6657473956072" y="1316.9999928474426"/>
-      <rectangleSize width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="REMARKS_ADD_APR_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="444.3883216955961" y="1156.9999940395355"/>
-      <rectangleSize width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="REMARKS_APPROVER" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302.0000000000002" y="996.9999952316284"/>
-      <rectangleSize width="160"/>
-    </shape>
     <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="785.6657473956072" y="1316.9999928474426"/>
+      <upperLeftCorner x="785" y="1316"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="267.35498046875"/>
+      <rectangleSize width="267"/>
     </shape>
     <shape modelObjectName="REMARKS_VERIFIER" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="370" y="495"/>
-      <rectangleSize width="197.24609375"/>
+      <rectangleSize width="197"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="654.3883216955962" y="1156.9999940395355"/>
+      <upperLeftCorner x="654" y="1156"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
@@ -3611,10 +3619,10 @@
     </shape>
     <shape modelObjectName="REMAKRS_ADD_APR_1" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="413" y="628"/>
-      <rectangleSize width="210.1044921875"/>
+      <rectangleSize width="210"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="512.0000000000002" y="996.9999952316284"/>
+      <upperLeftCorner x="512" y="996"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_4" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
@@ -3623,75 +3631,67 @@
     </shape>
     <shape modelObjectName="REMARKS_ADD_APR_2" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="312" y="638"/>
-      <rectangleSize width="210.1044921875"/>
+      <rectangleSize width="210"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="341.44552746294175" y="836.9999964237213"/>
+      <upperLeftCorner x="341" y="836"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_5" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="267.35498046875"/>
+      <rectangleSize width="267"/>
     </shape>
     <shape modelObjectName="REMARKS_APPROVER" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="362" y="554"/>
-      <rectangleSize width="198.689453125"/>
-    </shape>
-    <shape expanded="true" modelObjectName="RATE_TYPE_MASTER_DATA" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="996.9999952316284"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="854.4999964237213"/>
-      <rectangleSize height="30" width="160"/>
+      <rectangleSize width="198"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_7" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="209.39180441913447" y="676.9999976158142"/>
+      <upperLeftCorner x="209" y="676"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_6" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="267.35498046875"/>
+      <rectangleSize width="267"/>
     </shape>
     <shape modelObjectName="Aggregation_2" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="368" y="962"/>
-      <rectangleSize width="152.4189453125"/>
+      <rectangleSize width="152"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_8" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="162.79542854395402" y="516.9999988079071"/>
+      <upperLeftCorner x="162" y="516"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_7" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="267.35498046875"/>
+      <rectangleSize width="267"/>
     </shape>
     <shape modelObjectName="STAFF_LIST_VIEW" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="395" y="1570"/>
-      <rectangleSize width="171.783203125"/>
+      <rectangleSize width="171"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_9" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="162.79542854395402" y="376.9999988079071"/>
+      <upperLeftCorner x="162" y="376"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_8" modelObjectNameSpace="Join_9" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="267.35498046875"/>
+      <rectangleSize width="267"/>
     </shape>
     <shape modelObjectName="NUSEXT_ECLAIMS_TAX_BFT_CLAIMS_GRP" modelObjectNameSpace="Join_9" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="335" y="970"/>
-      <rectangleSize width="318.478515625"/>
+      <rectangleSize width="318"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_10" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="148.45103447095664" y="217"/>
+      <upperLeftCorner x="148" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_9" modelObjectNameSpace="Join_10" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="267.35498046875"/>
+      <rectangleSize width="267"/>
     </shape>
     <shape modelObjectName="STAFF_LIST_VIEW" modelObjectNameSpace="Join_10" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="410" y="1285"/>
-      <rectangleSize width="171.783203125"/>
+      <rectangleSize width="171"/>
     </shape>
   </shapes>
 </layout>
