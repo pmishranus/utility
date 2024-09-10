@@ -33,7 +33,7 @@ type VAR_TEXT_500  : String(500);
 type VAR_TEXT_1000 : String(1000);
 type VAR_TEXT_2000 : String(2000);
 type VAR_TEXT_5000 : String(5000);
-type VAR_TIMESTAMP : DateTime;
+type VAR_TIMESTAMP : Timestamp;
 type VAR_DEC_10_2  : Decimal(10, 2);
 type VAR_DEC_05_2  : Decimal(5, 2);
 type VAR_DEC_12_2  : Decimal(12, 2);

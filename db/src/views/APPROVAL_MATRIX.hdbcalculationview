@@ -74,10 +74,12 @@
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4" filterExpressionLanguage="COLUMN_ENGINE">
     <viewAttributes>
       <viewAttribute id="ROLE_CODE"/>
-      <viewAttribute id="ROLE_CODE_LBL"/>
+      <viewAttribute id="STAFF_USER_ALIAS"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="NUSEXT_UTILITY_CHRS_ROLE_MASTER"/>
+    <input node="NUSEXT_UTILITY_CHRS_ROLE_MASTER">
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_USER_ALIAS" source="ROLE_CODE_LBL"/>
+    </input>
     <filter>&quot;ROLE_CODE&quot;!='MATRIX_ADMIN' AND &quot;ROLE_CODE&quot;!='SUPER_ADMIN'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="leftOuter">
@@ -338,7 +340,7 @@
       <viewAttribute id="FDLU_T"/>
       <viewAttribute id="ULU_T"/>
       <viewAttribute id="PROCESS_TITLE"/>
-      <viewAttribute id="ROLE_CODE_LBL"/>
+      <viewAttribute id="STAFF_USER_ALIAS"/>
       <viewAttribute hidden="true" id="JOIN$STAFF_USER_GRP$ROLE_CODE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -370,7 +372,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$STAFF_USER_GRP$ROLE_CODE" source="STAFF_USER_GRP"/>
     </input>
     <input node="Projection_4">
-      <mapping xsi:type="Calculation:AttributeMapping" target="ROLE_CODE_LBL" source="ROLE_CODE_LBL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_USER_ALIAS" source="STAFF_USER_ALIAS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$STAFF_USER_GRP$ROLE_CODE" source="ROLE_CODE"/>
     </input>
     <joinAttribute name="JOIN$STAFF_USER_GRP$ROLE_CODE"/>
@@ -475,9 +477,9 @@
       <descriptions defaultDescription="PROCESS_TITLE"/>
       <keyMapping columnObjectName="Join_5" columnName="PROCESS_TITLE"/>
     </attribute>
-    <attribute id="ROLE_CODE_LBL" order="25" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ROLE_CODE_LBL"/>
-      <keyMapping columnObjectName="Join_5" columnName="ROLE_CODE_LBL"/>
+    <attribute id="STAFF_USER_ALIAS" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAFF_USER_ALIAS"/>
+      <keyMapping columnObjectName="Join_5" columnName="STAFF_USER_ALIAS"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -499,17 +501,25 @@
       <upperLeftCorner x="210" y="982"/>
       <rectangleSize height="30" width="160"/>
     </shape>
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="316" y="549"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="454" y="406"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="-55" y="828"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="188.47509765625"/>
+      <rectangleSize width="188"/>
     </shape>
     <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="180.7353515625"/>
+      <rectangleSize width="180"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="130" y="701"/>
@@ -521,7 +531,7 @@
     </shape>
     <shape modelObjectName="NUSEXT_MASTER_DATA_CHRS_FDLU_ULU" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="318.912109375"/>
+      <rectangleSize width="318"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="15" y="549"/>
@@ -529,15 +539,11 @@
     </shape>
     <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="188.47509765625"/>
+      <rectangleSize width="188"/>
     </shape>
     <shape modelObjectName="NUSEXT_MASTER_DATA_CHRS_FDLU_ULU" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="318.912109375"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="316" y="549"/>
-      <rectangleSize height="30" width="160"/>
+      <rectangleSize width="318"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="120" y="397"/>
@@ -545,15 +551,11 @@
     </shape>
     <shape modelObjectName="Join_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="188.47509765625"/>
+      <rectangleSize width="188"/>
     </shape>
     <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="177.68994140625"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="454" y="406"/>
-      <rectangleSize height="30" width="160"/>
+      <rectangleSize width="177"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="326" y="272"/>
@@ -565,7 +567,7 @@
     </shape>
     <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="179.54296875"/>
+      <rectangleSize width="179"/>
     </shape>
   </shapes>
 </layout>
