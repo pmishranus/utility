@@ -55,7 +55,7 @@ module.exports = {
 
 
             for (let index  of inputRequest) {
-                let configRequest = inputRequest[index]
+                let configRequest = index; //inputRequest[index]
                 try {
 
                     let response = await this.checkForDuplicateWhileCreation(configRequest);

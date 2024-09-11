@@ -19,13 +19,13 @@
   <DataSource id="NUSEXT_MASTER_DATA_CHRS_FDLU_ULU">
     <resourceUri>NUSEXT_MASTER_DATA_CHRS_FDLU_ULU</resourceUri>
   </DataSource>
-  <DataSource id="Join_3$$$$NUSEXT_MASTER_DATA_CHRS_FDLU_ULU$$">
+  <DataSource id="Approver_Details$$$$NUSEXT_MASTER_DATA_CHRS_FDLU_ULU$$">
     <resourceUri>NUSEXT_MASTER_DATA_CHRS_FDLU_ULU</resourceUri>
   </DataSource>
 </dataSources>
 <snapshotProcedures/>
 <calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+  <calculationView xsi:type="Calculation:ProjectionView" id="ApproverMatrix" filterExpressionLanguage="SQL">
     <viewAttributes>
       <viewAttribute id="AUTH_ID"/>
       <viewAttribute id="PROCESS_CODE"/>
@@ -47,8 +47,10 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="NUSEXT_UTILITY_CHRS_APPROVER_MATRIX"/>
+  
+    <filter>&quot;IS_DELETED&quot; = 'N'</filter>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+  <calculationView xsi:type="Calculation:ProjectionView" id="All_User">
     <viewAttributes>
       <viewAttribute id="FULL_NM"/>
       <viewAttribute id="STAFF_STATUS"/>
@@ -63,7 +65,7 @@
     <calculatedViewAttributes/>
     <input node="ACTIVE_INACTIVE_USER_LOOKUP"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Process_Config">
     <viewAttributes>
       <viewAttribute id="PROCESS_CODE"/>
       <viewAttribute id="PROCESS_TITLE"/>
@@ -71,7 +73,7 @@
     <calculatedViewAttributes/>
     <input node="NUSEXT_UTILITY_PROCESS_CONFIG"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4" filterExpressionLanguage="COLUMN_ENGINE">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Role_Matrix" filterExpressionLanguage="COLUMN_ENGINE">
     <viewAttributes>
       <viewAttribute id="ROLE_CODE"/>
       <viewAttribute id="STAFF_USER_ALIAS"/>
@@ -82,7 +84,7 @@
     </input>
     <filter>&quot;ROLE_CODE&quot;!='MATRIX_ADMIN' AND &quot;ROLE_CODE&quot;!='SUPER_ADMIN'</filter>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="leftOuter">
+  <calculationView xsi:type="Calculation:JoinView" id="UserFullDetails" cardinality="CN_N" joinType="leftOuter">
     <viewAttributes>
       <viewAttribute id="AUTH_ID"/>
       <viewAttribute id="PROCESS_CODE"/>
@@ -108,7 +110,7 @@
       <viewAttribute hidden="true" id="JOIN$STAFF_ID$SF_STF_NUMBER"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="Projection_1">
+    <input node="ApproverMatrix">
       <mapping xsi:type="Calculation:AttributeMapping" target="AUTH_ID" source="AUTH_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
@@ -126,7 +128,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$STAFF_ID$SF_STF_NUMBER" source="STAFF_ID"/>
     </input>
-    <input node="Projection_2">
+    <input node="All_User">
       <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_STATUS" source="STAFF_STATUS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_C" source="ULU_C"/>
@@ -137,7 +139,7 @@
     </input>
     <joinAttribute name="JOIN$STAFF_ID$SF_STF_NUMBER"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="CN_N" joinType="inner">
+  <calculationView xsi:type="Calculation:JoinView" id="FDLU_Join" cardinality="CN_N" joinType="leftOuter">
     <viewAttributes>
       <viewAttribute id="AUTH_ID"/>
       <viewAttribute id="PROCESS_CODE"/>
@@ -164,7 +166,7 @@
       <viewAttribute hidden="true" id="JOIN$FDLU$FDLU_C"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="Join_1">
+    <input node="UserFullDetails">
       <mapping xsi:type="Calculation:AttributeMapping" target="AUTH_ID" source="AUTH_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
@@ -194,7 +196,7 @@
     </input>
     <joinAttribute name="JOIN$FDLU$FDLU_C"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="CN_N" joinType="inner">
+  <calculationView xsi:type="Calculation:JoinView" id="Approver_Details" cardinality="CN_N" joinType="leftOuter">
     <viewAttributes>
       <viewAttribute id="AUTH_ID"/>
       <viewAttribute id="PROCESS_CODE"/>
@@ -222,7 +224,7 @@
       <viewAttribute hidden="true" id="JOIN$ULU$ULU_C"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="Join_2">
+    <input node="FDLU_Join">
       <mapping xsi:type="Calculation:AttributeMapping" target="AUTH_ID" source="AUTH_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
@@ -247,13 +249,13 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ULU$ULU_C" source="ULU"/>
     </input>
-    <input node="Join_3$$$$NUSEXT_MASTER_DATA_CHRS_FDLU_ULU$$">
+    <input node="Approver_Details$$$$NUSEXT_MASTER_DATA_CHRS_FDLU_ULU$$">
       <mapping xsi:type="Calculation:AttributeMapping" target="ULU_T" source="ULU_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ULU$ULU_C" source="ULU_C"/>
     </input>
     <joinAttribute name="JOIN$ULU$ULU_C"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_4" cardinality="CN_N" joinType="inner">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_Process_User" cardinality="CN_N" joinType="inner">
     <viewAttributes>
       <viewAttribute id="AUTH_ID"/>
       <viewAttribute id="PROCESS_CODE"/>
@@ -282,7 +284,7 @@
       <viewAttribute hidden="true" id="JOIN$PROCESS_CODE$PROCESS_CODE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="Join_3">
+    <input node="Approver_Details">
       <mapping xsi:type="Calculation:AttributeMapping" target="AUTH_ID" source="AUTH_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
@@ -308,13 +310,13 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ULU_T" source="ULU_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_CODE$PROCESS_CODE" source="PROCESS_CODE"/>
     </input>
-    <input node="Projection_3">
+    <input node="Process_Config">
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TITLE" source="PROCESS_TITLE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_CODE$PROCESS_CODE" source="PROCESS_CODE"/>
     </input>
     <joinAttribute name="JOIN$PROCESS_CODE$PROCESS_CODE"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_5" cardinality="CN_N" joinType="inner">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_Auth_Matrix" cardinality="CN_N" joinType="inner">
     <viewAttributes>
       <viewAttribute id="AUTH_ID"/>
       <viewAttribute id="PROCESS_CODE"/>
@@ -344,7 +346,7 @@
       <viewAttribute hidden="true" id="JOIN$STAFF_USER_GRP$ROLE_CODE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="Join_4">
+    <input node="Join_Process_User">
       <mapping xsi:type="Calculation:AttributeMapping" target="AUTH_ID" source="AUTH_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
@@ -371,7 +373,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TITLE" source="PROCESS_TITLE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$STAFF_USER_GRP$ROLE_CODE" source="STAFF_USER_GRP"/>
     </input>
-    <input node="Projection_4">
+    <input node="Role_Matrix">
       <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_USER_ALIAS" source="STAFF_USER_ALIAS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$STAFF_USER_GRP$ROLE_CODE" source="ROLE_CODE"/>
     </input>
@@ -379,107 +381,107 @@
   </calculationView>
 </calculationViews>
 
-<logicalModel id="Join_5">
+<logicalModel id="Join_Auth_Matrix">
   <attributes>
     <attribute id="AUTH_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="AUTH_ID"/>
-      <keyMapping columnObjectName="Join_5" columnName="AUTH_ID"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="AUTH_ID"/>
     </attribute>
     <attribute id="PROCESS_CODE" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PROCESS_CODE"/>
-      <keyMapping columnObjectName="Join_5" columnName="PROCESS_CODE"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="PROCESS_CODE"/>
     </attribute>
     <attribute id="ULU" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ULU"/>
-      <keyMapping columnObjectName="Join_5" columnName="ULU"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="ULU"/>
     </attribute>
     <attribute id="FDLU" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FDLU"/>
-      <keyMapping columnObjectName="Join_5" columnName="FDLU"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="FDLU"/>
     </attribute>
     <attribute id="STAFF_USER_GRP" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STAFF_USER_GRP"/>
-      <keyMapping columnObjectName="Join_5" columnName="STAFF_USER_GRP"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_USER_GRP"/>
     </attribute>
     <attribute id="STAFF_NUSNET_ID" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STAFF_NUSNET_ID"/>
-      <keyMapping columnObjectName="Join_5" columnName="STAFF_NUSNET_ID"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_NUSNET_ID"/>
     </attribute>
     <attribute id="STAFF_ID" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STAFF_ID"/>
-      <keyMapping columnObjectName="Join_5" columnName="STAFF_ID"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_ID"/>
     </attribute>
     <attribute id="VALID_FROM" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALID_FROM"/>
-      <keyMapping columnObjectName="Join_5" columnName="VALID_FROM"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="VALID_FROM"/>
     </attribute>
     <attribute id="VALID_TO" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALID_TO"/>
-      <keyMapping columnObjectName="Join_5" columnName="VALID_TO"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="VALID_TO"/>
     </attribute>
     <attribute id="UPDATED_BY" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="UPDATED_BY"/>
-      <keyMapping columnObjectName="Join_5" columnName="UPDATED_BY"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="UPDATED_BY"/>
     </attribute>
     <attribute id="UPDATED_BY_NID" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="UPDATED_BY_NID"/>
-      <keyMapping columnObjectName="Join_5" columnName="UPDATED_BY_NID"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="UPDATED_BY_NID"/>
     </attribute>
     <attribute id="UPDATED_ON" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="UPDATED_ON"/>
-      <keyMapping columnObjectName="Join_5" columnName="UPDATED_ON"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="UPDATED_ON"/>
     </attribute>
     <attribute id="APM_VALID_FROM" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="APM_VALID_FROM"/>
-      <keyMapping columnObjectName="Join_5" columnName="APM_VALID_FROM"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="APM_VALID_FROM"/>
     </attribute>
     <attribute id="APM_VALID_TO" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="APM_VALID_TO"/>
-      <keyMapping columnObjectName="Join_5" columnName="APM_VALID_TO"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="APM_VALID_TO"/>
     </attribute>
     <attribute id="PROCESS_TYPE" order="15" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PROCESS_TYPE"/>
-      <keyMapping columnObjectName="Join_5" columnName="PROCESS_TYPE"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="PROCESS_TYPE"/>
     </attribute>
     <attribute id="FULL_NM" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FULL_NM"/>
-      <keyMapping columnObjectName="Join_5" columnName="FULL_NM"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="FULL_NM"/>
     </attribute>
     <attribute id="STAFF_STATUS" order="17" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STAFF_STATUS"/>
-      <keyMapping columnObjectName="Join_5" columnName="STAFF_STATUS"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_STATUS"/>
     </attribute>
     <attribute id="STAFF_ULU_C" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ULU_C"/>
-      <keyMapping columnObjectName="Join_5" columnName="STAFF_ULU_C"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_ULU_C"/>
     </attribute>
     <attribute id="STAFF_ULU_T" order="19" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ULU_T"/>
-      <keyMapping columnObjectName="Join_5" columnName="STAFF_ULU_T"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_ULU_T"/>
     </attribute>
     <attribute id="STAFF_FDLU_C" order="20" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FDLU_C"/>
-      <keyMapping columnObjectName="Join_5" columnName="STAFF_FDLU_C"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_FDLU_C"/>
     </attribute>
     <attribute id="STAFF_FDLU_T" order="21" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FDLU_T"/>
-      <keyMapping columnObjectName="Join_5" columnName="STAFF_FDLU_T"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_FDLU_T"/>
     </attribute>
     <attribute id="FDLU_T" order="22" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FDLU_T"/>
-      <keyMapping columnObjectName="Join_5" columnName="FDLU_T"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="FDLU_T"/>
     </attribute>
     <attribute id="ULU_T" order="23" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ULU_T"/>
-      <keyMapping columnObjectName="Join_5" columnName="ULU_T"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="ULU_T"/>
     </attribute>
     <attribute id="PROCESS_TITLE" order="24" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PROCESS_TITLE"/>
-      <keyMapping columnObjectName="Join_5" columnName="PROCESS_TITLE"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="PROCESS_TITLE"/>
     </attribute>
     <attribute id="STAFF_USER_ALIAS" order="25" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STAFF_USER_ALIAS"/>
-      <keyMapping columnObjectName="Join_5" columnName="STAFF_USER_ALIAS"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_USER_ALIAS"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -493,79 +495,79 @@
     </shape>
     
   
-    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+    <shape expanded="true" modelObjectName="ApproverMatrix" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="-252" y="974"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+    <shape expanded="true" modelObjectName="All_User" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="210" y="982"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+    <shape expanded="true" modelObjectName="Process_Config" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="316" y="549"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+    <shape expanded="true" modelObjectName="Role_Matrix" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="454" y="406"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+    <shape expanded="true" modelObjectName="UserFullDetails" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="-55" y="828"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="ApproverMatrix" modelObjectNameSpace="UserFullDetails" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="188"/>
     </shape>
-    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="All_User" modelObjectNameSpace="UserFullDetails" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="180"/>
     </shape>
-    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+    <shape expanded="true" modelObjectName="FDLU_Join" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="130" y="701"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="UserFullDetails" modelObjectNameSpace="FDLU_Join" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape modelObjectName="NUSEXT_MASTER_DATA_CHRS_FDLU_ULU" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="NUSEXT_MASTER_DATA_CHRS_FDLU_ULU" modelObjectNameSpace="FDLU_Join" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="318"/>
     </shape>
-    <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+    <shape expanded="true" modelObjectName="Approver_Details" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="15" y="549"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="FDLU_Join" modelObjectNameSpace="Approver_Details" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="188"/>
     </shape>
-    <shape modelObjectName="NUSEXT_MASTER_DATA_CHRS_FDLU_ULU" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="NUSEXT_MASTER_DATA_CHRS_FDLU_ULU" modelObjectNameSpace="Approver_Details" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="318"/>
     </shape>
-    <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
+    <shape expanded="true" modelObjectName="Join_Process_User" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="120" y="397"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="Join_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="Approver_Details" modelObjectNameSpace="Join_Process_User" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="188"/>
     </shape>
-    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="Process_Config" modelObjectNameSpace="Join_Process_User" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="177"/>
     </shape>
-    <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
+    <shape expanded="true" modelObjectName="Join_Auth_Matrix" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="326" y="272"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="Join_4" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="Join_Process_User" modelObjectNameSpace="Join_Auth_Matrix" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="Role_Matrix" modelObjectNameSpace="Join_Auth_Matrix" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="179"/>
     </shape>

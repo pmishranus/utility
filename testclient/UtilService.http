@@ -1,6 +1,6 @@
 @xsuaaHostname = https://nus-ariba-dev-px55m7l5.authentication.eu10.hana.ondemand.com
 @xsuaaClient = sb-utility!t169063
-@xsuaaSecret = 606f8bda-ed4a-458d-ba53-927554a3c61c$Fq-f7jr_uYV2ONwMzuVZfaDLRDn7sRXDmSJn68Tzizg=
+@xsuaaSecret = fbd8f6c6-127b-45ab-9c94-a77344cb35b4$l8kKwMdOMjse8xNNLtcBnNu6r2tMh-Ljq9Tr4cd6_PU=
 @host = localhost:4004
 @protocol = https
 @unsecureProtocol = http
@@ -35,9 +35,161 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 
+### Request-2 Get eclaims header data
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/v2/util/getUserDetails?userId='PTT_CA9'
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-2 Get eclaims header data
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/v2/catalog/$metadata
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
 ### Request-1 Get eclaims header data
 #==================================================================#
 GET {{unsecureProtocol}}://{{host}}/v2/catalog/v_approval_maxtrix?$filter=(STAFF_USER_GRP eq 'VERIFIER' and APM_VALID_FROM le '2024-09-04T06:54:58.069')
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
+
+
+
+### Request-1 Get eclaims header data
+#==================================================================#
+POST {{unsecureProtocol}}://{{host}}/approvermatrix/createEntry
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "data": [
+        {
+            "isStaffEnabled": true,
+            "isDelimitScenario": false,
+            "delimitScenario": false,
+            "isEditScenario": false,
+            "isSingleSubmissionSelected": true,
+            "isMassUploadSelected": false,
+            "isAllUluVisible": true,
+            "isAllFdluVisible": false,
+            "isMassUploadVisible": false,
+            "isSubmitVisible": true,
+            "isValidFromEnabled": true,
+            "isValidToEnabled": true,
+            "isFormEditable": true,
+            "isFDLUEnabled": false,
+            "isULUEnabled": false,
+            "isDesignationVisible": true,
+            "isULUVisible": true,
+            "isValidityVisible": true,
+            "isStaffSelectionVisible": true,
+            "isFDLUVisible": true,
+            "VALID_FROM": "2024-09-11",
+            "VALID_TO": "9999-12-31",
+            "PROCESS_CODE": "201",
+            "processCodeList": [
+                {
+                    "PROCESS_CODE": "201",
+                    "PROCESS_NAME": "CWS",
+                    "PROCESS_TITLE": "Consultation Work",
+                    "PROCESS_SLA_DAYS": 10,
+                    "REFERENCE_KEY": "200",
+                    "__metadata": {
+                        "type": "CatalogService.processcfg_data",
+                        "uri": "https://port8081-workspaces-ws-v892z.eu10.applicationstudio.cloud.sap,nusbtputil.dest:443/destinations/nusbtputil/v2/catalog/processcfg_data('201')"
+                    }
+                },
+                {
+                    "PROCESS_CODE": "202",
+                    "PROCESS_NAME": "NED",
+                    "PROCESS_TITLE": "Non Executive Directorship",
+                    "PROCESS_SLA_DAYS": 10,
+                    "REFERENCE_KEY": "200",
+                    "__metadata": {
+                        "type": "CatalogService.processcfg_data",
+                        "uri": "https://port8081-workspaces-ws-v892z.eu10.applicationstudio.cloud.sap,nusbtputil.dest:443/destinations/nusbtputil/v2/catalog/processcfg_data('202')"
+                    }
+                },
+                {
+                    "PROCESS_CODE": "203",
+                    "PROCESS_NAME": "OPWN",
+                    "PROCESS_TITLE": "Other Paid Work in NUS",
+                    "PROCESS_SLA_DAYS": 10,
+                    "REFERENCE_KEY": "200",
+                    "__metadata": {
+                        "type": "CatalogService.processcfg_data",
+                        "uri": "https://port8081-workspaces-ws-v892z.eu10.applicationstudio.cloud.sap,nusbtputil.dest:443/destinations/nusbtputil/v2/catalog/processcfg_data('203')"
+                    }
+                },
+                {
+                    "PROCESS_CODE": "204",
+                    "PROCESS_NAME": "INT_CWS",
+                    "PROCESS_TITLE": "Internal Consultation Work",
+                    "PROCESS_SLA_DAYS": 10,
+                    "REFERENCE_KEY": "200",
+                    "__metadata": {
+                        "type": "CatalogService.processcfg_data",
+                        "uri": "https://port8081-workspaces-ws-v892z.eu10.applicationstudio.cloud.sap,nusbtputil.dest:443/destinations/nusbtputil/v2/catalog/processcfg_data('204')"
+                    }
+                }
+            ],
+            "designationList": [
+                {
+                    "DESIGNATION_CODE": "CW_DEPARTMENT_ADMIN",
+                    "DESIGNATION_DESC": "Department Admin"
+                },
+                {
+                    "DESIGNATION_CODE": "CW_OHRSS",
+                    "DESIGNATION_DESC": "OHR Shared Services"
+                },
+                {
+                    "DESIGNATION_CODE": "CW_PROGRAM_ADMIN",
+                    "DESIGNATION_DESC": "Program Admin"
+                },
+                {
+                    "DESIGNATION_CODE": "CW_PROGRAM_MANAGER",
+                    "DESIGNATION_DESC": "Program Manager"
+                },
+                {
+                    "DESIGNATION_CODE": "CW_HRP_REPORT_ADMIN",
+                    "DESIGNATION_DESC": "HRP ULU"
+                },
+                {
+                    "DESIGNATION_CODE": "CW_FINANCE_ADMIN",
+                    "DESIGNATION_DESC": "Finance Admin"
+                },
+                {
+                    "DESIGNATION_CODE": "CW_AUTO_APPROVAL",
+                    "DESIGNATION_DESC": "Auto Approval"
+                },
+                {
+                    "DESIGNATION_CODE": "CW_APP_ADMIN",
+                    "DESIGNATION_DESC": "Application Admin"
+                },
+                {
+                    "DESIGNATION_CODE": "OFN_ADMIN",
+                    "DESIGNATION_DESC": "OFN Admin"
+                },
+                {
+                    "DESIGNATION_CODE": "CWS_CONFIG_ADMIN",
+                    "DESIGNATION_DESC": "Config Admin"
+                },
+                {
+                    "DESIGNATION_CODE": "CWS_WF_ADMIN",
+                    "DESIGNATION_DESC": "Workflow Admin"
+                }
+            ],
+            "STAFF_USER_GRP": "CW_OHRSS",
+            "STAFF_ID": "53094",
+            "FULL_NM": "Paris Haney",
+            "NUSNET_ID": "",
+            "ULU": "ALL",
+            "ULU_T": "ALL",
+            "FDLU": "ALL",
+            "FDLU_T": "ALL",
+            "ALL_FDLU": true,
+            "ALL_ULU": true,
+            "STAFF_NUSNET_ID": "PHYARR"
+        }
+    ]
+}

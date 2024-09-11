@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="BASE_REQUEST_TASK_INBOX" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="BASE_REQUEST_TASK_INBOX"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="NUSEXT_MASTER_DATA_CHRS_JOB_INFO">
+    <resourceUri>NUSEXT_MASTER_DATA_CHRS_JOB_INFO</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="FULL_NM"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_MASTER_DATA_CHRS_JOB_INFO"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="STF_NUMBER" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STF_NUMBER"/>
+      <keyMapping columnObjectName="Projection_1" columnName="STF_NUMBER"/>
+    </attribute>
+    <attribute id="FULL_NM" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FULL_NM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FULL_NM"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes>
+    <calculatedAttribute id="CC_1" order="3" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <keyCalculation datatype="INTEGER" expressionLanguage="SQL">
+        <formula>1</formula>
+      </keyCalculation>
+    </calculatedAttribute>
+  </calculatedAttributes>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+
+  <localDimensions/>
+
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="106" y="281"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
