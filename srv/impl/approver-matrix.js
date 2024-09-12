@@ -65,7 +65,7 @@ module.exports = {
                         ? await commonQuery.fetchSequenceNumber("AUTH" + requestYear + requestMonth, 4)
                         : configRequest.AUTH_ID;
                     let approverMatrix = {};
-                    approverMatrix.AUTH_ID = authId.RUNNINGNORESULT;
+                    approverMatrix.AUTH_ID = (authId && authId.RUNNINGNORESULT) ? authId.RUNNINGNORESULT : authId;
                     approverMatrix.PROCESS_CODE = configRequest.PROCESS_CODE;
                     approverMatrix.PROCESS_TYPE = configRequest.PROCESS_TYPE;
                     approverMatrix.FDLU = configRequest.FDLU;
