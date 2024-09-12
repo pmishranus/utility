@@ -93,15 +93,15 @@ module.exports = {
                     approverMatrix.IS_DELETED = ApplicationConstants.N;
 
                     await commonQuery.upsertOperationChained(tx, "NUSEXT_UTILITY_CHRS_APPROVER_MATRIX", approverMatrix);
-                    config.frameResponse = CommonUtils.frameResponse(ApplicationConstants.S, "The Configuration is successfully done");
+                    configRequest = CommonUtils.frameResponse(configRequest, ApplicationConstants.S, "The Configuration is successfully done");
                 } catch (error) {
 
                     if (error instanceof ApplicationException) {
-                        configRequest.frameResponse = CommonUtils.frameResponse(ApplicationConstants.E, error.message);
+                        configRequest = CommonUtils.frameResponse(configRequest,ApplicationConstants.E, error.message);
                     } else if (error instanceof TypeError) {
-                        configRequest.frameResponse = CommonUtils.frameResponse(ApplicationConstants.E, error.message);
+                        configRequest = CommonUtils.frameResponse(configRequest,ApplicationConstants.E, error.message);
                     } else {
-                        configRequest.frameResponse = CommonUtils.frameResponse(ApplicationConstants.E, error.message);
+                        configRequest = CommonUtils.frameResponse(configRequest,ApplicationConstants.E, error.message);
                     }
                 }
                 configResponse.push(configRequest);

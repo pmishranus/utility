@@ -76,10 +76,12 @@
       <viewAttribute id="PROCESS_NAME"/>
       <viewAttribute id="PROCESS_TITLE"/>
       <viewAttribute id="PROCESS_SLA_DAYS"/>
-      <viewAttribute id="REFERENCE_KEY"/>
+      <viewAttribute id="PROCESS_TYPE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="NUSEXT_UTILITY_PROCESS_CONFIG"/>
+    <input node="NUSEXT_UTILITY_PROCESS_CONFIG">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="REFERENCE_KEY"/>
+    </input>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="task_config">
     <viewAttributes>
@@ -225,7 +227,7 @@
       <viewAttribute id="PROCESS_NAME"/>
       <viewAttribute id="PROCESS_TITLE"/>
       <viewAttribute id="PROCESS_SLA_DAYS"/>
-      <viewAttribute id="REFERENCE_KEY"/>
+      <viewAttribute id="PROCESS_TYPE"/>
       <viewAttribute hidden="true" id="JOIN$PROCESS_CODE$PROCESS_CODE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -259,7 +261,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_NAME" source="PROCESS_NAME"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TITLE" source="PROCESS_TITLE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_SLA_DAYS" source="PROCESS_SLA_DAYS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_KEY" source="REFERENCE_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_CODE$PROCESS_CODE" source="PROCESS_CODE"/>
     </input>
     <joinAttribute name="JOIN$PROCESS_CODE$PROCESS_CODE"/>
@@ -292,8 +294,8 @@
       <viewAttribute id="PROCESS_NAME"/>
       <viewAttribute id="PROCESS_TITLE"/>
       <viewAttribute id="PROCESS_SLA_DAYS"/>
-      <viewAttribute id="REFERENCE_KEY"/>
       <viewAttribute id="SOURCE_ACCESS"/>
+      <viewAttribute id="PROCESS_TYPE"/>
       <viewAttribute hidden="true" id="JOIN$TASK_NAME$TASK_NAME"/>
       <viewAttribute hidden="true" id="JOIN$PROCESS_CODE$PROCESS_CODE"/>
     </viewAttributes>
@@ -325,7 +327,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_NAME" source="PROCESS_NAME"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TITLE" source="PROCESS_TITLE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_SLA_DAYS" source="PROCESS_SLA_DAYS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_KEY" source="REFERENCE_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_NAME$TASK_NAME" source="TASK_NAME"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_CODE$PROCESS_CODE" source="PROCESS_CODE"/>
     </input>
@@ -365,9 +367,9 @@
       <viewAttribute id="PROCESS_NAME"/>
       <viewAttribute id="PROCESS_TITLE"/>
       <viewAttribute id="PROCESS_SLA_DAYS"/>
-      <viewAttribute id="REFERENCE_KEY"/>
       <viewAttribute id="SOURCE_ACCESS"/>
-      <viewAttribute id="TASK_CREATED_BY_FULL_NM"/>
+      <viewAttribute id="TASK_CREATED_BY_FULL_NAME"/>
+      <viewAttribute id="PROCESS_TYPE"/>
       <viewAttribute hidden="true" id="JOIN$TASK_CREATED_BY$STF_NUMBER"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -398,12 +400,12 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_NAME" source="PROCESS_NAME"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TITLE" source="PROCESS_TITLE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_SLA_DAYS" source="PROCESS_SLA_DAYS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_KEY" source="REFERENCE_KEY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_ACCESS" source="SOURCE_ACCESS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_CREATED_BY$STF_NUMBER" source="TASK_CREATED_BY"/>
     </input>
     <input node="STAFF_LIST_VIEW">
-      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_BY_FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_BY_FULL_NAME" source="FULL_NM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_CREATED_BY$STF_NUMBER" source="STF_NUMBER"/>
     </input>
     <joinAttribute name="JOIN$TASK_CREATED_BY$STF_NUMBER"/>
@@ -516,17 +518,17 @@
       <descriptions defaultDescription="PROCESS_SLA_DAYS"/>
       <keyMapping columnObjectName="TAKS_WITH_CREATOR_FULL_NAME" columnName="PROCESS_SLA_DAYS"/>
     </attribute>
-    <attribute id="REFERENCE_KEY" order="27" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="REFERENCE_KEY"/>
-      <keyMapping columnObjectName="TAKS_WITH_CREATOR_FULL_NAME" columnName="REFERENCE_KEY"/>
-    </attribute>
-    <attribute id="SOURCE_ACCESS" order="28" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SOURCE_ACCESS" order="27" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SOURCE_ACCESS"/>
       <keyMapping columnObjectName="TAKS_WITH_CREATOR_FULL_NAME" columnName="SOURCE_ACCESS"/>
     </attribute>
-    <attribute id="TASK_CREATED_BY_FULL_NM" order="29" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="FULL_NM"/>
-      <keyMapping columnObjectName="TAKS_WITH_CREATOR_FULL_NAME" columnName="TASK_CREATED_BY_FULL_NM"/>
+    <attribute id="PROCESS_TYPE" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_TYPE"/>
+      <keyMapping columnObjectName="TAKS_WITH_CREATOR_FULL_NAME" columnName="PROCESS_TYPE"/>
+    </attribute>
+    <attribute id="TASK_CREATED_BY_FULLNAME" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_CREATED_BY_FULLNAME"/>
+      <keyMapping columnObjectName="TAKS_WITH_CREATOR_FULL_NAME" columnName="TASK_CREATED_BY_FULL_NAME"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -549,21 +551,29 @@
       <upperLeftCorner x="573" y="1007"/>
       <rectangleSize height="30" width="160"/>
     </shape>
+    <shape expanded="true" modelObjectName="PROCESS_DETAILS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="856" y="865"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="PROCESS_CONFIG" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="891" y="739"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="task_config" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="971" y="609"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
     <shape expanded="true" modelObjectName="TASK_STATUS" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="563" y="857"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="TASK_DETAILS" modelObjectNameSpace="TASK_STATUS" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="260.41552734375"/>
+      <rectangleSize width="260"/>
     </shape>
     <shape modelObjectName="STATUS_CONFIG" modelObjectNameSpace="TASK_STATUS" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="210.89404296875"/>
-    </shape>
-    <shape expanded="true" modelObjectName="PROCESS_DETAILS" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="856" y="865"/>
-      <rectangleSize height="30" width="160"/>
+      <rectangleSize width="210"/>
     </shape>
     <shape expanded="true" modelObjectName="TASK_WITH_PROCESS_DETAILS" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="563" y="739"/>
@@ -577,25 +587,17 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape expanded="true" modelObjectName="PROCESS_CONFIG" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="891" y="739"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
     <shape expanded="true" modelObjectName="task_with_process_config" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="563" y="589"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="TASK_WITH_PROCESS_DETAILS" modelObjectNameSpace="task_with_process_config" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="260.41552734375"/>
+      <rectangleSize width="260"/>
     </shape>
     <shape modelObjectName="PROCESS_CONFIG" modelObjectNameSpace="task_with_process_config" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="201.95654296875"/>
-    </shape>
-    <shape expanded="true" modelObjectName="task_config" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="971" y="609"/>
-      <rectangleSize height="30" width="160"/>
+      <rectangleSize width="201"/>
     </shape>
     <shape expanded="true" modelObjectName="TASK_WITH_SOURCE" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="776" y="503"/>
@@ -603,11 +605,11 @@
     </shape>
     <shape modelObjectName="task_with_process_config" modelObjectNameSpace="TASK_WITH_SOURCE" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="260.41552734375"/>
+      <rectangleSize width="260"/>
     </shape>
     <shape modelObjectName="task_config" modelObjectNameSpace="TASK_WITH_SOURCE" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="184.41455078125"/>
+      <rectangleSize width="184"/>
     </shape>
     <shape expanded="true" modelObjectName="TAKS_WITH_CREATOR_FULL_NAME" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="776" y="396"/>
@@ -619,7 +621,7 @@
     </shape>
     <shape modelObjectName="STAFF_LIST_VIEW" modelObjectNameSpace="TAKS_WITH_CREATOR_FULL_NAME" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="171.783203125"/>
+      <rectangleSize width="171"/>
     </shape>
   </shapes>
 </layout>

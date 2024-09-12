@@ -2,11 +2,11 @@ const _ = require('lodash');
 const { MESSAGE } = require('./app-constant');
 const ValidationResultsDto = require("../dto/ValidationResultsDto")
 
-function frameResponse(errorCode, message) {
-  return {
-    STATUS_CODE: errorCode,
-    MESSAGE: message
-  };
+function frameResponse(sourceObj, errorCode, message) {
+
+  sourceObj.STATUS_CODE = errorCode;
+  sourceObj.MESSAGE = message;
+  return sourceObj;
 }
 
 /**
@@ -31,7 +31,7 @@ function isEmpty(value) {
   return _.isEmpty(value);
 }
 
-function isNotBlank(value){
+function isNotBlank(value) {
   return !_.isEmpty(value)
 }
 
@@ -127,7 +127,7 @@ const checkIsStringMandatory = /^[a-zA-Z]+$/;
 
 function numberToText(number) {
   if (number === null || number === undefined) {
-      return '';
+    return '';
   }
   return number.toString();
 }
@@ -135,12 +135,12 @@ function numberToText(number) {
 // Helper function to group by a specified key
 function groupBy(array, key) {
   return array.reduce((result, item) => {
-      const value = item[key];
-      if (!result[value]) {
-          result[value] = [];
-      }
-      result[value].push(item);
-      return result;
+    const value = item[key];
+    if (!result[value]) {
+      result[value] = [];
+    }
+    result[value].push(item);
+    return result;
   }, {});
 }
 
