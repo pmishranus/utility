@@ -1,0 +1,936 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="USER_LOOKUP" applyPrivilegeType="ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" defaultClient="$$client$$" outputViewType="Aggregation" calculationScenarioType="TREE_BASED" enforceSqlExecution="false">
+<descriptions defaultDescription="CHRS_JOB_INFO"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="NUSEXT_UTILITY_CHRS_EXTERNAL_USERS">
+    <resourceUri>NUSEXT_UTILITY_CHRS_EXTERNAL_USERS</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_MASTER_DATA_CHRS_JOB_INFO">
+    <resourceUri>NUSEXT_MASTER_DATA_CHRS_JOB_INFO</resourceUri>
+  </DataSource>
+  <DataSource id="RMM_Staff$$$$NUSEXT_MASTER_DATA_CHRS_JOB_INFO$$">
+    <resourceUri>NUSEXT_MASTER_DATA_CHRS_JOB_INFO</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_MASTER_DATA_CHRS_HRP_INFO">
+    <resourceUri>NUSEXT_MASTER_DATA_CHRS_HRP_INFO</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="External_Users_Projection">
+    <viewAttributes>
+      <viewAttribute id="APPT_TRACK_C"/>
+      <viewAttribute id="APPT_TRACK_T"/>
+      <viewAttribute id="BANK_INFO_FLG"/>
+      <viewAttribute id="CAPACITY_UTIL"/>
+      <viewAttribute id="COMPANY_C"/>
+      <viewAttribute id="COMPANY_T"/>
+      <viewAttribute id="CONTEXP_DATE"/>
+      <viewAttribute id="EMAIL"/>
+      <viewAttribute id="EMPL_STS_C"/>
+      <viewAttribute id="EMPL_STS_T"/>
+      <viewAttribute id="EMP_CAT_C"/>
+      <viewAttribute id="EMP_CAT_T"/>
+      <viewAttribute id="EMP_GP_C"/>
+      <viewAttribute id="EMP_GP_T"/>
+      <viewAttribute id="END_DATE"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="FIRST_NM"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="JOB_GRD_C"/>
+      <viewAttribute id="JOB_GRD_T"/>
+      <viewAttribute id="JOB_LVL_C"/>
+      <viewAttribute id="JOB_LVL_T"/>
+      <viewAttribute id="JOIN_DATE"/>
+      <viewAttribute id="LAST_NM"/>
+      <viewAttribute id="LEAVING_DATE"/>
+      <viewAttribute id="MODIFIED_BY"/>
+      <viewAttribute id="MODIFIED_ON"/>
+      <viewAttribute id="NUSNET_ID"/>
+      <viewAttribute id="PAYSCALE_GRP_C"/>
+      <viewAttribute id="PAYSCALE_GRP_T"/>
+      <viewAttribute id="PREF_NM"/>
+      <viewAttribute id="REMARKS"/>
+      <viewAttribute id="RM_FLG"/>
+      <viewAttribute id="RM_NUSNET_ID"/>
+      <viewAttribute id="RM_STF_N"/>
+      <viewAttribute id="SAP_DEPT_C"/>
+      <viewAttribute id="SAP_DEPT_T"/>
+      <viewAttribute id="SAP_FAC_C"/>
+      <viewAttribute id="SAP_FAC_T"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="START_DATE"/>
+      <viewAttribute id="STD_HOURS"/>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="WK_SCHD_C"/>
+      <viewAttribute id="WK_SCHD_T"/>
+      <viewAttribute id="WORK_TITLE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="START_DATE_CAL" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;START_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="END_DATE_CAL" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;END_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="IS_EXTERNAL" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+    
+        <formula>1</formula>
+    
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="NUSEXT_UTILITY_CHRS_EXTERNAL_USERS"/>
+    <!-- <filter>&quot;START_DATE&quot;&lt;= DATE(now()) AND &quot;END_DATE&quot;&gt;= DATE(now())</filter> -->
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="CHRS_Staff">
+    <viewAttributes>
+      <viewAttribute id="APPT_TRACK_C"/>
+      <viewAttribute id="APPT_TRACK_T"/>
+      <viewAttribute id="BANK_INFO_FLG"/>
+      <viewAttribute id="CAPACITY_UTIL"/>
+      <viewAttribute id="COMPANY_C"/>
+      <viewAttribute id="COMPANY_T"/>
+      <viewAttribute id="CONTEXP_DATE"/>
+      <viewAttribute id="EMAIL"/>
+      <viewAttribute id="EMPL_STS_C"/>
+      <viewAttribute id="EMPL_STS_T"/>
+      <viewAttribute id="EMP_CAT_C"/>
+      <viewAttribute id="EMP_CAT_T"/>
+      <viewAttribute id="EMP_GP_C"/>
+      <viewAttribute id="EMP_GP_T"/>
+      <viewAttribute id="END_DATE"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="FIRST_NM"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="JOB_GRD_C"/>
+      <viewAttribute id="JOB_GRD_T"/>
+      <viewAttribute id="JOB_LVL_C"/>
+      <viewAttribute id="JOB_LVL_T"/>
+      <viewAttribute id="JOIN_DATE"/>
+      <viewAttribute id="LAST_NM"/>
+      <viewAttribute id="LEAVING_DATE"/>
+      <viewAttribute id="MODIFIED_BY"/>
+      <viewAttribute id="MODIFIED_ON"/>
+      <viewAttribute id="NUSNET_ID"/>
+      <viewAttribute id="PAYSCALE_GRP_C"/>
+      <viewAttribute id="PAYSCALE_GRP_T"/>
+      <viewAttribute id="PREF_NM"/>
+      <viewAttribute id="RACE_C"/>
+      <viewAttribute id="RACE_T"/>
+      <viewAttribute id="RELIGION_C"/>
+      <viewAttribute id="RELIGION_T"/>
+      <viewAttribute id="REMARKS"/>
+      <viewAttribute id="RM_FLG"/>
+      <viewAttribute id="RM_NUSNET_ID"/>
+      <viewAttribute id="RM_STF_N"/>
+      <viewAttribute id="SAP_DEPT_C"/>
+      <viewAttribute id="SAP_DEPT_T"/>
+      <viewAttribute id="SAP_FAC_C"/>
+      <viewAttribute id="SAP_FAC_T"/>
+      <viewAttribute id="SEQ_NUMBER"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="START_DATE"/>
+      <viewAttribute id="STD_HOURS"/>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="WK_SCHD_C"/>
+      <viewAttribute id="WK_SCHD_T"/>
+      <viewAttribute id="WORK_TITLE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="START_DATE_CAL" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;START_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="END_DATE_CAL" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;END_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="IS_EXTERNAL" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+    
+        <formula>0</formula>
+    
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="NUSEXT_MASTER_DATA_CHRS_JOB_INFO"/>
+    <!-- <filter>&quot;START_DATE&quot;&lt;= DATE(now()) AND &quot;END_DATE&quot;&gt;= DATE(now())</filter> -->
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="RMM_Staff">
+    <viewAttributes>
+      <viewAttribute id="RMM_STF_N"/>
+      <viewAttribute id="START_DATE"/>
+      <viewAttribute id="END_DATE"/>
+      <viewAttribute id="RM_STF_N"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="RMM_Staff$$$$NUSEXT_MASTER_DATA_CHRS_JOB_INFO$$">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RMM_STF_N" source="RM_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_STF_N" source="SF_STF_NUMBER"/></input>
+    <!-- <filter>&quot;START_DATE&quot;&lt;= DATE(now()) AND &quot;END_DATE&quot;&gt;= DATE(now())</filter> -->
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="HRP_Info_Proj">
+    <viewAttributes>
+      <viewAttribute id="END_DATE"/>
+      <viewAttribute id="HRP_NUSNET_ID"/>
+      <viewAttribute id="HRP_STF_N"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="START_DATE"/>
+      <viewAttribute id="STF_NUMBER"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_MASTER_DATA_CHRS_HRP_INFO"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="User_Union">
+    <viewAttributes>
+      <viewAttribute id="APPT_TRACK_C"/>
+      <viewAttribute id="APPT_TRACK_T"/>
+      <viewAttribute id="BANK_INFO_FLG"/>
+      <viewAttribute id="CAPACITY_UTIL"/>
+      <viewAttribute id="COMPANY_C"/>
+      <viewAttribute id="COMPANY_T"/>
+      <viewAttribute id="CONTEXP_DATE"/>
+      <viewAttribute id="EMAIL"/>
+      <viewAttribute id="EMPL_STS_C"/>
+      <viewAttribute id="EMPL_STS_T"/>
+      <viewAttribute id="EMP_CAT_C"/>
+      <viewAttribute id="EMP_CAT_T"/>
+      <viewAttribute id="EMP_GP_C"/>
+      <viewAttribute id="EMP_GP_T"/>
+      <viewAttribute id="END_DATE"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="FIRST_NM"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="JOB_GRD_C"/>
+      <viewAttribute id="JOB_GRD_T"/>
+      <viewAttribute id="JOB_LVL_C"/>
+      <viewAttribute id="JOB_LVL_T"/>
+      <viewAttribute id="JOIN_DATE"/>
+      <viewAttribute id="LAST_NM"/>
+      <viewAttribute id="LEAVING_DATE"/>
+      <viewAttribute id="MODIFIED_BY"/>
+      <viewAttribute id="MODIFIED_ON"/>
+      <viewAttribute id="NUSNET_ID"/>
+      <viewAttribute id="PAYSCALE_GRP_C"/>
+      <viewAttribute id="PAYSCALE_GRP_T"/>
+      <viewAttribute id="PREF_NM"/>
+      <viewAttribute id="RACE_C"/>
+      <viewAttribute id="RACE_T"/>
+      <viewAttribute id="RELIGION_C"/>
+      <viewAttribute id="RELIGION_T"/>
+      <viewAttribute id="REMARKS"/>
+      <viewAttribute id="RM_FLG"/>
+      <viewAttribute id="RM_NUSNET_ID"/>
+      <viewAttribute id="RM_STF_N"/>
+      <viewAttribute id="SAP_DEPT_C"/>
+      <viewAttribute id="SAP_DEPT_T"/>
+      <viewAttribute id="SAP_FAC_C"/>
+      <viewAttribute id="SAP_FAC_T"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="START_DATE"/>
+      <viewAttribute id="STD_HOURS"/>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="WK_SCHD_C"/>
+      <viewAttribute id="WK_SCHD_T"/>
+      <viewAttribute id="WORK_TITLE"/>
+      <viewAttribute id="START_DATE_CAL"/>
+      <viewAttribute id="END_DATE_CAL"/>
+      <viewAttribute id="IS_EXTERNAL"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="CHRS_Staff" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPT_TRACK_C" source="APPT_TRACK_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPT_TRACK_T" source="APPT_TRACK_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BANK_INFO_FLG" source="BANK_INFO_FLG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAPACITY_UTIL" source="CAPACITY_UTIL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_C" source="COMPANY_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_T" source="COMPANY_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTEXP_DATE" source="CONTEXP_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL" source="EMAIL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPL_STS_C" source="EMPL_STS_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPL_STS_T" source="EMPL_STS_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CAT_C" source="EMP_CAT_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CAT_T" source="EMP_CAT_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_C" source="EMP_GP_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_T" source="EMP_GP_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIRST_NM" source="FIRST_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOB_GRD_C" source="JOB_GRD_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOB_GRD_T" source="JOB_GRD_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOB_LVL_C" source="JOB_LVL_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOB_LVL_T" source="JOB_LVL_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAST_NM" source="LAST_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LEAVING_DATE" source="LEAVING_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY" source="MODIFIED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_ON" source="MODIFIED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NUSNET_ID" source="NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYSCALE_GRP_C" source="PAYSCALE_GRP_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYSCALE_GRP_T" source="PAYSCALE_GRP_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PREF_NM" source="PREF_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RACE_C" source="RACE_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RACE_T" source="RACE_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RELIGION_C" source="RELIGION_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RELIGION_T" source="RELIGION_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REMARKS" source="REMARKS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_FLG" source="RM_FLG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_NUSNET_ID" source="RM_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_STF_N" source="RM_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAP_DEPT_C" source="SAP_DEPT_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAP_DEPT_T" source="SAP_DEPT_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAP_FAC_C" source="SAP_FAC_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAP_FAC_T" source="SAP_FAC_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE" source="START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STD_HOURS" source="STD_HOURS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_NUMBER" source="STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_C" source="ULU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_T" source="ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WK_SCHD_C" source="WK_SCHD_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WK_SCHD_T" source="WK_SCHD_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_TITLE" source="WORK_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE_CAL" source="START_DATE_CAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE_CAL" source="END_DATE_CAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_EXTERNAL" source="IS_EXTERNAL"/>
+    </input>
+    <input node="External_Users_Projection" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPT_TRACK_C" source="APPT_TRACK_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPT_TRACK_T" source="APPT_TRACK_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BANK_INFO_FLG" source="BANK_INFO_FLG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAPACITY_UTIL" source="CAPACITY_UTIL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_C" source="COMPANY_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_T" source="COMPANY_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTEXP_DATE" source="CONTEXP_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL" source="EMAIL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPL_STS_C" source="EMPL_STS_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPL_STS_T" source="EMPL_STS_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CAT_C" source="EMP_CAT_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CAT_T" source="EMP_CAT_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_C" source="EMP_GP_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_T" source="EMP_GP_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIRST_NM" source="FIRST_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOB_GRD_C" source="JOB_GRD_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOB_GRD_T" source="JOB_GRD_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOB_LVL_C" source="JOB_LVL_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOB_LVL_T" source="JOB_LVL_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAST_NM" source="LAST_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LEAVING_DATE" source="LEAVING_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY" source="MODIFIED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_ON" source="MODIFIED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NUSNET_ID" source="NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYSCALE_GRP_C" source="PAYSCALE_GRP_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYSCALE_GRP_T" source="PAYSCALE_GRP_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PREF_NM" source="PREF_NM"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="RACE_C" null="true"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="RACE_T" null="true"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="RELIGION_C" null="true"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="RELIGION_T" null="true"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REMARKS" source="REMARKS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_FLG" source="RM_FLG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_NUSNET_ID" source="RM_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_STF_N" source="RM_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAP_DEPT_C" source="SAP_DEPT_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAP_DEPT_T" source="SAP_DEPT_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAP_FAC_C" source="SAP_FAC_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAP_FAC_T" source="SAP_FAC_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE" source="START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STD_HOURS" source="STD_HOURS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_NUMBER" source="STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_C" source="ULU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_T" source="ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WK_SCHD_C" source="WK_SCHD_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WK_SCHD_T" source="WK_SCHD_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_TITLE" source="WORK_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE_CAL" source="START_DATE_CAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE_CAL" source="END_DATE_CAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_EXTERNAL" source="IS_EXTERNAL"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:RankView" id="HRP_Rank">
+    <viewAttributes>
+      <viewAttribute id="HRP_STF_N"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="START_DATE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="HRP_Info_Proj"/>
+    <windowFunction dynamicPartitionAttributes="false">
+      <partitionViewAttributeName>SF_STF_NUMBER</partitionViewAttributeName>
+      <order byViewAttributeName="START_DATE" direction="DESC"/>
+      <rankThreshold/>
+    </windowFunction>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="User_RMM_Details" cardinality="C1_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="APPT_TRACK_C"/>
+      <viewAttribute id="APPT_TRACK_T"/>
+      <viewAttribute id="BANK_INFO_FLG"/>
+      <viewAttribute id="CAPACITY_UTIL"/>
+      <viewAttribute id="COMPANY_C"/>
+      <viewAttribute id="COMPANY_T"/>
+      <viewAttribute id="CONTEXP_DATE"/>
+      <viewAttribute id="EMAIL"/>
+      <viewAttribute id="EMPL_STS_C"/>
+      <viewAttribute id="EMPL_STS_T"/>
+      <viewAttribute id="EMP_CAT_C"/>
+      <viewAttribute id="EMP_CAT_T"/>
+      <viewAttribute id="EMP_GP_C"/>
+      <viewAttribute id="EMP_GP_T"/>
+      <viewAttribute id="END_DATE"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="FIRST_NM"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="JOB_GRD_C"/>
+      <viewAttribute id="JOB_GRD_T"/>
+      <viewAttribute id="JOB_LVL_C"/>
+      <viewAttribute id="JOB_LVL_T"/>
+      <viewAttribute id="JOIN_DATE"/>
+      <viewAttribute id="LAST_NM"/>
+      <viewAttribute id="LEAVING_DATE"/>
+      <viewAttribute id="NUSNET_ID"/>
+      <viewAttribute id="PAYSCALE_GRP_C"/>
+      <viewAttribute id="PAYSCALE_GRP_T"/>
+      <viewAttribute id="PREF_NM"/>
+      <viewAttribute id="RACE_C"/>
+      <viewAttribute id="RACE_T"/>
+      <viewAttribute id="RELIGION_C"/>
+      <viewAttribute id="RELIGION_T"/>
+      <viewAttribute id="REMARKS"/>
+      <viewAttribute id="RM_FLG"/>
+      <viewAttribute id="RM_NUSNET_ID"/>
+      <viewAttribute id="RM_STF_N"/>
+      <viewAttribute id="SAP_DEPT_C"/>
+      <viewAttribute id="SAP_DEPT_T"/>
+      <viewAttribute id="SAP_FAC_C"/>
+      <viewAttribute id="SAP_FAC_T"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="START_DATE"/>
+      <viewAttribute id="STD_HOURS"/>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="WK_SCHD_C"/>
+      <viewAttribute id="WK_SCHD_T"/>
+      <viewAttribute id="WORK_TITLE"/>
+      <viewAttribute id="START_DATE_CAL"/>
+      <viewAttribute id="END_DATE_CAL"/>
+      <viewAttribute id="IS_EXTERNAL"/>
+      <viewAttribute id="RMM_STF_N"/>
+      <viewAttribute hidden="true" id="JOIN$RM_STF_N$RM_STF_N"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="User_Union">
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPT_TRACK_C" source="APPT_TRACK_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPT_TRACK_T" source="APPT_TRACK_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BANK_INFO_FLG" source="BANK_INFO_FLG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAPACITY_UTIL" source="CAPACITY_UTIL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_C" source="COMPANY_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_T" source="COMPANY_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTEXP_DATE" source="CONTEXP_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL" source="EMAIL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPL_STS_C" source="EMPL_STS_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPL_STS_T" source="EMPL_STS_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CAT_C" source="EMP_CAT_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CAT_T" source="EMP_CAT_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_C" source="EMP_GP_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_T" source="EMP_GP_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIRST_NM" source="FIRST_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOB_GRD_C" source="JOB_GRD_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOB_GRD_T" source="JOB_GRD_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOB_LVL_C" source="JOB_LVL_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOB_LVL_T" source="JOB_LVL_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAST_NM" source="LAST_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LEAVING_DATE" source="LEAVING_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NUSNET_ID" source="NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYSCALE_GRP_C" source="PAYSCALE_GRP_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYSCALE_GRP_T" source="PAYSCALE_GRP_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PREF_NM" source="PREF_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RACE_C" source="RACE_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RACE_T" source="RACE_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RELIGION_C" source="RELIGION_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RELIGION_T" source="RELIGION_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REMARKS" source="REMARKS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_FLG" source="RM_FLG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_NUSNET_ID" source="RM_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_STF_N" source="RM_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAP_DEPT_C" source="SAP_DEPT_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAP_DEPT_T" source="SAP_DEPT_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAP_FAC_C" source="SAP_FAC_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAP_FAC_T" source="SAP_FAC_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE" source="START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STD_HOURS" source="STD_HOURS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_NUMBER" source="STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_C" source="ULU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_T" source="ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WK_SCHD_C" source="WK_SCHD_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WK_SCHD_T" source="WK_SCHD_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_TITLE" source="WORK_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE_CAL" source="START_DATE_CAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE_CAL" source="END_DATE_CAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_EXTERNAL" source="IS_EXTERNAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RM_STF_N$RM_STF_N" source="RM_STF_N"/>
+    </input>
+    <input node="RMM_Staff">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RMM_STF_N" source="RMM_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RM_STF_N$RM_STF_N" source="RM_STF_N"/>
+    </input>
+    <joinAttribute name="JOIN$RM_STF_N$RM_STF_N"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="User_HRP_Join" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="APPT_TRACK_C"/>
+      <viewAttribute id="APPT_TRACK_T"/>
+      <viewAttribute id="BANK_INFO_FLG"/>
+      <viewAttribute id="CAPACITY_UTIL"/>
+      <viewAttribute id="COMPANY_C"/>
+      <viewAttribute id="COMPANY_T"/>
+      <viewAttribute id="CONTEXP_DATE"/>
+      <viewAttribute id="EMAIL"/>
+      <viewAttribute id="EMPL_STS_C"/>
+      <viewAttribute id="EMPL_STS_T"/>
+      <viewAttribute id="EMP_CAT_C"/>
+      <viewAttribute id="EMP_CAT_T"/>
+      <viewAttribute id="EMP_GP_C"/>
+      <viewAttribute id="EMP_GP_T"/>
+      <viewAttribute id="END_DATE"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="FIRST_NM"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="JOB_GRD_C"/>
+      <viewAttribute id="JOB_GRD_T"/>
+      <viewAttribute id="JOB_LVL_C"/>
+      <viewAttribute id="JOB_LVL_T"/>
+      <viewAttribute id="JOIN_DATE"/>
+      <viewAttribute id="LAST_NM"/>
+      <viewAttribute id="LEAVING_DATE"/>
+      <viewAttribute id="NUSNET_ID"/>
+      <viewAttribute id="PAYSCALE_GRP_C"/>
+      <viewAttribute id="PAYSCALE_GRP_T"/>
+      <viewAttribute id="PREF_NM"/>
+      <viewAttribute id="RACE_C"/>
+      <viewAttribute id="RACE_T"/>
+      <viewAttribute id="RELIGION_C"/>
+      <viewAttribute id="RELIGION_T"/>
+      <viewAttribute id="REMARKS"/>
+      <viewAttribute id="RM_FLG"/>
+      <viewAttribute id="RM_NUSNET_ID"/>
+      <viewAttribute id="RM_STF_N"/>
+      <viewAttribute id="SAP_DEPT_C"/>
+      <viewAttribute id="SAP_DEPT_T"/>
+      <viewAttribute id="SAP_FAC_C"/>
+      <viewAttribute id="SAP_FAC_T"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="START_DATE"/>
+      <viewAttribute id="STD_HOURS"/>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="WK_SCHD_C"/>
+      <viewAttribute id="WK_SCHD_T"/>
+      <viewAttribute id="WORK_TITLE"/>
+      <viewAttribute id="START_DATE_CAL"/>
+      <viewAttribute id="END_DATE_CAL"/>
+      <viewAttribute id="IS_EXTERNAL"/>
+      <viewAttribute id="RMM_STF_N"/>
+      <viewAttribute id="HRP_STF_N"/>
+      <viewAttribute hidden="true" id="JOIN$SF_STF_NUMBER$SF_STF_NUMBER"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="User_RMM_Details">
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPT_TRACK_C" source="APPT_TRACK_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APPT_TRACK_T" source="APPT_TRACK_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BANK_INFO_FLG" source="BANK_INFO_FLG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAPACITY_UTIL" source="CAPACITY_UTIL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_C" source="COMPANY_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_T" source="COMPANY_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTEXP_DATE" source="CONTEXP_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL" source="EMAIL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPL_STS_C" source="EMPL_STS_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPL_STS_T" source="EMPL_STS_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CAT_C" source="EMP_CAT_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CAT_T" source="EMP_CAT_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_C" source="EMP_GP_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_T" source="EMP_GP_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIRST_NM" source="FIRST_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOB_GRD_C" source="JOB_GRD_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOB_GRD_T" source="JOB_GRD_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOB_LVL_C" source="JOB_LVL_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOB_LVL_T" source="JOB_LVL_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAST_NM" source="LAST_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LEAVING_DATE" source="LEAVING_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NUSNET_ID" source="NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYSCALE_GRP_C" source="PAYSCALE_GRP_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYSCALE_GRP_T" source="PAYSCALE_GRP_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PREF_NM" source="PREF_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RACE_C" source="RACE_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RACE_T" source="RACE_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RELIGION_C" source="RELIGION_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RELIGION_T" source="RELIGION_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REMARKS" source="REMARKS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_FLG" source="RM_FLG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_NUSNET_ID" source="RM_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_STF_N" source="RM_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAP_DEPT_C" source="SAP_DEPT_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAP_DEPT_T" source="SAP_DEPT_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAP_FAC_C" source="SAP_FAC_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAP_FAC_T" source="SAP_FAC_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE" source="START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STD_HOURS" source="STD_HOURS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_NUMBER" source="STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_C" source="ULU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_T" source="ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WK_SCHD_C" source="WK_SCHD_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WK_SCHD_T" source="WK_SCHD_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_TITLE" source="WORK_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE_CAL" source="START_DATE_CAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE_CAL" source="END_DATE_CAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_EXTERNAL" source="IS_EXTERNAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RMM_STF_N" source="RMM_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SF_STF_NUMBER$SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+    </input>
+    <input node="HRP_Rank">
+      <mapping xsi:type="Calculation:AttributeMapping" target="HRP_STF_N" source="HRP_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SF_STF_NUMBER$SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+    </input>
+    <joinAttribute name="JOIN$SF_STF_NUMBER$SF_STF_NUMBER"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="User_HRP_Join">
+  <attributes>
+    <attribute id="APPT_TRACK_C" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPT_TRACK_C"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="APPT_TRACK_C"/>
+    </attribute>
+    <attribute id="APPT_TRACK_T" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPT_TRACK_T"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="APPT_TRACK_T"/>
+    </attribute>
+    <attribute id="BANK_INFO_FLG" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BANK_INFO_FLG"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="BANK_INFO_FLG"/>
+    </attribute>
+    <attribute id="CAPACITY_UTIL" order="4" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CAPACITY_UTIL"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="CAPACITY_UTIL"/>
+    </attribute>
+    <attribute id="COMPANY_C" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COMPANY_C"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="COMPANY_C"/>
+    </attribute>
+    <attribute id="COMPANY_T" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COMPANY_T"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="COMPANY_T"/>
+    </attribute>
+    <attribute id="EMAIL" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMAIL"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="EMAIL"/>
+    </attribute>
+    <attribute id="EMPL_STS_C" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMPL_STS_C"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="EMPL_STS_C"/>
+    </attribute>
+    <attribute id="EMPL_STS_T" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMPL_STS_T"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="EMPL_STS_T"/>
+    </attribute>
+    <attribute id="EMP_CAT_C" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMP_CAT_C"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="EMP_CAT_C"/>
+    </attribute>
+    <attribute id="EMP_CAT_T" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMP_CAT_T"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="EMP_CAT_T"/>
+    </attribute>
+    <attribute id="EMP_GP_C" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMP_GP_C"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="EMP_GP_C"/>
+    </attribute>
+    <attribute id="EMP_GP_T" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMP_GP_T"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="EMP_GP_T"/>
+    </attribute>
+    <attribute id="FDLU_C" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FDLU_C"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="FDLU_C"/>
+    </attribute>
+    <attribute id="FDLU_T" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FDLU_T"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="FDLU_T"/>
+    </attribute>
+    <attribute id="FIRST_NM" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FIRST_NM"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="FIRST_NM"/>
+    </attribute>
+    <attribute id="FULL_NM" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FULL_NM"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="FULL_NM"/>
+    </attribute>
+    <attribute id="JOB_GRD_C" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOB_GRD_C"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="JOB_GRD_C"/>
+    </attribute>
+    <attribute id="JOB_GRD_T" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOB_GRD_T"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="JOB_GRD_T"/>
+    </attribute>
+    <attribute id="JOB_LVL_C" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOB_LVL_C"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="JOB_LVL_C"/>
+    </attribute>
+    <attribute id="JOB_LVL_T" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOB_LVL_T"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="JOB_LVL_T"/>
+    </attribute>
+    <attribute id="LAST_NM" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAST_NM"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="LAST_NM"/>
+    </attribute>
+    <attribute id="NUSNET_ID" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NUSNET_ID"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="NUSNET_ID"/>
+    </attribute>
+    <attribute id="PAYSCALE_GRP_C" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYSCALE_GRP_C"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="PAYSCALE_GRP_C"/>
+    </attribute>
+    <attribute id="PAYSCALE_GRP_T" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYSCALE_GRP_T"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="PAYSCALE_GRP_T"/>
+    </attribute>
+    <attribute id="PREF_NM" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PREF_NM"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="PREF_NM"/>
+    </attribute>
+    <attribute id="RACE_C" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RACE_C"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="RACE_C"/>
+    </attribute>
+    <attribute id="RACE_T" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RACE_T"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="RACE_T"/>
+    </attribute>
+    <attribute id="RELIGION_C" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RELIGION_C"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="RELIGION_C"/>
+    </attribute>
+    <attribute id="RELIGION_T" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RELIGION_T"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="RELIGION_T"/>
+    </attribute>
+    <attribute id="REMARKS" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REMARKS"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="REMARKS"/>
+    </attribute>
+    <attribute id="RM_FLG" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RM_FLG"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="RM_FLG"/>
+    </attribute>
+    <attribute id="RM_NUSNET_ID" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RM_NUSNET_ID"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="RM_NUSNET_ID"/>
+    </attribute>
+    <attribute id="RM_STF_N" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RM_STF_N"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="RM_STF_N"/>
+    </attribute>
+    <attribute id="SAP_DEPT_C" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SAP_DEPT_C"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="SAP_DEPT_C"/>
+    </attribute>
+    <attribute id="SAP_DEPT_T" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SAP_DEPT_T"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="SAP_DEPT_T"/>
+    </attribute>
+    <attribute id="SAP_FAC_C" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SAP_FAC_C"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="SAP_FAC_C"/>
+    </attribute>
+    <attribute id="SAP_FAC_T" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SAP_FAC_T"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="SAP_FAC_T"/>
+    </attribute>
+    <attribute id="SF_STF_NUMBER" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SF_STF_NUMBER"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="SF_STF_NUMBER"/>
+    </attribute>
+    <attribute id="STD_HOURS" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_HOURS"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="STD_HOURS"/>
+    </attribute>
+    <attribute id="STF_NUMBER" order="46" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STF_NUMBER"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="STF_NUMBER"/>
+    </attribute>
+    <attribute id="ULU_C" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ULU_C"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="ULU_C"/>
+    </attribute>
+    <attribute id="ULU_T" order="48" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ULU_T"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="ULU_T"/>
+    </attribute>
+    <attribute id="WK_SCHD_C" order="49" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WK_SCHD_C"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="WK_SCHD_C"/>
+    </attribute>
+    <attribute id="WK_SCHD_T" order="50" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WK_SCHD_T"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="WK_SCHD_T"/>
+    </attribute>
+    <attribute id="WORK_TITLE" order="51" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WORK_TITLE"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="WORK_TITLE"/>
+    </attribute>
+    <attribute id="IS_EXTERNAL" order="54" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="IS_EXTERNAL"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="IS_EXTERNAL"/>
+    </attribute>
+    <attribute id="RMM_STF_N" order="55" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RMM_STF_N"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="RMM_STF_N"/>
+    </attribute>
+    <attribute id="HRP_STF_N" order="56" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HRP_STF_N"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="HRP_STF_N"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="CONTEXP_DATE" order="7" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="CONTEXP_DATE"/>
+      <measureMapping columnObjectName="User_HRP_Join" columnName="CONTEXP_DATE"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="END_DATE" order="15" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="END_DATE"/>
+      <measureMapping columnObjectName="User_HRP_Join" columnName="END_DATE"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="JOIN_DATE" order="24" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="JOIN_DATE"/>
+      <measureMapping columnObjectName="User_HRP_Join" columnName="JOIN_DATE"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="LEAVING_DATE" order="26" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="LEAVING_DATE"/>
+      <measureMapping columnObjectName="User_HRP_Join" columnName="LEAVING_DATE"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="START_DATE" order="44" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="START_DATE"/>
+      <measureMapping columnObjectName="User_HRP_Join" columnName="START_DATE"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="START_DATE_CAL" order="52" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="START_DATE_CAL"/>
+      <measureMapping columnObjectName="User_HRP_Join" columnName="START_DATE_CAL"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="END_DATE_CAL" order="53" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="END_DATE_CAL"/>
+      <measureMapping columnObjectName="User_HRP_Join" columnName="END_DATE_CAL"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure></baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="367" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="External_Users_Projection" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="201" y="681"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="CHRS_Staff" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="411" y="681"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="RMM_Staff" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="524" y="536"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="HRP_Info_Proj" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="536"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="User_Union" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="314" y="540"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="HRP_Rank" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="394"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="User_RMM_Details" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="400" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="User_Union" modelObjectNameSpace="User_RMM_Details" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="RMM_Staff" modelObjectNameSpace="User_RMM_Details" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="User_HRP_Join" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="367" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape modelObjectName="User_RMM_Details" modelObjectNameSpace="User_HRP_Join" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="HRP_Rank" modelObjectNameSpace="User_HRP_Join" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
