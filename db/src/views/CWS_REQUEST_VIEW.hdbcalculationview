@@ -19,8 +19,8 @@
   <DataSource id="USER_LOOKUP">
     <resourceUri>USER_LOOKUP</resourceUri>
   </DataSource>
-  <DataSource id="NUSEXT_UTILITY_PROCESS_DETAILS">
-    <resourceUri>NUSEXT_UTILITY_PROCESS_DETAILS</resourceUri>
+  <DataSource id="PROCESS_DETAILS">
+    <resourceUri>PROCESS_DETAILS</resourceUri>
   </DataSource>
   <DataSource id="NUSEXT_MASTER_DATA_CHRS_FDLU_ULU">
     <resourceUri>NUSEXT_MASTER_DATA_CHRS_FDLU_ULU</resourceUri>
@@ -187,9 +187,15 @@
     
     
       <viewAttribute id="REFERENCE_ID"/>
-      <viewAttribute id="PROCESS_CODE"/></viewAttributes>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
+    </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="NUSEXT_UTILITY_PROCESS_DETAILS"/>
+    <input node="PROCESS_DETAILS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="STATUS_COLOR_CODE"/>
+    </input>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Ulu_Fdlu_Details">
     <viewAttributes>
@@ -982,6 +988,8 @@
       <viewAttribute id="PROCESS_INST_ID"/>
       <viewAttribute id="PROCESS_STATUS"/>
       <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
       <viewAttribute hidden="true" id="JOIN$REQ_UNIQUE_ID$REFERENCE_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -1086,6 +1094,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$REQ_UNIQUE_ID$REFERENCE_ID" source="REFERENCE_ID"/>
     </input>
     <joinAttribute name="JOIN$REQ_UNIQUE_ID$REFERENCE_ID"/>
@@ -1192,6 +1202,8 @@
       <viewAttribute id="PROCESS_INST_ID"/>
       <viewAttribute id="PROCESS_STATUS"/>
       <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
       <viewAttribute hidden="true" id="JOIN$DEPT_C$FDLU_C"/>
       <viewAttribute hidden="true" id="JOIN$FACULTY_C$ULU_C"/>
     </viewAttributes>
@@ -1295,6 +1307,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DEPT_C$FDLU_C" source="DEPT_C"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FACULTY_C$ULU_C" source="FACULTY_C"/>
     </input>
@@ -1408,7 +1422,10 @@
     
       <viewAttribute id="PROCESS_INST_ID"/>
       <viewAttribute id="PROCESS_STATUS"/>
-      <viewAttribute id="PROCESS_ACTUAL_DOC"/></viewAttributes>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+    </viewAttributes>
     <calculatedViewAttributes/>
     <input node="CwsNUluFdluJoin"/>
   </calculationView>
@@ -1517,6 +1534,8 @@
       <viewAttribute id="PROCESS_INST_ID"/>
       <viewAttribute id="PROCESS_STATUS"/>
       <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
       <viewAttribute hidden="true" id="JOIN$REQ_UNIQUE_ID$REFERENCE_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -1621,6 +1640,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$REQ_UNIQUE_ID$REFERENCE_ID" source="REQ_UNIQUE_ID"/>
     </input>
     <input node="Request_Lock">
@@ -1734,6 +1755,8 @@
       <viewAttribute id="PROCESS_INST_ID"/>
       <viewAttribute id="PROCESS_STATUS"/>
       <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
       <viewAttribute hidden="true" id="JOIN$SUBMITTED_BY$SUBMITTED_BY_STF_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -1838,6 +1861,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SUBMITTED_BY$SUBMITTED_BY_STF_ID" source="SUBMITTED_BY"/>
     </input>
     <input node="Submitted_By_User_Lookup">
@@ -1950,6 +1975,8 @@
       <viewAttribute id="PROCESS_INST_ID"/>
       <viewAttribute id="PROCESS_STATUS"/>
       <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
       <viewAttribute hidden="true" id="JOIN$SUBMISSION_TYPE$SUBMISSION_TYPE_K"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -2054,6 +2081,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SUBMISSION_TYPE$SUBMISSION_TYPE_K" source="SUBMISSION_TYPE"/>
     </input>
     <input node="Sub_Type_Alias">
@@ -2164,6 +2193,8 @@
       <viewAttribute id="PROCESS_INST_ID"/>
       <viewAttribute id="PROCESS_STATUS"/>
       <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
       <viewAttribute hidden="true" id="JOIN$MODIFIED_BY$MODIFIED_BY_STF_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -2266,6 +2297,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MODIFIED_BY$MODIFIED_BY_STF_ID" source="MODIFIED_BY"/>
     </input>
     <input node="ModifiedBy_Lookup">
@@ -2377,6 +2410,8 @@
       <viewAttribute id="PROCESS_INST_ID"/>
       <viewAttribute id="PROCESS_STATUS"/>
       <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
       <viewAttribute hidden="true" id="JOIN$FDLU$FDLU_C"/>
       <viewAttribute hidden="true" id="JOIN$ULU$ULU_C"/>
     </viewAttributes>
@@ -2481,6 +2516,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FDLU$FDLU_C" source="FDLU"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ULU$ULU_C" source="ULU"/>
     </input>
@@ -2857,7 +2894,12 @@
     <attribute id="PROCESS_STATUS" order="94" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PROCESS_STATUS"/>
       <keyMapping columnObjectName="Request_Engaging_View" columnName="PROCESS_STATUS"/>
-    </attribute></attributes>
+    </attribute>
+    <attribute id="PROCESS_STATUS_ALIAS" order="97" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_STATUS_ALIAS"/>
+      <keyMapping columnObjectName="Request_Engaging_View" columnName="PROCESS_STATUS_ALIAS"/>
+    </attribute>
+  </attributes>
   <calculatedAttributes/>
   <baseMeasures>
     <measure id="END_DATE" order="8" aggregationType="min" measureType="simple">
@@ -2916,6 +2958,12 @@
   
       <exceptionAggregationMetadata/>
   
+    </measure>
+  
+    <measure id="PROCESS_STATUS_COLOR_CODE" order="96" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="PROCESS_STATUS_COLOR_CODE"/>
+      <measureMapping columnObjectName="Request_Engaging_View" columnName="PROCESS_STATUS_COLOR_CODE"/>
+      <exceptionAggregationMetadata/>
     </measure>
   </baseMeasures>
   <calculatedMeasures/>
