@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="TASK_MD_SEL_STAFF_FOR" applyPrivilegeType="ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" defaultClient="$$client$$" outputViewType="Aggregation" calculationScenarioType="TREE_BASED" enforceSqlExecution="false">
+<descriptions defaultDescription="TASK_MD_SEL_STAFF"/>
+<localVariables>
+  <variable id="IP_1" parameter="true">
+    <descriptions defaultDescription="Claim Type"/>
+    <variableProperties datatype="VARCHAR" length="10" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="true"/>
+      <defaultRange/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="NUSEXT_MASTER_DATA_CHRS_JOB_INFO">
+    <resourceUri>NUSEXT_MASTER_DATA_CHRS_JOB_INFO</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_UTILITY_CHRS_APPROVER_MATRIX">
+    <resourceUri>NUSEXT_UTILITY_CHRS_APPROVER_MATRIX</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Chrs_Job_Info">
+    <viewAttributes>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="NUSNET_ID"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="RM_FLG"/>
+      <viewAttribute id="RM_NUSNET_ID"/>
+      <viewAttribute id="RM_STF_N"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_MASTER_DATA_CHRS_JOB_INFO"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Approver_Matrix">
+    <viewAttributes>
+      <viewAttribute id="STAFF_USER_GRP"/>
+    
+      <viewAttribute id="CLAIM_TYPE"/>
+    
+      <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="FDLU"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="ULU"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_UTILITY_CHRS_APPROVER_MATRIX">
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE" source="PROCESS_TYPE"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="NUSNET_ID"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="RM_FLG"/>
+      <viewAttribute id="RM_NUSNET_ID"/>
+      <viewAttribute id="RM_STF_N"/>
+      <viewAttribute id="STAFF_USER_GRP"/>
+      <viewAttribute id="CLAIM_TYPE"/>
+    
+      <viewAttribute hidden="true" id="JOIN$SF_STF_NUMBER$STAFF_ID"/>
+      <viewAttribute hidden="true" id="JOIN$STF_NUMBER$STAFF_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_1" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>1</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Chrs_Job_Info">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NUSNET_ID" source="NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_C" source="ULU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_NUMBER" source="STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_T" source="ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_FLG" source="RM_FLG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_NUSNET_ID" source="RM_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_STF_N" source="RM_STF_N"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SF_STF_NUMBER$STAFF_ID" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$STF_NUMBER$STAFF_ID" source="STF_NUMBER"/>
+    </input>
+    <input node="Approver_Matrix">
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_USER_GRP" source="STAFF_USER_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE" source="CLAIM_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SF_STF_NUMBER$STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$STF_NUMBER$STAFF_ID" source="STAFF_ID"/>
+    </input>
+    <joinAttribute name="JOIN$SF_STF_NUMBER$STAFF_ID"/>
+    <joinAttribute name="JOIN$STF_NUMBER$STAFF_ID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="AddingStaffUserGrp">
+    <viewAttributes>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="NUSNET_ID"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="RM_FLG"/>
+      <viewAttribute id="RM_NUSNET_ID"/>
+      <viewAttribute id="RM_STF_N"/>
+      <viewAttribute id="CC_1"/>
+    
+      <viewAttribute id="STAFF_USER_GRP"/>
+      <viewAttribute id="CLAIM_TYPE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_STAFF_USER_GRP" datatype="VARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
+        <formula>if(isnull(&quot;STAFF_USER_GRP&quot;),'NONE',&quot;STAFF_USER_GRP&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Join_1"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="AddingStaffUserGrp">
+  <attributes>
+    <attribute id="FDLU_C" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FDLU_C"/>
+      <keyMapping columnObjectName="AddingStaffUserGrp" columnName="FDLU_C"/>
+    </attribute>
+    <attribute id="FDLU_T" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FDLU_T"/>
+      <keyMapping columnObjectName="AddingStaffUserGrp" columnName="FDLU_T"/>
+    </attribute>
+    <attribute id="FULL_NM" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FULL_NM"/>
+      <keyMapping columnObjectName="AddingStaffUserGrp" columnName="FULL_NM"/>
+    </attribute>
+    <attribute id="NUSNET_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NUSNET_ID"/>
+      <keyMapping columnObjectName="AddingStaffUserGrp" columnName="NUSNET_ID"/>
+    </attribute>
+    <attribute id="SF_STF_NUMBER" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SF_STF_NUMBER"/>
+      <keyMapping columnObjectName="AddingStaffUserGrp" columnName="SF_STF_NUMBER"/>
+    </attribute>
+    <attribute id="ULU_C" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ULU_C"/>
+      <keyMapping columnObjectName="AddingStaffUserGrp" columnName="ULU_C"/>
+    </attribute>
+    <attribute id="STF_NUMBER" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STF_NUMBER"/>
+      <keyMapping columnObjectName="AddingStaffUserGrp" columnName="STF_NUMBER"/>
+    </attribute>
+    <attribute id="ULU_T" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ULU_T"/>
+      <keyMapping columnObjectName="AddingStaffUserGrp" columnName="ULU_T"/>
+    </attribute>
+    <attribute id="RM_FLG" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RM_FLG"/>
+      <keyMapping columnObjectName="AddingStaffUserGrp" columnName="RM_FLG"/>
+    </attribute>
+    <attribute id="RM_NUSNET_ID" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RM_NUSNET_ID"/>
+      <keyMapping columnObjectName="AddingStaffUserGrp" columnName="RM_NUSNET_ID"/>
+    </attribute>
+    <attribute id="RM_STF_N" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RM_STF_N"/>
+      <keyMapping columnObjectName="AddingStaffUserGrp" columnName="RM_STF_N"/>
+    </attribute>
+    <attribute id="STAFF_USER_GRP" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAFF_USER_GRP"/>
+      <keyMapping columnObjectName="AddingStaffUserGrp" columnName="CC_STAFF_USER_GRP"/>
+    </attribute>
+    <attribute id="CLAIM_TYPE" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLAIM_TYPE"/>
+      <keyMapping columnObjectName="AddingStaffUserGrp" columnName="CLAIM_TYPE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="CC_1" order="12" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CC_1"/>
+      <measureMapping columnObjectName="AddingStaffUserGrp" columnName="CC_1"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="241.21650018073558" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Chrs_Job_Info" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92.00000000000006" y="501.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="222.93631278293594" y="341.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Chrs_Job_Info" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Approver_Matrix" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Approver_Matrix" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302.0000000000001" y="501.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+  
+    <shape expanded="true" modelObjectName="AddingStaffUserGrp" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="222.93631278293594" y="236.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape></shapes>
+</layout>
+</Calculation:scenario>
