@@ -1,0 +1,727 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="REQUEST_TASK_VIEW" applyPrivilegeType="ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" defaultClient="$$client$$" outputViewType="Aggregation" calculationScenarioType="TREE_BASED" enforceSqlExecution="false">
+<descriptions defaultDescription="BASE_TASK_INBOX"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="BASE_TASK_VIEW">
+    <resourceUri>BASE_TASK_VIEW</resourceUri>
+  </DataSource>
+  <DataSource id="USER_LOOKUP">
+    <resourceUri>USER_LOOKUP</resourceUri>
+  </DataSource>
+  <DataSource id="ALL_REQUESTS_VIEW">
+    <resourceUri>ALL_REQUESTS_VIEW</resourceUri>
+  </DataSource>
+  <DataSource id="All_Request_NoProcess$$$$ALL_REQUESTS_VIEW$$">
+    <resourceUri>ALL_REQUESTS_VIEW</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Base_Task_View">
+    <viewAttributes>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="TASK_ACTION_CODE"/>
+      <viewAttribute id="TASK_CREATED_BY_NID"/>
+      <viewAttribute id="TASK_CREATED_BY_FULLNAME"/>
+      <viewAttribute id="TASK_STATUS_ALIAS"/>
+      <viewAttribute id="TASK_STATUS"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TASK_INST_ID"/>
+      <viewAttribute id="TASK_EXPECTED_DOC"/>
+      <viewAttribute id="TASK_CREATED_ON"/>
+      <viewAttribute id="TASK_CREATED_BY"/>
+      <viewAttribute id="TASK_COMPLETED_BY_NID"/>
+      <viewAttribute id="TASK_COMPLETED_BY"/>
+      <viewAttribute id="TASK_ASSGN_TO_STF_NUMBER"/>
+      <viewAttribute id="TASK_ASSGN_TO"/>
+      <viewAttribute id="TASK_ASSGN_GRP"/>
+      <viewAttribute id="TASK_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="BASE_TASK_VIEW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ACTION_CODE" source="ACTION_CODE"/></input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Task_Assgn_Lk">
+    <viewAttributes>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="FULL_NM"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="USER_LOOKUP"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="All_Request_View" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="REQUEST_STATUS_CODE"/>
+      <viewAttribute id="REQUEST_STATUS_COLOR_CODE"/>
+      <viewAttribute id="PROCESS_TITLE"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="SUBMITTED_BY_NID"/>
+      <viewAttribute id="SUBMITTED_BY_FULLNAME"/>
+      <viewAttribute id="ENG_FDLU_T"/>
+      <viewAttribute id="ENG_ULU_T"/>
+      <viewAttribute id="MIGRATED"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="NUSNET_ID"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="REQUEST_TYPE"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="REQUEST_STATUS_TYPE"/>
+      <viewAttribute id="OFFLINE_APPROVAL"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="DRAFT_ID"/>
+      <viewAttribute id="EMPLOYEE_GRP"/>
+      <viewAttribute id="FDLU"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+      <viewAttribute id="REQUEST_ID"/>
+      <viewAttribute id="REQUEST_STATUS"/>
+      <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="SUBMITTED_BY"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="REQUEST_STATUS_ALIAS"/>
+      <viewAttribute id="SUBMITTED_ON"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="ALL_REQUESTS_VIEW"/>
+    <filter>not(isNull(&quot;PROCESS_INST_ID&quot;))</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="All_Request_NoProcess" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="REQUEST_STATUS_CODE"/>
+      <viewAttribute id="REQUEST_STATUS_COLOR_CODE"/>
+      <viewAttribute id="PROCESS_TITLE"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="SUBMITTED_BY_NID"/>
+      <viewAttribute id="SUBMITTED_BY_FULLNAME"/>
+      <viewAttribute id="ENG_FDLU_T"/>
+      <viewAttribute id="ENG_ULU_T"/>
+      <viewAttribute id="MIGRATED"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="NUSNET_ID"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="REQUEST_TYPE"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="REQUEST_STATUS_TYPE"/>
+      <viewAttribute id="OFFLINE_APPROVAL"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="DRAFT_ID"/>
+      <viewAttribute id="EMPLOYEE_GRP"/>
+      <viewAttribute id="FDLU"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+      <viewAttribute id="REQUEST_ID"/>
+      <viewAttribute id="REQUEST_STATUS"/>
+      <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="SUBMITTED_BY"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="REQUEST_STATUS_ALIAS"/>
+      <viewAttribute id="SUBMITTED_ON"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="REFERENCE_ID" datatype="VARCHAR" length="10" expressionLanguage="COLUMN_ENGINE">
+        <formula>&quot;DRAFT_ID&quot;</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TASK_INST_ID" datatype="VARCHAR" length="10" expressionLanguage="COLUMN_ENGINE">
+        <formula>'NA'</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TASK_ASSGN_TO" datatype="VARCHAR" length="10" expressionLanguage="COLUMN_ENGINE">
+        <formula>'ALL'</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TASK_ASSGN_TO_FULLNAME" datatype="VARCHAR" length="10" expressionLanguage="COLUMN_ENGINE">
+        <formula>'ALL'</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TASK_ASSGN_TO_STF_NUMBER" datatype="VARCHAR" length="10" expressionLanguage="COLUMN_ENGINE">
+        <formula>'ALL'</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TASK_CREATED_ON" datatype="TIMESTAMP" expressionLanguage="COLUMN_ENGINE">
+        <formula>now()</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TASK_ASSGN_GRP" datatype="VARCHAR" length="10" expressionLanguage="COLUMN_ENGINE">
+        <formula>'NA'</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TASK_NAME" datatype="VARCHAR" length="10" expressionLanguage="COLUMN_ENGINE">
+        <formula>'NA'</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="TASK_STATUS" datatype="VARCHAR" length="10" expressionLanguage="COLUMN_ENGINE">
+        <formula>'NA'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="All_Request_NoProcess$$$$ALL_REQUESTS_VIEW$$"/>
+    <filter>isNull(&quot;PROCESS_INST_ID&quot;)</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="All_Task_Dtls" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TASK_INST_ID"/>
+      <viewAttribute id="TASK_CREATED_ON"/>
+      <viewAttribute id="TASK_ASSGN_TO_STF_NUMBER"/>
+      <viewAttribute id="TASK_ASSGN_TO"/>
+      <viewAttribute id="TASK_ASSGN_GRP"/>
+      <viewAttribute id="TASK_ASSGN_TO_FULLNAME"/>
+    
+      <viewAttribute id="TASK_STATUS"/>
+    
+      <viewAttribute hidden="true" id="JOIN$TASK_ASSGN_TO_STF_NUMBER$STF_NUMBER"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Base_Task_View">
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_NAME" source="TASK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_INST_ID" source="TASK_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_ON" source="TASK_CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO_STF_NUMBER" source="TASK_ASSGN_TO_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO" source="TASK_ASSGN_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_GRP" source="TASK_ASSGN_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS" source="TASK_STATUS"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_ASSGN_TO_STF_NUMBER$STF_NUMBER" source="TASK_ASSGN_TO_STF_NUMBER"/>
+    </input>
+    <input node="Task_Assgn_Lk">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO_FULLNAME" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_ASSGN_TO_STF_NUMBER$STF_NUMBER" source="STF_NUMBER"/>
+    </input>
+    <joinAttribute name="JOIN$TASK_ASSGN_TO_STF_NUMBER$STF_NUMBER"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="RequesT_Task_Jn_Dtls" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="REQUEST_STATUS_CODE"/>
+      <viewAttribute id="REQUEST_STATUS_COLOR_CODE"/>
+      <viewAttribute id="PROCESS_TITLE"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="SUBMITTED_BY_NID"/>
+      <viewAttribute id="SUBMITTED_BY_FULLNAME"/>
+      <viewAttribute id="ENG_FDLU_T"/>
+      <viewAttribute id="ENG_ULU_T"/>
+      <viewAttribute id="MIGRATED"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="NUSNET_ID"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="REQUEST_TYPE"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="REQUEST_STATUS_TYPE"/>
+      <viewAttribute id="OFFLINE_APPROVAL"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="DRAFT_ID"/>
+      <viewAttribute id="EMPLOYEE_GRP"/>
+      <viewAttribute id="FDLU"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+      <viewAttribute id="REQUEST_ID"/>
+      <viewAttribute id="REQUEST_STATUS"/>
+      <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="SUBMITTED_BY"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="REQUEST_STATUS_ALIAS"/>
+      <viewAttribute id="SUBMITTED_ON"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TASK_INST_ID"/>
+      <viewAttribute id="TASK_CREATED_ON"/>
+      <viewAttribute id="TASK_ASSGN_TO_STF_NUMBER"/>
+      <viewAttribute id="TASK_ASSGN_TO"/>
+      <viewAttribute id="TASK_ASSGN_GRP"/>
+      <viewAttribute id="TASK_ASSGN_TO_FULLNAME"/>
+      <viewAttribute id="TASK_STATUS"/>
+    
+      <viewAttribute hidden="true" id="JOIN$DRAFT_ID$REFERENCE_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="All_Request_View">
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS_CODE" source="REQUEST_STATUS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS_COLOR_CODE" source="REQUEST_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TITLE" source="PROCESS_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_NID" source="SUBMITTED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_FULLNAME" source="SUBMITTED_BY_FULLNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENG_FDLU_T" source="ENG_FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENG_ULU_T" source="ENG_ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NUSNET_ID" source="NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_C" source="ULU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_TYPE" source="REQUEST_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS_TYPE" source="REQUEST_STATUS_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OFFLINE_APPROVAL" source="OFFLINE_APPROVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_T" source="ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DRAFT_ID" source="DRAFT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPLOYEE_GRP" source="EMPLOYEE_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTOR_GRP" source="REQUESTOR_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS" source="REQUEST_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY" source="SUBMITTED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS_ALIAS" source="REQUEST_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON" source="SUBMITTED_ON"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$REFERENCE_ID" source="DRAFT_ID"/>
+    </input>
+    <input node="All_Task_Dtls">
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_NAME" source="TASK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_INST_ID" source="TASK_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_ON" source="TASK_CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO_STF_NUMBER" source="TASK_ASSGN_TO_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO" source="TASK_ASSGN_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_GRP" source="TASK_ASSGN_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO_FULLNAME" source="TASK_ASSGN_TO_FULLNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS" source="TASK_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$REFERENCE_ID" source="REFERENCE_ID"/>
+    </input>
+    <joinAttribute name="JOIN$DRAFT_ID$REFERENCE_ID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:RankView" id="Distinct_Reqs">
+    <viewAttributes>
+      <viewAttribute id="REQUEST_STATUS_CODE"/>
+      <viewAttribute id="REQUEST_STATUS_COLOR_CODE"/>
+      <viewAttribute id="PROCESS_TITLE"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="SUBMITTED_BY_NID"/>
+      <viewAttribute id="SUBMITTED_BY_FULLNAME"/>
+      <viewAttribute id="ENG_FDLU_T"/>
+      <viewAttribute id="ENG_ULU_T"/>
+      <viewAttribute id="MIGRATED"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="NUSNET_ID"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="REQUEST_TYPE"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="REQUEST_STATUS_TYPE"/>
+      <viewAttribute id="OFFLINE_APPROVAL"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="DRAFT_ID"/>
+      <viewAttribute id="EMPLOYEE_GRP"/>
+      <viewAttribute id="FDLU"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+      <viewAttribute id="REQUEST_ID"/>
+      <viewAttribute id="REQUEST_STATUS"/>
+      <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="SUBMITTED_BY"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="REQUEST_STATUS_ALIAS"/>
+      <viewAttribute id="SUBMITTED_ON"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TASK_INST_ID"/>
+      <viewAttribute id="TASK_CREATED_ON"/>
+      <viewAttribute id="TASK_ASSGN_TO_STF_NUMBER"/>
+      <viewAttribute id="TASK_ASSGN_TO"/>
+      <viewAttribute id="TASK_ASSGN_GRP"/>
+      <viewAttribute id="TASK_ASSGN_TO_FULLNAME"/>
+      <viewAttribute id="TASK_STATUS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="RequesT_Task_Jn_Dtls"/>
+    <windowFunction dynamicPartitionAttributes="false">
+      <partitionViewAttributeName>DRAFT_ID</partitionViewAttributeName>
+      <order byViewAttributeName="SUBMITTED_ON" direction="DESC"/>
+      <rankThreshold/>
+    </windowFunction>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Request_Union">
+    <viewAttributes>
+      <viewAttribute id="REQUEST_STATUS_CODE"/>
+      <viewAttribute id="REQUEST_STATUS_COLOR_CODE"/>
+      <viewAttribute id="PROCESS_TITLE"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="SUBMITTED_BY_NID"/>
+      <viewAttribute id="SUBMITTED_BY_FULLNAME"/>
+      <viewAttribute id="ENG_FDLU_T"/>
+      <viewAttribute id="ENG_ULU_T"/>
+      <viewAttribute id="MIGRATED"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="NUSNET_ID"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="REQUEST_TYPE"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="REQUEST_STATUS_TYPE"/>
+      <viewAttribute id="OFFLINE_APPROVAL"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="DRAFT_ID"/>
+      <viewAttribute id="EMPLOYEE_GRP"/>
+      <viewAttribute id="FDLU"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+      <viewAttribute id="REQUEST_ID"/>
+      <viewAttribute id="REQUEST_STATUS"/>
+      <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="SUBMITTED_BY"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="REQUEST_STATUS_ALIAS"/>
+      <viewAttribute id="SUBMITTED_ON"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TASK_INST_ID"/>
+      <viewAttribute id="TASK_CREATED_ON"/>
+      <viewAttribute id="TASK_ASSGN_TO_STF_NUMBER"/>
+      <viewAttribute id="TASK_ASSGN_TO"/>
+      <viewAttribute id="TASK_ASSGN_GRP"/>
+      <viewAttribute id="TASK_ASSGN_TO_FULLNAME"/>
+      <viewAttribute id="TASK_STATUS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Distinct_Reqs" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS_CODE" source="REQUEST_STATUS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS_COLOR_CODE" source="REQUEST_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TITLE" source="PROCESS_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_NID" source="SUBMITTED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_FULLNAME" source="SUBMITTED_BY_FULLNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENG_FDLU_T" source="ENG_FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENG_ULU_T" source="ENG_ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NUSNET_ID" source="NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_C" source="ULU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_TYPE" source="REQUEST_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS_TYPE" source="REQUEST_STATUS_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OFFLINE_APPROVAL" source="OFFLINE_APPROVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_T" source="ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DRAFT_ID" source="DRAFT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPLOYEE_GRP" source="EMPLOYEE_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTOR_GRP" source="REQUESTOR_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS" source="REQUEST_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY" source="SUBMITTED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS_ALIAS" source="REQUEST_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON" source="SUBMITTED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_NAME" source="TASK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_INST_ID" source="TASK_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_ON" source="TASK_CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO_STF_NUMBER" source="TASK_ASSGN_TO_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO" source="TASK_ASSGN_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_GRP" source="TASK_ASSGN_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO_FULLNAME" source="TASK_ASSGN_TO_FULLNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS" source="TASK_STATUS"/>
+    </input>
+    <input node="All_Request_NoProcess" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS_CODE" source="REQUEST_STATUS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS_COLOR_CODE" source="REQUEST_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TITLE" source="PROCESS_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_NID" source="SUBMITTED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_FULLNAME" source="SUBMITTED_BY_FULLNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENG_FDLU_T" source="ENG_FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENG_ULU_T" source="ENG_ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NUSNET_ID" source="NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_C" source="ULU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_TYPE" source="REQUEST_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS_TYPE" source="REQUEST_STATUS_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OFFLINE_APPROVAL" source="OFFLINE_APPROVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_T" source="ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DRAFT_ID" source="DRAFT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPLOYEE_GRP" source="EMPLOYEE_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTOR_GRP" source="REQUESTOR_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS" source="REQUEST_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY" source="SUBMITTED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS_ALIAS" source="REQUEST_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON" source="SUBMITTED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_NAME" source="TASK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_INST_ID" source="TASK_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_ON" source="TASK_CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO_STF_NUMBER" source="TASK_ASSGN_TO_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO" source="TASK_ASSGN_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_GRP" source="TASK_ASSGN_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO_FULLNAME" source="TASK_ASSGN_TO_FULLNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS" source="TASK_STATUS"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Request_Union">
+  <attributes>
+    <attribute id="REQUEST_STATUS_CODE" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REQUEST_STATUS_CODE"/>
+      <keyMapping columnObjectName="Request_Union" columnName="REQUEST_STATUS_CODE"/>
+    </attribute>
+    <attribute id="REQUEST_STATUS_COLOR_CODE" order="2" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REQUEST_STATUS_COLOR_CODE"/>
+      <keyMapping columnObjectName="Request_Union" columnName="REQUEST_STATUS_COLOR_CODE"/>
+    </attribute>
+    <attribute id="PROCESS_TITLE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_TITLE"/>
+      <keyMapping columnObjectName="Request_Union" columnName="PROCESS_TITLE"/>
+    </attribute>
+    <attribute id="ULU" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ULU"/>
+      <keyMapping columnObjectName="Request_Union" columnName="ULU"/>
+    </attribute>
+    <attribute id="SUBMITTED_BY_NID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUBMITTED_BY_NID"/>
+      <keyMapping columnObjectName="Request_Union" columnName="SUBMITTED_BY_NID"/>
+    </attribute>
+    <attribute id="SUBMITTED_BY_FULLNAME" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUBMITTED_BY_FULLNAME"/>
+      <keyMapping columnObjectName="Request_Union" columnName="SUBMITTED_BY_FULLNAME"/>
+    </attribute>
+    <attribute id="ENG_FDLU_T" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ENG_FDLU_T"/>
+      <keyMapping columnObjectName="Request_Union" columnName="ENG_FDLU_T"/>
+    </attribute>
+    <attribute id="ENG_ULU_T" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ENG_ULU_T"/>
+      <keyMapping columnObjectName="Request_Union" columnName="ENG_ULU_T"/>
+    </attribute>
+    <attribute id="MIGRATED" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MIGRATED"/>
+      <keyMapping columnObjectName="Request_Union" columnName="MIGRATED"/>
+    </attribute>
+    <attribute id="PROCESS_INST_ID" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_INST_ID"/>
+      <keyMapping columnObjectName="Request_Union" columnName="PROCESS_INST_ID"/>
+    </attribute>
+    <attribute id="NUSNET_ID" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NUSNET_ID"/>
+      <keyMapping columnObjectName="Request_Union" columnName="NUSNET_ID"/>
+    </attribute>
+    <attribute id="ULU_C" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ULU_C"/>
+      <keyMapping columnObjectName="Request_Union" columnName="ULU_C"/>
+    </attribute>
+    <attribute id="REQUEST_TYPE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REQUEST_TYPE"/>
+      <keyMapping columnObjectName="Request_Union" columnName="REQUEST_TYPE"/>
+    </attribute>
+    <attribute id="PROCESS_CODE" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_CODE"/>
+      <keyMapping columnObjectName="Request_Union" columnName="PROCESS_CODE"/>
+    </attribute>
+    <attribute id="REQUEST_STATUS_TYPE" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REQUEST_STATUS_TYPE"/>
+      <keyMapping columnObjectName="Request_Union" columnName="REQUEST_STATUS_TYPE"/>
+    </attribute>
+    <attribute id="OFFLINE_APPROVAL" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OFFLINE_APPROVAL"/>
+      <keyMapping columnObjectName="Request_Union" columnName="OFFLINE_APPROVAL"/>
+    </attribute>
+    <attribute id="PROCESS_STATUS" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_STATUS"/>
+      <keyMapping columnObjectName="Request_Union" columnName="PROCESS_STATUS"/>
+    </attribute>
+    <attribute id="FDLU_T" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FDLU_T"/>
+      <keyMapping columnObjectName="Request_Union" columnName="FDLU_T"/>
+    </attribute>
+    <attribute id="ULU_T" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ULU_T"/>
+      <keyMapping columnObjectName="Request_Union" columnName="ULU_T"/>
+    </attribute>
+    <attribute id="PROCESS_STATUS_ALIAS" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_STATUS_ALIAS"/>
+      <keyMapping columnObjectName="Request_Union" columnName="PROCESS_STATUS_ALIAS"/>
+    </attribute>
+    <attribute id="DRAFT_ID" key="true" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DRAFT_ID"/>
+      <keyMapping columnObjectName="Request_Union" columnName="DRAFT_ID"/>
+    </attribute>
+    <attribute id="EMPLOYEE_GRP" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMPLOYEE_GRP"/>
+      <keyMapping columnObjectName="Request_Union" columnName="EMPLOYEE_GRP"/>
+    </attribute>
+    <attribute id="FDLU" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FDLU"/>
+      <keyMapping columnObjectName="Request_Union" columnName="FDLU"/>
+    </attribute>
+    <attribute id="REQUESTOR_GRP" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REQUESTOR_GRP"/>
+      <keyMapping columnObjectName="Request_Union" columnName="REQUESTOR_GRP"/>
+    </attribute>
+    <attribute id="REQUEST_ID" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REQUEST_ID"/>
+      <keyMapping columnObjectName="Request_Union" columnName="REQUEST_ID"/>
+    </attribute>
+    <attribute id="REQUEST_STATUS" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REQUEST_STATUS"/>
+      <keyMapping columnObjectName="Request_Union" columnName="REQUEST_STATUS"/>
+    </attribute>
+    <attribute id="STAFF_ID" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAFF_ID"/>
+      <keyMapping columnObjectName="Request_Union" columnName="STAFF_ID"/>
+    </attribute>
+    <attribute id="STAFF_NUSNET_ID" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAFF_NUSNET_ID"/>
+      <keyMapping columnObjectName="Request_Union" columnName="STAFF_NUSNET_ID"/>
+    </attribute>
+    <attribute id="SUBMITTED_BY" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUBMITTED_BY"/>
+      <keyMapping columnObjectName="Request_Union" columnName="SUBMITTED_BY"/>
+    </attribute>
+    <attribute id="FULL_NM" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FULL_NM"/>
+      <keyMapping columnObjectName="Request_Union" columnName="FULL_NM"/>
+    </attribute>
+    <attribute id="FDLU_C" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FDLU_C"/>
+      <keyMapping columnObjectName="Request_Union" columnName="FDLU_C"/>
+    </attribute>
+    <attribute id="REQUEST_STATUS_ALIAS" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REQUEST_STATUS_ALIAS"/>
+      <keyMapping columnObjectName="Request_Union" columnName="REQUEST_STATUS_ALIAS"/>
+    </attribute>
+    <attribute id="REFERENCE_ID" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REFERENCE_ID"/>
+      <keyMapping columnObjectName="Request_Union" columnName="REFERENCE_ID"/>
+    </attribute>
+    <attribute id="TASK_NAME" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_NAME"/>
+      <keyMapping columnObjectName="Request_Union" columnName="TASK_NAME"/>
+    </attribute>
+    <attribute id="TASK_INST_ID" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_INST_ID"/>
+      <keyMapping columnObjectName="Request_Union" columnName="TASK_INST_ID"/>
+    </attribute>
+    <attribute id="TASK_ASSGN_TO_STF_NUMBER" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_ASSGN_TO_STF_NUMBER"/>
+      <keyMapping columnObjectName="Request_Union" columnName="TASK_ASSGN_TO_STF_NUMBER"/>
+    </attribute>
+    <attribute id="TASK_ASSGN_TO" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_ASSGN_TO"/>
+      <keyMapping columnObjectName="Request_Union" columnName="TASK_ASSGN_TO"/>
+    </attribute>
+    <attribute id="TASK_ASSGN_GRP" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_ASSGN_GRP"/>
+      <keyMapping columnObjectName="Request_Union" columnName="TASK_ASSGN_GRP"/>
+    </attribute>
+    <attribute id="TASK_ASSGN_TO_FULLNAME" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_ASSGN_TO_FULLNAME"/>
+      <keyMapping columnObjectName="Request_Union" columnName="TASK_ASSGN_TO_FULLNAME"/>
+    </attribute>
+    <attribute id="TASK_STATUS" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_STATUS"/>
+      <keyMapping columnObjectName="Request_Union" columnName="TASK_STATUS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="SUBMITTED_ON" order="33" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="SUBMITTED_ON"/>
+      <measureMapping columnObjectName="Request_Union" columnName="SUBMITTED_ON"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="TASK_CREATED_ON" order="37" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="TASK_CREATED_ON"/>
+      <measureMapping columnObjectName="Request_Union" columnName="TASK_CREATED_ON"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="354.77573636826054" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Base_Task_View" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92.00000000000007" y="801.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Task_Assgn_Lk" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302.0000000000002" y="801.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="All_Task_Dtls" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="118.66666666666674" y="641.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Base_Task_View" modelObjectNameSpace="All_Task_Dtls" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Task_Assgn_Lk" modelObjectNameSpace="All_Task_Dtls" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="RequesT_Task_Jn_Dtls" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="239.2840561134243" y="481.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="All_Request_View" modelObjectNameSpace="RequesT_Task_Jn_Dtls" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="All_Task_Dtls" modelObjectNameSpace="RequesT_Task_Jn_Dtls" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="All_Request_View" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="385.1825727656271" y="641.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Distinct_Reqs" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="239.2840561134243" y="366.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="All_Request_NoProcess" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="449.2840561134243" y="356.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Request_Union" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="354.77573636826054" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="BASE_TASK_VIEW" applyPrivilegeType="ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" defaultClient="$$client$$" outputViewType="Aggregation" calculationScenarioType="TREE_BASED" enforceSqlExecution="false">
+<descriptions defaultDescription="BASE_TASK_INBOX"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="NUSEXT_UTILITY_TASK_DETAILS">
+    <resourceUri>NUSEXT_UTILITY_TASK_DETAILS</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_UTILITY_STATUS_CONFIG">
+    <resourceUri>NUSEXT_UTILITY_STATUS_CONFIG</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_UTILITY_PROCESS_DETAILS">
+    <resourceUri>NUSEXT_UTILITY_PROCESS_DETAILS</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_UTILITY_PROCESS_CONFIG">
+    <resourceUri>NUSEXT_UTILITY_PROCESS_CONFIG</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_UTILITY_TASKS_CONFIG">
+    <resourceUri>NUSEXT_UTILITY_TASKS_CONFIG</resourceUri>
+  </DataSource>
+  <DataSource id="STAFF_LIST_VIEW">
+    <resourceUri>STAFF_LIST_VIEW</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="TaskDetails">
+    <viewAttributes>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="TASK_ACTUAL_DOC"/>
+      <viewAttribute id="TASK_ASSGN_GRP"/>
+      <viewAttribute id="TASK_ASSGN_TO"/>
+      <viewAttribute id="TASK_ASSGN_TO_STF_NUMBER"/>
+      <viewAttribute id="TASK_COMPLETED_BY"/>
+      <viewAttribute id="TASK_COMPLETED_BY_NID"/>
+      <viewAttribute id="TASK_CREATED_BY"/>
+      <viewAttribute id="TASK_CREATED_ON"/>
+      <viewAttribute id="TASK_EXPECTED_DOC"/>
+      <viewAttribute id="TASK_INST_ID"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TASK_STATUS"/>
+    
+      <viewAttribute id="ACTION_CODE"/>
+    
+      <viewAttribute id="TASK_CREATED_BY_NID"/>
+    
+      <viewAttribute id="TASK_SEQUENCE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_UTILITY_TASK_DETAILS"/></calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="StatusConfig">
+    <viewAttributes>
+      <viewAttribute id="STATUS_ALIAS"/>
+      <viewAttribute id="STATUS_CODE"/>
+      <viewAttribute id="STATUS_COLOR_CODE"/>
+      <viewAttribute id="STATUS_TYPE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_UTILITY_STATUS_CONFIG"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ProcessDetails">
+    <viewAttributes>
+      <viewAttribute id="PROCESSED_BY"/>
+      <viewAttribute id="PROCESSED_BY_NID"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="PROCESS_START_DATE"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="REFERENCE_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_UTILITY_PROCESS_DETAILS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ProcessConfig">
+    <viewAttributes>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROCESS_NAME"/>
+      <viewAttribute id="PROCESS_SLA_DAYS"/>
+      <viewAttribute id="PROCESS_TITLE"/>
+    
+      <viewAttribute id="PROCESS_TYPE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_UTILITY_PROCESS_CONFIG">
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="REFERENCE_KEY"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="TaskAction">
+    <viewAttributes>
+      <viewAttribute id="TCFG_ID"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="SOURCE_ACCESS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_UTILITY_TASKS_CONFIG"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="TaskStatus" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="TASK_ACTUAL_DOC"/>
+      <viewAttribute id="TASK_ASSGN_GRP"/>
+      <viewAttribute id="TASK_ASSGN_TO"/>
+      <viewAttribute id="TASK_ASSGN_TO_STF_NUMBER"/>
+      <viewAttribute id="TASK_COMPLETED_BY"/>
+      <viewAttribute id="TASK_COMPLETED_BY_NID"/>
+      <viewAttribute id="TASK_CREATED_BY"/>
+      <viewAttribute id="TASK_CREATED_ON"/>
+      <viewAttribute id="TASK_EXPECTED_DOC"/>
+      <viewAttribute id="TASK_INST_ID"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TASK_STATUS"/>
+      <viewAttribute id="TASK_STATUS_ALIAS"/>
+      <viewAttribute id="TASK_STATUS_COLOR_CODE"/>
+    
+      <viewAttribute id="ACTION_CODE"/>
+    
+      <viewAttribute id="TASK_CREATED_BY_NID"/>
+    
+      <viewAttribute id="TASK_SEQUENCE"/>
+    
+      <viewAttribute hidden="true" id="JOIN$TASK_STATUS$STATUS_CODE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="TaskDetails">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ACTUAL_DOC" source="TASK_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_GRP" source="TASK_ASSGN_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO" source="TASK_ASSGN_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO_STF_NUMBER" source="TASK_ASSGN_TO_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_COMPLETED_BY" source="TASK_COMPLETED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_COMPLETED_BY_NID" source="TASK_COMPLETED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_BY" source="TASK_CREATED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_ON" source="TASK_CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_EXPECTED_DOC" source="TASK_EXPECTED_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_INST_ID" source="TASK_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_NAME" source="TASK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS" source="TASK_STATUS"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACTION_CODE" source="ACTION_CODE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_BY_NID" source="TASK_CREATED_BY_NID"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_SEQUENCE" source="TASK_SEQUENCE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_STATUS$STATUS_CODE" source="TASK_STATUS"/>
+    </input>
+    <input node="StatusConfig">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS_ALIAS" source="STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS_COLOR_CODE" source="STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_STATUS$STATUS_CODE" source="STATUS_CODE"/>
+    </input>
+    <joinAttribute name="JOIN$TASK_STATUS$STATUS_CODE"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="TaskWithProcessDetails" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="TASK_ACTUAL_DOC"/>
+      <viewAttribute id="TASK_ASSGN_GRP"/>
+      <viewAttribute id="TASK_ASSGN_TO"/>
+      <viewAttribute id="TASK_ASSGN_TO_STF_NUMBER"/>
+      <viewAttribute id="TASK_COMPLETED_BY"/>
+      <viewAttribute id="TASK_COMPLETED_BY_NID"/>
+      <viewAttribute id="TASK_CREATED_BY"/>
+      <viewAttribute id="TASK_CREATED_ON"/>
+      <viewAttribute id="TASK_EXPECTED_DOC"/>
+      <viewAttribute id="TASK_INST_ID"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TASK_STATUS"/>
+      <viewAttribute id="TASK_STATUS_ALIAS"/>
+      <viewAttribute id="TASK_STATUS_COLOR_CODE"/>
+      <viewAttribute id="PROCESSED_BY"/>
+      <viewAttribute id="PROCESSED_BY_NID"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROCESS_START_DATE"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="REFERENCE_ID"/>
+    
+      <viewAttribute id="ACTION_CODE"/>
+    
+      <viewAttribute id="TASK_CREATED_BY_NID"/>
+    
+      <viewAttribute id="TASK_SEQUENCE"/>
+    
+      <viewAttribute hidden="true" id="JOIN$PROCESS_INST_ID$PROCESS_INST_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="TaskStatus">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ACTUAL_DOC" source="TASK_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_GRP" source="TASK_ASSGN_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO" source="TASK_ASSGN_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO_STF_NUMBER" source="TASK_ASSGN_TO_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_COMPLETED_BY" source="TASK_COMPLETED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_COMPLETED_BY_NID" source="TASK_COMPLETED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_BY" source="TASK_CREATED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_ON" source="TASK_CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_EXPECTED_DOC" source="TASK_EXPECTED_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_INST_ID" source="TASK_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_NAME" source="TASK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS" source="TASK_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS_ALIAS" source="TASK_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS_COLOR_CODE" source="TASK_STATUS_COLOR_CODE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACTION_CODE" source="ACTION_CODE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_BY_NID" source="TASK_CREATED_BY_NID"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_SEQUENCE" source="TASK_SEQUENCE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_INST_ID$PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+    </input>
+    <input node="ProcessDetails">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESSED_BY" source="PROCESSED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESSED_BY_NID" source="PROCESSED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_START_DATE" source="PROCESS_START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_INST_ID$PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+    </input>
+    <joinAttribute name="JOIN$PROCESS_INST_ID$PROCESS_INST_ID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="TaskWithProcessConfig" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="TASK_ACTUAL_DOC"/>
+      <viewAttribute id="TASK_ASSGN_GRP"/>
+      <viewAttribute id="TASK_ASSGN_TO"/>
+      <viewAttribute id="TASK_ASSGN_TO_STF_NUMBER"/>
+      <viewAttribute id="TASK_COMPLETED_BY"/>
+      <viewAttribute id="TASK_COMPLETED_BY_NID"/>
+      <viewAttribute id="TASK_CREATED_BY"/>
+      <viewAttribute id="TASK_CREATED_ON"/>
+      <viewAttribute id="TASK_EXPECTED_DOC"/>
+      <viewAttribute id="TASK_INST_ID"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TASK_STATUS"/>
+      <viewAttribute id="TASK_STATUS_ALIAS"/>
+      <viewAttribute id="TASK_STATUS_COLOR_CODE"/>
+      <viewAttribute id="PROCESSED_BY"/>
+      <viewAttribute id="PROCESSED_BY_NID"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROCESS_START_DATE"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="PROCESS_TITLE"/>
+      <viewAttribute id="PROCESS_SLA_DAYS"/>
+      <viewAttribute id="PROCESS_NAME"/>
+    
+      <viewAttribute id="PROCESS_TYPE"/>
+    
+      <viewAttribute id="ACTION_CODE"/>
+    
+      <viewAttribute id="TASK_CREATED_BY_NID"/>
+    
+      <viewAttribute id="TASK_SEQUENCE"/>
+    
+      <viewAttribute hidden="true" id="JOIN$PROCESS_CODE$PROCESS_CODE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="TaskWithProcessDetails">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ACTUAL_DOC" source="TASK_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_GRP" source="TASK_ASSGN_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO" source="TASK_ASSGN_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO_STF_NUMBER" source="TASK_ASSGN_TO_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_COMPLETED_BY" source="TASK_COMPLETED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_COMPLETED_BY_NID" source="TASK_COMPLETED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_BY" source="TASK_CREATED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_ON" source="TASK_CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_EXPECTED_DOC" source="TASK_EXPECTED_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_INST_ID" source="TASK_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_NAME" source="TASK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS" source="TASK_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS_ALIAS" source="TASK_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS_COLOR_CODE" source="TASK_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESSED_BY" source="PROCESSED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESSED_BY_NID" source="PROCESSED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_START_DATE" source="PROCESS_START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_ID" source="REFERENCE_ID"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACTION_CODE" source="ACTION_CODE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_BY_NID" source="TASK_CREATED_BY_NID"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_SEQUENCE" source="TASK_SEQUENCE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_CODE$PROCESS_CODE" source="PROCESS_CODE"/>
+    </input>
+    <input node="ProcessConfig">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TITLE" source="PROCESS_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_SLA_DAYS" source="PROCESS_SLA_DAYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_NAME" source="PROCESS_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_CODE$PROCESS_CODE" source="PROCESS_CODE"/>
+    </input>
+    <joinAttribute name="JOIN$PROCESS_CODE$PROCESS_CODE"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="TASK_ACTUAL_DOC"/>
+      <viewAttribute id="TASK_ASSGN_GRP"/>
+      <viewAttribute id="TASK_ASSGN_TO"/>
+      <viewAttribute id="TASK_ASSGN_TO_STF_NUMBER"/>
+      <viewAttribute id="TASK_COMPLETED_BY"/>
+      <viewAttribute id="TASK_COMPLETED_BY_NID"/>
+      <viewAttribute id="TASK_CREATED_BY"/>
+      <viewAttribute id="TASK_CREATED_ON"/>
+      <viewAttribute id="TASK_EXPECTED_DOC"/>
+      <viewAttribute id="TASK_INST_ID"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TASK_STATUS"/>
+      <viewAttribute id="TASK_STATUS_ALIAS"/>
+      <viewAttribute id="TASK_STATUS_COLOR_CODE"/>
+      <viewAttribute id="PROCESSED_BY"/>
+      <viewAttribute id="PROCESSED_BY_NID"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROCESS_START_DATE"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="PROCESS_TITLE"/>
+      <viewAttribute id="PROCESS_SLA_DAYS"/>
+      <viewAttribute id="PROCESS_NAME"/>
+      <viewAttribute id="SOURCE_ACCESS"/>
+    
+      <viewAttribute id="PROCESS_TYPE"/>
+    
+      <viewAttribute id="ACTION_CODE"/>
+    
+      <viewAttribute id="TASK_CREATED_BY_NID"/>
+    
+      <viewAttribute id="TASK_SEQUENCE"/>
+    
+      <viewAttribute hidden="true" id="JOIN$PROCESS_CODE$PROCESS_CODE"/>
+      <viewAttribute hidden="true" id="JOIN$TASK_NAME$TASK_NAME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="TaskWithProcessConfig">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ACTUAL_DOC" source="TASK_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_GRP" source="TASK_ASSGN_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO" source="TASK_ASSGN_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO_STF_NUMBER" source="TASK_ASSGN_TO_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_COMPLETED_BY" source="TASK_COMPLETED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_COMPLETED_BY_NID" source="TASK_COMPLETED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_BY" source="TASK_CREATED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_ON" source="TASK_CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_EXPECTED_DOC" source="TASK_EXPECTED_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_INST_ID" source="TASK_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_NAME" source="TASK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS" source="TASK_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS_ALIAS" source="TASK_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS_COLOR_CODE" source="TASK_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESSED_BY" source="PROCESSED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESSED_BY_NID" source="PROCESSED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_START_DATE" source="PROCESS_START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TITLE" source="PROCESS_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_SLA_DAYS" source="PROCESS_SLA_DAYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_NAME" source="PROCESS_NAME"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACTION_CODE" source="ACTION_CODE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_BY_NID" source="TASK_CREATED_BY_NID"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_SEQUENCE" source="TASK_SEQUENCE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_CODE$PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_NAME$TASK_NAME" source="TASK_NAME"/>
+    </input>
+    <input node="TaskAction">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_ACCESS" source="SOURCE_ACCESS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_CODE$PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_NAME$TASK_NAME" source="TASK_NAME"/>
+    </input>
+    <joinAttribute name="JOIN$PROCESS_CODE$PROCESS_CODE"/>
+    <joinAttribute name="JOIN$TASK_NAME$TASK_NAME"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="TASK_ACTUAL_DOC"/>
+      <viewAttribute id="TASK_ASSGN_GRP"/>
+      <viewAttribute id="TASK_ASSGN_TO"/>
+      <viewAttribute id="TASK_ASSGN_TO_STF_NUMBER"/>
+      <viewAttribute id="TASK_COMPLETED_BY"/>
+      <viewAttribute id="TASK_COMPLETED_BY_NID"/>
+      <viewAttribute id="TASK_CREATED_BY"/>
+      <viewAttribute id="TASK_CREATED_ON"/>
+      <viewAttribute id="TASK_EXPECTED_DOC"/>
+      <viewAttribute id="TASK_INST_ID"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TASK_STATUS"/>
+      <viewAttribute id="TASK_STATUS_ALIAS"/>
+      <viewAttribute id="TASK_STATUS_COLOR_CODE"/>
+      <viewAttribute id="PROCESSED_BY"/>
+      <viewAttribute id="PROCESSED_BY_NID"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROCESS_START_DATE"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="PROCESS_TITLE"/>
+      <viewAttribute id="PROCESS_SLA_DAYS"/>
+      <viewAttribute id="PROCESS_NAME"/>
+      <viewAttribute id="SOURCE_ACCESS"/>
+      <viewAttribute id="PROCESS_TYPE"/>
+      <viewAttribute id="ACTION_CODE"/>
+      <viewAttribute id="TASK_CREATED_BY_NID"/>
+      <viewAttribute id="TASK_CREATED_BY_FULLNAME"/>
+    
+      <viewAttribute id="TASK_SEQUENCE"/>
+    
+      <viewAttribute hidden="true" id="JOIN$TASK_CREATED_BY$STF_NUMBER"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ACTUAL_DOC" source="TASK_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_GRP" source="TASK_ASSGN_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO" source="TASK_ASSGN_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_TO_STF_NUMBER" source="TASK_ASSGN_TO_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_COMPLETED_BY" source="TASK_COMPLETED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_COMPLETED_BY_NID" source="TASK_COMPLETED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_BY" source="TASK_CREATED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_ON" source="TASK_CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_EXPECTED_DOC" source="TASK_EXPECTED_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_INST_ID" source="TASK_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_NAME" source="TASK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS" source="TASK_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS_ALIAS" source="TASK_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS_COLOR_CODE" source="TASK_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESSED_BY" source="PROCESSED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESSED_BY_NID" source="PROCESSED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_START_DATE" source="PROCESS_START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TITLE" source="PROCESS_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_SLA_DAYS" source="PROCESS_SLA_DAYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_NAME" source="PROCESS_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_ACCESS" source="SOURCE_ACCESS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACTION_CODE" source="ACTION_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_BY_NID" source="TASK_CREATED_BY_NID"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_SEQUENCE" source="TASK_SEQUENCE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_CREATED_BY$STF_NUMBER" source="TASK_CREATED_BY"/>
+    </input>
+    <input node="STAFF_LIST_VIEW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_CREATED_BY_FULLNAME" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_CREATED_BY$STF_NUMBER" source="STF_NUMBER"/>
+    </input>
+    <joinAttribute name="JOIN$TASK_CREATED_BY$STF_NUMBER"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_2">
+  <attributes>
+    <attribute id="PROCESS_INST_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_INST_ID"/>
+      <keyMapping columnObjectName="Join_2" columnName="PROCESS_INST_ID"/>
+    </attribute>
+    <attribute id="TASK_ACTUAL_DOC" order="3" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_ACTUAL_DOC"/>
+      <keyMapping columnObjectName="Join_2" columnName="TASK_ACTUAL_DOC"/>
+    </attribute>
+    <attribute id="TASK_ASSGN_GRP" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_ASSGN_GRP"/>
+      <keyMapping columnObjectName="Join_2" columnName="TASK_ASSGN_GRP"/>
+    </attribute>
+    <attribute id="TASK_ASSGN_TO" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_ASSGN_TO"/>
+      <keyMapping columnObjectName="Join_2" columnName="TASK_ASSGN_TO"/>
+    </attribute>
+    <attribute id="TASK_ASSGN_TO_STF_NUMBER" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_ASSGN_TO_STF_NUMBER"/>
+      <keyMapping columnObjectName="Join_2" columnName="TASK_ASSGN_TO_STF_NUMBER"/>
+    </attribute>
+    <attribute id="TASK_COMPLETED_BY" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_COMPLETED_BY"/>
+      <keyMapping columnObjectName="Join_2" columnName="TASK_COMPLETED_BY"/>
+    </attribute>
+    <attribute id="TASK_COMPLETED_BY_NID" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_COMPLETED_BY_NID"/>
+      <keyMapping columnObjectName="Join_2" columnName="TASK_COMPLETED_BY_NID"/>
+    </attribute>
+    <attribute id="TASK_CREATED_BY" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_CREATED_BY"/>
+      <keyMapping columnObjectName="Join_2" columnName="TASK_CREATED_BY"/>
+    </attribute>
+    <attribute id="TASK_CREATED_ON" order="10" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_CREATED_ON"/>
+      <keyMapping columnObjectName="Join_2" columnName="TASK_CREATED_ON"/>
+    </attribute>
+    <attribute id="TASK_EXPECTED_DOC" order="11" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_EXPECTED_DOC"/>
+      <keyMapping columnObjectName="Join_2" columnName="TASK_EXPECTED_DOC"/>
+    </attribute>
+    <attribute id="TASK_INST_ID" key="true" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_INST_ID"/>
+      <keyMapping columnObjectName="Join_2" columnName="TASK_INST_ID"/>
+    </attribute>
+    <attribute id="TASK_NAME" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_NAME"/>
+      <keyMapping columnObjectName="Join_2" columnName="TASK_NAME"/>
+    </attribute>
+    <attribute id="TASK_STATUS" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_STATUS"/>
+      <keyMapping columnObjectName="Join_2" columnName="TASK_STATUS"/>
+    </attribute>
+    <attribute id="TASK_STATUS_ALIAS" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_STATUS_ALIAS"/>
+      <keyMapping columnObjectName="Join_2" columnName="TASK_STATUS_ALIAS"/>
+    </attribute>
+    <attribute id="TASK_STATUS_COLOR_CODE" order="16" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_STATUS_COLOR_CODE"/>
+      <keyMapping columnObjectName="Join_2" columnName="TASK_STATUS_COLOR_CODE"/>
+    </attribute>
+    <attribute id="PROCESSED_BY" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESSED_BY"/>
+      <keyMapping columnObjectName="Join_2" columnName="PROCESSED_BY"/>
+    </attribute>
+    <attribute id="PROCESSED_BY_NID" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESSED_BY_NID"/>
+      <keyMapping columnObjectName="Join_2" columnName="PROCESSED_BY_NID"/>
+    </attribute>
+    <attribute id="PROCESS_CODE" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_CODE"/>
+      <keyMapping columnObjectName="Join_2" columnName="PROCESS_CODE"/>
+    </attribute>
+    <attribute id="PROCESS_START_DATE" order="20" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_START_DATE"/>
+      <keyMapping columnObjectName="Join_2" columnName="PROCESS_START_DATE"/>
+    </attribute>
+    <attribute id="PROCESS_STATUS" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_STATUS"/>
+      <keyMapping columnObjectName="Join_2" columnName="PROCESS_STATUS"/>
+    </attribute>
+    <attribute id="REFERENCE_ID" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REFERENCE_ID"/>
+      <keyMapping columnObjectName="Join_2" columnName="REFERENCE_ID"/>
+    </attribute>
+    <attribute id="PROCESS_TITLE" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_TITLE"/>
+      <keyMapping columnObjectName="Join_2" columnName="PROCESS_TITLE"/>
+    </attribute>
+    <attribute id="PROCESS_SLA_DAYS" order="24" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_SLA_DAYS"/>
+      <keyMapping columnObjectName="Join_2" columnName="PROCESS_SLA_DAYS"/>
+    </attribute>
+    <attribute id="PROCESS_NAME" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_NAME"/>
+      <keyMapping columnObjectName="Join_2" columnName="PROCESS_NAME"/>
+    </attribute>
+    <attribute id="SOURCE_ACCESS" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOURCE_ACCESS"/>
+      <keyMapping columnObjectName="Join_2" columnName="SOURCE_ACCESS"/>
+    </attribute>
+    <attribute id="PROCESS_TYPE" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_TYPE"/>
+      <keyMapping columnObjectName="Join_2" columnName="PROCESS_TYPE"/>
+    </attribute>
+    <attribute id="ACTION_CODE" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACTION_CODE"/>
+      <keyMapping columnObjectName="Join_2" columnName="ACTION_CODE"/>
+    </attribute>
+    <attribute id="TASK_CREATED_BY_NID" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_CREATED_BY_NID"/>
+      <keyMapping columnObjectName="Join_2" columnName="TASK_CREATED_BY_NID"/>
+    </attribute>
+    <attribute id="TASK_CREATED_BY_FULLNAME" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_CREATED_BY_FULLNAME"/>
+      <keyMapping columnObjectName="Join_2" columnName="TASK_CREATED_BY_FULLNAME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="TASK_SEQUENCE" order="31" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TASK_SEQUENCE"/>
+      <measureMapping columnObjectName="Join_2" columnName="TASK_SEQUENCE"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures>
+    <measure id="CC_1" hidden="false" order="1" aggregationType="count" measureType="simple" datatype="VARCHAR" length="1">
+      <formula>1</formula>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+  </calculatedMeasures>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="562.4634061450527" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="TaskDetails" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91.99999999999999" y="1016.9999940395355"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="StatusConfig" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="1016.9999940395355"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="TaskStatus" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="118.6666666666666" y="856.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="TaskDetails" modelObjectNameSpace="TaskStatus" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="StatusConfig" modelObjectNameSpace="TaskStatus" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ProcessDetails" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="381.92259190381174" y="856.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="TaskWithProcessDetails" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="145.33333333333326" y="696.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="TaskStatus" modelObjectNameSpace="TaskWithProcessDetails" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="ProcessDetails" modelObjectNameSpace="TaskWithProcessDetails" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ProcessConfig" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="481.05546147828704" y="696.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="TaskWithProcessConfig" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="171.9999999999999" y="536.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="TaskWithProcessDetails" modelObjectNameSpace="TaskWithProcessConfig" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="ProcessConfig" modelObjectNameSpace="TaskWithProcessConfig" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="TaskAction" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="597.9777654040042" y="536.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="545.881597038546" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="TaskWithProcessConfig" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="TaskAction" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="545.881597038546" y="236.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="STAFF_LIST_VIEW" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="SH_DELEGATION_FOR" applyPrivilegeType="ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" defaultClient="$$client$$" outputViewType="Aggregation" calculationScenarioType="TREE_BASED" enforceSqlExecution="false">
+<descriptions defaultDescription="SH_DELEGATION_FOR"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="TASK_INBOX_DELEGATION">
+    <resourceUri>TASK_INBOX_DELEGATION</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="DELEGATION">
+    <viewAttributes>
+      <viewAttribute id="DELEGATED_FOR"/>
+      <viewAttribute id="DELEGATED_FOR_NID"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_CONSTANT" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>1</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="TASK_INBOX_DELEGATION"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="DELEGATION">
+  <attributes>
+    <attribute id="DELEGATED_FOR" key="true" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DELEGATED_FOR"/>
+      <keyMapping columnObjectName="DELEGATION" columnName="DELEGATED_FOR"/>
+    </attribute>
+    <attribute id="DELEGATED_FOR_NID" key="true" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DELEGATED_FOR_NID"/>
+      <keyMapping columnObjectName="DELEGATION" columnName="DELEGATED_FOR_NID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="CC_CONSTANT" order="3" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CC_CONSTANT"/>
+      <measureMapping columnObjectName="DELEGATION" columnName="CC_CONSTANT"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="DELEGATION" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

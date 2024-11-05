@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="TASK_ACTION_CONFIG" applyPrivilegeType="ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" defaultClient="$$client$$" outputViewType="Aggregation" calculationScenarioType="TREE_BASED" enforceSqlExecution="false">
+<descriptions defaultDescription="TASK_ACTION_CONFIG"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="NUSEXT_UTILITY_TASK_DETAILS">
+    <resourceUri>NUSEXT_UTILITY_TASK_DETAILS</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_UTILITY_TASK_ACTION_CONFIG">
+    <resourceUri>NUSEXT_UTILITY_TASK_ACTION_CONFIG</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_UTILITY_PROCESS_DETAILS">
+    <resourceUri>NUSEXT_UTILITY_PROCESS_DETAILS</resourceUri>
+  </DataSource>
+  <DataSource id="BASE_REQUEST_TASK_INBOX">
+    <resourceUri>BASE_REQUEST_TASK_INBOX</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="TASK_DETAIL_ACTION">
+    <viewAttributes>
+      <viewAttribute id="TASK_INST_ID"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TASK_ASSGN_GRP"/>
+    
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="TASK_STATUS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_UTILITY_TASK_DETAILS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="TASK_ACTION_CONFIG" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="ACTION_CODE"/>
+      <viewAttribute id="ACTION_NAME"/>
+      <viewAttribute id="CURRENT_TASK_SEQUENCE"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+      <viewAttribute id="TACTION_ID"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TO_BE_PROCESS_STATUS"/>
+      <viewAttribute id="TO_BE_REQUEST_STATUS"/>
+      <viewAttribute id="TO_BE_TASK_SEQUENCE"/>
+    
+      <viewAttribute id="BUTTON_TYPE"/>
+      <viewAttribute id="DISPLAY_ICON"/>
+      <viewAttribute id="SEQUENCE_ORDER"/>
+    
+      <viewAttribute id="DISPLAY_REQD"/>
+    
+      <viewAttribute id="PROCESS_CODE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_UTILITY_TASK_ACTION_CONFIG"/>
+    <filter>&quot;DISPLAY_REQD&quot; = 'Y'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="PROCESS_DETAILS">
+    <viewAttributes>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_UTILITY_PROCESS_DETAILS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Process_Task_Details" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="TASK_INST_ID"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TASK_ASSGN_GRP"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="TASK_STATUS"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute hidden="true" id="JOIN$PROCESS_INST_ID$PROCESS_INST_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="TASK_DETAIL_ACTION">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_INST_ID" source="TASK_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_NAME" source="TASK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_GRP" source="TASK_ASSGN_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS" source="TASK_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_INST_ID$PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+    </input>
+    <input node="PROCESS_DETAILS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_INST_ID$PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+    </input>
+    <joinAttribute name="JOIN$PROCESS_INST_ID$PROCESS_INST_ID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Task_Claim_Data" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="TASK_INST_ID"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TASK_ASSGN_GRP"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="TASK_STATUS"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+    
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute hidden="true" id="JOIN$REFERENCE_ID$DRAFT_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Process_Task_Details">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_INST_ID" source="TASK_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_NAME" source="TASK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_GRP" source="TASK_ASSGN_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS" source="TASK_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$REFERENCE_ID$DRAFT_ID" source="REFERENCE_ID"/>
+    </input>
+    <input node="BASE_REQUEST_TASK_INBOX">
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTOR_GRP" source="REQUESTOR_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$REFERENCE_ID$DRAFT_ID" source="DRAFT_ID"/>
+    </input>
+    <joinAttribute name="JOIN$REFERENCE_ID$DRAFT_ID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="ClaimActionTask" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="TASK_INST_ID"/>
+      <viewAttribute id="TASK_NAME"/>
+      <viewAttribute id="TASK_ASSGN_GRP"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="TASK_STATUS"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="ACTION_NAME"/>
+      <viewAttribute id="CURRENT_TASK_SEQUENCE"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+      <viewAttribute id="TACTION_ID"/>
+      <viewAttribute id="TO_BE_PROCESS_STATUS"/>
+      <viewAttribute id="TO_BE_REQUEST_STATUS"/>
+      <viewAttribute id="TO_BE_TASK_SEQUENCE"/>
+      <viewAttribute id="BUTTON_TYPE"/>
+      <viewAttribute id="DISPLAY_ICON"/>
+      <viewAttribute id="SEQUENCE_ORDER"/>
+      <viewAttribute id="ACTION_CODE"/>
+      <viewAttribute hidden="true" id="JOIN$TASK_NAME$TASK_NAME"/>
+      <viewAttribute hidden="true" id="JOIN$REQUESTOR_GRP$REQUESTOR_GRP"/>
+      <viewAttribute hidden="true" id="JOIN$PROCESS_CODE$PROCESS_CODE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Task_Claim_Data">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_INST_ID" source="TASK_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_NAME" source="TASK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ASSGN_GRP" source="TASK_ASSGN_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TASK_STATUS" source="TASK_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_NAME$TASK_NAME" source="TASK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$REQUESTOR_GRP$REQUESTOR_GRP" source="REQUESTOR_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_CODE$PROCESS_CODE" source="PROCESS_CODE"/>
+    </input>
+    <input node="TASK_ACTION_CONFIG">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACTION_NAME" source="ACTION_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURRENT_TASK_SEQUENCE" source="CURRENT_TASK_SEQUENCE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTOR_GRP" source="REQUESTOR_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TACTION_ID" source="TACTION_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TO_BE_PROCESS_STATUS" source="TO_BE_PROCESS_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TO_BE_REQUEST_STATUS" source="TO_BE_REQUEST_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TO_BE_TASK_SEQUENCE" source="TO_BE_TASK_SEQUENCE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUTTON_TYPE" source="BUTTON_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DISPLAY_ICON" source="DISPLAY_ICON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SEQUENCE_ORDER" source="SEQUENCE_ORDER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACTION_CODE" source="ACTION_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_NAME$TASK_NAME" source="TASK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$REQUESTOR_GRP$REQUESTOR_GRP" source="REQUESTOR_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_CODE$PROCESS_CODE" source="PROCESS_CODE"/>
+    </input>
+    <joinAttribute name="JOIN$TASK_NAME$TASK_NAME"/>
+    <joinAttribute name="JOIN$REQUESTOR_GRP$REQUESTOR_GRP"/>
+    <joinAttribute name="JOIN$PROCESS_CODE$PROCESS_CODE"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="ClaimActionTask">
+  <attributes>
+    <attribute id="TASK_INST_ID" key="true" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_INST_ID"/>
+      <keyMapping columnObjectName="ClaimActionTask" columnName="TASK_INST_ID"/>
+    </attribute>
+    <attribute id="TASK_NAME" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_NAME"/>
+      <keyMapping columnObjectName="ClaimActionTask" columnName="TASK_NAME"/>
+    </attribute>
+    <attribute id="TASK_ASSGN_GRP" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_ASSGN_GRP"/>
+      <keyMapping columnObjectName="ClaimActionTask" columnName="TASK_ASSGN_GRP"/>
+    </attribute>
+    <attribute id="PROCESS_INST_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_INST_ID"/>
+      <keyMapping columnObjectName="ClaimActionTask" columnName="PROCESS_INST_ID"/>
+    </attribute>
+    <attribute id="TASK_STATUS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TASK_STATUS"/>
+      <keyMapping columnObjectName="ClaimActionTask" columnName="TASK_STATUS"/>
+    </attribute>
+    <attribute id="ACTION_NAME" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACTION_NAME"/>
+      <keyMapping columnObjectName="ClaimActionTask" columnName="ACTION_NAME"/>
+    </attribute>
+    <attribute id="REQUESTOR_GRP" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REQUESTOR_GRP"/>
+      <keyMapping columnObjectName="ClaimActionTask" columnName="REQUESTOR_GRP"/>
+    </attribute>
+    <attribute id="BUTTON_TYPE" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUTTON_TYPE"/>
+      <keyMapping columnObjectName="ClaimActionTask" columnName="BUTTON_TYPE"/>
+    </attribute>
+    <attribute id="DISPLAY_ICON" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DISPLAY_ICON"/>
+      <keyMapping columnObjectName="ClaimActionTask" columnName="DISPLAY_ICON"/>
+    </attribute>
+    <attribute id="SEQUENCE_ORDER" order="11" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SEQUENCE_ORDER"/>
+      <keyMapping columnObjectName="ClaimActionTask" columnName="SEQUENCE_ORDER"/>
+    </attribute>
+    <attribute id="ACTION_CODE" key="true" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACTION_CODE"/>
+      <keyMapping columnObjectName="ClaimActionTask" columnName="ACTION_CODE"/>
+    </attribute>
+  
+    <attribute id="TACTION_ID" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TACTION_ID"/>
+  
+      <keyMapping columnObjectName="ClaimActionTask" columnName="TACTION_ID"/>
+  
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures>
+    <measure id="CC_1" hidden="false" order="1" aggregationType="count" measureType="simple" datatype="VARCHAR" length="1">
+      <formula>1</formula>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+  </calculatedMeasures>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="230" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="TASK_DETAIL_ACTION" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="113" y="696"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="TASK_ACTION_CONFIG" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="PROCESS_DETAILS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="323" y="696"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Process_Task_Details" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="232" y="536"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="TASK_DETAIL_ACTION" modelObjectNameSpace="Process_Task_Details" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="PROCESS_DETAILS" modelObjectNameSpace="Process_Task_Details" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Task_Claim_Data" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Process_Task_Details" modelObjectNameSpace="Task_Claim_Data" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="BASE_REQUEST_TASK_INBOX" modelObjectNameSpace="Task_Claim_Data" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ClaimActionTask" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="230" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape modelObjectName="Task_Claim_Data" modelObjectNameSpace="ClaimActionTask" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="TASK_ACTION_CONFIG" modelObjectNameSpace="ClaimActionTask" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

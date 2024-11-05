@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="HRP_USERS_VIEW" applyPrivilegeType="ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" defaultClient="$$client$$" outputViewType="Aggregation" calculationScenarioType="TREE_BASED" enforceSqlExecution="false">
+<descriptions defaultDescription="CHRS_JOB_INFO"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="NUSEXT_MASTER_DATA_CHRS_HRP_INFO">
+    <resourceUri>NUSEXT_MASTER_DATA_CHRS_HRP_INFO</resourceUri>
+  </DataSource>
+  <DataSource id="USER_LOOKUP">
+    <resourceUri>USER_LOOKUP</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="HRP_Info" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="END_DATE"/>
+      <viewAttribute id="HRP_NUSNET_ID"/>
+      <viewAttribute id="HRP_STF_N"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="START_DATE"/>
+      <viewAttribute id="STF_NUMBER"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_MASTER_DATA_CHRS_HRP_INFO"/>
+    <filter>&quot;START_DATE&quot;&lt;= NOW() AND &quot;END_DATE&quot;&gt;= NOW()</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Users_Lookup">
+    <viewAttributes>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="CONCURRENT_STAFF_ID"/>
+      <viewAttribute id="IS_EXTERNAL"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="STAFF_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="USER_LOOKUP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONCURRENT_STAFF_ID" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STF_NUMBER"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="HRP_Staff" joinType="rightOuter">
+    <viewAttributes>
+      <viewAttribute id="HRP_NUSNET_ID"/>
+      <viewAttribute id="HRP_STF_N"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="CONCURRENT_STAFF_ID"/>
+      <viewAttribute id="IS_EXTERNAL"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="STAFF_ID"/>
+    
+      <viewAttribute id="END_DATE"/>
+      <viewAttribute hidden="true" id="JOIN$SF_STF_NUMBER$CONCURRENT_STAFF_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="HRP_Info">
+      <mapping xsi:type="Calculation:AttributeMapping" target="HRP_NUSNET_ID" source="HRP_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HRP_STF_N" source="HRP_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_NUMBER" source="STF_NUMBER"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SF_STF_NUMBER$CONCURRENT_STAFF_ID" source="SF_STF_NUMBER"/>
+    </input>
+    <input node="Users_Lookup">
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONCURRENT_STAFF_ID" source="CONCURRENT_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_EXTERNAL" source="IS_EXTERNAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SF_STF_NUMBER$CONCURRENT_STAFF_ID" source="CONCURRENT_STAFF_ID"/>
+    </input>
+    <joinAttribute name="JOIN$SF_STF_NUMBER$CONCURRENT_STAFF_ID"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="HRP_Staff">
+  <attributes>
+    <attribute id="HRP_NUSNET_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HRP_NUSNET_ID"/>
+      <keyMapping columnObjectName="HRP_Staff" columnName="HRP_NUSNET_ID"/>
+    </attribute>
+    <attribute id="HRP_STF_N" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HRP_STF_N"/>
+      <keyMapping columnObjectName="HRP_Staff" columnName="HRP_STF_N"/>
+    </attribute>
+    <attribute id="CONCURRENT_STAFF_ID" order="3" displayAttribute="false" attributeHierarchyActive="false" key="true">
+      <descriptions defaultDescription="CONCURRENT_STAFF_ID"/>
+      <keyMapping columnObjectName="HRP_Staff" columnName="CONCURRENT_STAFF_ID"/>
+    </attribute>
+    <attribute id="IS_EXTERNAL" order="4" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="IS_EXTERNAL"/>
+      <keyMapping columnObjectName="HRP_Staff" columnName="IS_EXTERNAL"/>
+    </attribute>
+    <attribute id="FULL_NM" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FULL_NM"/>
+      <keyMapping columnObjectName="HRP_Staff" columnName="FULL_NM"/>
+    </attribute>
+    <attribute id="STAFF_ID" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAFF_ID"/>
+      <keyMapping columnObjectName="HRP_Staff" columnName="STAFF_ID"/>
+    </attribute>
+  
+    <attribute id="STAFF_NUSNET_ID" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAFF_NUSNET_ID"/>
+  
+      <keyMapping columnObjectName="HRP_Staff" columnName="STAFF_NUSNET_ID"/>
+  
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="END_DATE" order="7" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="END_DATE"/>
+      <measureMapping columnObjectName="HRP_Staff" columnName="END_DATE"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="HRP_Info" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Users_Lookup" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="HRP_Staff" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape modelObjectName="HRP_Info" modelObjectNameSpace="HRP_Staff" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Users_Lookup" modelObjectNameSpace="HRP_Staff" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
