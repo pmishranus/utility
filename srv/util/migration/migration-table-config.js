@@ -106,6 +106,11 @@ module.exports = {
         oTableConfig.aPrimaryKeys = ["TASK_INST_ID"];
         oTableConfig.oTable = srv.entities.TASK_DETAILS;
         break;
+      case "DASHBOARD_CONFIG":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["DS_ACFG_ID"];
+        oTableConfig.oTable = srv.entities.DASHBOARD_CONFIG;
+        break;
       default:
         oTableConfig.exists = false;
         break;

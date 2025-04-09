@@ -1,7 +1,7 @@
 using {nusext as db} from '../db/datamodel';
 
 using {
-  APPROVAL_MATRIX
+  APPROVAL_MATRIX, TASK_INBOX
 } from '../db/redefinemodel';
 
 service CatalogService @(path: '/catalog') {
@@ -106,6 +106,7 @@ service CatalogService @(path: '/catalog') {
 
   @readonly
   entity v_approval_maxtrix         as projection on APPROVAL_MATRIX;
+  entity v_task_inbox               as projection on TASK_INBOX;
 
   /********************************************************************************************************************************************************************************/
 

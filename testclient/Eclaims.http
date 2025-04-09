@@ -23,51 +23,42 @@ client_id={{xsuaaClient}}
 
 ### Request-1 Get eclaims header data
 #==================================================================#
-GET {{unsecureProtocol}}://{{host}}/catalog/eclaims_data
+GET {{unsecureProtocol}}://{{host}}/eclaims/v_eclaim_item_cons?$top=2
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
-### Request-2 MASTER_CLAIM_TYPE
+
+### Request-2 Get eclaims header data
 #==================================================================#
-GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='MASTER_CLAIM_TYPE')
+GET {{unsecureProtocol}}://{{host}}/util/getUserDetails(userId='PTT_CA9')
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
-### Request-3 ECLAIMS_DATA
+### Request-1 Get eclaims overview dashboard config
 #==================================================================#
-GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='ECLAIMS_DATA')
+POST {{unsecureProtocol}}://{{host}}/eclaims/eclaimsOverviewDashboard
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
-### Request-3 ECLAIMS_DATA
+{
+	"data": {
+		"STF_NUMBER": "81535",
+		"SF_STF_NUMBER": "81535",
+		"PROCESS_CODE": "100"
+	}
+}
+
+
+
+### Request-2 Get eclaims header data
 #==================================================================#
-GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='ECLAIMS_ITEMS_DATA')
+GET {{unsecureProtocol}}://{{host}}/approvermatrix/staff_based_usergroup_ulu_fdlu(staffId='81535',userGroup='CW_DEPARTMENT_ADMIN')
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 
-### Request-3 REMARKS_DATA
+### Request-2 Get eclaims header data
 #==================================================================#
-GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='REMARKS_DATA')
+GET {{unsecureProtocol}}://{{host}}/approvermatrix/staff_based_usergroup_ulu_fdluType
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
-
-
-### Request-3 PROCESS_DETAILS
-#==================================================================#
-GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='PROCESS_DETAILS')
-Content-Type: application/json
-Authorization: Bearer {{access_token}}
-
-### Request-3 DASHBOARD_CONFIG
-#==================================================================#
-GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='DASHBOARD_CONFIG')
-Content-Type: application/json
-Authorization: Bearer {{access_token}}
-### Request-4 Get User Detail
-#==================================================================#
-GET {{unsecureProtocol}}://{{host}}/util/getUserDetails()
-Content-Type: application/json
-Authorization: Bearer {{access_token}}
-
-

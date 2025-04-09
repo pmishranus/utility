@@ -32,6 +32,7 @@ service MigrationService {
     entity REMARKS_DATA         as select * from db.UTILITY.REMARKS_DATA;
     entity PROCESS_DETAILS      as select * from db.UTILITY.PROCESS_DETAILS;
     entity TASK_DETAILS         as select * from db.UTILITY.TASK_DETAILS;
+    entity DASHBOARD_CONFIG     as select * from db.UTILITY.DASHBOARD_CONFIG;
 
     @open
     type object {};

@@ -4,8 +4,8 @@ description: A simple CAP project.
 version: 1.0.0
 modules:
 - name: utility-srv
-  type: nodejs
-  path: gen/srv
+  type: javascript.nodejs
+  path: utility-srv
   requires:
   - name: utility-db
   - name: utility-uaa
@@ -15,15 +15,9 @@ modules:
       srv-url: ${default-url}
   parameters:
     buildpack: nodejs_buildpack
-  build-parameters:
-    builder: custom
-    commands:
-      - npm root
-    ignore:
-      - node_modules/
 - name: eclaims-srv
-  type: nodejs
-  path: gen/eclaims
+  type: javascript.nodejs
+  path: .utility_mta_build_tmp/eclaims-srv/data.zip
   requires:
   - name: utility-db
   - name: utility-uaa
@@ -33,15 +27,9 @@ modules:
       eclaims-url: ${default-url}
   parameters:
     buildpack: nodejs_buildpack
-  build-parameters:
-    builder: custom
-    commands:
-      - npm root
-    ignore:
-      - node_modules/
 - name: cws-srv
-  type: nodejs
-  path: gen/cws
+  type: javascript.nodejs
+  path: cws-srv
   requires:
   - name: utility-db
   - name: utility-uaa
@@ -51,28 +39,17 @@ modules:
       cws-url: ${default-url}
   parameters:
     buildpack: nodejs_buildpack
-  build-parameters:
-    builder: custom
-    commands:
-      - npm root
-    ignore:
-      - node_modules/
 - name: utility-db-deployer
-  type: hdb
-  path: gen/db
+  type: com.sap.xs.hdi
+  path: utility-db-deployer
   requires:
   - name: utility-db
     properties:
       TARGET_CONTAINER: ~{hdi-service-name}
   parameters:
     buildpack: nodejs_buildpack
-  build-parameters:
-    ignore:
-    - default-*.json
-    - .env
-    - '*node_modules*'
 - name: app
-  type: approuter.nodejs
+  type: javascript.nodejs
   path: app
   requires:
   - name: srv-api
@@ -98,11 +75,6 @@ modules:
     disk-quota: 256M
     keep-existing-routes: true
     memory: 256M
-  build-parameters:
-    ignore:
-    - default-*.json
-    - .env
-    - '*node_modules*'
 resources:
 - name: utility-db
   type: com.sap.xs.hdi-container
@@ -123,4 +95,4 @@ build-parameters:
   before-all:
   - builder: custom
     commands:
-      - npm root
+    - npm root

@@ -9,10 +9,10 @@ Utility Module
 - cds deploy --to hana:utility-db
 
 # 3. MTAR build
-- mbt build
+- mbt build -t gen --mtar archive
 
 # 4. MATR deploy
-- cf deploy mta_archives/utility_1.0.0.mtar;
+- cf deploy gen/archive.mtar;
 
 # 5. CDS bind services
 - cds bind -2 <servicename>
@@ -21,6 +21,7 @@ Utility Module
 - cds bind --exec npm run approuter
 
 # 7. Proxy entity for the calculation view
+hana-cli inspectView -o cds  //this will give option to write the exact name of the database view
 - hana-cli inspectView -v APPROVAL_MATRIX -o cds
 - hana-cli inspectView -v ECLAIMS_ITEM_VIEW -o cds
 - hana-cli inspectView -v OT_VERIFIER_APPROVER_LIST -o cds
@@ -29,6 +30,8 @@ Utility Module
 
 # 8. Get the active port
 - C
+
+mbt module-build -m eclaims-srv -g
 
 # 9. Kill the process id
 -  kill -9 22447
@@ -62,3 +65,8 @@ Utility Module
 //     }
 //   ]
 // }
+
+# 10. How to access services : 
+##### Eclaims : https://national-university-of-singapore-nus-ariba-dev-px55m7l55b18a041.cfapps.eu10-004.hana.ondemand.com/eclaims/v2/eclaims/$metadata
+
+##### Util : https://national-university-of-singapore-nus-ariba-dev-px55m7l55b18a041.cfapps.eu10-004.hana.ondemand.com/v2/catalog/eclaims_data

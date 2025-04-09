@@ -29,8 +29,7 @@
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "node",
       "runtimeArgs": [
-        "--nolazy",
-        "--inspect-brk=9229"
+        "--nolazy"
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"

@@ -4,13 +4,22 @@ using {
   PRJ_BASE_ECLAIM_REQUEST_VIEW,
   ECLAIM_REQUEST_VIEW,
   ECLAIMS_ITEM_VIEW,
-  OT_VERIFIER_APPROVER_LIST
+  OT_VERIFIER_APPROVER_LIST,
+  TASK_INBOX
 } from '../db/redefinemodel';
 
 
 service EclaimsService @(path: '/eclaims') {
 
+  @open
+  type object {};
 
+
+  /********************************************************************* Functions ***************************************************************************************************/
+
+  /********************************************************************* Actions ***************************************************************************************************/
+
+  action eclaimsOverviewDashboard(data : object) returns String;
   /******************************************************************** Calculation Views Exposed *********************************************************************************/
 
   @readonly

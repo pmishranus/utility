@@ -63,6 +63,7 @@ module.exports = {
         case "REMARKS_DATA":
         case "PROCESS_DETAILS":
         case "TASK_DETAILS":
+        case "DASHBOARD_CONFIG":
           relativePath += "fetchData";
           oPayload = {
             SCHEMA: "NUS_BTP_UTILS",

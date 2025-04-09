@@ -151,6 +151,21 @@ function frameValidationMessage(type, message) {
     message: message
   };
 }
+//extractUniqueValuesAsString
+function convertListToString(arr, key) {
+  if (!Array.isArray(arr) || typeof key !== 'string') return '';
+
+  const uniqueValues = [
+      ...new Set(
+          arr
+              .map(item => item[key])
+              .filter(value => typeof value === 'string' && value.trim() !== '')
+      )
+  ];
+
+  return uniqueValues.map(v => `'${v}'`).join(',');
+}
+
 
 
 
@@ -174,5 +189,6 @@ module.exports = {
   checkIsStringMandatory,
   numberToText,
   groupBy,
-  frameValidationMessage
+  frameValidationMessage,
+  convertListToString
 };

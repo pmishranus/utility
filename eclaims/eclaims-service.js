@@ -1,4 +1,5 @@
 const cds = require("@sap/cds");
+const eclaimsOverviewDashboardImpl = require("./impl/eclaims-overview-dashboard");
 
 module.exports = cds.service.impl(async (srv) => {
   const db = await cds.connect.to("db");
@@ -17,6 +18,10 @@ module.exports = cds.service.impl(async (srv) => {
         "name" : "Eclaims"
     }
     return results;
+  });
+
+  srv.on("eclaimsOverviewDashboard", async (request) => {
+    return await eclaimsOverviewDashboardImpl.createConnectionOverviewDashboard(request, db, srv);
   });
 
   

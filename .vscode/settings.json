@@ -8,5 +8,6 @@
     // "tab",
     // "tsv"
   ],
-  "SAP HANA Database Artifacts.lastSelectedTargetPath": "/home/user/projects/utility/db/src/views"
+  "SAP HANA Database Artifacts.lastSelectedTargetPath": "/home/user/projects/utility/db/src/views",
+  "SAP HANA Database Explorer.UseObjectsDefinitionForSqlGeneration.RetentionTime": 7
 }

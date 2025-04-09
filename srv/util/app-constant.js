@@ -450,7 +450,23 @@ const ApplicationConstants = {
     LOGGING_LEVEL_INFO: "INFO",
     LOGGING_LEVEL_ERROR: "ERROR",
     LOGGING_LEVEL_WARN: "WARN",
-    LOGGING_LEVEL_DEBUG: "DEBUG"
+    LOGGING_LEVEL_DEBUG: "DEBUG",
+
+
+
+
+
+
+
+
+
+
+
+
+
+PERSONAL_INFO : "PERSONAL_INFO",
+ECLAIMS_DASHBOARD_SYSTEM_REFRESH_ERROR : "System refresh is in-progress, please try again at later time.",
+INVALID_PROCESS_CODE : "Invalid process code : Pass the valid process code"
 };
 
 module.exports = ApplicationConstants;

@@ -272,3 +272,71 @@ entity ECLAIMS_REMARKS_AGG_F {
     key REMARKS         : String(5000);
     key REMARKS_LENGTH  : Integer;
 };
+
+
+@cds.persistence.exists 
+@cds.persistence.calcview 
+Entity TASK_INBOX {
+key     ACTION_CODE: String(40)  @title: 'ACTION_CODE: ACTION_CODE' ; 
+key     TASK_STATUS: String(2)  @title: 'TASK_STATUS: TASK_STATUS' ; 
+key     TASK_STATUS_ALIAS: String(100)  @title: 'TASK_STATUS_ALIAS: TASK_STATUS_ALIAS' ; 
+key     TASK_STATUS_COLOR_CODE: Integer  @title: 'TASK_STATUS_COLOR_CODE: TASK_STATUS_COLOR_CODE' ; 
+key     PROCESSED_BY: String(15)  @title: 'PROCESSED_BY: PROCESSED_BY' ; 
+key     PROCESSED_BY_NID: String(15)  @title: 'PROCESSED_BY_NID: PROCESSED_BY_NID' ; 
+key     PROCESS_CODE: String(6)  @title: 'PROCESS_CODE: PROCESS_CODE' ; 
+key     PROCESS_START_DATE: Timestamp  @title: 'PROCESS_START_DATE: PROCESS_START_DATE' ; 
+key     PROCESS_STATUS: String(2)  @title: 'PROCESS_STATUS: PROCESS_STATUS' ; 
+key     REFERENCE_ID: String(15)  @title: 'REFERENCE_ID: REFERENCE_ID' ; 
+key     PROCESS_TITLE: String(100)  @title: 'PROCESS_TITLE: PROCESS_TITLE' ; 
+key     PROCESS_SLA_DAYS: Integer  @title: 'PROCESS_SLA_DAYS: PROCESS_SLA_DAYS' ; 
+key     PROCESS_NAME: String(50)  @title: 'PROCESS_NAME: PROCESS_NAME' ; 
+key     PROCESS_INST_ID: String(12)  @title: 'PROCESS_INST_ID: PROCESS_INST_ID' ; 
+key     TASK_ACTUAL_DOC: Timestamp  @title: 'TASK_ACTUAL_DOC: TASK_ACTUAL_DOC' ; 
+key     TASK_ASSGN_GRP: String(40)  @title: 'TASK_ASSGN_GRP: TASK_ASSGN_GRP' ; 
+key     TASK_ASSGN_TO: String(15)  @title: 'TASK_ASSGN_TO: TASK_ASSGN_TO' ; 
+key     TASK_ASSGN_TO_STF_NUMBER: String(15)  @title: 'TASK_ASSGN_TO_STF_NUMBER: TASK_ASSGN_TO_STF_NUMBER' ; 
+key     TASK_COMPLETED_BY: String(15)  @title: 'TASK_COMPLETED_BY: TASK_COMPLETED_BY' ; 
+key     TASK_COMPLETED_BY_NID: String(15)  @title: 'TASK_COMPLETED_BY_NID: TASK_COMPLETED_BY_NID' ; 
+key     TASK_CREATED_BY: String(15)  @title: 'TASK_CREATED_BY: TASK_CREATED_BY' ; 
+key     TASK_CREATED_ON: Timestamp  @title: 'TASK_CREATED_ON: TASK_CREATED_ON' ; 
+key     TASK_EXPECTED_DOC: Timestamp  @title: 'TASK_EXPECTED_DOC: TASK_EXPECTED_DOC' ; 
+key     TASK_INST_ID: String(12)  @title: 'TASK_INST_ID: TASK_INST_ID' ; 
+key     TASK_NAME: String(40)  @title: 'TASK_NAME: TASK_NAME' ; 
+key     ULU_T: String(100)  @title: 'ULU_T: ULU_T' ; 
+key     STAFF_ID: String(15)  @title: 'STAFF_ID: STAFF_ID' ; 
+key     REQUEST_ID: String(20)  @title: 'REQUEST_ID: REQUEST_ID' ; 
+key     REQUEST_STATUS: String(2)  @title: 'REQUEST_STATUS: REQUEST_STATUS' ; 
+key     STAFF_NUSNET_ID: String(15)  @title: 'STAFF_NUSNET_ID: STAFF_NUSNET_ID' ; 
+key     SUBMITTED_BY: String(15)  @title: 'SUBMITTED_BY: SUBMITTED_BY' ; 
+key     FDLU: String(15)  @title: 'FDLU: FDLU' ; 
+key     ULU: String(15)  @title: 'ULU: ULU' ; 
+key     DRAFT_ID: String(20)  @title: 'DRAFT_ID: DRAFT_ID' ; 
+key     REQUEST_STATUS_ALIAS: String(100)  @title: 'REQUEST_STATUS_ALIAS: REQUEST_STATUS_ALIAS' ; 
+key     REQUEST_STATUS_COLOR_CODE: Integer  @title: 'REQUEST_STATUS_COLOR_CODE: REQUEST_STATUS_COLOR_CODE' ; 
+key     REQUEST_STATUS_TYPE: String(10)  @title: 'REQUEST_STATUS_TYPE: REQUEST_STATUS_TYPE' ; 
+key     EMAIL: String(128)  @title: 'EMAIL: EMAIL' ; 
+key     FDLU_T: String(100)  @title: 'FDLU_T: FDLU_T' ; 
+key     FULL_NM: String(256)  @title: 'FULL_NM: FULL_NM' ; 
+key     SUBMITTED_ON: Timestamp  @title: 'SUBMITTED_ON: SUBMITTED_ON' ; 
+key     CLAIM_MONTH: String(2)  @title: 'CLAIM_MONTH: CLAIM_MONTH' ; 
+key     CLAIM_YEAR: String(4)  @title: 'CLAIM_YEAR: CLAIM_YEAR' ; 
+key     CONCURRENT_STAFF_ID: String(15)  @title: 'CONCURRENT_STAFF_ID: CONCURRENT_STAFF_ID' ; 
+key     EMPLOYEE_GRP: String(20)  @title: 'EMPLOYEE_GRP: EMPLOYEE_GRP' ; 
+key     EMP_RATE_TYPE: String(10)  @title: 'EMP_RATE_TYPE: EMP_RATE_TYPE' ; 
+        NUM_TOTAL_AMOUNT: Decimal(5)  @title: 'NUM_TOTAL_AMOUNT: NUM_TOTAL_AMOUNT' ; 
+key     SUBMITTED_BY_NID: String(15)  @title: 'SUBMITTED_BY_NID: SUBMITTED_BY_NID' ; 
+key     DURATION_DAYS: Decimal(5)  @title: 'DURATION_DAYS: DURATION_DAYS' ; 
+key     PROCESS_TYPE: String(6)  @title: 'PROCESS_TYPE: PROCESS_TYPE' ; 
+key     AMOUNT: Decimal(10)  @title: 'AMOUNT: AMOUNT' ; 
+key     SUBMITTED_BY_FULL_NM: String(256)  @title: 'SUBMITTED_BY_FULL_NM: SUBMITTED_BY_FULL_NM' ; 
+key     START_DATE: Date  @title: 'START_DATE: START_DATE' ; 
+key     CLIENT_NAME: String(200)  @title: 'CLIENT_NAME: CLIENT_NAME' ; 
+key     PROGRAM_NAME: String(5000)  @title: 'PROGRAM_NAME: PROGRAM_NAME' ; 
+key     END_DATE: Date  @title: 'END_DATE: END_DATE' ; 
+key     SUB_TYPE_T: String(250)  @title: 'SUB_TYPE_T: SUB_TYPE_T' ; 
+key     REQUESTOR_GRP: String(50)  @title: 'REQUESTOR_GRP: REQUESTOR_GRP' ; 
+key     TASK_CREATED_BY_FULLNAME: String(256)  @title: 'TASK_CREATED_BY_FULLNAME: TASK_CREATED_BY_FULLNAME' ; 
+key     TASK_CREATED_BY_NID: String(15)  @title: 'TASK_CREATED_BY_NID: TASK_CREATED_BY_NID' ; 
+key     TASK_COMPLETE_ACTION_ALIAS: String(100)  @title: 'TASK_COMPLETE_ACTION_ALIAS: TASK_COMPLETE_ACTION_ALIAS' ; 
+key     SHOW_INBOX: String(1)  @title: 'SHOW_INBOX: SHOW_INBOX' ; 
+}
