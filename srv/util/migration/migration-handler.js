@@ -6,8 +6,9 @@ const TableConfig = require("../migration/migration-table-config");
 const hanaDbHost =
   process.env.hanaDbHost ||
   "https://nusbtpqahanaduxmssmjjx.ap1.hana.ondemand.com";
-const hanaDbUser = process.env.hanaDbUser || "BTPAPP_QA_ADMIN";
-const hanaDbPwd = process.env.hanaDbPwd || "NusBtpAppqa!55w0rd";
+// const hanaDbUser = process.env.hanaDbUser || "BTPAPP_QA_ADMIN";
+// const hanaDbPwd = process.env.hanaDbPwd || "NusBtpAppqa!55w0rd";
+const credStore = require("../common/credStore");
 module.exports = {
   /**
    *
@@ -77,10 +78,31 @@ module.exports = {
           throw error;
       }
 
+      //credential store beginning
+
+      let credStoreBinding = JSON.parse(process.env.VCAP_SERVICES).credstore[0].credentials;
+
+      let credPassword = {
+        name: "hana_login_password"
+    };
+
+      let oRetCredential = await credStore.readCredential(credStoreBinding, "hana_db", "password", credPassword.name);
+
+
+
+
+      //end of credential store
+
       //setting the api config
-      const url = hanaDbHost + relativePath;
-      const username = hanaDbUser;
-      const password = hanaDbPwd;
+      if(!oRetCredential || !oRetCredential.metadata || !oRetCredential.username || !oRetCredential.value){
+        const error = new Error("Client Credentials Not Available");
+          error.code = 400;
+          error.statusCode = 400;
+          throw error;
+      }
+      const url = oRetCredential.metadata + relativePath;
+      const username = oRetCredential.username;
+      const password = oRetCredential.value;
       const auth = Buffer.from(`${username}:${password}`).toString("base64");
       const config = {
         headers: {

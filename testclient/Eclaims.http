@@ -59,6 +59,6 @@ Authorization: Bearer {{access_token}}
 
 ### Request-2 Get eclaims header data
 #==================================================================#
-GET {{unsecureProtocol}}://{{host}}/approvermatrix/staff_based_usergroup_ulu_fdluType
+GET {{unsecureProtocol}}://{{host}}/v2/eclaims/$metadata
 Content-Type: application/json
 Authorization: Bearer {{access_token}}

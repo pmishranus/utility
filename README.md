@@ -67,6 +67,6 @@ mbt module-build -m eclaims-srv -g
 // }
 
 # 10. How to access services : 
-##### Eclaims : https://national-university-of-singapore-nus-ariba-dev-px55m7l55b18a041.cfapps.eu10-004.hana.ondemand.com/eclaims/v2/eclaims/$metadata
+##### Eclaims : https://national-university-of-singapore-nus-ariba-dev-px55m7l55b18a041.cfapps.eu10-004.hana.ondemand.com/eclaims/v2/eclaims/eclaims/eclaimsOverviewDashboard
 
 ##### Util : https://national-university-of-singapore-nus-ariba-dev-px55m7l55b18a041.cfapps.eu10-004.hana.ondemand.com/v2/catalog/eclaims_data
