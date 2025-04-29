@@ -258,7 +258,6 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Join_2"/>
-  
     <filter>&quot;CLAIM_TYPE&quot; ='105'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="BENEFITS" filterExpressionLanguage="SQL">

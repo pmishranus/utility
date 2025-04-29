@@ -93,6 +93,8 @@
       <viewAttribute id="TASK_NAME"/>
       <viewAttribute id="PROCESS_CODE"/>
       <viewAttribute id="SOURCE_ACCESS"/>
+    
+      <viewAttribute id="TASK_SEQUENCE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="NUSEXT_UTILITY_TASKS_CONFIG"/>
@@ -422,7 +424,11 @@
     
       <viewAttribute hidden="true" id="JOIN$TASK_CREATED_BY$STF_NUMBER"/>
     </viewAttributes>
-    <calculatedViewAttributes/>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="C_TASK_SEQ" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>if(isnull(&quot;TASK_SEQUENCE&quot;), -1, &quot;TASK_SEQUENCE&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
     <input node="Join_1">
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ACTUAL_DOC" source="TASK_ACTUAL_DOC"/>
@@ -582,16 +588,13 @@
       <descriptions defaultDescription="TASK_CREATED_BY_FULLNAME"/>
       <keyMapping columnObjectName="Join_2" columnName="TASK_CREATED_BY_FULLNAME"/>
     </attribute>
+    <attribute id="TASK_SEQUENCE" order="31" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_TASK_SEQ"/>
+      <keyMapping columnObjectName="Join_2" columnName="C_TASK_SEQ"/>
+    </attribute>
   </attributes>
   <calculatedAttributes/>
-  <baseMeasures>
-    <measure id="TASK_SEQUENCE" order="31" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="TASK_SEQUENCE"/>
-      <measureMapping columnObjectName="Join_2" columnName="TASK_SEQUENCE"/>
-    
-      <exceptionAggregationMetadata/>
-    </measure>
-  </baseMeasures>
+  <baseMeasures/>
   <calculatedMeasures>
     <measure id="CC_1" hidden="false" order="1" aggregationType="count" measureType="simple" datatype="VARCHAR" length="1">
       <formula>1</formula>
@@ -689,7 +692,7 @@
     </shape>
     <shape modelObjectName="STAFF_LIST_VIEW" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="250"/>
+      <rectangleSize width="171.783203125"/>
     </shape>
   </shapes>
 </layout>

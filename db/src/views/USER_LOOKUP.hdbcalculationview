@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="USER_LOOKUP" applyPrivilegeType="ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" defaultClient="$$client$$" outputViewType="Aggregation" calculationScenarioType="TREE_BASED" enforceSqlExecution="false">
 <descriptions defaultDescription="CHRS_JOB_INFO"/>
-<localVariables/>
+<localVariables>
+  <variable id="IP_CURRENT_DATE" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="DATE" mandatory="false" defaultExpressionLanguage="SQL">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="SingleValue"/>
+      <defaultExpression>CURRENT_DATE</defaultExpression>
+    </variableProperties>
+  </variable>
+</localVariables>
 <variableMappings/>
 <dataSources>
   <DataSource id="NUSEXT_UTILITY_CHRS_EXTERNAL_USERS">
@@ -19,7 +28,7 @@
 </dataSources>
 <snapshotProcedures/>
 <calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="External_Users_Projection">
+  <calculationView xsi:type="Calculation:ProjectionView" id="External_Users_Projection" filterExpressionLanguage="COLUMN_ENGINE">
     <viewAttributes>
       <viewAttribute id="APPT_TRACK_C"/>
       <viewAttribute id="APPT_TRACK_T"/>
@@ -84,11 +93,18 @@
         <formula>1</formula>
     
       </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="EXT_SEQ_NO" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+    
+        <formula>TO_VARCHAR(&quot;IS_EXTERNAL&quot;)</formula>
+    
+      </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="NUSEXT_UTILITY_CHRS_EXTERNAL_USERS"/>
-    <!-- <filter>&quot;START_DATE&quot;&lt;= DATE(now()) AND &quot;END_DATE&quot;&gt;= DATE(now())</filter> -->
+    <filter>&quot;START_DATE&quot;&lt;= '$$IP_CURRENT_DATE$$' AND
+&quot;END_DATE&quot; &gt;= '$$IP_CURRENT_DATE$$'</filter>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="CHRS_Staff">
+  <calculationView xsi:type="Calculation:ProjectionView" id="CHRS_Staff" filterExpressionLanguage="COLUMN_ENGINE">
     <viewAttributes>
       <viewAttribute id="APPT_TRACK_C"/>
       <viewAttribute id="APPT_TRACK_T"/>
@@ -160,19 +176,25 @@
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="NUSEXT_MASTER_DATA_CHRS_JOB_INFO"/>
-    <!-- <filter>&quot;START_DATE&quot;&lt;= DATE(now()) AND &quot;END_DATE&quot;&gt;= DATE(now())</filter> -->
+    <filter>&quot;START_DATE&quot;&lt;= '$$IP_CURRENT_DATE$$' AND
+&quot;END_DATE&quot; &gt;= '$$IP_CURRENT_DATE$$'</filter>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="RMM_Staff">
+  <calculationView xsi:type="Calculation:ProjectionView" id="RMM_Staff" filterExpressionLanguage="COLUMN_ENGINE">
     <viewAttributes>
       <viewAttribute id="RMM_STF_N"/>
       <viewAttribute id="START_DATE"/>
       <viewAttribute id="END_DATE"/>
-      <viewAttribute id="RM_STF_N"/></viewAttributes>
+      <viewAttribute id="RM_STF_N"/>
+      <viewAttribute id="RMM_STF_SEQ_NO"/>
+    </viewAttributes>
     <calculatedViewAttributes/>
     <input node="RMM_Staff$$$$NUSEXT_MASTER_DATA_CHRS_JOB_INFO$$">
       <mapping xsi:type="Calculation:AttributeMapping" target="RMM_STF_N" source="RM_STF_N"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="RM_STF_N" source="SF_STF_NUMBER"/></input>
-    <!-- <filter>&quot;START_DATE&quot;&lt;= DATE(now()) AND &quot;END_DATE&quot;&gt;= DATE(now())</filter> -->
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_STF_N" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RMM_STF_SEQ_NO" source="SEQ_NUMBER"/>
+    </input>
+    <filter>&quot;START_DATE&quot;&lt;= '$$IP_CURRENT_DATE$$' AND 
+&quot;END_DATE&quot;&gt;= '$$IP_CURRENT_DATE$$'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="HRP_Info_Proj">
     <viewAttributes>
@@ -244,6 +266,8 @@
       <viewAttribute id="START_DATE_CAL"/>
       <viewAttribute id="END_DATE_CAL"/>
       <viewAttribute id="IS_EXTERNAL"/>
+    
+      <viewAttribute id="STF_SEQ_NO"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="CHRS_Staff" emptyUnionBehavior="NO_ROW">
@@ -303,6 +327,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE_CAL" source="START_DATE_CAL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE_CAL" source="END_DATE_CAL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="IS_EXTERNAL" source="IS_EXTERNAL"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_SEQ_NO" source="SEQ_NUMBER"/>
     </input>
     <input node="External_Users_Projection" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="APPT_TRACK_C" source="APPT_TRACK_C"/>
@@ -361,7 +387,25 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE_CAL" source="START_DATE_CAL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE_CAL" source="END_DATE_CAL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="IS_EXTERNAL" source="IS_EXTERNAL"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_SEQ_NO" source="EXT_SEQ_NO"/>
     </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:RankView" id="RMM_Staff_Seq">
+    <viewAttributes>
+      <viewAttribute id="RMM_STF_N"/>
+      <viewAttribute id="RM_STF_N"/>
+      <viewAttribute id="START_DATE"/>
+      <viewAttribute id="END_DATE"/>
+      <viewAttribute id="RMM_STF_SEQ_NO"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="RMM_Staff"/>
+    <windowFunction dynamicPartitionAttributes="false">
+      <partitionViewAttributeName>RM_STF_N</partitionViewAttributeName>
+      <order byViewAttributeName="RMM_STF_SEQ_NO" direction="DESC"/>
+      <rankThreshold/>
+    </windowFunction>
   </calculationView>
   <calculationView xsi:type="Calculation:RankView" id="HRP_Rank">
     <viewAttributes>
@@ -374,6 +418,72 @@
     <windowFunction dynamicPartitionAttributes="false">
       <partitionViewAttributeName>SF_STF_NUMBER</partitionViewAttributeName>
       <order byViewAttributeName="START_DATE" direction="DESC"/>
+      <rankThreshold/>
+    </windowFunction>
+  </calculationView>
+  <calculationView xsi:type="Calculation:RankView" id="User_Union_seq">
+    <viewAttributes>
+      <viewAttribute id="APPT_TRACK_C"/>
+      <viewAttribute id="APPT_TRACK_T"/>
+      <viewAttribute id="BANK_INFO_FLG"/>
+      <viewAttribute id="CAPACITY_UTIL"/>
+      <viewAttribute id="COMPANY_C"/>
+      <viewAttribute id="COMPANY_T"/>
+      <viewAttribute id="CONTEXP_DATE"/>
+      <viewAttribute id="EMAIL"/>
+      <viewAttribute id="EMPL_STS_C"/>
+      <viewAttribute id="EMPL_STS_T"/>
+      <viewAttribute id="EMP_CAT_C"/>
+      <viewAttribute id="EMP_CAT_T"/>
+      <viewAttribute id="EMP_GP_C"/>
+      <viewAttribute id="EMP_GP_T"/>
+      <viewAttribute id="END_DATE"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="FIRST_NM"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="JOB_GRD_C"/>
+      <viewAttribute id="JOB_GRD_T"/>
+      <viewAttribute id="JOB_LVL_C"/>
+      <viewAttribute id="JOB_LVL_T"/>
+      <viewAttribute id="JOIN_DATE"/>
+      <viewAttribute id="LAST_NM"/>
+      <viewAttribute id="LEAVING_DATE"/>
+      <viewAttribute id="NUSNET_ID"/>
+      <viewAttribute id="PAYSCALE_GRP_C"/>
+      <viewAttribute id="PAYSCALE_GRP_T"/>
+      <viewAttribute id="PREF_NM"/>
+      <viewAttribute id="RACE_C"/>
+      <viewAttribute id="RACE_T"/>
+      <viewAttribute id="RELIGION_C"/>
+      <viewAttribute id="RELIGION_T"/>
+      <viewAttribute id="REMARKS"/>
+      <viewAttribute id="RM_FLG"/>
+      <viewAttribute id="RM_NUSNET_ID"/>
+      <viewAttribute id="SAP_DEPT_C"/>
+      <viewAttribute id="SAP_DEPT_T"/>
+      <viewAttribute id="SAP_FAC_C"/>
+      <viewAttribute id="SAP_FAC_T"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="START_DATE"/>
+      <viewAttribute id="STD_HOURS"/>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="WK_SCHD_C"/>
+      <viewAttribute id="WK_SCHD_T"/>
+      <viewAttribute id="WORK_TITLE"/>
+      <viewAttribute id="START_DATE_CAL"/>
+      <viewAttribute id="END_DATE_CAL"/>
+      <viewAttribute id="IS_EXTERNAL"/>
+      <viewAttribute id="STF_SEQ_NO"/>
+    
+      <viewAttribute id="RM_STF_N"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="User_Union"/>
+    <windowFunction dynamicPartitionAttributes="false">
+      <partitionViewAttributeName>SF_STF_NUMBER</partitionViewAttributeName>
+      <order byViewAttributeName="STF_SEQ_NO" direction="DESC"/>
       <rankThreshold/>
     </windowFunction>
   </calculationView>
@@ -416,7 +526,6 @@
       <viewAttribute id="REMARKS"/>
       <viewAttribute id="RM_FLG"/>
       <viewAttribute id="RM_NUSNET_ID"/>
-      <viewAttribute id="RM_STF_N"/>
       <viewAttribute id="SAP_DEPT_C"/>
       <viewAttribute id="SAP_DEPT_T"/>
       <viewAttribute id="SAP_FAC_C"/>
@@ -433,11 +542,14 @@
       <viewAttribute id="START_DATE_CAL"/>
       <viewAttribute id="END_DATE_CAL"/>
       <viewAttribute id="IS_EXTERNAL"/>
+      <viewAttribute id="STF_SEQ_NO"/>
       <viewAttribute id="RMM_STF_N"/>
+      <viewAttribute id="RM_STF_N"/>
+    
       <viewAttribute hidden="true" id="JOIN$RM_STF_N$RM_STF_N"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="User_Union">
+    <input node="User_Union_seq">
       <mapping xsi:type="Calculation:AttributeMapping" target="APPT_TRACK_C" source="APPT_TRACK_C"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="APPT_TRACK_T" source="APPT_TRACK_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BANK_INFO_FLG" source="BANK_INFO_FLG"/>
@@ -475,7 +587,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="REMARKS" source="REMARKS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RM_FLG" source="RM_FLG"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RM_NUSNET_ID" source="RM_NUSNET_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="RM_STF_N" source="RM_STF_N"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SAP_DEPT_C" source="SAP_DEPT_C"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SAP_DEPT_T" source="SAP_DEPT_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SAP_FAC_C" source="SAP_FAC_C"/>
@@ -492,9 +603,12 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE_CAL" source="START_DATE_CAL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE_CAL" source="END_DATE_CAL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="IS_EXTERNAL" source="IS_EXTERNAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_SEQ_NO" source="STF_SEQ_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_STF_N" source="RM_STF_N"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RM_STF_N$RM_STF_N" source="RM_STF_N"/>
     </input>
-    <input node="RMM_Staff">
+    <input node="RMM_Staff_Seq">
       <mapping xsi:type="Calculation:AttributeMapping" target="RMM_STF_N" source="RMM_STF_N"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RM_STF_N$RM_STF_N" source="RM_STF_N"/>
     </input>
@@ -539,7 +653,6 @@
       <viewAttribute id="REMARKS"/>
       <viewAttribute id="RM_FLG"/>
       <viewAttribute id="RM_NUSNET_ID"/>
-      <viewAttribute id="RM_STF_N"/>
       <viewAttribute id="SAP_DEPT_C"/>
       <viewAttribute id="SAP_DEPT_T"/>
       <viewAttribute id="SAP_FAC_C"/>
@@ -556,8 +669,11 @@
       <viewAttribute id="START_DATE_CAL"/>
       <viewAttribute id="END_DATE_CAL"/>
       <viewAttribute id="IS_EXTERNAL"/>
+      <viewAttribute id="STF_SEQ_NO"/>
       <viewAttribute id="RMM_STF_N"/>
       <viewAttribute id="HRP_STF_N"/>
+      <viewAttribute id="RM_STF_N"/>
+    
       <viewAttribute hidden="true" id="JOIN$SF_STF_NUMBER$SF_STF_NUMBER"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -599,7 +715,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="REMARKS" source="REMARKS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RM_FLG" source="RM_FLG"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RM_NUSNET_ID" source="RM_NUSNET_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="RM_STF_N" source="RM_STF_N"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SAP_DEPT_C" source="SAP_DEPT_C"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SAP_DEPT_T" source="SAP_DEPT_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SAP_FAC_C" source="SAP_FAC_C"/>
@@ -616,7 +731,10 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE_CAL" source="START_DATE_CAL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE_CAL" source="END_DATE_CAL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="IS_EXTERNAL" source="IS_EXTERNAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_SEQ_NO" source="STF_SEQ_NO"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RMM_STF_N" source="RMM_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_STF_N" source="RM_STF_N"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SF_STF_NUMBER$SF_STF_NUMBER" source="SF_STF_NUMBER"/>
     </input>
     <input node="HRP_Rank">
@@ -652,6 +770,10 @@
       <descriptions defaultDescription="COMPANY_T"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="COMPANY_T"/>
     </attribute>
+    <attribute id="CONTEXP_DATE" order="7" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONTEXP_DATE"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="CONTEXP_DATE"/>
+    </attribute>
     <attribute id="EMAIL" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="EMAIL"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="EMAIL"/>
@@ -679,6 +801,10 @@
     <attribute id="EMP_GP_T" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="EMP_GP_T"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="EMP_GP_T"/>
+    </attribute>
+    <attribute id="END_DATE" order="15" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="END_DATE"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="END_DATE"/>
     </attribute>
     <attribute id="FDLU_C" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FDLU_C"/>
@@ -712,9 +838,17 @@
       <descriptions defaultDescription="JOB_LVL_T"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="JOB_LVL_T"/>
     </attribute>
+    <attribute id="JOIN_DATE" order="24" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOIN_DATE"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="JOIN_DATE"/>
+    </attribute>
     <attribute id="LAST_NM" order="25" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LAST_NM"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="LAST_NM"/>
+    </attribute>
+    <attribute id="LEAVING_DATE" order="26" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LEAVING_DATE"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="LEAVING_DATE"/>
     </attribute>
     <attribute id="NUSNET_ID" order="27" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NUSNET_ID"/>
@@ -760,61 +894,65 @@
       <descriptions defaultDescription="RM_NUSNET_ID"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="RM_NUSNET_ID"/>
     </attribute>
-    <attribute id="RM_STF_N" order="38" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="RM_STF_N"/>
-      <keyMapping columnObjectName="User_HRP_Join" columnName="RM_STF_N"/>
-    </attribute>
-    <attribute id="SAP_DEPT_C" order="39" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SAP_DEPT_C" order="38" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SAP_DEPT_C"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="SAP_DEPT_C"/>
     </attribute>
-    <attribute id="SAP_DEPT_T" order="40" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SAP_DEPT_T" order="39" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SAP_DEPT_T"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="SAP_DEPT_T"/>
     </attribute>
-    <attribute id="SAP_FAC_C" order="41" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SAP_FAC_C" order="40" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SAP_FAC_C"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="SAP_FAC_C"/>
     </attribute>
-    <attribute id="SAP_FAC_T" order="42" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SAP_FAC_T" order="41" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SAP_FAC_T"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="SAP_FAC_T"/>
     </attribute>
-    <attribute id="SF_STF_NUMBER" order="43" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SF_STF_NUMBER" order="42" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SF_STF_NUMBER"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="SF_STF_NUMBER"/>
     </attribute>
-    <attribute id="STD_HOURS" order="45" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="START_DATE" order="43" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="START_DATE"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="START_DATE"/>
+    </attribute>
+    <attribute id="STD_HOURS" order="44" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_HOURS"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="STD_HOURS"/>
     </attribute>
-    <attribute id="STF_NUMBER" order="46" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="STF_NUMBER" order="45" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STF_NUMBER"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="STF_NUMBER"/>
     </attribute>
-    <attribute id="ULU_C" order="47" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ULU_C" order="46" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ULU_C"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="ULU_C"/>
     </attribute>
-    <attribute id="ULU_T" order="48" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ULU_T" order="47" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ULU_T"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="ULU_T"/>
     </attribute>
-    <attribute id="WK_SCHD_C" order="49" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WK_SCHD_C" order="48" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WK_SCHD_C"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="WK_SCHD_C"/>
     </attribute>
-    <attribute id="WK_SCHD_T" order="50" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WK_SCHD_T" order="49" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WK_SCHD_T"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="WK_SCHD_T"/>
     </attribute>
-    <attribute id="WORK_TITLE" order="51" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WORK_TITLE" order="50" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WORK_TITLE"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="WORK_TITLE"/>
     </attribute>
-    <attribute id="IS_EXTERNAL" order="54" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="IS_EXTERNAL" order="53" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="IS_EXTERNAL"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="IS_EXTERNAL"/>
+    </attribute>
+    <attribute id="STF_SEQ_NO" order="54" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STF_SEQ_NO"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="STF_SEQ_NO"/>
     </attribute>
     <attribute id="RMM_STF_N" order="55" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RMM_STF_N"/>
@@ -824,51 +962,26 @@
       <descriptions defaultDescription="HRP_STF_N"/>
       <keyMapping columnObjectName="User_HRP_Join" columnName="HRP_STF_N"/>
     </attribute>
+    <attribute id="RM_STF_N" order="57" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RM_STF_N"/>
+      <keyMapping columnObjectName="User_HRP_Join" columnName="RM_STF_N"/>
+    </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="CONTEXP_DATE" order="7" aggregationType="min" measureType="simple">
-      <descriptions defaultDescription="CONTEXP_DATE"/>
-      <measureMapping columnObjectName="User_HRP_Join" columnName="CONTEXP_DATE"/>
-    
-      <exceptionAggregationMetadata/>
-    </measure>
-    <measure id="END_DATE" order="15" aggregationType="min" measureType="simple">
-      <descriptions defaultDescription="END_DATE"/>
-      <measureMapping columnObjectName="User_HRP_Join" columnName="END_DATE"/>
-    
-      <exceptionAggregationMetadata/>
-    </measure>
-    <measure id="JOIN_DATE" order="24" aggregationType="min" measureType="simple">
-      <descriptions defaultDescription="JOIN_DATE"/>
-      <measureMapping columnObjectName="User_HRP_Join" columnName="JOIN_DATE"/>
-    
-      <exceptionAggregationMetadata/>
-    </measure>
-    <measure id="LEAVING_DATE" order="26" aggregationType="min" measureType="simple">
-      <descriptions defaultDescription="LEAVING_DATE"/>
-      <measureMapping columnObjectName="User_HRP_Join" columnName="LEAVING_DATE"/>
-    
-      <exceptionAggregationMetadata/>
-    </measure>
-    <measure id="START_DATE" order="44" aggregationType="min" measureType="simple">
-      <descriptions defaultDescription="START_DATE"/>
-      <measureMapping columnObjectName="User_HRP_Join" columnName="START_DATE"/>
-    
-      <exceptionAggregationMetadata/>
-    </measure>
-    <measure id="START_DATE_CAL" order="52" aggregationType="min" measureType="simple">
+    <measure id="START_DATE_CAL" order="51" aggregationType="min" measureType="simple">
       <descriptions defaultDescription="START_DATE_CAL"/>
       <measureMapping columnObjectName="User_HRP_Join" columnName="START_DATE_CAL"/>
     
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="END_DATE_CAL" order="53" aggregationType="min" measureType="simple">
+    <measure id="END_DATE_CAL" order="52" aggregationType="min" measureType="simple">
       <descriptions defaultDescription="END_DATE_CAL"/>
       <measureMapping columnObjectName="User_HRP_Join" columnName="END_DATE_CAL"/>
     
       <exceptionAggregationMetadata/>
-    </measure></baseMeasures>
+    </measure>
+  </baseMeasures>
   <calculatedMeasures/>
   <restrictedMeasures/>
   <localDimensions/>
@@ -876,53 +989,62 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="367" y="112"/>
+      <upperLeftCorner x="432.4049662634501" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="External_Users_Projection" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="201" y="681"/>
+      <upperLeftCorner x="92.00000000000003" y="806.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="CHRS_Staff" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="411" y="681"/>
+      <upperLeftCorner x="302" y="806.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="User_Union" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="167.97210483808996" y="665.3333297570547"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="RMM_Staff" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="524" y="536"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="HRP_Info_Proj" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="536"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="User_Union" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="314" y="540"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="HRP_Rank" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="394"/>
+      <upperLeftCorner x="395.4199717652357" y="661.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="User_RMM_Details" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="400" y="376"/>
+      <upperLeftCorner x="194.63877150475662" y="376.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="User_Union" modelObjectNameSpace="User_RMM_Details" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="User_Union_seq" modelObjectNameSpace="User_RMM_Details" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape modelObjectName="RMM_Staff" modelObjectNameSpace="User_RMM_Details" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="RMM_Staff_Seq" modelObjectNameSpace="User_RMM_Details" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape expanded="true" modelObjectName="User_HRP_Join" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="367" y="217"/>
+  
+    <shape expanded="true" modelObjectName="User_Union_seq" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="167.97210483808996" y="536.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="RMM_Staff_Seq" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="377.97210483809" y="536.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
+    <shape expanded="true" modelObjectName="HRP_Info_Proj" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="587.97210483809" y="536.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="HRP_Rank" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="522.3896141865458" y="394.4999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="User_HRP_Join" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="432.4049662634501" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
     <shape modelObjectName="User_RMM_Details" modelObjectNameSpace="User_HRP_Join" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="250"/>

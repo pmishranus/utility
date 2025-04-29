@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="HRP_USERS_VIEW" applyPrivilegeType="ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" defaultClient="$$client$$" outputViewType="Aggregation" calculationScenarioType="TREE_BASED" enforceSqlExecution="false">
 <descriptions defaultDescription="CHRS_JOB_INFO"/>
-<localVariables/>
+<localVariables>
+  <variable id="IP_CURRENT_DATE" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="DATE" mandatory="false" defaultExpressionLanguage="SQL" defaultValue="CURRENT_DATE">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="SingleValue"/>
+    </variableProperties>
+  </variable>
+</localVariables>
 <variableMappings/>
 <dataSources>
   <DataSource id="NUSEXT_MASTER_DATA_CHRS_HRP_INFO">
@@ -24,7 +32,8 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="NUSEXT_MASTER_DATA_CHRS_HRP_INFO"/>
-    <filter>&quot;START_DATE&quot;&lt;= NOW() AND &quot;END_DATE&quot;&gt;= NOW()</filter>
+    <filter>&quot;START_DATE&quot;&lt;= '$$IP_CURRENT_DATE$$' AND 
+&quot;END_DATE&quot;&gt;= '$$IP_CURRENT_DATE$$'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Users_Lookup">
     <viewAttributes>
@@ -54,6 +63,7 @@
       <viewAttribute id="STAFF_ID"/>
     
       <viewAttribute id="END_DATE"/>
+    
       <viewAttribute hidden="true" id="JOIN$SF_STF_NUMBER$CONCURRENT_STAFF_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -64,6 +74,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="STF_NUMBER" source="STF_NUMBER"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SF_STF_NUMBER$CONCURRENT_STAFF_ID" source="SF_STF_NUMBER"/>
     </input>
     <input node="Users_Lookup">
@@ -127,20 +138,20 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="221" y="112"/>
+      <upperLeftCorner x="221.11302679000914" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="HRP_Info" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="376"/>
+      <upperLeftCorner x="92.00000000000001" y="376.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Users_Lookup" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="376"/>
+      <upperLeftCorner x="302.00000000000006" y="376.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="HRP_Staff" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="221" y="217"/>
+      <upperLeftCorner x="221.11302679000914" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   

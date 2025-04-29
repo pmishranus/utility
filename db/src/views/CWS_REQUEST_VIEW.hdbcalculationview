@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CWS_REQUEST_VIEW" applyPrivilegeType="ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" defaultClient="$$client$$" outputViewType="Aggregation" calculationScenarioType="TREE_BASED" enforceSqlExecution="false">
-<descriptions defaultDescription="CWS_REQUEST_VIEW"/>
+<descriptions defaultDescription="ECLAIM_REQUEST_VIEW"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
@@ -16,8 +16,8 @@
   <DataSource id="NUSEXT_UTILITY_STATUS_CONFIG">
     <resourceUri>NUSEXT_UTILITY_STATUS_CONFIG</resourceUri>
   </DataSource>
-  <DataSource id="USER_LOOKUP">
-    <resourceUri>USER_LOOKUP</resourceUri>
+  <DataSource id="ACTIVE_INACTIVE_USER_LOOKUP">
+    <resourceUri>ACTIVE_INACTIVE_USER_LOOKUP</resourceUri>
   </DataSource>
   <DataSource id="PROCESS_DETAILS">
     <resourceUri>PROCESS_DETAILS</resourceUri>
@@ -28,17 +28,20 @@
   <DataSource id="NUSEXT_UTILITY_REQUEST_LOCK_DETAILS">
     <resourceUri>NUSEXT_UTILITY_REQUEST_LOCK_DETAILS</resourceUri>
   </DataSource>
-  <DataSource id="Submitted_By_User_Lookup$$$$USER_LOOKUP$$">
-    <resourceUri>USER_LOOKUP</resourceUri>
+  <DataSource id="Submitted_By_User_Lookup$$$$ACTIVE_INACTIVE_USER_LOOKUP$$">
+    <resourceUri>ACTIVE_INACTIVE_USER_LOOKUP</resourceUri>
   </DataSource>
   <DataSource id="Sub_Type_Alias$$$$NUSEXT_UTILITY_CWS_APP_CONFIGS$$">
     <resourceUri>NUSEXT_UTILITY_CWS_APP_CONFIGS</resourceUri>
   </DataSource>
-  <DataSource id="ModifiedBy_Lookup$$$$USER_LOOKUP$$">
-    <resourceUri>USER_LOOKUP</resourceUri>
+  <DataSource id="ModifiedBy_Lookup$$$$ACTIVE_INACTIVE_USER_LOOKUP$$">
+    <resourceUri>ACTIVE_INACTIVE_USER_LOOKUP</resourceUri>
   </DataSource>
   <DataSource id="Engaging_Dept_Prj$$$$NUSEXT_MASTER_DATA_CHRS_FDLU_ULU$$">
     <resourceUri>NUSEXT_MASTER_DATA_CHRS_FDLU_ULU</resourceUri>
+  </DataSource>
+  <DataSource id="Location_CWS_AppCfg$$$$NUSEXT_UTILITY_CWS_APP_CONFIGS$$">
+    <resourceUri>NUSEXT_UTILITY_CWS_APP_CONFIGS</resourceUri>
   </DataSource>
 </dataSources>
 <snapshotProcedures/>
@@ -106,8 +109,6 @@
       <viewAttribute id="AGREED_CURRENCY"/>
       <viewAttribute id="CURRENCY"/>
     
-      <viewAttribute id="MIGRATED"/>
-    
       <viewAttribute id="SOURCE"/>
     
       <viewAttribute id="IS_WAIVED"/>
@@ -116,6 +117,8 @@
     
       <viewAttribute id="MASS_REF_UPLOAD_ID"/>
       <viewAttribute id="MASS_REF_VAL"/>
+    
+      <viewAttribute id="MIGRATED"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="NUSEXT_CWNED_HEADER_DATA"/>
@@ -167,34 +170,37 @@
       <viewAttribute id="FIRST_NM"/>
       <viewAttribute id="LAST_NM"/>
       <viewAttribute id="HRP_STF_N"/>
+      <viewAttribute id="WORK_TITLE"/>
+    
     
     
     
       <viewAttribute id="START_DATE"/>
       <viewAttribute id="END_DATE"/></viewAttributes>
     <calculatedViewAttributes/>
-    <input node="USER_LOOKUP">
+    <input node="ACTIVE_INACTIVE_USER_LOOKUP">
       <mapping xsi:type="Calculation:AttributeMapping" target="PSA_CODE" source="SAP_DEPT_C"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PSA_DESC" source="SAP_DEPT_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PA_CODE" source="SAP_FAC_C"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PA_DESC" source="SAP_FAC_T"/></input>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PA_DESC" source="SAP_FAC_T"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="RMM_STF_N" null="true"/></input>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Process_View">
     <viewAttributes>
       <viewAttribute id="PROCESS_INST_ID"/>
       <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
       <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
     
     
       <viewAttribute id="REFERENCE_ID"/>
-      <viewAttribute id="PROCESS_CODE"/>
-      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
-      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
-    </viewAttributes>
+      <viewAttribute id="PROCESS_CODE"/></viewAttributes>
     <calculatedViewAttributes/>
     <input node="PROCESS_DETAILS">
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="STATUS_ALIAS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROCESS_STATUS_ALIAS" null="true"/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROCESS_STATUS_COLOR_CODE" null="true"/>
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Ulu_Fdlu_Details">
@@ -223,12 +229,13 @@
   <calculationView xsi:type="Calculation:ProjectionView" id="Submitted_By_User_Lookup">
     <viewAttributes>
       <viewAttribute id="SUBMITTED_BY_FULLNAME"/>
-    
-      <viewAttribute id="SUBMITTED_BY_STF_ID"/></viewAttributes>
+      <viewAttribute id="SUBMITTED_BY_STF_ID"/>
+    </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="Submitted_By_User_Lookup$$$$USER_LOOKUP$$">
-      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_STF_ID" source="STF_NUMBER"/>
+    <input node="Submitted_By_User_Lookup$$$$ACTIVE_INACTIVE_USER_LOOKUP$$">
       <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_FULLNAME" source="FULL_NM"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_STF_ID" source="SF_STF_NUMBER"/>
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Sub_Type_Alias" filterExpressionLanguage="COLUMN_ENGINE">
@@ -252,7 +259,7 @@
       <viewAttribute id="MODIFIED_BY_FULLNAME"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="ModifiedBy_Lookup$$$$USER_LOOKUP$$">
+    <input node="ModifiedBy_Lookup$$$$ACTIVE_INACTIVE_USER_LOOKUP$$">
       <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY_STF_ID" source="SF_STF_NUMBER"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY_FULLNAME" source="FULL_NM"/>
     </input>
@@ -267,7 +274,17 @@
     <calculatedViewAttributes/>
     <input node="Engaging_Dept_Prj$$$$NUSEXT_MASTER_DATA_CHRS_FDLU_ULU$$"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Cw_MasterDataJoin" joinType="leftOuter">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Location_CWS_AppCfg" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="CONFIG_VALUE"/>
+      <viewAttribute id="CONFIG_KEY"/>
+      <viewAttribute id="REFERENCE_KEY"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Location_CWS_AppCfg$$$$NUSEXT_UTILITY_CWS_APP_CONFIGS$$"/>
+    <filter>&quot;REFERENCE_KEY&quot;='LOCATION'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Cw_MasterDataJoin" cardinality="C1_1" joinType="leftOuter">
     <viewAttributes>
       <viewAttribute id="CLIENT_NAME"/>
       <viewAttribute id="CONCURRENT_STAFF_ID"/>
@@ -320,8 +337,6 @@
     
       <viewAttribute id="SUB_TYPE_R"/>
     
-      <viewAttribute id="MIGRATED"/>
-    
       <viewAttribute id="SOURCE"/>
     
       <viewAttribute id="IS_WAIVED"/>
@@ -330,6 +345,9 @@
     
       <viewAttribute id="MASS_REF_UPLOAD_ID"/>
       <viewAttribute id="MASS_REF_VAL"/>
+    
+      <viewAttribute id="MIGRATED"/>
+    
       <viewAttribute hidden="true" id="JOIN$SUB_TYPE$CONFIG_KEY"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -382,8 +400,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="AGREED_CURRENCY" source="AGREED_CURRENCY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
     
-      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
-    
       <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE" source="SOURCE"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="IS_WAIVED" source="IS_WAIVED"/>
@@ -392,6 +408,9 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="MASS_REF_UPLOAD_ID" source="MASS_REF_UPLOAD_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MASS_REF_VAL" source="MASS_REF_VAL"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SUB_TYPE$CONFIG_KEY" source="SUB_TYPE"/>
     </input>
     <input node="Cw_AppConfigs">
@@ -459,8 +478,6 @@
     
       <viewAttribute id="SUB_TYPE_R"/>
     
-      <viewAttribute id="MIGRATED"/>
-    
       <viewAttribute id="SOURCE"/>
     
       <viewAttribute id="IS_WAIVED"/>
@@ -469,6 +486,9 @@
     
       <viewAttribute id="MASS_REF_UPLOAD_ID"/>
       <viewAttribute id="MASS_REF_VAL"/>
+    
+      <viewAttribute id="MIGRATED"/>
+    
       <viewAttribute hidden="true" id="JOIN$PROCESS_CODE$PROCESS_CODE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -524,8 +544,6 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE_R" source="SUB_TYPE_R"/>
     
-      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
-    
       <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE" source="SOURCE"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="IS_WAIVED" source="IS_WAIVED"/>
@@ -534,6 +552,9 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="MASS_REF_UPLOAD_ID" source="MASS_REF_UPLOAD_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MASS_REF_VAL" source="MASS_REF_VAL"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_CODE$PROCESS_CODE" source="PROCESS_CODE"/>
     </input>
     <input node="Process_Config">
@@ -602,8 +623,6 @@
     
       <viewAttribute id="SUB_TYPE_R"/>
     
-      <viewAttribute id="MIGRATED"/>
-    
       <viewAttribute id="SOURCE"/>
     
       <viewAttribute id="IS_WAIVED"/>
@@ -612,6 +631,9 @@
     
       <viewAttribute id="MASS_REF_UPLOAD_ID"/>
       <viewAttribute id="MASS_REF_VAL"/>
+    
+      <viewAttribute id="MIGRATED"/>
+    
       <viewAttribute hidden="true" id="JOIN$REQUEST_STATUS$STATUS_CODE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -669,8 +691,6 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE_R" source="SUB_TYPE_R"/>
     
-      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
-    
       <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE" source="SOURCE"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="IS_WAIVED" source="IS_WAIVED"/>
@@ -679,6 +699,9 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="MASS_REF_UPLOAD_ID" source="MASS_REF_UPLOAD_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MASS_REF_VAL" source="MASS_REF_VAL"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$REQUEST_STATUS$STATUS_CODE" source="REQUEST_STATUS"/>
     </input>
     <input node="Request_Status">
@@ -749,8 +772,6 @@
     
       <viewAttribute id="SUB_TYPE_R"/>
     
-      <viewAttribute id="MIGRATED"/>
-    
       <viewAttribute id="SOURCE"/>
     
       <viewAttribute id="IS_WAIVED"/>
@@ -786,6 +807,11 @@
     
       <viewAttribute id="MASS_REF_UPLOAD_ID"/>
       <viewAttribute id="MASS_REF_VAL"/>
+    
+      <viewAttribute id="MIGRATED"/>
+    
+      <viewAttribute id="WORK_TITLE"/>
+    
       <viewAttribute hidden="true" id="JOIN$STAFF_ID$SF_STF_NUMBER"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -847,8 +873,6 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE_R" source="SUB_TYPE_R"/>
     
-      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
-    
       <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE" source="SOURCE"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="IS_WAIVED" source="IS_WAIVED"/>
@@ -857,6 +881,9 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="MASS_REF_UPLOAD_ID" source="MASS_REF_UPLOAD_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MASS_REF_VAL" source="MASS_REF_VAL"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$STAFF_ID$SF_STF_NUMBER" source="STAFF_ID"/>
     </input>
     <input node="User_Lookup">
@@ -884,6 +911,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FIRST_NM" source="FIRST_NM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LAST_NM" source="LAST_NM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="HRP_STF_N" source="HRP_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_TITLE" source="WORK_TITLE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$STAFF_ID$SF_STF_NUMBER" source="SF_STF_NUMBER"/>
     </input>
     <joinAttribute name="JOIN$STAFF_ID$SF_STF_NUMBER"/>
@@ -947,8 +975,6 @@
     
       <viewAttribute id="SUB_TYPE_R"/>
     
-      <viewAttribute id="MIGRATED"/>
-    
       <viewAttribute id="SOURCE"/>
     
       <viewAttribute id="IS_WAIVED"/>
@@ -987,9 +1013,15 @@
     
       <viewAttribute id="PROCESS_INST_ID"/>
       <viewAttribute id="PROCESS_STATUS"/>
-      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
-      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
       <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+    
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
+    
+      <viewAttribute id="MIGRATED"/>
+    
+      <viewAttribute id="WORK_TITLE"/>
+    
       <viewAttribute hidden="true" id="JOIN$REQ_UNIQUE_ID$REFERENCE_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -1051,8 +1083,6 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE_R" source="SUB_TYPE_R"/>
     
-      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
-    
       <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE" source="SOURCE"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="IS_WAIVED" source="IS_WAIVED"/>
@@ -1088,14 +1118,19 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="MASS_REF_UPLOAD_ID" source="MASS_REF_UPLOAD_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MASS_REF_VAL" source="MASS_REF_VAL"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_TITLE" source="WORK_TITLE"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$REQ_UNIQUE_ID$REFERENCE_ID" source="REQ_UNIQUE_ID"/>
     </input>
     <input node="Process_View">
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$REQ_UNIQUE_ID$REFERENCE_ID" source="REFERENCE_ID"/>
     </input>
     <joinAttribute name="JOIN$REQ_UNIQUE_ID$REFERENCE_ID"/>
@@ -1161,8 +1196,6 @@
     
       <viewAttribute id="SUB_TYPE_R"/>
     
-      <viewAttribute id="MIGRATED"/>
-    
       <viewAttribute id="SOURCE"/>
     
       <viewAttribute id="IS_WAIVED"/>
@@ -1201,9 +1234,15 @@
     
       <viewAttribute id="PROCESS_INST_ID"/>
       <viewAttribute id="PROCESS_STATUS"/>
-      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
-      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
       <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+    
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
+    
+      <viewAttribute id="MIGRATED"/>
+    
+      <viewAttribute id="WORK_TITLE"/>
+    
       <viewAttribute hidden="true" id="JOIN$DEPT_C$FDLU_C"/>
       <viewAttribute hidden="true" id="JOIN$FACULTY_C$ULU_C"/>
     </viewAttributes>
@@ -1266,8 +1305,6 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE_R" source="SUB_TYPE_R"/>
     
-      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
-    
       <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE" source="SOURCE"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="IS_WAIVED" source="IS_WAIVED"/>
@@ -1306,9 +1343,15 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_TITLE" source="WORK_TITLE"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DEPT_C$FDLU_C" source="DEPT_C"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FACULTY_C$ULU_C" source="FACULTY_C"/>
     </input>
@@ -1382,8 +1425,6 @@
     
       <viewAttribute id="SUB_TYPE_R"/>
     
-      <viewAttribute id="MIGRATED"/>
-    
       <viewAttribute id="SOURCE"/>
     
       <viewAttribute id="IS_WAIVED"/>
@@ -1422,9 +1463,14 @@
     
       <viewAttribute id="PROCESS_INST_ID"/>
       <viewAttribute id="PROCESS_STATUS"/>
-      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
-      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
       <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+    
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
+    
+      <viewAttribute id="MIGRATED"/>
+    
+      <viewAttribute id="WORK_TITLE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="CwsNUluFdluJoin"/>
@@ -1493,8 +1539,6 @@
     
       <viewAttribute id="SUB_TYPE_R"/>
     
-      <viewAttribute id="MIGRATED"/>
-    
       <viewAttribute id="SOURCE"/>
     
       <viewAttribute id="IS_WAIVED"/>
@@ -1533,9 +1577,15 @@
     
       <viewAttribute id="PROCESS_INST_ID"/>
       <viewAttribute id="PROCESS_STATUS"/>
-      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
-      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
       <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+    
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
+    
+      <viewAttribute id="MIGRATED"/>
+    
+      <viewAttribute id="WORK_TITLE"/>
+    
       <viewAttribute hidden="true" id="JOIN$REQ_UNIQUE_ID$REFERENCE_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -1599,8 +1649,6 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE_R" source="SUB_TYPE_R"/>
     
-      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
-    
       <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE" source="SOURCE"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="IS_WAIVED" source="IS_WAIVED"/>
@@ -1639,9 +1687,15 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_TITLE" source="WORK_TITLE"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$REQ_UNIQUE_ID$REFERENCE_ID" source="REQ_UNIQUE_ID"/>
     </input>
     <input node="Request_Lock">
@@ -1713,8 +1767,6 @@
     
       <viewAttribute id="SUB_TYPE_R"/>
     
-      <viewAttribute id="MIGRATED"/>
-    
       <viewAttribute id="SOURCE"/>
     
       <viewAttribute id="IS_WAIVED"/>
@@ -1754,9 +1806,15 @@
     
       <viewAttribute id="PROCESS_INST_ID"/>
       <viewAttribute id="PROCESS_STATUS"/>
-      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
-      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
       <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+    
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
+    
+      <viewAttribute id="MIGRATED"/>
+    
+      <viewAttribute id="WORK_TITLE"/>
+    
       <viewAttribute hidden="true" id="JOIN$SUBMITTED_BY$SUBMITTED_BY_STF_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -1820,8 +1878,6 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE_R" source="SUB_TYPE_R"/>
     
-      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
-    
       <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE" source="SOURCE"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="IS_WAIVED" source="IS_WAIVED"/>
@@ -1860,9 +1916,15 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_TITLE" source="WORK_TITLE"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SUBMITTED_BY$SUBMITTED_BY_STF_ID" source="SUBMITTED_BY"/>
     </input>
     <input node="Submitted_By_User_Lookup">
@@ -1933,8 +1995,6 @@
     
       <viewAttribute id="SUB_TYPE_R"/>
     
-      <viewAttribute id="MIGRATED"/>
-    
       <viewAttribute id="SOURCE"/>
     
       <viewAttribute id="IS_WAIVED"/>
@@ -1974,9 +2034,15 @@
     
       <viewAttribute id="PROCESS_INST_ID"/>
       <viewAttribute id="PROCESS_STATUS"/>
-      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
-      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
       <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+    
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
+    
+      <viewAttribute id="MIGRATED"/>
+    
+      <viewAttribute id="WORK_TITLE"/>
+    
       <viewAttribute hidden="true" id="JOIN$SUBMISSION_TYPE$SUBMISSION_TYPE_K"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -2039,8 +2105,6 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE_R" source="SUB_TYPE_R"/>
     
-      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
-    
       <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE" source="SOURCE"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="IS_WAIVED" source="IS_WAIVED"/>
@@ -2080,9 +2144,15 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_TITLE" source="WORK_TITLE"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SUBMISSION_TYPE$SUBMISSION_TYPE_K" source="SUBMISSION_TYPE"/>
     </input>
     <input node="Sub_Type_Alias">
@@ -2152,7 +2222,6 @@
       <viewAttribute id="SUBMISSION_TYPE_T"/>
       <viewAttribute id="SUBMISSION_TYPE_REF_T"/>
       <viewAttribute id="SUB_TYPE_R"/>
-      <viewAttribute id="MIGRATED"/>
       <viewAttribute id="SOURCE"/>
       <viewAttribute id="IS_WAIVED"/>
       <viewAttribute id="MODIFIED_BY_FULLNAME"/>
@@ -2192,9 +2261,15 @@
     
       <viewAttribute id="PROCESS_INST_ID"/>
       <viewAttribute id="PROCESS_STATUS"/>
-      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
-      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
       <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+    
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
+    
+      <viewAttribute id="MIGRATED"/>
+    
+      <viewAttribute id="WORK_TITLE"/>
+    
       <viewAttribute hidden="true" id="JOIN$MODIFIED_BY$MODIFIED_BY_STF_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -2257,7 +2332,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="SUBMISSION_TYPE_T" source="SUBMISSION_TYPE_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SUBMISSION_TYPE_REF_T" source="SUBMISSION_TYPE_REF_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE_R" source="SUB_TYPE_R"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE" source="SOURCE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="IS_WAIVED" source="IS_WAIVED"/>
     
@@ -2296,9 +2370,15 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_TITLE" source="WORK_TITLE"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MODIFIED_BY$MODIFIED_BY_STF_ID" source="MODIFIED_BY"/>
     </input>
     <input node="ModifiedBy_Lookup">
@@ -2367,7 +2447,6 @@
       <viewAttribute id="SUBMISSION_TYPE_T"/>
       <viewAttribute id="SUBMISSION_TYPE_REF_T"/>
       <viewAttribute id="SUB_TYPE_R"/>
-      <viewAttribute id="MIGRATED"/>
       <viewAttribute id="SOURCE"/>
       <viewAttribute id="IS_WAIVED"/>
       <viewAttribute id="MODIFIED_BY_FULLNAME"/>
@@ -2409,9 +2488,15 @@
     
       <viewAttribute id="PROCESS_INST_ID"/>
       <viewAttribute id="PROCESS_STATUS"/>
-      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
-      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
       <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+    
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
+    
+      <viewAttribute id="MIGRATED"/>
+    
+      <viewAttribute id="WORK_TITLE"/>
+    
       <viewAttribute hidden="true" id="JOIN$FDLU$FDLU_C"/>
       <viewAttribute hidden="true" id="JOIN$ULU$ULU_C"/>
     </viewAttributes>
@@ -2475,7 +2560,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="SUBMISSION_TYPE_T" source="SUBMISSION_TYPE_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SUBMISSION_TYPE_REF_T" source="SUBMISSION_TYPE_REF_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE_R" source="SUB_TYPE_R"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE" source="SOURCE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="IS_WAIVED" source="IS_WAIVED"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY_FULLNAME" source="MODIFIED_BY_FULLNAME"/>
@@ -2515,9 +2599,15 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_TITLE" source="WORK_TITLE"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FDLU$FDLU_C" source="FDLU"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ULU$ULU_C" source="ULU"/>
     </input>
@@ -2530,439 +2620,1092 @@
     <joinAttribute name="JOIN$FDLU$FDLU_C"/>
     <joinAttribute name="JOIN$ULU$ULU_C"/>
   </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Location_Ref" cardinality="C1_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="IS_LOCKED"/>
+      <viewAttribute id="LOCKED_BY_USER_NID"/>
+      <viewAttribute id="LOCKED_STAFF_USER_GRP"/>
+      <viewAttribute id="CLIENT_NAME"/>
+      <viewAttribute id="CONCURRENT_STAFF_ID"/>
+      <viewAttribute id="DURATION_DAYS"/>
+      <viewAttribute id="DURATION_HOURS"/>
+      <viewAttribute id="END_DATE"/>
+      <viewAttribute id="END_DATE_CAL"/>
+      <viewAttribute id="IS_REQUEST_CLOSED"/>
+      <viewAttribute id="LOCATION"/>
+      <viewAttribute id="MODIFIED_BY"/>
+      <viewAttribute id="MODIFIED_ON"/>
+      <viewAttribute id="OFFLINE_APPROVAL"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROPERTY_DETAILS"/>
+      <viewAttribute id="PROPERTY_USAGE"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+      <viewAttribute id="REQUEST_ID"/>
+      <viewAttribute id="REQUEST_STATUS"/>
+      <viewAttribute id="REQUEST_TYPE"/>
+      <viewAttribute id="REQ_UNIQUE_ID"/>
+      <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="START_DATE"/>
+      <viewAttribute id="START_DATE_CAL"/>
+      <viewAttribute id="SUBMITTED_BY"/>
+      <viewAttribute id="SUBMITTED_ON"/>
+      <viewAttribute id="SUB_TYPE"/>
+      <viewAttribute id="TIME_OFF_REQD"/>
+      <viewAttribute id="TYPE"/>
+      <viewAttribute id="WORK_DETAILS"/>
+      <viewAttribute id="WORK_HOURS"/>
+      <viewAttribute id="DEPT_C"/>
+      <viewAttribute id="FACULTY_C"/>
+      <viewAttribute id="FDLU"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="SUBMITTED_ON_TS"/>
+      <viewAttribute id="SUBMITTED_BY_NID"/>
+      <viewAttribute id="SUB_TYPE_T"/>
+      <viewAttribute id="PROCESS_NAME"/>
+      <viewAttribute id="PROCESS_TITLE"/>
+      <viewAttribute id="STATUS_ALIAS"/>
+      <viewAttribute id="STATUS_CODE"/>
+      <viewAttribute id="STATUS_COLOR_CODE"/>
+      <viewAttribute id="STATUS_TYPE"/>
+      <viewAttribute id="DEPT_T"/>
+      <viewAttribute id="FACULTY_T"/>
+      <viewAttribute id="SUBMISSION_TYPE"/>
+      <viewAttribute id="TO_DISPLAY"/>
+      <viewAttribute id="AMOUNT"/>
+      <viewAttribute id="PROGRAM_NAME"/>
+      <viewAttribute id="AGREED_AMOUNT"/>
+      <viewAttribute id="AGREED_CURRENCY"/>
+      <viewAttribute id="CURRENCY"/>
+      <viewAttribute id="SUBMISSION_TYPE_T"/>
+      <viewAttribute id="SUBMISSION_TYPE_REF_T"/>
+      <viewAttribute id="SUB_TYPE_R"/>
+      <viewAttribute id="SOURCE"/>
+      <viewAttribute id="IS_WAIVED"/>
+      <viewAttribute id="MODIFIED_BY_FULLNAME"/>
+      <viewAttribute id="ENG_FDLU_T"/>
+      <viewAttribute id="ENG_ULU_T"/>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="RMM_STF_N"/>
+      <viewAttribute id="RM_STF_N"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="PSA_CODE"/>
+      <viewAttribute id="PSA_DESC"/>
+      <viewAttribute id="PA_CODE"/>
+      <viewAttribute id="PA_DESC"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="EMPL_STS_C"/>
+      <viewAttribute id="EMPL_STS_T"/>
+      <viewAttribute id="EMP_GP_T"/>
+      <viewAttribute id="EMP_GP_C"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="NUSNET_ID"/>
+      <viewAttribute id="JOIN_DATE"/>
+      <viewAttribute id="EMP_CAT_C"/>
+      <viewAttribute id="EMP_CAT_T"/>
+      <viewAttribute id="SUBMITTED_BY_FULLNAME"/>
+      <viewAttribute id="FIRST_NM"/>
+      <viewAttribute id="LAST_NM"/>
+      <viewAttribute id="HRP_STF_N"/>
+      <viewAttribute id="IS_ZIP_PROCESSED"/>
+      <viewAttribute id="MASS_REF_UPLOAD_ID"/>
+      <viewAttribute id="MASS_REF_VAL"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
+      <viewAttribute id="MIGRATED"/>
+      <viewAttribute id="LOCATION_T"/>
+    
+      <viewAttribute id="WORK_TITLE"/>
+    
+      <viewAttribute hidden="true" id="JOIN$LOCATION$CONFIG_KEY"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Request_Engaging_View">
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_LOCKED" source="IS_LOCKED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCKED_BY_USER_NID" source="LOCKED_BY_USER_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCKED_STAFF_USER_GRP" source="LOCKED_STAFF_USER_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT_NAME" source="CLIENT_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONCURRENT_STAFF_ID" source="CONCURRENT_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DURATION_DAYS" source="DURATION_DAYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DURATION_HOURS" source="DURATION_HOURS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE_CAL" source="END_DATE_CAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_REQUEST_CLOSED" source="IS_REQUEST_CLOSED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION" source="LOCATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY" source="MODIFIED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_ON" source="MODIFIED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OFFLINE_APPROVAL" source="OFFLINE_APPROVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROPERTY_DETAILS" source="PROPERTY_DETAILS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROPERTY_USAGE" source="PROPERTY_USAGE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTOR_GRP" source="REQUESTOR_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS" source="REQUEST_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_TYPE" source="REQUEST_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQ_UNIQUE_ID" source="REQ_UNIQUE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE" source="START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE_CAL" source="START_DATE_CAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY" source="SUBMITTED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON" source="SUBMITTED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE" source="SUB_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME_OFF_REQD" source="TIME_OFF_REQD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_DETAILS" source="WORK_DETAILS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_HOURS" source="WORK_HOURS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEPT_C" source="DEPT_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FACULTY_C" source="FACULTY_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON_TS" source="SUBMITTED_ON_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_NID" source="SUBMITTED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE_T" source="SUB_TYPE_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_NAME" source="PROCESS_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TITLE" source="PROCESS_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_ALIAS" source="STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_CODE" source="STATUS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_COLOR_CODE" source="STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_TYPE" source="STATUS_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEPT_T" source="DEPT_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FACULTY_T" source="FACULTY_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMISSION_TYPE" source="SUBMISSION_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TO_DISPLAY" source="TO_DISPLAY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT" source="AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROGRAM_NAME" source="PROGRAM_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AGREED_AMOUNT" source="AGREED_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AGREED_CURRENCY" source="AGREED_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMISSION_TYPE_T" source="SUBMISSION_TYPE_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMISSION_TYPE_REF_T" source="SUBMISSION_TYPE_REF_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE_R" source="SUB_TYPE_R"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE" source="SOURCE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_WAIVED" source="IS_WAIVED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY_FULLNAME" source="MODIFIED_BY_FULLNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENG_FDLU_T" source="ENG_FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENG_ULU_T" source="ENG_ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_NUMBER" source="STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RMM_STF_N" source="RMM_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_STF_N" source="RM_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PSA_CODE" source="PSA_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PSA_DESC" source="PSA_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PA_CODE" source="PA_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PA_DESC" source="PA_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_C" source="ULU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_T" source="ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPL_STS_C" source="EMPL_STS_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPL_STS_T" source="EMPL_STS_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_T" source="EMP_GP_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_C" source="EMP_GP_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NUSNET_ID" source="NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CAT_C" source="EMP_CAT_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CAT_T" source="EMP_CAT_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_FULLNAME" source="SUBMITTED_BY_FULLNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIRST_NM" source="FIRST_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAST_NM" source="LAST_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HRP_STF_N" source="HRP_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_ZIP_PROCESSED" source="IS_ZIP_PROCESSED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MASS_REF_UPLOAD_ID" source="MASS_REF_UPLOAD_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MASS_REF_VAL" source="MASS_REF_VAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_TITLE" source="WORK_TITLE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LOCATION$CONFIG_KEY" source="LOCATION"/>
+    </input>
+    <input node="Location_CWS_AppCfg">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION_T" source="CONFIG_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LOCATION$CONFIG_KEY" source="CONFIG_KEY"/>
+    </input>
+    <joinAttribute name="JOIN$LOCATION$CONFIG_KEY"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Prop_Usage_Join" cardinality="C1_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="IS_LOCKED"/>
+      <viewAttribute id="LOCKED_BY_USER_NID"/>
+      <viewAttribute id="LOCKED_STAFF_USER_GRP"/>
+      <viewAttribute id="CLIENT_NAME"/>
+      <viewAttribute id="CONCURRENT_STAFF_ID"/>
+      <viewAttribute id="DURATION_DAYS"/>
+      <viewAttribute id="DURATION_HOURS"/>
+      <viewAttribute id="END_DATE"/>
+      <viewAttribute id="END_DATE_CAL"/>
+      <viewAttribute id="IS_REQUEST_CLOSED"/>
+      <viewAttribute id="LOCATION"/>
+      <viewAttribute id="MODIFIED_BY"/>
+      <viewAttribute id="MODIFIED_ON"/>
+      <viewAttribute id="OFFLINE_APPROVAL"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROPERTY_DETAILS"/>
+      <viewAttribute id="PROPERTY_USAGE"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+      <viewAttribute id="REQUEST_ID"/>
+      <viewAttribute id="REQUEST_STATUS"/>
+      <viewAttribute id="REQUEST_TYPE"/>
+      <viewAttribute id="REQ_UNIQUE_ID"/>
+      <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="START_DATE"/>
+      <viewAttribute id="START_DATE_CAL"/>
+      <viewAttribute id="SUBMITTED_BY"/>
+      <viewAttribute id="SUBMITTED_ON"/>
+      <viewAttribute id="SUB_TYPE"/>
+      <viewAttribute id="TIME_OFF_REQD"/>
+      <viewAttribute id="TYPE"/>
+      <viewAttribute id="WORK_DETAILS"/>
+      <viewAttribute id="WORK_HOURS"/>
+      <viewAttribute id="DEPT_C"/>
+      <viewAttribute id="FACULTY_C"/>
+      <viewAttribute id="FDLU"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="SUBMITTED_ON_TS"/>
+      <viewAttribute id="SUBMITTED_BY_NID"/>
+      <viewAttribute id="SUB_TYPE_T"/>
+      <viewAttribute id="PROCESS_NAME"/>
+      <viewAttribute id="PROCESS_TITLE"/>
+      <viewAttribute id="STATUS_ALIAS"/>
+      <viewAttribute id="STATUS_CODE"/>
+      <viewAttribute id="STATUS_COLOR_CODE"/>
+      <viewAttribute id="STATUS_TYPE"/>
+      <viewAttribute id="DEPT_T"/>
+      <viewAttribute id="FACULTY_T"/>
+      <viewAttribute id="SUBMISSION_TYPE"/>
+      <viewAttribute id="TO_DISPLAY"/>
+      <viewAttribute id="AMOUNT"/>
+      <viewAttribute id="PROGRAM_NAME"/>
+      <viewAttribute id="AGREED_AMOUNT"/>
+      <viewAttribute id="AGREED_CURRENCY"/>
+      <viewAttribute id="CURRENCY"/>
+      <viewAttribute id="SUBMISSION_TYPE_T"/>
+      <viewAttribute id="SUBMISSION_TYPE_REF_T"/>
+      <viewAttribute id="SUB_TYPE_R"/>
+      <viewAttribute id="SOURCE"/>
+      <viewAttribute id="IS_WAIVED"/>
+      <viewAttribute id="MODIFIED_BY_FULLNAME"/>
+      <viewAttribute id="ENG_FDLU_T"/>
+      <viewAttribute id="ENG_ULU_T"/>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="RMM_STF_N"/>
+      <viewAttribute id="RM_STF_N"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="PSA_CODE"/>
+      <viewAttribute id="PSA_DESC"/>
+      <viewAttribute id="PA_CODE"/>
+      <viewAttribute id="PA_DESC"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="EMPL_STS_C"/>
+      <viewAttribute id="EMPL_STS_T"/>
+      <viewAttribute id="EMP_GP_T"/>
+      <viewAttribute id="EMP_GP_C"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="NUSNET_ID"/>
+      <viewAttribute id="JOIN_DATE"/>
+      <viewAttribute id="EMP_CAT_C"/>
+      <viewAttribute id="EMP_CAT_T"/>
+      <viewAttribute id="SUBMITTED_BY_FULLNAME"/>
+      <viewAttribute id="FIRST_NM"/>
+      <viewAttribute id="LAST_NM"/>
+      <viewAttribute id="HRP_STF_N"/>
+      <viewAttribute id="IS_ZIP_PROCESSED"/>
+      <viewAttribute id="MASS_REF_UPLOAD_ID"/>
+      <viewAttribute id="MASS_REF_VAL"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
+      <viewAttribute id="MIGRATED"/>
+      <viewAttribute id="LOCATION_T"/>
+      <viewAttribute id="PROPERTY_USAGE_T"/>
+      <viewAttribute id="PROPERTY_USAGE_R"/>
+    
+      <viewAttribute id="WORK_TITLE"/>
+    
+      <viewAttribute hidden="true" id="JOIN$PROPERTY_USAGE$CONFIG_KEY"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Location_Ref">
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_LOCKED" source="IS_LOCKED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCKED_BY_USER_NID" source="LOCKED_BY_USER_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCKED_STAFF_USER_GRP" source="LOCKED_STAFF_USER_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT_NAME" source="CLIENT_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONCURRENT_STAFF_ID" source="CONCURRENT_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DURATION_DAYS" source="DURATION_DAYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DURATION_HOURS" source="DURATION_HOURS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE_CAL" source="END_DATE_CAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_REQUEST_CLOSED" source="IS_REQUEST_CLOSED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION" source="LOCATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY" source="MODIFIED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_ON" source="MODIFIED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OFFLINE_APPROVAL" source="OFFLINE_APPROVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROPERTY_DETAILS" source="PROPERTY_DETAILS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROPERTY_USAGE" source="PROPERTY_USAGE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTOR_GRP" source="REQUESTOR_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS" source="REQUEST_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_TYPE" source="REQUEST_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQ_UNIQUE_ID" source="REQ_UNIQUE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE" source="START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE_CAL" source="START_DATE_CAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY" source="SUBMITTED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON" source="SUBMITTED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE" source="SUB_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME_OFF_REQD" source="TIME_OFF_REQD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_DETAILS" source="WORK_DETAILS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_HOURS" source="WORK_HOURS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEPT_C" source="DEPT_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FACULTY_C" source="FACULTY_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON_TS" source="SUBMITTED_ON_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_NID" source="SUBMITTED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE_T" source="SUB_TYPE_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_NAME" source="PROCESS_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TITLE" source="PROCESS_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_ALIAS" source="STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_CODE" source="STATUS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_COLOR_CODE" source="STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_TYPE" source="STATUS_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEPT_T" source="DEPT_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FACULTY_T" source="FACULTY_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMISSION_TYPE" source="SUBMISSION_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TO_DISPLAY" source="TO_DISPLAY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT" source="AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROGRAM_NAME" source="PROGRAM_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AGREED_AMOUNT" source="AGREED_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AGREED_CURRENCY" source="AGREED_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMISSION_TYPE_T" source="SUBMISSION_TYPE_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMISSION_TYPE_REF_T" source="SUBMISSION_TYPE_REF_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE_R" source="SUB_TYPE_R"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE" source="SOURCE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_WAIVED" source="IS_WAIVED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY_FULLNAME" source="MODIFIED_BY_FULLNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENG_FDLU_T" source="ENG_FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENG_ULU_T" source="ENG_ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_NUMBER" source="STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RMM_STF_N" source="RMM_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_STF_N" source="RM_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PSA_CODE" source="PSA_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PSA_DESC" source="PSA_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PA_CODE" source="PA_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PA_DESC" source="PA_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_C" source="ULU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_T" source="ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPL_STS_C" source="EMPL_STS_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPL_STS_T" source="EMPL_STS_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_T" source="EMP_GP_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_C" source="EMP_GP_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NUSNET_ID" source="NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CAT_C" source="EMP_CAT_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CAT_T" source="EMP_CAT_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_FULLNAME" source="SUBMITTED_BY_FULLNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIRST_NM" source="FIRST_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAST_NM" source="LAST_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HRP_STF_N" source="HRP_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_ZIP_PROCESSED" source="IS_ZIP_PROCESSED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MASS_REF_UPLOAD_ID" source="MASS_REF_UPLOAD_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MASS_REF_VAL" source="MASS_REF_VAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION_T" source="LOCATION_T"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_TITLE" source="WORK_TITLE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROPERTY_USAGE$CONFIG_KEY" source="PROPERTY_USAGE"/>
+    </input>
+    <input node="Cw_AppConfigs">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROPERTY_USAGE_T" source="CONFIG_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROPERTY_USAGE_R" source="REFERENCE_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROPERTY_USAGE$CONFIG_KEY" source="CONFIG_KEY"/>
+    </input>
+    <joinAttribute name="JOIN$PROPERTY_USAGE$CONFIG_KEY"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Work_Hours_Join" cardinality="C1_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="IS_LOCKED"/>
+      <viewAttribute id="LOCKED_BY_USER_NID"/>
+      <viewAttribute id="LOCKED_STAFF_USER_GRP"/>
+      <viewAttribute id="CLIENT_NAME"/>
+      <viewAttribute id="CONCURRENT_STAFF_ID"/>
+      <viewAttribute id="DURATION_DAYS"/>
+      <viewAttribute id="DURATION_HOURS"/>
+      <viewAttribute id="END_DATE"/>
+      <viewAttribute id="END_DATE_CAL"/>
+      <viewAttribute id="IS_REQUEST_CLOSED"/>
+      <viewAttribute id="LOCATION"/>
+      <viewAttribute id="MODIFIED_BY"/>
+      <viewAttribute id="MODIFIED_ON"/>
+      <viewAttribute id="OFFLINE_APPROVAL"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="PROPERTY_DETAILS"/>
+      <viewAttribute id="PROPERTY_USAGE"/>
+      <viewAttribute id="REQUESTOR_GRP"/>
+      <viewAttribute id="REQUEST_ID"/>
+      <viewAttribute id="REQUEST_STATUS"/>
+      <viewAttribute id="REQUEST_TYPE"/>
+      <viewAttribute id="REQ_UNIQUE_ID"/>
+      <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="START_DATE"/>
+      <viewAttribute id="START_DATE_CAL"/>
+      <viewAttribute id="SUBMITTED_BY"/>
+      <viewAttribute id="SUBMITTED_ON"/>
+      <viewAttribute id="SUB_TYPE"/>
+      <viewAttribute id="TIME_OFF_REQD"/>
+      <viewAttribute id="TYPE"/>
+      <viewAttribute id="WORK_DETAILS"/>
+      <viewAttribute id="WORK_HOURS"/>
+      <viewAttribute id="DEPT_C"/>
+      <viewAttribute id="FACULTY_C"/>
+      <viewAttribute id="FDLU"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="SUBMITTED_ON_TS"/>
+      <viewAttribute id="SUBMITTED_BY_NID"/>
+      <viewAttribute id="SUB_TYPE_T"/>
+      <viewAttribute id="PROCESS_NAME"/>
+      <viewAttribute id="PROCESS_TITLE"/>
+      <viewAttribute id="STATUS_ALIAS"/>
+      <viewAttribute id="STATUS_CODE"/>
+      <viewAttribute id="STATUS_COLOR_CODE"/>
+      <viewAttribute id="STATUS_TYPE"/>
+      <viewAttribute id="DEPT_T"/>
+      <viewAttribute id="FACULTY_T"/>
+      <viewAttribute id="SUBMISSION_TYPE"/>
+      <viewAttribute id="TO_DISPLAY"/>
+      <viewAttribute id="AMOUNT"/>
+      <viewAttribute id="PROGRAM_NAME"/>
+      <viewAttribute id="AGREED_AMOUNT"/>
+      <viewAttribute id="AGREED_CURRENCY"/>
+      <viewAttribute id="CURRENCY"/>
+      <viewAttribute id="SUBMISSION_TYPE_T"/>
+      <viewAttribute id="SUBMISSION_TYPE_REF_T"/>
+      <viewAttribute id="SUB_TYPE_R"/>
+      <viewAttribute id="SOURCE"/>
+      <viewAttribute id="IS_WAIVED"/>
+      <viewAttribute id="MODIFIED_BY_FULLNAME"/>
+      <viewAttribute id="ENG_FDLU_T"/>
+      <viewAttribute id="ENG_ULU_T"/>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="RMM_STF_N"/>
+      <viewAttribute id="RM_STF_N"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="PSA_CODE"/>
+      <viewAttribute id="PSA_DESC"/>
+      <viewAttribute id="PA_CODE"/>
+      <viewAttribute id="PA_DESC"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="EMPL_STS_C"/>
+      <viewAttribute id="EMPL_STS_T"/>
+      <viewAttribute id="EMP_GP_T"/>
+      <viewAttribute id="EMP_GP_C"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="NUSNET_ID"/>
+      <viewAttribute id="JOIN_DATE"/>
+      <viewAttribute id="EMP_CAT_C"/>
+      <viewAttribute id="EMP_CAT_T"/>
+      <viewAttribute id="SUBMITTED_BY_FULLNAME"/>
+      <viewAttribute id="FIRST_NM"/>
+      <viewAttribute id="LAST_NM"/>
+      <viewAttribute id="HRP_STF_N"/>
+      <viewAttribute id="IS_ZIP_PROCESSED"/>
+      <viewAttribute id="MASS_REF_UPLOAD_ID"/>
+      <viewAttribute id="MASS_REF_VAL"/>
+      <viewAttribute id="PROCESS_INST_ID"/>
+      <viewAttribute id="PROCESS_STATUS"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
+      <viewAttribute id="MIGRATED"/>
+      <viewAttribute id="LOCATION_T"/>
+      <viewAttribute id="PROPERTY_USAGE_T"/>
+      <viewAttribute id="PROPERTY_USAGE_R"/>
+      <viewAttribute id="WORK_HOURS_T"/>
+    
+      <viewAttribute id="WORK_TITLE"/>
+    
+      <viewAttribute hidden="true" id="JOIN$WORK_HOURS$CONFIG_KEY"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Prop_Usage_Join">
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_LOCKED" source="IS_LOCKED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCKED_BY_USER_NID" source="LOCKED_BY_USER_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCKED_STAFF_USER_GRP" source="LOCKED_STAFF_USER_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT_NAME" source="CLIENT_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONCURRENT_STAFF_ID" source="CONCURRENT_STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DURATION_DAYS" source="DURATION_DAYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DURATION_HOURS" source="DURATION_HOURS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE_CAL" source="END_DATE_CAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_REQUEST_CLOSED" source="IS_REQUEST_CLOSED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION" source="LOCATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY" source="MODIFIED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_ON" source="MODIFIED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OFFLINE_APPROVAL" source="OFFLINE_APPROVAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROPERTY_DETAILS" source="PROPERTY_DETAILS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROPERTY_USAGE" source="PROPERTY_USAGE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTOR_GRP" source="REQUESTOR_GRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS" source="REQUEST_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_TYPE" source="REQUEST_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REQ_UNIQUE_ID" source="REQ_UNIQUE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE" source="START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE_CAL" source="START_DATE_CAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY" source="SUBMITTED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON" source="SUBMITTED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE" source="SUB_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIME_OFF_REQD" source="TIME_OFF_REQD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_DETAILS" source="WORK_DETAILS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_HOURS" source="WORK_HOURS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEPT_C" source="DEPT_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FACULTY_C" source="FACULTY_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON_TS" source="SUBMITTED_ON_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_NID" source="SUBMITTED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE_T" source="SUB_TYPE_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_NAME" source="PROCESS_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TITLE" source="PROCESS_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_ALIAS" source="STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_CODE" source="STATUS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_COLOR_CODE" source="STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_TYPE" source="STATUS_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEPT_T" source="DEPT_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FACULTY_T" source="FACULTY_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMISSION_TYPE" source="SUBMISSION_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TO_DISPLAY" source="TO_DISPLAY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT" source="AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROGRAM_NAME" source="PROGRAM_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AGREED_AMOUNT" source="AGREED_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AGREED_CURRENCY" source="AGREED_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMISSION_TYPE_T" source="SUBMISSION_TYPE_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMISSION_TYPE_REF_T" source="SUBMISSION_TYPE_REF_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUB_TYPE_R" source="SUB_TYPE_R"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE" source="SOURCE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_WAIVED" source="IS_WAIVED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY_FULLNAME" source="MODIFIED_BY_FULLNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENG_FDLU_T" source="ENG_FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENG_ULU_T" source="ENG_ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STF_NUMBER" source="STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RMM_STF_N" source="RMM_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RM_STF_N" source="RM_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PSA_CODE" source="PSA_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PSA_DESC" source="PSA_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PA_CODE" source="PA_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PA_DESC" source="PA_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_C" source="ULU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU_T" source="ULU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPL_STS_C" source="EMPL_STS_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPL_STS_T" source="EMPL_STS_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_T" source="EMP_GP_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_C" source="EMP_GP_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NUSNET_ID" source="NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CAT_C" source="EMP_CAT_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CAT_T" source="EMP_CAT_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_FULLNAME" source="SUBMITTED_BY_FULLNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIRST_NM" source="FIRST_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LAST_NM" source="LAST_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HRP_STF_N" source="HRP_STF_N"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_ZIP_PROCESSED" source="IS_ZIP_PROCESSED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MASS_REF_UPLOAD_ID" source="MASS_REF_UPLOAD_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MASS_REF_VAL" source="MASS_REF_VAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MIGRATED" source="MIGRATED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION_T" source="LOCATION_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROPERTY_USAGE_T" source="PROPERTY_USAGE_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROPERTY_USAGE_R" source="PROPERTY_USAGE_R"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_TITLE" source="WORK_TITLE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$WORK_HOURS$CONFIG_KEY" source="WORK_HOURS"/>
+    </input>
+    <input node="Cw_AppConfigs">
+      <mapping xsi:type="Calculation:AttributeMapping" target="WORK_HOURS_T" source="CONFIG_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$WORK_HOURS$CONFIG_KEY" source="CONFIG_KEY"/>
+    </input>
+    <joinAttribute name="JOIN$WORK_HOURS$CONFIG_KEY"/>
+  </calculationView>
 </calculationViews>
-<logicalModel id="Request_Engaging_View">
+<logicalModel id="Work_Hours_Join">
   <attributes>
     <attribute id="IS_LOCKED" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="IS_LOCKED"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="IS_LOCKED"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="IS_LOCKED"/>
     </attribute>
     <attribute id="LOCKED_BY_USER_NID" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LOCKED_BY_USER_NID"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="LOCKED_BY_USER_NID"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="LOCKED_BY_USER_NID"/>
     </attribute>
     <attribute id="LOCKED_STAFF_USER_GRP" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LOCKED_STAFF_USER_GRP"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="LOCKED_STAFF_USER_GRP"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="LOCKED_STAFF_USER_GRP"/>
     </attribute>
     <attribute id="CLIENT_NAME" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CLIENT_NAME"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="CLIENT_NAME"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="CLIENT_NAME"/>
     </attribute>
     <attribute id="CONCURRENT_STAFF_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CONCURRENT_STAFF_ID"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="CONCURRENT_STAFF_ID"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="CONCURRENT_STAFF_ID"/>
     </attribute>
     <attribute id="DURATION_DAYS" order="6" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DURATION_DAYS"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="DURATION_DAYS"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="DURATION_DAYS"/>
     </attribute>
     <attribute id="DURATION_HOURS" order="7" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DURATION_HOURS"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="DURATION_HOURS"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="DURATION_HOURS"/>
     </attribute>
     <attribute id="IS_REQUEST_CLOSED" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="IS_REQUEST_CLOSED"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="IS_REQUEST_CLOSED"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="IS_REQUEST_CLOSED"/>
     </attribute>
     <attribute id="LOCATION" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LOCATION"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="LOCATION"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="LOCATION"/>
     </attribute>
     <attribute id="MODIFIED_BY" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MODIFIED_BY"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="MODIFIED_BY"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="MODIFIED_BY"/>
     </attribute>
     <attribute id="OFFLINE_APPROVAL" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="OFFLINE_APPROVAL"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="OFFLINE_APPROVAL"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="OFFLINE_APPROVAL"/>
     </attribute>
     <attribute id="PROCESS_CODE" order="15" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PROCESS_CODE"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="PROCESS_CODE"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="PROCESS_CODE"/>
     </attribute>
     <attribute id="PROPERTY_DETAILS" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PROPERTY_DETAILS"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="PROPERTY_DETAILS"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="PROPERTY_DETAILS"/>
     </attribute>
     <attribute id="PROPERTY_USAGE" order="17" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PROPERTY_USAGE"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="PROPERTY_USAGE"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="PROPERTY_USAGE"/>
     </attribute>
     <attribute id="REQUESTOR_GRP" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="REQUESTOR_GRP"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="REQUESTOR_GRP"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="REQUESTOR_GRP"/>
     </attribute>
     <attribute id="REQUEST_ID" order="19" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="REQUEST_ID"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="REQUEST_ID"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="REQUEST_ID"/>
     </attribute>
     <attribute id="REQUEST_STATUS" order="20" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="REQUEST_STATUS"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="REQUEST_STATUS"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="REQUEST_STATUS"/>
     </attribute>
     <attribute id="REQUEST_TYPE" order="21" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="REQUEST_TYPE"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="REQUEST_TYPE"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="REQUEST_TYPE"/>
     </attribute>
-    <attribute id="REQ_UNIQUE_ID" order="22" displayAttribute="false" attributeHierarchyActive="false" key="true">
+    <attribute id="REQ_UNIQUE_ID" order="22" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="REQ_UNIQUE_ID"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="REQ_UNIQUE_ID"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="REQ_UNIQUE_ID"/>
     </attribute>
     <attribute id="STAFF_ID" order="23" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STAFF_ID"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="STAFF_ID"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="STAFF_ID"/>
     </attribute>
     <attribute id="SUBMITTED_BY" order="26" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SUBMITTED_BY"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="SUBMITTED_BY"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="SUBMITTED_BY"/>
     </attribute>
     <attribute id="SUB_TYPE" order="28" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SUB_TYPE"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="SUB_TYPE"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="SUB_TYPE"/>
     </attribute>
     <attribute id="TIME_OFF_REQD" order="29" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TIME_OFF_REQD"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="TIME_OFF_REQD"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="TIME_OFF_REQD"/>
     </attribute>
     <attribute id="TYPE" order="30" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TYPE"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="TYPE"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="TYPE"/>
     </attribute>
     <attribute id="WORK_DETAILS" order="31" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WORK_DETAILS"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="WORK_DETAILS"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="WORK_DETAILS"/>
     </attribute>
     <attribute id="WORK_HOURS" order="32" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WORK_HOURS"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="WORK_HOURS"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="WORK_HOURS"/>
     </attribute>
     <attribute id="DEPT_C" order="33" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DEPT_C"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="DEPT_C"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="DEPT_C"/>
     </attribute>
     <attribute id="FACULTY_C" order="34" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FACULTY_C"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="FACULTY_C"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="FACULTY_C"/>
     </attribute>
     <attribute id="FDLU" order="35" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FDLU"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="FDLU"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="FDLU"/>
     </attribute>
     <attribute id="STAFF_NUSNET_ID" order="36" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STAFF_NUSNET_ID"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="STAFF_NUSNET_ID"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="STAFF_NUSNET_ID"/>
     </attribute>
     <attribute id="ULU" order="37" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ULU"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="ULU"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="ULU"/>
     </attribute>
     <attribute id="SUBMITTED_BY_NID" order="39" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SUBMITTED_BY_NID"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="SUBMITTED_BY_NID"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="SUBMITTED_BY_NID"/>
     </attribute>
     <attribute id="SUB_TYPE_T" order="40" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SUB_TYPE_T"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="SUB_TYPE_T"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="SUB_TYPE_T"/>
     </attribute>
     <attribute id="PROCESS_NAME" order="41" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PROCESS_NAME"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="PROCESS_NAME"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="PROCESS_NAME"/>
     </attribute>
     <attribute id="PROCESS_TITLE" order="42" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PROCESS_TITLE"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="PROCESS_TITLE"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="PROCESS_TITLE"/>
     </attribute>
     <attribute id="STATUS_ALIAS" order="43" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STATUS_ALIAS"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="STATUS_ALIAS"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="STATUS_ALIAS"/>
     </attribute>
     <attribute id="STATUS_CODE" order="44" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STATUS_CODE"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="STATUS_CODE"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="STATUS_CODE"/>
     </attribute>
     <attribute id="STATUS_COLOR_CODE" order="45" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STATUS_COLOR_CODE"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="STATUS_COLOR_CODE"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="STATUS_COLOR_CODE"/>
     </attribute>
     <attribute id="STATUS_TYPE" order="46" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STATUS_TYPE"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="STATUS_TYPE"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="STATUS_TYPE"/>
     </attribute>
     <attribute id="DEPT_T" order="47" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DEPT_T"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="DEPT_T"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="DEPT_T"/>
     </attribute>
     <attribute id="FACULTY_T" order="48" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FACULTY_T"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="FACULTY_T"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="FACULTY_T"/>
     </attribute>
     <attribute id="SUBMISSION_TYPE" order="49" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SUBMISSION_TYPE"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="SUBMISSION_TYPE"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="SUBMISSION_TYPE"/>
     </attribute>
     <attribute id="TO_DISPLAY" order="50" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TO_DISPLAY"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="TO_DISPLAY"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="TO_DISPLAY"/>
     </attribute>
     <attribute id="AMOUNT" order="51" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="AMOUNT"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="AMOUNT"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="AMOUNT"/>
     </attribute>
     <attribute id="PROGRAM_NAME" order="52" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PROGRAM_NAME"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="PROGRAM_NAME"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="PROGRAM_NAME"/>
     </attribute>
     <attribute id="AGREED_AMOUNT" order="53" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="AGREED_AMOUNT"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="AGREED_AMOUNT"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="AGREED_AMOUNT"/>
     </attribute>
     <attribute id="AGREED_CURRENCY" order="54" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="AGREED_CURRENCY"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="AGREED_CURRENCY"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="AGREED_CURRENCY"/>
     </attribute>
     <attribute id="CURRENCY" order="55" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CURRENCY"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="CURRENCY"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="CURRENCY"/>
     </attribute>
     <attribute id="SUBMISSION_TYPE_T" order="56" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SUBMISSION_TYPE_T"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="SUBMISSION_TYPE_T"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="SUBMISSION_TYPE_T"/>
     </attribute>
     <attribute id="SUBMISSION_TYPE_REF_T" order="57" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SUBMISSION_TYPE_REF_T"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="SUBMISSION_TYPE_REF_T"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="SUBMISSION_TYPE_REF_T"/>
     </attribute>
     <attribute id="SUB_TYPE_R" order="58" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SUB_TYPE_R"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="SUB_TYPE_R"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="SUB_TYPE_R"/>
     </attribute>
-    <attribute id="MIGRATED" order="59" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="MIGRATED"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="MIGRATED"/>
-    </attribute>
-    <attribute id="SOURCE" order="60" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SOURCE" order="59" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SOURCE"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="SOURCE"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="SOURCE"/>
     </attribute>
-    <attribute id="IS_WAIVED" order="61" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="IS_WAIVED" order="60" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="IS_WAIVED"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="IS_WAIVED"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="IS_WAIVED"/>
     </attribute>
-    <attribute id="MODIFIED_BY_FULLNAME" order="62" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MODIFIED_BY_FULLNAME" order="61" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MODIFIED_BY_FULLNAME"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="MODIFIED_BY_FULLNAME"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="MODIFIED_BY_FULLNAME"/>
     </attribute>
-    <attribute id="ENG_FDLU_T" order="63" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ENG_FDLU_T" order="62" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ENG_FDLU_T"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="ENG_FDLU_T"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="ENG_FDLU_T"/>
     </attribute>
-    <attribute id="ENG_ULU_T" order="64" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ENG_ULU_T" order="63" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ENG_ULU_T"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="ENG_ULU_T"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="ENG_ULU_T"/>
     </attribute>
-  
-    <attribute id="STF_NUMBER" order="65" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="STF_NUMBER" order="64" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STF_NUMBER"/>
-  
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="STF_NUMBER"/>
-  
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="STF_NUMBER"/>
     </attribute>
-    <attribute id="RMM_STF_N" order="66" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RMM_STF_N" order="65" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RMM_STF_N"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="RMM_STF_N"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="RMM_STF_N"/>
     </attribute>
-    <attribute id="RM_STF_N" order="67" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RM_STF_N" order="66" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RM_STF_N"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="RM_STF_N"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="RM_STF_N"/>
     </attribute>
-    <attribute id="SF_STF_NUMBER" order="68" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SF_STF_NUMBER" order="67" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SF_STF_NUMBER"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="SF_STF_NUMBER"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="SF_STF_NUMBER"/>
     </attribute>
-    <attribute id="FULL_NM" order="69" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="FULL_NM" order="68" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FULL_NM"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="FULL_NM"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="FULL_NM"/>
     </attribute>
-    <attribute id="PSA_CODE" order="70" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PSA_CODE" order="69" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PSA_CODE"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="PSA_CODE"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="PSA_CODE"/>
     </attribute>
-    <attribute id="PSA_DESC" order="71" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PSA_DESC" order="70" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PSA_DESC"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="PSA_DESC"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="PSA_DESC"/>
     </attribute>
-    <attribute id="PA_CODE" order="72" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PA_CODE" order="71" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PA_CODE"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="PA_CODE"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="PA_CODE"/>
     </attribute>
-    <attribute id="PA_DESC" order="73" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PA_DESC" order="72" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PA_DESC"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="PA_DESC"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="PA_DESC"/>
     </attribute>
-    <attribute id="ULU_C" order="74" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ULU_C" order="73" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ULU_C"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="ULU_C"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="ULU_C"/>
     </attribute>
-    <attribute id="ULU_T" order="75" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ULU_T" order="74" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ULU_T"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="ULU_T"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="ULU_T"/>
     </attribute>
-    <attribute id="EMPL_STS_C" order="76" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="EMPL_STS_C" order="75" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="EMPL_STS_C"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="EMPL_STS_C"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="EMPL_STS_C"/>
     </attribute>
-    <attribute id="EMPL_STS_T" order="77" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="EMPL_STS_T" order="76" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="EMPL_STS_T"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="EMPL_STS_T"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="EMPL_STS_T"/>
     </attribute>
-    <attribute id="EMP_GP_T" order="78" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="EMP_GP_T" order="77" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="EMP_GP_T"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="EMP_GP_T"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="EMP_GP_T"/>
     </attribute>
-    <attribute id="EMP_GP_C" order="79" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="EMP_GP_C" order="78" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="EMP_GP_C"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="EMP_GP_C"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="EMP_GP_C"/>
     </attribute>
-    <attribute id="FDLU_C" order="80" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="FDLU_C" order="79" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FDLU_C"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="FDLU_C"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="FDLU_C"/>
     </attribute>
-    <attribute id="FDLU_T" order="81" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="FDLU_T" order="80" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FDLU_T"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="FDLU_T"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="FDLU_T"/>
     </attribute>
-    <attribute id="NUSNET_ID" order="82" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="NUSNET_ID" order="81" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NUSNET_ID"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="NUSNET_ID"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="NUSNET_ID"/>
     </attribute>
-    <attribute id="EMP_CAT_C" order="84" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="EMP_CAT_C" order="83" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="EMP_CAT_C"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="EMP_CAT_C"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="EMP_CAT_C"/>
     </attribute>
-    <attribute id="EMP_CAT_T" order="85" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="EMP_CAT_T" order="84" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="EMP_CAT_T"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="EMP_CAT_T"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="EMP_CAT_T"/>
     </attribute>
-    <attribute id="SUBMITTED_BY_FULLNAME" order="86" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SUBMITTED_BY_FULLNAME" order="85" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SUBMITTED_BY_FULLNAME"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="SUBMITTED_BY_FULLNAME"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="SUBMITTED_BY_FULLNAME"/>
     </attribute>
-  
-    <attribute id="FIRST_NM" order="87" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="FIRST_NM" order="86" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FIRST_NM"/>
-  
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="FIRST_NM"/>
-  
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="FIRST_NM"/>
     </attribute>
-    <attribute id="LAST_NM" order="88" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="LAST_NM" order="87" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LAST_NM"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="LAST_NM"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="LAST_NM"/>
     </attribute>
-  
-    <attribute id="HRP_STF_N" order="89" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="HRP_STF_N" order="88" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="HRP_STF_N"/>
-  
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="HRP_STF_N"/>
-  
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="HRP_STF_N"/>
     </attribute>
-  
-    <attribute id="IS_ZIP_PROCESSED" order="90" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="IS_ZIP_PROCESSED" order="89" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="IS_ZIP_PROCESSED"/>
-  
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="IS_ZIP_PROCESSED"/>
-  
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="IS_ZIP_PROCESSED"/>
     </attribute>
-  
-    <attribute id="MASS_REF_UPLOAD_ID" order="91" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MASS_REF_UPLOAD_ID" order="90" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MASS_REF_UPLOAD_ID"/>
-  
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="MASS_REF_UPLOAD_ID"/>
-  
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="MASS_REF_UPLOAD_ID"/>
     </attribute>
-    <attribute id="MASS_REF_VAL" order="92" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MASS_REF_VAL" order="91" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MASS_REF_VAL"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="MASS_REF_VAL"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="MASS_REF_VAL"/>
     </attribute>
-  
-    <attribute id="PROCESS_INST_ID" order="93" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PROCESS_INST_ID" order="92" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PROCESS_INST_ID"/>
-  
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="PROCESS_INST_ID"/>
-  
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="PROCESS_INST_ID"/>
     </attribute>
-    <attribute id="PROCESS_STATUS" order="94" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PROCESS_STATUS" order="93" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PROCESS_STATUS"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="PROCESS_STATUS"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="PROCESS_STATUS"/>
     </attribute>
-    <attribute id="PROCESS_STATUS_ALIAS" order="97" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PROCESS_STATUS_ALIAS" order="94" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PROCESS_STATUS_ALIAS"/>
-      <keyMapping columnObjectName="Request_Engaging_View" columnName="PROCESS_STATUS_ALIAS"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="PROCESS_STATUS_ALIAS"/>
+    </attribute>
+    <attribute id="PROCESS_ACTUAL_DOC" order="95" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_ACTUAL_DOC"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="PROCESS_ACTUAL_DOC"/>
+    </attribute>
+    <attribute id="PROCESS_STATUS_COLOR_CODE" order="96" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_STATUS_COLOR_CODE"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="PROCESS_STATUS_COLOR_CODE"/>
+    </attribute>
+    <attribute id="MIGRATED" order="97" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MIGRATED"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="MIGRATED"/>
+    </attribute>
+    <attribute id="LOCATION_T" order="98" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LOCATION_T"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="LOCATION_T"/>
+    </attribute>
+    <attribute id="PROPERTY_USAGE_T" order="99" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROPERTY_USAGE_T"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="PROPERTY_USAGE_T"/>
+    </attribute>
+    <attribute id="PROPERTY_USAGE_R" order="100" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROPERTY_USAGE_R"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="PROPERTY_USAGE_R"/>
+    </attribute>
+    <attribute id="WORK_HOURS_T" order="101" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WORK_HOURS_T"/>
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="WORK_HOURS_T"/>
+    </attribute>
+  
+    <attribute id="WORK_TITLE" order="102" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WORK_TITLE"/>
+  
+      <keyMapping columnObjectName="Work_Hours_Join" columnName="WORK_TITLE"/>
+  
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
     <measure id="END_DATE" order="8" aggregationType="min" measureType="simple">
       <descriptions defaultDescription="END_DATE"/>
-      <measureMapping columnObjectName="Request_Engaging_View" columnName="END_DATE"/>
+      <measureMapping columnObjectName="Work_Hours_Join" columnName="END_DATE"/>
     
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="END_DATE_CAL" order="9" aggregationType="min" measureType="simple">
       <descriptions defaultDescription="END_DATE_CAL"/>
-      <measureMapping columnObjectName="Request_Engaging_View" columnName="END_DATE_CAL"/>
+      <measureMapping columnObjectName="Work_Hours_Join" columnName="END_DATE_CAL"/>
     
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="MODIFIED_ON" order="13" aggregationType="min" measureType="simple">
       <descriptions defaultDescription="MODIFIED_ON"/>
-      <measureMapping columnObjectName="Request_Engaging_View" columnName="MODIFIED_ON"/>
+      <measureMapping columnObjectName="Work_Hours_Join" columnName="MODIFIED_ON"/>
     
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="START_DATE" order="24" aggregationType="min" measureType="simple">
       <descriptions defaultDescription="START_DATE"/>
-      <measureMapping columnObjectName="Request_Engaging_View" columnName="START_DATE"/>
+      <measureMapping columnObjectName="Work_Hours_Join" columnName="START_DATE"/>
     
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="START_DATE_CAL" order="25" aggregationType="min" measureType="simple">
       <descriptions defaultDescription="START_DATE_CAL"/>
-      <measureMapping columnObjectName="Request_Engaging_View" columnName="START_DATE_CAL"/>
+      <measureMapping columnObjectName="Work_Hours_Join" columnName="START_DATE_CAL"/>
     
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="SUBMITTED_ON" order="27" aggregationType="min" measureType="simple">
       <descriptions defaultDescription="SUBMITTED_ON"/>
-      <measureMapping columnObjectName="Request_Engaging_View" columnName="SUBMITTED_ON"/>
+      <measureMapping columnObjectName="Work_Hours_Join" columnName="SUBMITTED_ON"/>
     
       <exceptionAggregationMetadata/>
     </measure>
     <measure id="SUBMITTED_ON_TS" order="38" aggregationType="min" measureType="simple">
       <descriptions defaultDescription="SUBMITTED_ON_TS"/>
-      <measureMapping columnObjectName="Request_Engaging_View" columnName="SUBMITTED_ON_TS"/>
+      <measureMapping columnObjectName="Work_Hours_Join" columnName="SUBMITTED_ON_TS"/>
     
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="JOIN_DATE" order="83" aggregationType="min" measureType="simple">
+    <measure id="JOIN_DATE" order="82" aggregationType="min" measureType="simple">
       <descriptions defaultDescription="JOIN_DATE"/>
-      <measureMapping columnObjectName="Request_Engaging_View" columnName="JOIN_DATE"/>
+      <measureMapping columnObjectName="Work_Hours_Join" columnName="JOIN_DATE"/>
     
-      <exceptionAggregationMetadata/>
-    </measure>
-  
-    <measure id="PROCESS_ACTUAL_DOC" order="95" aggregationType="min" measureType="simple">
-      <descriptions defaultDescription="PROCESS_ACTUAL_DOC"/>
-      <measureMapping columnObjectName="Request_Engaging_View" columnName="PROCESS_ACTUAL_DOC"/>
-    
-  
-      <exceptionAggregationMetadata/>
-  
-    </measure>
-  
-    <measure id="PROCESS_STATUS_COLOR_CODE" order="96" aggregationType="min" measureType="simple">
-      <descriptions defaultDescription="PROCESS_STATUS_COLOR_CODE"/>
-      <measureMapping columnObjectName="Request_Engaging_View" columnName="PROCESS_STATUS_COLOR_CODE"/>
       <exceptionAggregationMetadata/>
     </measure>
   </baseMeasures>
@@ -2973,69 +3716,25 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="843" y="112"/>
+      <upperLeftCorner x="125.84245198289682" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
-    <shape expanded="true" modelObjectName="Process_Config" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="374" y="1941"/>
+    <shape expanded="true" modelObjectName="CWS_Data_ProcessType" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="484.2323089197374" y="2281.9999845027924"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape expanded="true" modelObjectName="CWS_Data" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="2101"/>
-      <rectangleSize height="30" width="160"/>
+    <shape modelObjectName="Cw_MasterDataJoin" modelObjectNameSpace="CWS_Data_ProcessType" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
     </shape>
-    <shape expanded="true" modelObjectName="Cw_AppConfigs" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="2101"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Request_Status" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="454" y="1781"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="User_Lookup" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="540" y="1621"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Process_View" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="632" y="1461"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="Ulu_Fdlu_Details" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="729" y="1301"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-  
-  
-    <shape expanded="true" modelObjectName="Request_Lock" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="330" y="1016"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Submitted_By_User_Lookup" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="567" y="856"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-  
-  
-  
-    <shape expanded="true" modelObjectName="Sub_Type_Alias" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="647" y="696"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="ModifiedBy_Lookup" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="757" y="536"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="Engaging_Dept_Prj" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="884" y="376"/>
-      <rectangleSize height="30" width="160"/>
+    <shape modelObjectName="Process_Config" modelObjectNameSpace="CWS_Data_ProcessType" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Cw_MasterDataJoin" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="118" y="1941"/>
+      <upperLeftCorner x="299.32588692086944" y="2441.9999833106995"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="CWS_Data" modelObjectNameSpace="Cw_MasterDataJoin" modelObjectType="JoinNodeInput">
@@ -3047,21 +3746,21 @@
       <rectangleSize width="250"/>
     </shape>
   
-    <shape expanded="true" modelObjectName="CWS_Data_ProcessType" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="145" y="1781"/>
+    <shape expanded="true" modelObjectName="Process_Config" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="510.89897558640405" y="2441.9999833106995"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="Cw_MasterDataJoin" modelObjectNameSpace="CWS_Data_ProcessType" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="250"/>
+    <shape expanded="true" modelObjectName="CWS_Data" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="325.9925535875361" y="2601.9999821186066"/>
+      <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="Process_Config" modelObjectNameSpace="CWS_Data_ProcessType" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="250"/>
+    <shape expanded="true" modelObjectName="Cw_AppConfigs" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="2601.9999821186066"/>
+      <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="CWS_Data_Status" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="171" y="1621"/>
+      <upperLeftCorner x="803.2481182461229" y="2121.9999856948853"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="CWS_Data_ProcessType" modelObjectNameSpace="CWS_Data_Status" modelObjectType="JoinNodeInput">
@@ -3072,8 +3771,12 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
+    <shape expanded="true" modelObjectName="Request_Status" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="798.0176777083079" y="2281.9999845027924"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
     <shape expanded="true" modelObjectName="CWSAndUserData" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="198" y="1461"/>
+      <upperLeftCorner x="782.1799831608955" y="1961.9999868869781"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="CWS_Data_Status" modelObjectNameSpace="CWSAndUserData" modelObjectType="JoinNodeInput">
@@ -3084,8 +3787,13 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
+  
+    <shape expanded="true" modelObjectName="User_Lookup" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="593.2481182461227" y="2121.9999856948853"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
     <shape expanded="true" modelObjectName="CwsNProcessDetails" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="519" y="1301"/>
+      <upperLeftCorner x="729.4666238390553" y="1801.999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="CWSAndUserData" modelObjectNameSpace="CwsNProcessDetails" modelObjectType="JoinNodeInput">
@@ -3096,8 +3804,17 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
+    <shape expanded="true" modelObjectName="Process_View" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="572.1799831608955" y="1961.9999868869781"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Handling_ReqUniqueId_Instead_of_ProcessInstId" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="820.4499698992717" y="1506.9999904632568"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
     <shape expanded="true" modelObjectName="CwsNUluFdluJoin" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="546" y="1141"/>
+      <upperLeftCorner x="546.1332905057219" y="1641.999989271164"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="CwsNProcessDetails" modelObjectNameSpace="CwsNUluFdluJoin" modelObjectType="JoinNodeInput">
@@ -3109,12 +3826,18 @@
       <rectangleSize width="250"/>
     </shape>
   
-    <shape expanded="true" modelObjectName="Handling_ReqUniqueId_Instead_of_ProcessInstId" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="546" y="1026"/>
+    <shape expanded="true" modelObjectName="Ulu_Fdlu_Details" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="519.4666238390553" y="1801.999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+  
+    <shape expanded="true" modelObjectName="Request_Lock" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="597.8799693640219" y="1496.9999904632568"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="CWS_Main_Data" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="357" y="856"/>
+      <upperLeftCorner x="761.7010190410147" y="1336.9999916553497"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Handling_ReqUniqueId_Instead_of_ProcessInstId" modelObjectNameSpace="CWS_Main_Data" modelObjectType="JoinNodeInput">
@@ -3126,7 +3849,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="CWS_Request_Data" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="384" y="696"/>
+      <upperLeftCorner x="666.0407586873549" y="1176.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="CWS_Main_Data" modelObjectNameSpace="CWS_Request_Data" modelObjectType="JoinNodeInput">
@@ -3137,8 +3860,19 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
+    <shape expanded="true" modelObjectName="Submitted_By_User_Lookup" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="551.7010190410147" y="1336.9999916553497"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+  
+  
+    <shape expanded="true" modelObjectName="Sub_Type_Alias" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="456.0407586873549" y="1176.9999928474426"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
     <shape expanded="true" modelObjectName="Requests_View" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="410" y="536"/>
+      <upperLeftCorner x="541.5620872168737" y="1016.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="CWS_Request_Data" modelObjectNameSpace="Requests_View" modelObjectType="JoinNodeInput">
@@ -3149,8 +3883,12 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
+    <shape expanded="true" modelObjectName="ModifiedBy_Lookup" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="331.5620872168737" y="1016.9999940395355"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
     <shape expanded="true" modelObjectName="Request_View_Final" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="437" y="376"/>
+      <upperLeftCorner x="397.9999994039538" y="856.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Requests_View" modelObjectNameSpace="Request_View_Final" modelObjectType="JoinNodeInput">
@@ -3161,8 +3899,13 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
+  
+    <shape expanded="true" modelObjectName="Engaging_Dept_Prj" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="187.99999940395378" y="856.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
     <shape expanded="true" modelObjectName="Request_Engaging_View" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="843" y="217"/>
+      <upperLeftCorner x="188.70013215488802" y="696.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Request_View_Final" modelObjectNameSpace="Request_Engaging_View" modelObjectType="JoinNodeInput">
@@ -3170,6 +3913,47 @@
       <rectangleSize width="250"/>
     </shape>
     <shape modelObjectName="Engaging_Dept_Prj" modelObjectNameSpace="Request_Engaging_View" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Location_Ref" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="215.36679882155477" y="536.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Request_Engaging_View" modelObjectNameSpace="Location_Ref" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Location_CWS_AppCfg" modelObjectNameSpace="Location_Ref" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Location_CWS_AppCfg" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="398.700132154888" y="696.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Prop_Usage_Join" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="188.70013215488802" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Location_Ref" modelObjectNameSpace="Prop_Usage_Join" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Cw_AppConfigs" modelObjectNameSpace="Prop_Usage_Join" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Work_Hours_Join" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="125.84245198289682" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape modelObjectName="Prop_Usage_Join" modelObjectNameSpace="Work_Hours_Join" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Cw_AppConfigs" modelObjectNameSpace="Work_Hours_Join" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>

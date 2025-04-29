@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="APPROVAL_MATRIX" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
-<descriptions defaultDescription="APPROVAL_MATRIX"/>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="ECLAIMS_APPROVAL_MATRIX_ALL" applyPrivilegeType="ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" defaultClient="$$client$$" outputViewType="Aggregation" calculationScenarioType="TREE_BASED" enforceSqlExecution="false">
+<descriptions defaultDescription="ECLAIMS_APPROVAL_MATRIX"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
@@ -13,301 +13,370 @@
   <DataSource id="NUSEXT_UTILITY_PROCESS_CONFIG">
     <resourceUri>NUSEXT_UTILITY_PROCESS_CONFIG</resourceUri>
   </DataSource>
-  <DataSource id="NUSEXT_UTILITY_CHRS_ROLE_MASTER">
-    <resourceUri>NUSEXT_UTILITY_CHRS_ROLE_MASTER</resourceUri>
-  </DataSource>
   <DataSource id="NUSEXT_MASTER_DATA_CHRS_FDLU_ULU">
     <resourceUri>NUSEXT_MASTER_DATA_CHRS_FDLU_ULU</resourceUri>
   </DataSource>
-  <DataSource id="Approver_Details$$$$NUSEXT_MASTER_DATA_CHRS_FDLU_ULU$$">
+  <DataSource id="FDLU_Master$$$$NUSEXT_MASTER_DATA_CHRS_FDLU_ULU$$">
     <resourceUri>NUSEXT_MASTER_DATA_CHRS_FDLU_ULU</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_UTILITY_CHRS_ROLE_MASTER">
+    <resourceUri>NUSEXT_UTILITY_CHRS_ROLE_MASTER</resourceUri>
   </DataSource>
 </dataSources>
 <snapshotProcedures/>
 <calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="ApproverMatrix" filterExpressionLanguage="SQL">
+  <calculationView xsi:type="Calculation:ProjectionView" id="EclaimApprovalMatrix" filterExpressionLanguage="COLUMN_ENGINE">
     <viewAttributes>
-      <viewAttribute id="AUTH_ID"/>
-      <viewAttribute id="PROCESS_CODE"/>
-      <viewAttribute id="ULU"/>
       <viewAttribute id="FDLU"/>
-      <viewAttribute id="STAFF_USER_GRP"/>
-      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="PROCESS_CODE"/>
       <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="STAFF_USER_GRP"/>
+      <viewAttribute id="ULU"/>
       <viewAttribute id="VALID_FROM"/>
       <viewAttribute id="VALID_TO"/>
+    
+      <viewAttribute id="AUTH_ID"/>
       <viewAttribute id="IS_EXCLUDED"/>
       <viewAttribute id="UPDATED_BY"/>
       <viewAttribute id="UPDATED_BY_NID"/>
       <viewAttribute id="UPDATED_ON"/>
       <viewAttribute id="IS_DELETED"/>
+    
       <viewAttribute id="APM_VALID_FROM"/>
       <viewAttribute id="APM_VALID_TO"/>
+    
       <viewAttribute id="PROCESS_TYPE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="NUSEXT_UTILITY_CHRS_APPROVER_MATRIX"/>
-  
     <filter>&quot;IS_DELETED&quot; = 'N'</filter>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="All_User">
+  <calculationView xsi:type="Calculation:ProjectionView" id="All_User_LookUp">
     <viewAttributes>
       <viewAttribute id="FULL_NM"/>
       <viewAttribute id="STAFF_STATUS"/>
-      <viewAttribute id="ULU_C"/>
-      <viewAttribute id="ULU_T"/>
       <viewAttribute id="FDLU_C"/>
       <viewAttribute id="FDLU_T"/>
-      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="ULU_T"/>
+    
+    
       <viewAttribute id="SF_STF_NUMBER"/>
-      <viewAttribute id="NUSNET_ID"/>
-    </viewAttributes>
+    
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="NUSNET_ID"/></viewAttributes>
     <calculatedViewAttributes/>
     <input node="ACTIVE_INACTIVE_USER_LOOKUP"/>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Process_Config">
     <viewAttributes>
-      <viewAttribute id="PROCESS_CODE"/>
       <viewAttribute id="PROCESS_TITLE"/>
-    </viewAttributes>
+    
+      <viewAttribute id="PROCESS_CODE"/></viewAttributes>
     <calculatedViewAttributes/>
     <input node="NUSEXT_UTILITY_PROCESS_CONFIG"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Role_Matrix" filterExpressionLanguage="COLUMN_ENGINE">
+  <calculationView xsi:type="Calculation:ProjectionView" id="ULU_Master">
     <viewAttributes>
-      <viewAttribute id="ROLE_CODE"/>
+      <viewAttribute id="ULU_T"/>
+    
+      <viewAttribute id="ULU_C"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_MASTER_DATA_CHRS_FDLU_ULU"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="FDLU_Master">
+    <descriptions>
+      <comment text=""/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="FDLU_T"/>
+    
+      <viewAttribute id="FDLU_C"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="FDLU_Master$$$$NUSEXT_MASTER_DATA_CHRS_FDLU_ULU$$"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Role_Matrix">
+    <viewAttributes>
       <viewAttribute id="STAFF_USER_ALIAS"/>
-    </viewAttributes>
+    
+      <viewAttribute id="ROLE_CODE"/></viewAttributes>
     <calculatedViewAttributes/>
     <input node="NUSEXT_UTILITY_CHRS_ROLE_MASTER">
       <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_USER_ALIAS" source="ROLE_CODE_LBL"/>
-    </input>
-    <filter>&quot;ROLE_CODE&quot;!='MATRIX_ADMIN' AND &quot;ROLE_CODE&quot;!='SUPER_ADMIN'</filter>
-  </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="UserFullDetails" cardinality="CN_N" joinType="leftOuter">
+    </input></calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="UserFullDetails" joinType="leftOuter">
     <viewAttributes>
-      <viewAttribute id="AUTH_ID"/>
       <viewAttribute id="PROCESS_CODE"/>
-      <viewAttribute id="ULU"/>
       <viewAttribute id="FDLU"/>
-      <viewAttribute id="STAFF_USER_GRP"/>
-      <viewAttribute id="STAFF_NUSNET_ID"/>
       <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="STAFF_USER_GRP"/>
       <viewAttribute id="VALID_FROM"/>
       <viewAttribute id="VALID_TO"/>
+      <viewAttribute id="AUTH_ID"/>
+    
       <viewAttribute id="UPDATED_BY"/>
       <viewAttribute id="UPDATED_BY_NID"/>
+    
       <viewAttribute id="UPDATED_ON"/>
+    
       <viewAttribute id="APM_VALID_FROM"/>
       <viewAttribute id="APM_VALID_TO"/>
+    
       <viewAttribute id="PROCESS_TYPE"/>
+    
       <viewAttribute id="FULL_NM"/>
+    
       <viewAttribute id="STAFF_STATUS"/>
-      <viewAttribute id="STAFF_ULU_C"/>
-      <viewAttribute id="STAFF_ULU_T"/>
       <viewAttribute id="STAFF_FDLU_C"/>
       <viewAttribute id="STAFF_FDLU_T"/>
+      <viewAttribute id="STAFF_ULU_C"/>
+      <viewAttribute id="STAFF_ULU_T"/>
+    
       <viewAttribute hidden="true" id="JOIN$STAFF_ID$SF_STF_NUMBER"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="ApproverMatrix">
-      <mapping xsi:type="Calculation:AttributeMapping" target="AUTH_ID" source="AUTH_ID"/>
+    <input node="EclaimApprovalMatrix">
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_USER_GRP" source="STAFF_USER_GRP"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_USER_GRP" source="STAFF_USER_GRP"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="VALID_FROM" source="VALID_FROM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AUTH_ID" source="AUTH_ID"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_BY" source="UPDATED_BY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_BY_NID" source="UPDATED_BY_NID"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_ON" source="UPDATED_ON"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="APM_VALID_FROM" source="APM_VALID_FROM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="APM_VALID_TO" source="APM_VALID_TO"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$STAFF_ID$SF_STF_NUMBER" source="STAFF_ID"/>
     </input>
-    <input node="All_User">
+    <input node="All_User_LookUp">
       <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_STATUS" source="STAFF_STATUS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_C" source="ULU_C"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_T" source="ULU_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_FDLU_C" source="FDLU_C"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_FDLU_T" source="FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_C" source="ULU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_T" source="ULU_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$STAFF_ID$SF_STF_NUMBER" source="SF_STF_NUMBER"/>
     </input>
     <joinAttribute name="JOIN$STAFF_ID$SF_STF_NUMBER"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="FDLU_Join" cardinality="CN_N" joinType="leftOuter">
+  <calculationView xsi:type="Calculation:JoinView" id="FDLU_JOIN" joinType="leftOuter">
     <viewAttributes>
-      <viewAttribute id="AUTH_ID"/>
       <viewAttribute id="PROCESS_CODE"/>
-      <viewAttribute id="ULU"/>
       <viewAttribute id="FDLU"/>
-      <viewAttribute id="STAFF_USER_GRP"/>
-      <viewAttribute id="STAFF_NUSNET_ID"/>
       <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="STAFF_USER_GRP"/>
       <viewAttribute id="VALID_FROM"/>
       <viewAttribute id="VALID_TO"/>
+      <viewAttribute id="AUTH_ID"/>
       <viewAttribute id="UPDATED_BY"/>
       <viewAttribute id="UPDATED_BY_NID"/>
+      <viewAttribute id="FDLU_T"/>
+    
       <viewAttribute id="UPDATED_ON"/>
+    
       <viewAttribute id="APM_VALID_FROM"/>
       <viewAttribute id="APM_VALID_TO"/>
+    
       <viewAttribute id="PROCESS_TYPE"/>
+    
       <viewAttribute id="FULL_NM"/>
+    
       <viewAttribute id="STAFF_STATUS"/>
-      <viewAttribute id="STAFF_ULU_C"/>
-      <viewAttribute id="STAFF_ULU_T"/>
       <viewAttribute id="STAFF_FDLU_C"/>
       <viewAttribute id="STAFF_FDLU_T"/>
-      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="STAFF_ULU_C"/>
+      <viewAttribute id="STAFF_ULU_T"/>
+    
       <viewAttribute hidden="true" id="JOIN$FDLU$FDLU_C"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="UserFullDetails">
-      <mapping xsi:type="Calculation:AttributeMapping" target="AUTH_ID" source="AUTH_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_USER_GRP" source="STAFF_USER_GRP"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_USER_GRP" source="STAFF_USER_GRP"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="VALID_FROM" source="VALID_FROM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AUTH_ID" source="AUTH_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_BY" source="UPDATED_BY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_BY_NID" source="UPDATED_BY_NID"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_ON" source="UPDATED_ON"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="APM_VALID_FROM" source="APM_VALID_FROM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="APM_VALID_TO" source="APM_VALID_TO"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_STATUS" source="STAFF_STATUS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_C" source="STAFF_ULU_C"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_T" source="STAFF_ULU_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_FDLU_C" source="STAFF_FDLU_C"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_FDLU_T" source="STAFF_FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_C" source="STAFF_ULU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_T" source="STAFF_ULU_T"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FDLU$FDLU_C" source="FDLU"/>
     </input>
-    <input node="NUSEXT_MASTER_DATA_CHRS_FDLU_ULU">
+    <input node="FDLU_Master">
       <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FDLU$FDLU_C" source="FDLU_C"/>
     </input>
     <joinAttribute name="JOIN$FDLU$FDLU_C"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Approver_Details" cardinality="CN_N" joinType="leftOuter">
+  <calculationView xsi:type="Calculation:JoinView" id="Approver_Details" joinType="leftOuter">
     <viewAttributes>
-      <viewAttribute id="AUTH_ID"/>
       <viewAttribute id="PROCESS_CODE"/>
-      <viewAttribute id="ULU"/>
       <viewAttribute id="FDLU"/>
-      <viewAttribute id="STAFF_USER_GRP"/>
-      <viewAttribute id="STAFF_NUSNET_ID"/>
       <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="STAFF_USER_GRP"/>
       <viewAttribute id="VALID_FROM"/>
       <viewAttribute id="VALID_TO"/>
+      <viewAttribute id="AUTH_ID"/>
       <viewAttribute id="UPDATED_BY"/>
       <viewAttribute id="UPDATED_BY_NID"/>
-      <viewAttribute id="UPDATED_ON"/>
-      <viewAttribute id="APM_VALID_FROM"/>
-      <viewAttribute id="APM_VALID_TO"/>
-      <viewAttribute id="PROCESS_TYPE"/>
-      <viewAttribute id="FULL_NM"/>
-      <viewAttribute id="STAFF_STATUS"/>
-      <viewAttribute id="STAFF_ULU_C"/>
-      <viewAttribute id="STAFF_ULU_T"/>
-      <viewAttribute id="STAFF_FDLU_C"/>
-      <viewAttribute id="STAFF_FDLU_T"/>
       <viewAttribute id="FDLU_T"/>
       <viewAttribute id="ULU_T"/>
+    
+      <viewAttribute id="UPDATED_ON"/>
+    
+      <viewAttribute id="APM_VALID_FROM"/>
+      <viewAttribute id="APM_VALID_TO"/>
+    
+      <viewAttribute id="PROCESS_TYPE"/>
+    
+      <viewAttribute id="FULL_NM"/>
+    
+      <viewAttribute id="STAFF_STATUS"/>
+      <viewAttribute id="STAFF_FDLU_C"/>
+      <viewAttribute id="STAFF_FDLU_T"/>
+      <viewAttribute id="STAFF_ULU_C"/>
+      <viewAttribute id="STAFF_ULU_T"/>
+    
       <viewAttribute hidden="true" id="JOIN$ULU$ULU_C"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="FDLU_Join">
-      <mapping xsi:type="Calculation:AttributeMapping" target="AUTH_ID" source="AUTH_ID"/>
+    <input node="FDLU_JOIN">
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_USER_GRP" source="STAFF_USER_GRP"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_USER_GRP" source="STAFF_USER_GRP"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="VALID_FROM" source="VALID_FROM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AUTH_ID" source="AUTH_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_BY" source="UPDATED_BY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_BY_NID" source="UPDATED_BY_NID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_ON" source="UPDATED_ON"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="APM_VALID_FROM" source="APM_VALID_FROM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="APM_VALID_TO" source="APM_VALID_TO"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_STATUS" source="STAFF_STATUS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_C" source="STAFF_ULU_C"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_T" source="STAFF_ULU_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_FDLU_C" source="STAFF_FDLU_C"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_FDLU_T" source="STAFF_FDLU_T"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_C" source="STAFF_ULU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_T" source="STAFF_ULU_T"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ULU$ULU_C" source="ULU"/>
     </input>
-    <input node="Approver_Details$$$$NUSEXT_MASTER_DATA_CHRS_FDLU_ULU$$">
+    <input node="ULU_Master">
       <mapping xsi:type="Calculation:AttributeMapping" target="ULU_T" source="ULU_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ULU$ULU_C" source="ULU_C"/>
     </input>
     <joinAttribute name="JOIN$ULU$ULU_C"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_Process_User" cardinality="CN_N" joinType="inner">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_Process_User" joinType="inner">
     <viewAttributes>
-      <viewAttribute id="AUTH_ID"/>
       <viewAttribute id="PROCESS_CODE"/>
-      <viewAttribute id="ULU"/>
       <viewAttribute id="FDLU"/>
-      <viewAttribute id="STAFF_USER_GRP"/>
-      <viewAttribute id="STAFF_NUSNET_ID"/>
       <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="STAFF_USER_GRP"/>
       <viewAttribute id="VALID_FROM"/>
       <viewAttribute id="VALID_TO"/>
+      <viewAttribute id="AUTH_ID"/>
       <viewAttribute id="UPDATED_BY"/>
       <viewAttribute id="UPDATED_BY_NID"/>
-      <viewAttribute id="UPDATED_ON"/>
-      <viewAttribute id="APM_VALID_FROM"/>
-      <viewAttribute id="APM_VALID_TO"/>
-      <viewAttribute id="PROCESS_TYPE"/>
-      <viewAttribute id="FULL_NM"/>
-      <viewAttribute id="STAFF_STATUS"/>
-      <viewAttribute id="STAFF_ULU_C"/>
-      <viewAttribute id="STAFF_ULU_T"/>
-      <viewAttribute id="STAFF_FDLU_C"/>
-      <viewAttribute id="STAFF_FDLU_T"/>
       <viewAttribute id="FDLU_T"/>
       <viewAttribute id="ULU_T"/>
       <viewAttribute id="PROCESS_TITLE"/>
+    
+      <viewAttribute id="UPDATED_ON"/>
+    
+      <viewAttribute id="APM_VALID_FROM"/>
+      <viewAttribute id="APM_VALID_TO"/>
+    
+      <viewAttribute id="PROCESS_TYPE"/>
+    
+      <viewAttribute id="FULL_NM"/>
+    
+      <viewAttribute id="STAFF_STATUS"/>
+      <viewAttribute id="STAFF_FDLU_C"/>
+      <viewAttribute id="STAFF_FDLU_T"/>
+      <viewAttribute id="STAFF_ULU_C"/>
+      <viewAttribute id="STAFF_ULU_T"/>
+    
       <viewAttribute hidden="true" id="JOIN$PROCESS_CODE$PROCESS_CODE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Approver_Details">
-      <mapping xsi:type="Calculation:AttributeMapping" target="AUTH_ID" source="AUTH_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_USER_GRP" source="STAFF_USER_GRP"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_USER_GRP" source="STAFF_USER_GRP"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="VALID_FROM" source="VALID_FROM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AUTH_ID" source="AUTH_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_BY" source="UPDATED_BY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_BY_NID" source="UPDATED_BY_NID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_ON" source="UPDATED_ON"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="APM_VALID_FROM" source="APM_VALID_FROM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="APM_VALID_TO" source="APM_VALID_TO"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_STATUS" source="STAFF_STATUS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_C" source="STAFF_ULU_C"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_T" source="STAFF_ULU_T"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_FDLU_C" source="STAFF_FDLU_C"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_FDLU_T" source="STAFF_FDLU_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ULU_T" source="ULU_T"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_ON" source="UPDATED_ON"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="APM_VALID_FROM" source="APM_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APM_VALID_TO" source="APM_VALID_TO"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_STATUS" source="STAFF_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_FDLU_C" source="STAFF_FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_FDLU_T" source="STAFF_FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_C" source="STAFF_ULU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_T" source="STAFF_ULU_T"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_CODE$PROCESS_CODE" source="PROCESS_CODE"/>
     </input>
     <input node="Process_Config">
@@ -316,61 +385,74 @@
     </input>
     <joinAttribute name="JOIN$PROCESS_CODE$PROCESS_CODE"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_Auth_Matrix" cardinality="CN_N" joinType="inner">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_Auth_Matrix" joinType="inner">
     <viewAttributes>
-      <viewAttribute id="AUTH_ID"/>
       <viewAttribute id="PROCESS_CODE"/>
-      <viewAttribute id="ULU"/>
       <viewAttribute id="FDLU"/>
-      <viewAttribute id="STAFF_USER_GRP"/>
-      <viewAttribute id="STAFF_NUSNET_ID"/>
       <viewAttribute id="STAFF_ID"/>
+      <viewAttribute id="STAFF_NUSNET_ID"/>
+      <viewAttribute id="ULU"/>
+      <viewAttribute id="STAFF_USER_GRP"/>
       <viewAttribute id="VALID_FROM"/>
       <viewAttribute id="VALID_TO"/>
+      <viewAttribute id="AUTH_ID"/>
       <viewAttribute id="UPDATED_BY"/>
       <viewAttribute id="UPDATED_BY_NID"/>
-      <viewAttribute id="UPDATED_ON"/>
-      <viewAttribute id="APM_VALID_FROM"/>
-      <viewAttribute id="APM_VALID_TO"/>
-      <viewAttribute id="PROCESS_TYPE"/>
-      <viewAttribute id="FULL_NM"/>
-      <viewAttribute id="STAFF_STATUS"/>
-      <viewAttribute id="STAFF_ULU_C"/>
-      <viewAttribute id="STAFF_ULU_T"/>
-      <viewAttribute id="STAFF_FDLU_C"/>
-      <viewAttribute id="STAFF_FDLU_T"/>
       <viewAttribute id="FDLU_T"/>
       <viewAttribute id="ULU_T"/>
       <viewAttribute id="PROCESS_TITLE"/>
+    
+      <viewAttribute id="UPDATED_ON"/>
+    
+      <viewAttribute id="APM_VALID_FROM"/>
+      <viewAttribute id="APM_VALID_TO"/>
+    
+      <viewAttribute id="PROCESS_TYPE"/>
+    
+      <viewAttribute id="FULL_NM"/>
+    
       <viewAttribute id="STAFF_USER_ALIAS"/>
+    
+      <viewAttribute id="STAFF_STATUS"/>
+      <viewAttribute id="STAFF_FDLU_C"/>
+      <viewAttribute id="STAFF_FDLU_T"/>
+      <viewAttribute id="STAFF_ULU_C"/>
+      <viewAttribute id="STAFF_ULU_T"/>
+    
       <viewAttribute hidden="true" id="JOIN$STAFF_USER_GRP$ROLE_CODE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Join_Process_User">
-      <mapping xsi:type="Calculation:AttributeMapping" target="AUTH_ID" source="AUTH_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_USER_GRP" source="STAFF_USER_GRP"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_USER_GRP" source="STAFF_USER_GRP"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="VALID_FROM" source="VALID_FROM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AUTH_ID" source="AUTH_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_BY" source="UPDATED_BY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_BY_NID" source="UPDATED_BY_NID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_ON" source="UPDATED_ON"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="APM_VALID_FROM" source="APM_VALID_FROM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="APM_VALID_TO" source="APM_VALID_TO"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_STATUS" source="STAFF_STATUS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_C" source="STAFF_ULU_C"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_T" source="STAFF_ULU_T"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_FDLU_C" source="STAFF_FDLU_C"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_FDLU_T" source="STAFF_FDLU_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_T" source="FDLU_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ULU_T" source="ULU_T"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TITLE" source="PROCESS_TITLE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_ON" source="UPDATED_ON"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="APM_VALID_FROM" source="APM_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APM_VALID_TO" source="APM_VALID_TO"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_STATUS" source="STAFF_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_FDLU_C" source="STAFF_FDLU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_FDLU_T" source="STAFF_FDLU_T"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_C" source="STAFF_ULU_C"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ULU_T" source="STAFF_ULU_T"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$STAFF_USER_GRP$ROLE_CODE" source="STAFF_USER_GRP"/>
     </input>
     <input node="Role_Matrix">
@@ -380,44 +462,35 @@
     <joinAttribute name="JOIN$STAFF_USER_GRP$ROLE_CODE"/>
   </calculationView>
 </calculationViews>
-
 <logicalModel id="Join_Auth_Matrix">
   <attributes>
-    <attribute id="AUTH_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="AUTH_ID"/>
-      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="AUTH_ID"/>
-    </attribute>
-    <attribute id="PROCESS_CODE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CLAIM_TYPE" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PROCESS_CODE"/>
       <keyMapping columnObjectName="Join_Auth_Matrix" columnName="PROCESS_CODE"/>
     </attribute>
-    <attribute id="ULU" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ULU"/>
-      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="ULU"/>
-    </attribute>
-    <attribute id="FDLU" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="FDLU" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FDLU"/>
       <keyMapping columnObjectName="Join_Auth_Matrix" columnName="FDLU"/>
     </attribute>
-    <attribute id="STAFF_USER_GRP" order="5" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="STAFF_USER_GRP"/>
-      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_USER_GRP"/>
-    </attribute>
-    <attribute id="STAFF_NUSNET_ID" order="6" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="STAFF_NUSNET_ID"/>
-      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_NUSNET_ID"/>
-    </attribute>
-    <attribute id="STAFF_ID" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="STAFF_ID" order="3" displayAttribute="false" attributeHierarchyActive="false" key="true">
       <descriptions defaultDescription="STAFF_ID"/>
       <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_ID"/>
     </attribute>
-    <attribute id="VALID_FROM" order="8" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="VALID_FROM"/>
-      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="VALID_FROM"/>
+    <attribute id="STAFF_NUSNET_ID" order="4" displayAttribute="false" attributeHierarchyActive="false" key="true">
+      <descriptions defaultDescription="STAFF_NUSNET_ID"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_NUSNET_ID"/>
     </attribute>
-    <attribute id="VALID_TO" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="VALID_TO"/>
-      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="VALID_TO"/>
+    <attribute id="ULU" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ULU"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="ULU"/>
+    </attribute>
+    <attribute id="STAFF_USER_GRP" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAFF_USER_GRP"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_USER_GRP"/>
+    </attribute>
+    <attribute id="AUTH_ID" order="9" displayAttribute="false" attributeHierarchyActive="false" key="true">
+      <descriptions defaultDescription="AUTH_ID"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="AUTH_ID"/>
     </attribute>
     <attribute id="UPDATED_BY" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="UPDATED_BY"/>
@@ -427,140 +500,186 @@
       <descriptions defaultDescription="UPDATED_BY_NID"/>
       <keyMapping columnObjectName="Join_Auth_Matrix" columnName="UPDATED_BY_NID"/>
     </attribute>
-    <attribute id="UPDATED_ON" order="12" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="UPDATED_ON"/>
-      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="UPDATED_ON"/>
-    </attribute>
-    <attribute id="APM_VALID_FROM" order="13" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="APM_VALID_FROM"/>
-      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="APM_VALID_FROM"/>
-    </attribute>
-    <attribute id="APM_VALID_TO" order="14" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="APM_VALID_TO"/>
-      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="APM_VALID_TO"/>
-    </attribute>
-    <attribute id="PROCESS_TYPE" order="15" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="PROCESS_TYPE"/>
-      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="PROCESS_TYPE"/>
-    </attribute>
-    <attribute id="FULL_NM" order="16" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="FULL_NM"/>
-      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="FULL_NM"/>
-    </attribute>
-    <attribute id="STAFF_STATUS" order="17" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="STAFF_STATUS"/>
-      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_STATUS"/>
-    </attribute>
-    <attribute id="STAFF_ULU_C" order="18" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ULU_C"/>
-      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_ULU_C"/>
-    </attribute>
-    <attribute id="STAFF_ULU_T" order="19" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ULU_T"/>
-      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_ULU_T"/>
-    </attribute>
-    <attribute id="STAFF_FDLU_C" order="20" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="FDLU_C"/>
-      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_FDLU_C"/>
-    </attribute>
-    <attribute id="STAFF_FDLU_T" order="21" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="FDLU_T"/>
-      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_FDLU_T"/>
-    </attribute>
-    <attribute id="FDLU_T" order="22" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="FDLU_T" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FDLU_T"/>
       <keyMapping columnObjectName="Join_Auth_Matrix" columnName="FDLU_T"/>
     </attribute>
-    <attribute id="ULU_T" order="23" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ULU_T" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ULU_T"/>
       <keyMapping columnObjectName="Join_Auth_Matrix" columnName="ULU_T"/>
     </attribute>
-    <attribute id="PROCESS_TITLE" order="24" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PROCESS_TITLE" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PROCESS_TITLE"/>
       <keyMapping columnObjectName="Join_Auth_Matrix" columnName="PROCESS_TITLE"/>
     </attribute>
-    <attribute id="STAFF_USER_ALIAS" order="25" displayAttribute="false" attributeHierarchyActive="false">
+  
+    <attribute id="UPDATED_ON" order="15" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="UPDATED_ON"/>
+  
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="UPDATED_ON"/>
+  
+    </attribute>
+  
+    <attribute id="PROCESS_TYPE" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_TYPE"/>
+  
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="PROCESS_TYPE"/>
+  
+    </attribute>
+  
+    <attribute id="FULL_NM" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FULL_NM"/>
+  
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="FULL_NM"/>
+  
+    </attribute>
+  
+    <attribute id="STAFF_USER_ALIAS" order="20" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STAFF_USER_ALIAS"/>
+  
       <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_USER_ALIAS"/>
+  
+    </attribute>
+  
+    <attribute id="STAFF_STATUS" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAFF_STATUS"/>
+  
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_STATUS"/>
+  
+    </attribute>
+    <attribute id="STAFF_FDLU_C" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAFF_FDLU_C"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_FDLU_C"/>
+    </attribute>
+    <attribute id="STAFF_FDLU_T" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAFF_FDLU_T"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_FDLU_T"/>
+    </attribute>
+    <attribute id="STAFF_ULU_C" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAFF_ULU_C"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_ULU_C"/>
+    </attribute>
+    <attribute id="STAFF_ULU_T" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAFF_ULU_T"/>
+      <keyMapping columnObjectName="Join_Auth_Matrix" columnName="STAFF_ULU_T"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
-  <baseMeasures/>
+  <baseMeasures>
+    <measure id="VALID_FROM" order="7" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="VALID_FROM"/>
+      <measureMapping columnObjectName="Join_Auth_Matrix" columnName="VALID_FROM"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="VALID_TO" order="8" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="VALID_TO"/>
+      <measureMapping columnObjectName="Join_Auth_Matrix" columnName="VALID_TO"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+  
+    <measure id="APM_VALID_FROM" order="16" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="APM_VALID_FROM"/>
+      <measureMapping columnObjectName="Join_Auth_Matrix" columnName="APM_VALID_FROM"/>
+    
+  
+      <exceptionAggregationMetadata/>
+  
+    </measure>
+    <measure id="APM_VALID_TO" order="17" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="APM_VALID_TO"/>
+      <measureMapping columnObjectName="Join_Auth_Matrix" columnName="APM_VALID_TO"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure></baseMeasures>
   <calculatedMeasures/>
-  <restrictedMeasures/></logicalModel>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="40" y="85"/>
-    </shape>
+      <upperLeftCorner x="660.3038801290666" y="112"/>
     
+      <rectangleSize width="160"/>
+    </shape>
   
-    <shape expanded="true" modelObjectName="ApproverMatrix" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="-252" y="974"/>
+    <shape expanded="true" modelObjectName="EclaimApprovalMatrix" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91.99999999999999" y="1016.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape expanded="true" modelObjectName="All_User" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="210" y="982"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Process_Config" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="316" y="549"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Role_Matrix" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="454" y="406"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
+  
     <shape expanded="true" modelObjectName="UserFullDetails" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="-55" y="828"/>
+      <upperLeftCorner x="118.66666666666663" y="856.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="ApproverMatrix" modelObjectNameSpace="UserFullDetails" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="188"/>
-    </shape>
-    <shape modelObjectName="All_User" modelObjectNameSpace="UserFullDetails" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="180"/>
-    </shape>
-    <shape expanded="true" modelObjectName="FDLU_Join" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="130" y="701"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape modelObjectName="UserFullDetails" modelObjectNameSpace="FDLU_Join" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="EclaimApprovalMatrix" modelObjectNameSpace="UserFullDetails" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape modelObjectName="NUSEXT_MASTER_DATA_CHRS_FDLU_ULU" modelObjectNameSpace="FDLU_Join" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="All_User_LookUp" modelObjectNameSpace="UserFullDetails" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="318"/>
+      <rectangleSize width="250"/>
     </shape>
-    <shape expanded="true" modelObjectName="Approver_Details" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="15" y="549"/>
+    <shape expanded="true" modelObjectName="All_User_LookUp" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302.00000000000006" y="1016.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="FDLU_Join" modelObjectNameSpace="Approver_Details" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="188"/>
-    </shape>
-    <shape modelObjectName="NUSEXT_MASTER_DATA_CHRS_FDLU_ULU" modelObjectNameSpace="Approver_Details" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="318"/>
-    </shape>
+  
     <shape expanded="true" modelObjectName="Join_Process_User" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="120" y="397"/>
+      <upperLeftCorner x="198.66666666666663" y="376.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Approver_Details" modelObjectNameSpace="Join_Process_User" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="188"/>
+      <rectangleSize width="250"/>
     </shape>
     <shape modelObjectName="Process_Config" modelObjectNameSpace="Join_Process_User" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="177"/>
+      <rectangleSize width="250"/>
     </shape>
+    <shape expanded="true" modelObjectName="Approver_Details" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="172" y="536.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="FDLU_JOIN" modelObjectNameSpace="Approver_Details" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="ULU_Master" modelObjectNameSpace="Approver_Details" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Process_Config" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="584.5795303100989" y="536.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="FDLU_JOIN" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="145.33333333333337" y="696.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="UserFullDetails" modelObjectNameSpace="FDLU_JOIN" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="FDLU_Master" modelObjectNameSpace="FDLU_JOIN" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ULU_Master" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="474.7983235081821" y="696.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="FDLU_Master" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="380.18794682697023" y="856.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+  
     <shape expanded="true" modelObjectName="Join_Auth_Matrix" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="326" y="272"/>
+      <upperLeftCorner x="660.3038801290664" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_Process_User" modelObjectNameSpace="Join_Auth_Matrix" modelObjectType="JoinNodeInput">
@@ -569,8 +688,11 @@
     </shape>
     <shape modelObjectName="Role_Matrix" modelObjectNameSpace="Join_Auth_Matrix" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="179"/>
+      <rectangleSize width="250"/>
     </shape>
-  </shapes>
+    <shape expanded="true" modelObjectName="Role_Matrix" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="708.3361339234377" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape></shapes>
 </layout>
 </Calculation:scenario>

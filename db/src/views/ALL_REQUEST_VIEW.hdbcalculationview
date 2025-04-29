@@ -10,8 +10,8 @@
   <DataSource id="ECLAIM_REQUEST_VIEW">
     <resourceUri>ECLAIM_REQUEST_VIEW</resourceUri>
   </DataSource>
-  <DataSource id="USER_LOOKUP">
-    <resourceUri>USER_LOOKUP</resourceUri>
+  <DataSource id="ACTIVE_INACTIVE_USER_LOOKUP">
+    <resourceUri>ACTIVE_INACTIVE_USER_LOOKUP</resourceUri>
   </DataSource>
 </dataSources>
 <snapshotProcedures/>
@@ -109,7 +109,7 @@
     
       <viewAttribute id="STF_NUMBER"/></viewAttributes>
     <calculatedViewAttributes/>
-    <input node="USER_LOOKUP"/>
+    <input node="ACTIVE_INACTIVE_USER_LOOKUP"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="EClaims_Submitted_Dtls" joinType="leftOuter">
     <viewAttributes>
@@ -135,10 +135,12 @@
       <viewAttribute id="ULU"/>
       <viewAttribute id="SUBMITTED_BY_NID"/>
       <viewAttribute id="SUBMITTED_BY_FULLNAME"/>
+    
+      <viewAttribute id="PROCESS_INST_ID"/>
+    
       <viewAttribute id="PROCESS_CODE"/>
       <viewAttribute id="REQUEST_STATUS_TYPE"/>
       <viewAttribute id="SUBMITTED_ON"/>
-    
       <viewAttribute hidden="true" id="JOIN$SUBMITTED_BY$SF_STF_NUMBER"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -167,6 +169,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS_TYPE" source="REQUEST_STATUS_TYPE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON" source="SUBMITTED_ON"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SUBMITTED_BY$SF_STF_NUMBER" source="SUBMITTED_BY"/>
     </input>
@@ -240,7 +244,7 @@
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENG_FDLU_T" null="true"/>
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ENG_ULU_T" null="true"/>
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MIGRATED" null="true"/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROCESS_INST_ID" null="true"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="NUSNET_ID" null="true"/>
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ULU_C" null="true"/>
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="REQUEST_TYPE" null="true"/>

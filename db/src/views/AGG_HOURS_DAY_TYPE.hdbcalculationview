@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="AGG_HOURS_DAY_TYPE" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="AGG_HOURS_DAY_TYPE" applyPrivilegeType="ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" defaultClient="$$client$$" outputViewType="Aggregation" calculationScenarioType="TREE_BASED" enforceSqlExecution="false">
 <descriptions defaultDescription="AGG_HOURS_DAY_TYPE"/>
 <localVariables/>
 <variableMappings/>
@@ -10,7 +10,7 @@
 </dataSources>
 <snapshotProcedures/>
 <calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="COLUMN_ENGINE">
     <viewAttributes>
       <viewAttribute id="DRAFT_ID"/>
       <viewAttribute id="HOURS_UNIT"/>
@@ -22,14 +22,13 @@
     <filter>&quot;IS_DELETED&quot;='N'</filter>
   </calculationView>
 </calculationViews>
-
 <logicalModel id="Projection_1">
   <attributes>
-    <attribute id="DRAFT_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="DRAFT_ID" key="true" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DRAFT_ID"/>
       <keyMapping columnObjectName="Projection_1" columnName="DRAFT_ID"/>
     </attribute>
-    <attribute id="CLAIM_DAY_TYPE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CLAIM_DAY_TYPE" key="true" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CLAIM_DAY_TYPE"/>
       <keyMapping columnObjectName="Projection_1" columnName="CLAIM_DAY_TYPE"/>
     </attribute>
@@ -39,6 +38,7 @@
     <measure id="HOURS_UNIT" order="2" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="HOURS_UNIT"/>
       <measureMapping columnObjectName="Projection_1" columnName="HOURS_UNIT"/>
+    
       <exceptionAggregationMetadata/>
     </measure>
   </baseMeasures>
@@ -49,15 +49,12 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="92" y="112"/>
-    
-      <rectangleSize width="160"/>
+      <upperLeftCorner x="40" y="85"/>
     </shape>
-    
   
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="217"/>
-      <rectangleSize height="30" width="160"/>
+      <upperLeftCorner x="83" y="277"/>
+      <rectangleSize height="30" width="140"/>
     </shape>
   </shapes>
 </layout>

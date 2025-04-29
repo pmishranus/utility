@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CHRS_EXTERNAL_USERS" applyPrivilegeType="ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" defaultClient="$$client$$" outputViewType="Aggregation" calculationScenarioType="TREE_BASED" enforceSqlExecution="false">
+<descriptions defaultDescription="CHRS_JOB_INFO"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="NUSEXT_UTILITY_CHRS_EXTERNAL_USERS">
+    <resourceUri>NUSEXT_UTILITY_CHRS_EXTERNAL_USERS</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="External_Users_Projection">
+    <viewAttributes>
+      <viewAttribute id="APPT_TRACK_C"/>
+      <viewAttribute id="APPT_TRACK_T"/>
+      <viewAttribute id="BANK_INFO_FLG"/>
+      <viewAttribute id="CAPACITY_UTIL"/>
+      <viewAttribute id="COMPANY_C"/>
+      <viewAttribute id="COMPANY_T"/>
+      <viewAttribute id="CONTEXP_DATE"/>
+      <viewAttribute id="EMAIL"/>
+      <viewAttribute id="EMPL_STS_C"/>
+      <viewAttribute id="EMPL_STS_T"/>
+      <viewAttribute id="EMP_CAT_C"/>
+      <viewAttribute id="EMP_CAT_T"/>
+      <viewAttribute id="EMP_GP_C"/>
+      <viewAttribute id="EMP_GP_T"/>
+      <viewAttribute id="END_DATE"/>
+      <viewAttribute id="FDLU_C"/>
+      <viewAttribute id="FDLU_T"/>
+      <viewAttribute id="FIRST_NM"/>
+      <viewAttribute id="FULL_NM"/>
+      <viewAttribute id="JOB_GRD_C"/>
+      <viewAttribute id="JOB_GRD_T"/>
+      <viewAttribute id="JOB_LVL_C"/>
+      <viewAttribute id="JOB_LVL_T"/>
+      <viewAttribute id="JOIN_DATE"/>
+      <viewAttribute id="LAST_NM"/>
+      <viewAttribute id="LEAVING_DATE"/>
+      <viewAttribute id="MODIFIED_BY"/>
+      <viewAttribute id="MODIFIED_ON"/>
+      <viewAttribute id="NUSNET_ID"/>
+      <viewAttribute id="PAYSCALE_GRP_C"/>
+      <viewAttribute id="PAYSCALE_GRP_T"/>
+      <viewAttribute id="PREF_NM"/>
+      <viewAttribute id="REMARKS"/>
+      <viewAttribute id="RM_FLG"/>
+      <viewAttribute id="RM_NUSNET_ID"/>
+      <viewAttribute id="RM_STF_N"/>
+      <viewAttribute id="SAP_DEPT_C"/>
+      <viewAttribute id="SAP_DEPT_T"/>
+      <viewAttribute id="SAP_FAC_C"/>
+      <viewAttribute id="SAP_FAC_T"/>
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="START_DATE"/>
+      <viewAttribute id="STD_HOURS"/>
+      <viewAttribute id="STF_NUMBER"/>
+      <viewAttribute id="ULU_C"/>
+      <viewAttribute id="ULU_T"/>
+      <viewAttribute id="WK_SCHD_C"/>
+      <viewAttribute id="WK_SCHD_T"/>
+      <viewAttribute id="WORK_TITLE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="START_DATE_CAL" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;START_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="END_DATE_CAL" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;END_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="NUSEXT_UTILITY_CHRS_EXTERNAL_USERS"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="External_Users_Projection">
+  <attributes>
+    <attribute id="APPT_TRACK_C" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPT_TRACK_C"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="APPT_TRACK_C"/>
+    </attribute>
+    <attribute id="APPT_TRACK_T" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPT_TRACK_T"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="APPT_TRACK_T"/>
+    </attribute>
+    <attribute id="BANK_INFO_FLG" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BANK_INFO_FLG"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="BANK_INFO_FLG"/>
+    </attribute>
+    <attribute id="COMPANY_C" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COMPANY_C"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="COMPANY_C"/>
+    </attribute>
+    <attribute id="COMPANY_T" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COMPANY_T"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="COMPANY_T"/>
+    </attribute>
+    <attribute id="EMAIL" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMAIL"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="EMAIL"/>
+    </attribute>
+    <attribute id="EMPL_STS_C" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMPL_STS_C"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="EMPL_STS_C"/>
+    </attribute>
+    <attribute id="EMPL_STS_T" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMPL_STS_T"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="EMPL_STS_T"/>
+    </attribute>
+    <attribute id="EMP_CAT_C" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMP_CAT_C"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="EMP_CAT_C"/>
+    </attribute>
+    <attribute id="EMP_CAT_T" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMP_CAT_T"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="EMP_CAT_T"/>
+    </attribute>
+    <attribute id="EMP_GP_C" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMP_GP_C"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="EMP_GP_C"/>
+    </attribute>
+    <attribute id="EMP_GP_T" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMP_GP_T"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="EMP_GP_T"/>
+    </attribute>
+    <attribute id="FDLU_C" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FDLU_C"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="FDLU_C"/>
+    </attribute>
+    <attribute id="FDLU_T" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FDLU_T"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="FDLU_T"/>
+    </attribute>
+    <attribute id="FIRST_NM" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FIRST_NM"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="FIRST_NM"/>
+    </attribute>
+    <attribute id="FULL_NM" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FULL_NM"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="FULL_NM"/>
+    </attribute>
+    <attribute id="JOB_GRD_C" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOB_GRD_C"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="JOB_GRD_C"/>
+    </attribute>
+    <attribute id="JOB_GRD_T" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOB_GRD_T"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="JOB_GRD_T"/>
+    </attribute>
+    <attribute id="JOB_LVL_C" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOB_LVL_C"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="JOB_LVL_C"/>
+    </attribute>
+    <attribute id="JOB_LVL_T" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOB_LVL_T"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="JOB_LVL_T"/>
+    </attribute>
+    <attribute id="LAST_NM" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAST_NM"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="LAST_NM"/>
+    </attribute>
+    <attribute id="MODIFIED_BY" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MODIFIED_BY"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="MODIFIED_BY"/>
+    </attribute>
+    <attribute id="NUSNET_ID" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NUSNET_ID"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="NUSNET_ID"/>
+    </attribute>
+    <attribute id="PAYSCALE_GRP_C" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYSCALE_GRP_C"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="PAYSCALE_GRP_C"/>
+    </attribute>
+    <attribute id="PAYSCALE_GRP_T" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYSCALE_GRP_T"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="PAYSCALE_GRP_T"/>
+    </attribute>
+    <attribute id="PREF_NM" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PREF_NM"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="PREF_NM"/>
+    </attribute>
+    <attribute id="REMARKS" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REMARKS"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="REMARKS"/>
+    </attribute>
+    <attribute id="RM_FLG" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RM_FLG"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="RM_FLG"/>
+    </attribute>
+    <attribute id="RM_NUSNET_ID" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RM_NUSNET_ID"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="RM_NUSNET_ID"/>
+    </attribute>
+    <attribute id="RM_STF_N" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RM_STF_N"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="RM_STF_N"/>
+    </attribute>
+    <attribute id="SAP_DEPT_C" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SAP_DEPT_C"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="SAP_DEPT_C"/>
+    </attribute>
+    <attribute id="SAP_DEPT_T" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SAP_DEPT_T"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="SAP_DEPT_T"/>
+    </attribute>
+    <attribute id="SAP_FAC_C" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SAP_FAC_C"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="SAP_FAC_C"/>
+    </attribute>
+    <attribute id="SAP_FAC_T" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SAP_FAC_T"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="SAP_FAC_T"/>
+    </attribute>
+    <attribute id="SF_STF_NUMBER" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SF_STF_NUMBER"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="SF_STF_NUMBER"/>
+    </attribute>
+    <attribute id="STD_HOURS" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_HOURS"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="STD_HOURS"/>
+    </attribute>
+    <attribute id="STF_NUMBER" order="44" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STF_NUMBER"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="STF_NUMBER"/>
+    </attribute>
+    <attribute id="ULU_C" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ULU_C"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="ULU_C"/>
+    </attribute>
+    <attribute id="ULU_T" order="46" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ULU_T"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="ULU_T"/>
+    </attribute>
+    <attribute id="WK_SCHD_C" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WK_SCHD_C"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="WK_SCHD_C"/>
+    </attribute>
+    <attribute id="WK_SCHD_T" order="48" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WK_SCHD_T"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="WK_SCHD_T"/>
+    </attribute>
+    <attribute id="WORK_TITLE" order="49" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WORK_TITLE"/>
+      <keyMapping columnObjectName="External_Users_Projection" columnName="WORK_TITLE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="CAPACITY_UTIL" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CAPACITY_UTIL"/>
+      <measureMapping columnObjectName="External_Users_Projection" columnName="CAPACITY_UTIL"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="CONTEXP_DATE" order="7" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="CONTEXP_DATE"/>
+      <measureMapping columnObjectName="External_Users_Projection" columnName="CONTEXP_DATE"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="END_DATE" order="15" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="END_DATE"/>
+      <measureMapping columnObjectName="External_Users_Projection" columnName="END_DATE"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="JOIN_DATE" order="24" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="JOIN_DATE"/>
+      <measureMapping columnObjectName="External_Users_Projection" columnName="JOIN_DATE"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="LEAVING_DATE" order="26" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="LEAVING_DATE"/>
+      <measureMapping columnObjectName="External_Users_Projection" columnName="LEAVING_DATE"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="MODIFIED_ON" order="28" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="MODIFIED_ON"/>
+      <measureMapping columnObjectName="External_Users_Projection" columnName="MODIFIED_ON"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="START_DATE" order="42" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="START_DATE"/>
+      <measureMapping columnObjectName="External_Users_Projection" columnName="START_DATE"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="START_DATE_CAL" order="50" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="START_DATE_CAL"/>
+      <measureMapping columnObjectName="External_Users_Projection" columnName="START_DATE_CAL"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+    <measure id="END_DATE_CAL" order="51" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="END_DATE_CAL"/>
+      <measureMapping columnObjectName="External_Users_Projection" columnName="END_DATE_CAL"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    <shape expanded="true" modelObjectName="External_Users_Projection" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91" y="242"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
