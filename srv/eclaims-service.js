@@ -1,5 +1,5 @@
 const cds = require("@sap/cds");
-const eclaimsOverviewDashboardCtrl = require("./controller/eclaimsOverviewDashboard.controller");
+// const eclaimsOverviewDashboardCtrl = require("../eclaims/controller/eclaimsOverviewDashboard.controller");
 
 module.exports = cds.service.impl(async (srv) => {
   const db = await cds.connect.to("db");
@@ -49,7 +49,7 @@ module.exports = cds.service.impl(async (srv) => {
         "userProfile": {
           "applications": [
             {
-              "value": "Under Eclaims",
+              "value": "Under Srv Inside",
               "title": "Approval Matrix"
             },
             {

@@ -22,6 +22,7 @@
     "node-jose": "^2.2.0",
     "passport": "^0.7.0",
     "path": "^0.12.7",
+    "recursive-readdir": "^2.2.3",
     "sap-hdbext-promisfied": "^2.202405.1",
     "swagger-ui-express": "^5.0.1",
     "xlsx": "^0.18.5"
@@ -49,13 +50,20 @@
       "db": {
         "kind": "hana",
         "model": [
-          "db"
+          "db",
+          "srv",
+          "eclaims",
+          "cws"
         ]
       },
       "services": {
         "ApproverMatrix": {
           "kind": "odata",
           "impl": "srv/approver-matrix.js"
+        },
+        "EclaimsService": {
+          "kind": "odata",
+          "impl": "srv/eclaims-service.js"
         }
       },
       "auth": {

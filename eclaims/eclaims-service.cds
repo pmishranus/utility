@@ -8,7 +8,7 @@ using {
   TASK_INBOX
 } from '../db/redefinemodel';
 
-
+@(impl : 'srv/eclaims-service.js')
 service EclaimsService @(path: '/eclaims') {
 
   @open
@@ -16,7 +16,7 @@ service EclaimsService @(path: '/eclaims') {
 
 
   /********************************************************************* Functions ***************************************************************************************************/
-
+ function dummy()         returns {};
   /********************************************************************* Actions ***************************************************************************************************/
 
   action eclaimsOverviewDashboard(data : object) returns String;

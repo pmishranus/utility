@@ -1,19 +1,19 @@
 
-const Connection = require("../../srv/util/request/connection.class");
-const ChrsJobInfoQuery = require("../../srv/query/query-chrs-job-info");
-const ChrsHrpInfoQuery = require("../../srv/query/query-hrp-info");
-const TaskInboxRepository = require("../../srv/query/query-task-inbox");
-const CommonQuery = require("../../srv/query/query-common");
-const ProcessConfigQuery = require("../../srv/query/query-process-config");
-const ApproverMatrixQuery = require("../../srv/query/query-approver-matrix");
-const ProcessParticipantsQuery = require("../../srv/query/query-process-participants");
-const DashboardConfigQuery = require("../../srv/query/query-dashboard-config");
-const ApplicationConstants = require("../../srv/util/app-constant");
-const { ApplicationException } = require("../../srv/util/customErrors");
-const CommonUtils = require("../../srv/util/common-utils");
-const ChrsUluFdluQuery = require("../../srv/query/query-chrs-ulu-fdlu");
-const TaskDelegationDetailsQuery = require("../../srv/query/query-task-delegation");
-const EclaimsHeaderDataQuery = require("../query/query-eclaims-data");
+const Connection = require("../config/connection.class");
+const ChrsJobInfoRepo = require("../repository/chrsJobInfo.repo");
+const ChrsHrpInfoRepo = require("../repository/hrpInfo.repo");
+const TaskInboxRepo = require("../repository/taskInbox.repo");
+const CommonRepo = require("../repository/util.repo");
+const ProcessConfigRepo = require("../repository/processConfig.repo");
+const ApproverMatrixRepo = require("../repository/approverMatrix.repo");
+const ProcessParticipantsRepo = require("../repository/processParticipant.repo");
+const DashboardConfigRepo = require("../repository/dashboardConfig.repo");
+const ApplicationConstants = require("../util/constant");
+const { ApplicationException } = require("../util/customErrors");
+const CommonUtils = require("../util/commonUtil");
+const ChrsUluFdluRepo = require("../repository/chrsUluFdlu.repo");
+const TaskDelegationDetailsRepo = require("../repository/taskDelegation,repo");
+const EclaimsHeaderDataRepo = require("../repository/eclaimsData.repo");
 const moment = require('moment-timezone');
 const { head } = require("lodash");
 module.exports = {
@@ -39,7 +39,7 @@ module.exports = {
             const upperNusNetId = userName.toUpperCase();
             //fetch logged in user information
 
-            let loggedInUserDetails = await CommonQuery.fetchLoggedInUser(upperNusNetId);
+            let loggedInUserDetails = await CommonRepo.fetchLoggedInUser(upperNusNetId);
 
             if (!userName) {
                 throw new Error("User not found..!!");
@@ -47,10 +47,10 @@ module.exports = {
 
             const inputRequest = oConnection.request.data.data;
 
-            let chrsJobInfoList = await ChrsJobInfoQuery.fetchUserDetails(upperNusNetId);
+            let chrsJobInfoList = await ChrsJobInfoRepo.fetchUserDetails(upperNusNetId);
 
             if (!chrsJobInfoList || Object.keys(chrsJobInfoList).length === 0) {
-                chrsJobInfoList = await ChrsJobInfoQuery.retrieveExternalUserDetails(upperNusNetId);
+                chrsJobInfoList = await ChrsJobInfoRepo.retrieveExternalUserDetails(upperNusNetId);
             }
 
             if (!chrsJobInfoList || Object.keys(chrsJobInfoList).length === 0) {
@@ -157,7 +157,7 @@ module.exports = {
             let tbList = await this.populateTbRequestDetails(chrsJobInfo, ApplicationConstants.CLAIM_ASSISTANT, inputRequest.PROCESS_CODE);
             oReturnObj.userProfile.taxBenRequestOverview = tbList.length ? tbList : [];
 
-            let taxBenCAList = await ApproverMatrixQuery.checkForUserGrpNProcess(ApplicationConstants.CLAIM_TYPE_105, chrsJobInfo.STF_NUMBER, ApplicationConstants.CLAIM_ASSISTANT);
+            let taxBenCAList = await ApproverMatrixRepo.checkForUserGrpNProcess(ApplicationConstants.CLAIM_TYPE_105, chrsJobInfo.STF_NUMBER, ApplicationConstants.CLAIM_ASSISTANT);
             oReturnObj.visible.taxBenRequestOverview = taxBenCAList.length ? true : false;
         }
         // populate tables
@@ -182,7 +182,7 @@ module.exports = {
 
     // getTaskTileDetails: async function (inputRequest,chrsJobInfo) {
 
-    //     let taskInboxStatusList = DashboardConfigQuery.fetchHeaderDetails("TASK_INBOX_STATUS", inputRequest.PROCESS_CODE);
+    //     let taskInboxStatusList = DashboardConfigRepo.fetchHeaderDetails("TASK_INBOX_STATUS", inputRequest.PROCESS_CODE);
 
     // 	let statusBreakdownList = [];
 
@@ -226,13 +226,13 @@ module.exports = {
 
     populateDelegationDetails: async function (oReturnObj, staffId, processCode) {
         let delegationDetailsList = [];
-        let taskDelegationList = await TaskDelegationDetailsQuery.fetchProcessActiveDelegationDetails(processCode, staffId);
+        let taskDelegationList = await TaskDelegationDetailsRepo.fetchProcessActiveDelegationDetails(processCode, staffId);
         for (let taskDelegationDetails of taskDelegationList) {
 
-            taskDelegationDetails.DELEGATED_TO_NAME = ChrsJobInfoQuery.fetchName(taskDelegationDetails.DELEGATED_TO);
-            taskDelegationDetails.DELEGATED_FROM_NAME = ChrsJobInfoQuery.fetchName(taskDelegationDetails.DELEGATED_FROM);
-            taskDelegationDetails.PROCESS_TYPE_DESC = ProcessConfigQuery.fetchProcessTitleByPROCESS_CODE(taskDelegationDetails.PROCESS_TYPE);
-            taskDelegationDetails.CHANGED_BY_NAME = ChrsJobInfoQuery.fetchName(taskDelegationDetails.MODIFIED_BY);
+            taskDelegationDetails.DELEGATED_TO_NAME = ChrsJobInfoRepo.fetchName(taskDelegationDetails.DELEGATED_TO);
+            taskDelegationDetails.DELEGATED_FROM_NAME = ChrsJobInfoRepo.fetchName(taskDelegationDetails.DELEGATED_FROM);
+            taskDelegationDetails.PROCESS_TYPE_DESC = ProcessConfigRepo.fetchProcessTitleByPROCESS_CODE(taskDelegationDetails.PROCESS_TYPE);
+            taskDelegationDetails.CHANGED_BY_NAME = ChrsJobInfoRepo.fetchName(taskDelegationDetails.MODIFIED_BY);
             taskDelegationDetails.DELIMIT_BTN_REQ = CommonUtils.equalsIgnoreCase(staffId, taskDelegationDetails.DELEGATED_FOR) ? ApplicationConstants.Y : ApplicationConstants.N;
             taskDelegationDetails.IS_DELETE = taskDelegationDetails.VALID_FROM > new Date() ? ApplicationConstants.Y : ApplicationConstants.N;
 
@@ -252,7 +252,7 @@ module.exports = {
         let roleList = role;
         roleList.push({
             STAFF_USER_GRP : "ALL"});
-        let dashboardConfigurationList = await DashboardConfigQuery.fetchStatusDetailsByRole(ApplicationConstants.USEFULLINKS, processCode, role, "STAFF_USER_GRP");
+        let dashboardConfigurationList = await DashboardConfigRepo.fetchStatusDetailsByRole(ApplicationConstants.USEFULLINKS, processCode, role, "STAFF_USER_GRP");
 
         const distinctByKey = (list, keyExtractor) => {
             const seen = new Set();
@@ -295,12 +295,12 @@ module.exports = {
                 || (CommonUtils.equalsIgnoreCase(chrsJobInfo.EMP_CAT_C, ApplicationConstants.OT_CODE)
                     && CommonUtils.equalsIgnoreCase(chrsJobInfo.APPT_TRACK_C,
                         ApplicationConstants.APP_TRACT_CODE))) {
-                codeDetail = await DashboardConfigQuery.fetchClaimCode(chrsJobInfo.EMP_CAT_C, inputRequest.PROCESS_CODE, chrsJobInfo.STF_NUMBER);
+                codeDetail = await DashboardConfigRepo.fetchClaimCode(chrsJobInfo.EMP_CAT_C, inputRequest.PROCESS_CODE, chrsJobInfo.STF_NUMBER);
 
                 let configKeyList = [...new Set(codeDetail.map(item => item.CONFIG_KEY))];
                 
                 if(configKeyList.length){
-                    approverMatrixList = await ApproverMatrixQuery.fetchCAAndDADetails(ulu, fdlu, configKeyList);
+                    approverMatrixList = await ApproverMatrixRepo.fetchCAAndDADetails(ulu, fdlu, configKeyList);
                 }
                 
 
@@ -310,7 +310,7 @@ module.exports = {
 
                     for (let ap of approverMatrixList) {
                         // fetch name
-                        let name = await ChrsJobInfoQuery.fetchName(ap.STAFF_ID);
+                        let name = await ChrsJobInfoRepo.fetchName(ap.STAFF_ID);
                         let eclaims = {};
                         let role = CommonUtils.equalsIgnoreCase(ap.STAFF_USER_GRP,
                             ApplicationConstants.CLAIM_ASSISTANT) ? ApplicationConstants.CA_ALIAS
@@ -339,13 +339,13 @@ module.exports = {
         let statusBreakdownDTOList = [];
         let totalCount = 0;
         let staffId = chrsJobInfo.STF_NUMBER;
-        let statusHeaderList = await DashboardConfigQuery.fetchHeaderListByRole(ApplicationConstants.REQUEST_HEADER, role, processCode);
+        let statusHeaderList = await DashboardConfigRepo.fetchHeaderListByRole(ApplicationConstants.REQUEST_HEADER, role, processCode);
         for (let headerConfig of statusHeaderList) {
             let statusCodeList = [];
             let roleList = [];
             roleList.push(role);
 
-            let statusList = await DashboardConfigQuery.fetchStatusDetailsByRole(headerConfig.CONFIG_KEY, processCode, role);
+            let statusList = await DashboardConfigRepo.fetchStatusDetailsByRole(headerConfig.CONFIG_KEY, processCode, role);
             statusList.forEach(statusCode => {
                 statusCodeList.push({
                     STATUS_CODE : statusCode.CONFIG_VALUE
@@ -355,9 +355,9 @@ module.exports = {
             let sStatusCodeListToString = CommonUtils.convertListToString(statusCodeList,'STATUS_CODE');
             if (CommonUtils.equalsIgnoreCase("INPROCESS_REQUEST", headerConfig.CONFIG_KEY)
                 || CommonUtils.equalsIgnoreCase("COMPLETED_REQUEST", headerConfig.CONFIG_KEY)) {
-                count = await EclaimsHeaderDataQuery.fetchTbClaimStatusCountById(staffId, sStatusCodeListToString);
+                count = await EclaimsHeaderDataRepo.fetchTbClaimStatusCountById(staffId, sStatusCodeListToString);
             } else {
-                count = await EclaimsHeaderDataQuery.fetchTbClaimStatusCount(staffId, sStatusCodeListToString);
+                count = await EclaimsHeaderDataRepo.fetchTbClaimStatusCount(staffId, sStatusCodeListToString);
             }
 
 
@@ -383,12 +383,12 @@ module.exports = {
         let totalCount = 0;
         let staffId = chrsJobInfo.STF_NUMBER;
         // let sRole = CommonUtils.convertListToString(role,"STAFF_USER_GRP");
-        let statusHeaderList = await DashboardConfigQuery.fetchHeaderListByRole(ApplicationConstants.REQUEST_HEADER, role, processCode);
+        let statusHeaderList = await DashboardConfigRepo.fetchHeaderListByRole(ApplicationConstants.REQUEST_HEADER, role, processCode);
         for (let headerConfig of statusHeaderList) {
             let statusCodeList = [];
             // let roleList = [];
             // roleList.push(role);
-            let statusList = await DashboardConfigQuery.fetchStatusDetailsByRole(headerConfig.CONFIG_KEY, processCode, role);
+            let statusList = await DashboardConfigRepo.fetchStatusDetailsByRole(headerConfig.CONFIG_KEY, processCode, role);
             statusList.forEach(statusCode => {
                 statusCodeList.push(statusCode.CONFIG_VALUE);
             });
@@ -396,18 +396,18 @@ module.exports = {
             if (ApplicationConstants.CLAIMANT === role) {
                 if (CommonUtils.equalsIgnoreCase("INPROCESS_REQUEST", headerConfig.CONFIG_KEY)
                     || CommonUtils.equalsIgnoreCase("COMPLETED_REQUEST", headerConfig.CONFIG_KEY)) {
-                    count = await EclaimsHeaderDataQuery.fetchClaimStatusCountById(staffId, statusCodeList);
+                    count = await EclaimsHeaderDataRepo.fetchClaimStatusCountById(staffId, statusCodeList);
                 } else {
-                    count = await EclaimsHeaderDataQuery.fetchClaimStatusCount(staffId, statusCodeList);
+                    count = await EclaimsHeaderDataRepo.fetchClaimStatusCount(staffId, statusCodeList);
                 }
             } else {
                 if (CommonUtils.equalsIgnoreCase("PENDING_REQUEST", headerConfig.CONFIG_KEY)) {
                     // Start from here
-                    count = await EclaimsHeaderDataQuery.fetchPendingCAStatusCount(staffId, statusCodeList);
+                    count = await EclaimsHeaderDataRepo.fetchPendingCAStatusCount(staffId, statusCodeList);
                 } else if (CommonUtils.equalsIgnoreCase("DRAFT_REQUEST", headerConfig.CONFIG_KEY)) {
-                    count = await EclaimsHeaderDataQuery.fetchCAStatusCountForDraft(staffId, statusCodeList);
+                    count = await EclaimsHeaderDataRepo.fetchCAStatusCountForDraft(staffId, statusCodeList);
                 } else {
-                    count = await EclaimsHeaderDataQuery.fetchCAStatusCount(staffId, statusCodeList);
+                    count = await EclaimsHeaderDataRepo.fetchCAStatusCount(staffId, statusCodeList);
                 }
             }
 
@@ -450,16 +450,16 @@ module.exports = {
     },
     fetchUserRoles: async function (chrsJobInfo) {
         // we will get approver, verifier, CA role from approver matrix table.
-        let role = await ApproverMatrixQuery.fetchEclaimsRole(chrsJobInfo.STF_NUMBER);
+        let role = await ApproverMatrixRepo.fetchEclaimsRole(chrsJobInfo.STF_NUMBER);
 
         // Additional approvers role is fetched from ProcessParticipants table
-        let appRoleList = await ProcessParticipantsQuery.fetchRole(chrsJobInfo.STF_NUMBER);
+        let appRoleList = await ProcessParticipantsRepo.fetchRole(chrsJobInfo.STF_NUMBER);
         for (let oAppRole of appRoleList) {
             role.push(oAppRole);
         }
 
         // fetch reporting manager for OT
-        let jobInfoList = await ChrsJobInfoQuery.fetchRmRole(chrsJobInfo.STF_NUMBER);
+        let jobInfoList = await ChrsJobInfoRepo.fetchRmRole(chrsJobInfo.STF_NUMBER);
         if (!CommonUtils.isEmptyObject(jobInfoList)) {
             role.push({
                 STAFF_USER_GRP: ApplicationConstants.REPORTING_MGR
@@ -477,24 +477,24 @@ module.exports = {
     },
     fetchCwUserRoles: async function (chrsJobInfo) {
         // we will get approver, verifier, CA role from approver matrix table.
-        let role = await ApproverMatrixQuery.fetchCWRoleForDashboard(chrsJobInfo.STF_NUMBER);
+        let role = await ApproverMatrixRepo.fetchCWRoleForDashboard(chrsJobInfo.STF_NUMBER);
 
 
 
         //fetch RM
-        let jobInfoList = await ChrsJobInfoQuery.fetchRmRole(chrsJobInfo.STF_NUMBER);
+        let jobInfoList = await ChrsJobInfoRepo.fetchRmRole(chrsJobInfo.STF_NUMBER);
         if (!CommonUtils.isEmptyObject(jobInfoList)) {
             role.push(ApplicationConstants.CW_REPORTING_MGR)
         }
 
         //fetch Manager RM
-        let rmJobInfoList = await ChrsJobInfoQuery.fetchRmsManagerJobInfo(chrsJobInfo.STF_NUMBER);
+        let rmJobInfoList = await ChrsJobInfoRepo.fetchRmsManagerJobInfo(chrsJobInfo.STF_NUMBER);
         if (!CommonUtils.isEmptyObject(rmJobInfoList)) {
             role.push(ApplicationConstants.CW_MANAGERS_MGR)
         }
 
         //fetch Manager RM
-        let chrsHrpInfoList = await ChrsHrpInfoQuery.fetchHrpStaffDetails(chrsJobInfo.STF_NUMBER);
+        let chrsHrpInfoList = await ChrsHrpInfoRepo.fetchHrpStaffDetails(chrsJobInfo.STF_NUMBER);
         if (!CommonUtils.isEmptyObject(chrsHrpInfoList)) {
             role.push(ApplicationConstants.CW_HRP)
         }
@@ -525,13 +525,13 @@ module.exports = {
         return oData;
     },
     populateGroups: async function (inputRequest, chrsJobInfo, chrsJobInfoList) {
-        let headerConfigList = await DashboardConfigQuery.fetchHeaderList(ApplicationConstants.HEADER, inputRequest.PROCESS_CODE);
+        let headerConfigList = await DashboardConfigRepo.fetchHeaderList(ApplicationConstants.HEADER, inputRequest.PROCESS_CODE);
         let staffId = null;
         let aGroups = [];
         for (let headerConfig of headerConfigList) {
             let oGroups = {};
             oGroups.title = headerConfig.CONFIG_VALUE;
-            let dashboardConfigDetails = await DashboardConfigQuery.fetchHeaderDetails(headerConfig.CONFIG_KEY, inputRequest.PROCESS_CODE);
+            let dashboardConfigDetails = await DashboardConfigRepo.fetchHeaderDetails(headerConfig.CONFIG_KEY, inputRequest.PROCESS_CODE);
             if (CommonUtils.equalsIgnoreCase(ApplicationConstants.MANAGER_DATA, headerConfig.CONFIG_KEY)) {
                 staffId = chrsJobInfo.RM_STF_N;
             } else {
@@ -585,13 +585,13 @@ module.exports = {
 
         }
         sColumns = sColumns.substring(0, sColumns.length - 1);
-        let rsList = await ChrsJobInfoQuery.fetchJobInfoDetailsForDashboard(sColumns, staffId);
+        let rsList = await ChrsJobInfoRepo.fetchJobInfoDetailsForDashboard(sColumns, staffId);
         rsList = (rsList && rsList.length) ? rsList : [];
         return rsList;
     },
     populateUluFdlu: async function (chrsJobInfo, inputRequest, aEclaimGroups) {
         let staffId = chrsJobInfo.STF_NUMBER;
-        let headerConfigList = await DashboardConfigQuery.fetchHeaderList(ApplicationConstants.ROLE, inputRequest.PROCESS_CODE);
+        let headerConfigList = await DashboardConfigRepo.fetchHeaderList(ApplicationConstants.ROLE, inputRequest.PROCESS_CODE);
 
         for (let headerConfig of headerConfigList) {
             let uluFdlu = await this.populateApproverDetails(staffId, headerConfig.CONFIG_KEY);
@@ -611,7 +611,7 @@ module.exports = {
     },
     populateApproverDetails: async function (staffId, role) {
         let uluFdlu = "";
-        let caUluAndFdluList = await ChrsUluFdluQuery.fetchUluFdluDetails(staffId, role);
+        let caUluAndFdluList = await ChrsUluFdluRepo.fetchUluFdluDetails(staffId, role);
         caUluAndFdluList.forEach(userDetailsDto => {
             uluFdlu += userDetailsDto.ULUFDLU + '\n';  // '\n' is for the newline character
         });
@@ -620,11 +620,11 @@ module.exports = {
     populateQuickLinks: async function (oReturnObj, role, inputRequest) {
         let qLinksResponse = [];
         // let sRole = CommonUtils.convertListToString(role,"STAFF_USER_GRP");
-        let applicationList = await DashboardConfigQuery.fetchStatusDetailsByRoles(ApplicationConstants.QUICK_LINKS, inputRequest.PROCESS_CODE, role, "STAFF_USER_GRP");
+        let applicationList = await DashboardConfigRepo.fetchStatusDetailsByRoles(ApplicationConstants.QUICK_LINKS, inputRequest.PROCESS_CODE, role, "STAFF_USER_GRP");
         let applicationDetailsList = [];
         let appnMap = {};
         for (let key of applicationList) {
-            applicationDetailsList = await DashboardConfigQuery.fetchHeaderDetails(key.CONFIG_KEY, inputRequest.PROCESS_CODE);
+            applicationDetailsList = await DashboardConfigRepo.fetchHeaderDetails(key.CONFIG_KEY, inputRequest.PROCESS_CODE);
             appnMap = {};
             let applicationsDTO = {
                 value: '',

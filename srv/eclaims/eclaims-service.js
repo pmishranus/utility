@@ -49,7 +49,7 @@ module.exports = cds.service.impl(async (srv) => {
         "userProfile": {
           "applications": [
             {
-              "value": "Under Eclaims",
+              "value": "Under Srv Eclaims Inside",
               "title": "Approval Matrix"
             },
             {
