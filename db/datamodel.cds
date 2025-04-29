@@ -45,9 +45,9 @@ context ECLAIMS {
         key DRAFT_ID            : VAR_TEXT_15;
             REQUEST_ID          : VAR_TEXT_15;
             CLAIM_TYPE          : VAR_TEXT_6;
-            STAFF_ID            : VAR_TEXT_15;
-            STAFF_NUSNET_ID     : VAR_TEXT_15;
-            CONCURRENT_STAFF_ID : VAR_TEXT_15;
+            STAFF_ID            : VAR_TEXT_20;
+            STAFF_NUSNET_ID     : VAR_TEXT_100;
+            CONCURRENT_STAFF_ID : VAR_TEXT_20;
             ULU                 : VAR_TEXT_15;
             FDLU                : VAR_TEXT_15;
             EMPLOYEE_GRP        : VAR_TEXT_20;
@@ -57,15 +57,15 @@ context ECLAIMS {
             CLAIM_MONTH         : VAR_TEXT_2;
             REQUEST_STATUS      : VAR_TEXT_2;
             SUBMITTED_ON        : VAR_DATE;
-            SUBMITTED_BY        : VAR_TEXT_15;
-            SUBMITTED_BY_NID    : VAR_TEXT_15;
+            SUBMITTED_BY        : VAR_TEXT_20;
+            SUBMITTED_BY_NID    : VAR_TEXT_100;
             REQUESTOR_GRP       : VAR_TEXT_50; // Identify the source user group
             CREATED_ON          : VAR_TIMESTAMP;
             ULU_T               : VAR_TEXT_100;
             FULL_NM             : VAR_TEXT_250;
             CLAIM_REQUEST_TYPE  : VAR_TEXT_10;
-            MODIFIED_BY         : VAR_TEXT_15;
-            MODIFIED_BY_NID     : VAR_TEXT_15;
+            MODIFIED_BY         : VAR_TEXT_20;
+            MODIFIED_BY_NID     : VAR_TEXT_100;
             MODIFIED_ON         : VAR_TIMESTAMP;
             WORKING_HOURS       : VAR_TEXT_100;
             STF_CLAIM_TYPE_CAT  : VAR_TEXT_10;
@@ -97,7 +97,7 @@ context ECLAIMS {
             IS_MULTIPLE          : VAR_FLAG; // '1' if same claim day has multiple records else '0'
             IS_MARK_DELETION     : VAR_FLAG; // Used as a flag to indicate that it's marked for deletion for Audit Log Purpose
             REMARKS              : VAR_TEXT_500; //Capture remarks at each Claim Date
-            UPDATED_BY           : VAR_TEXT_15; //Capture the logged in user name
+            UPDATED_BY           : VAR_TEXT_20; //Capture the logged in user name
             UPDATED_ON           : VAR_DATE; //Capture the timestamp of the action taken.
             CLAIM_DAY            : VAR_TEXT_20; // claim day
             RATE_UNIT            : VAR_TEXT_15;
@@ -143,21 +143,21 @@ context CWNED {
             TIME_OFF_REQD       : VAR_TEXT_10;
             PROPERTY_USAGE      : VAR_TEXT_40;
             PROPERTY_DETAILS    : VAR_TEXT_255;
-            STAFF_ID            : VAR_TEXT_15;
-            CONCURRENT_STAFF_ID : VAR_TEXT_15;
+            STAFF_ID            : VAR_TEXT_20;
+            CONCURRENT_STAFF_ID : VAR_TEXT_20;
             OFFLINE_APPROVAL    : VAR_TEXT_1;
             IS_REQUEST_CLOSED   : VAR_TEXT_1;
             REQUEST_STATUS      : VAR_TEXT_2;
             REQUESTOR_GRP       : VAR_TEXT_20;
-            SUBMITTED_BY        : VAR_TEXT_15;
+            SUBMITTED_BY        : VAR_TEXT_20;
             SUBMITTED_ON        : VAR_DATE;
-            MODIFIED_BY         : VAR_TEXT_15;
+            MODIFIED_BY         : VAR_TEXT_20;
             MODIFIED_ON         : VAR_TIMESTAMP;
-            STAFF_NUSNET_ID     : VAR_TEXT_15;
+            STAFF_NUSNET_ID     : VAR_TEXT_100;
             ULU                 : VAR_TEXT_15;
             FDLU                : VAR_TEXT_15;
             SUBMITTED_ON_TS     : VAR_TIMESTAMP;
-            SUBMITTED_BY_NID    : VAR_TEXT_15;
+            SUBMITTED_BY_NID    : VAR_TEXT_100;
             SUBMISSION_TYPE     : VAR_TEXT_10;
             TO_DISPLAY          : VAR_TEXT_1;
             PROGRAM_NAME        : VAR_TEXT_5000;
@@ -182,9 +182,9 @@ context CWNED {
             YEAR                 : VAR_TEXT_4;
             DURATION             : VAR_DEC_05_2;
             TOTAL_UTILIZATION_YR : VAR_DEC_05_2;
-            CREATED_BY           : VAR_TEXT_15;
+            CREATED_BY           : VAR_TEXT_20;
             CREATED_ON           : VAR_TIMESTAMP;
-            MODIFIED_BY          : VAR_TEXT_15;
+            MODIFIED_BY          : VAR_TEXT_20;
             MODIFIED_ON          : VAR_TIMESTAMP;
             IS_DELETED           : VAR_TEXT_2; // Column added for Soft Deletion
     };
@@ -193,13 +193,13 @@ context CWNED {
     entity ASSISTANCE_DATA {
         key ASSISTANCE_ID : VAR_TEXT_15;
             REFERENCE_ID  : VAR_TEXT_20;
-            STAFF_ID      : VAR_TEXT_15;
+            STAFF_ID      : VAR_TEXT_20;
             STAFF_NAME    : VAR_TEXT_100;
             STAFF_ULU     : VAR_TEXT_15;
             STAFF_FDLU    : VAR_TEXT_15;
-            CREATED_BY    : VAR_TEXT_15;
+            CREATED_BY    : VAR_TEXT_20;
             CREATED_ON    : VAR_TIMESTAMP;
-            MODIFIED_BY   : VAR_TEXT_15;
+            MODIFIED_BY   : VAR_TEXT_20;
             MODIFIED_ON   : VAR_TIMESTAMP;
             IS_DELETED    : VAR_TEXT_2; // Column added for Soft Deletion
     };
@@ -211,9 +211,9 @@ context CWNED {
             WBS          : VAR_TEXT_20;
             VALUE        : VAR_DEC_05_2;
             UNIT         : VAR_TEXT_20;
-            CREATED_BY   : VAR_TEXT_15;
+            CREATED_BY   : VAR_TEXT_20;
             CREATED_ON   : VAR_TIMESTAMP;
-            MODIFIED_BY  : VAR_TEXT_15;
+            MODIFIED_BY  : VAR_TEXT_20;
             MODIFIED_ON  : VAR_TIMESTAMP;
             IS_DELETED   : VAR_TEXT_2; // Column added for Soft Deletion
             WBS_CODE     : VAR_TEXT_20;
@@ -241,9 +241,9 @@ context CWNED {
             BIZ_EXP_CRNCY      : VAR_TEXT_5;
             BIZ_EXP_AMT        : VAR_DEC_10_2;
             PAYMENT_REQ_STATUS : VAR_TEXT_2;
-            CREATED_BY         : VAR_TEXT_15;
+            CREATED_BY         : VAR_TEXT_20;
             CREATED_ON         : VAR_TIMESTAMP;
-            MODIFIED_BY        : VAR_TEXT_15;
+            MODIFIED_BY        : VAR_TEXT_20;
             MODIFIED_ON        : VAR_TIMESTAMP;
             PAYMENT_TYPE       : VAR_TEXT_2;
             IS_DELETED         : VAR_TEXT_1; // Column added for Soft Deletion
@@ -259,7 +259,7 @@ context CWNED {
         key PAYMENT_ID         : VAR_TEXT_20;
             REFERENCE_ID       : VAR_TEXT_20;
             REQ_REFERENCE_ID   : VAR_TEXT_20;
-            STAFF_ID           : VAR_TEXT_15;
+            STAFF_ID           : VAR_TEXT_20;
             MONTH              : VAR_TEXT_4;
             YEAR               : VAR_TEXT_4;
             WBS                : VAR_TEXT_20;
@@ -272,7 +272,7 @@ context CWNED {
             PAYMENT_DATE_CAL   : VAR_TIMESTAMP;
             PAYMENT_REQ_STATUS : VAR_TEXT_2;
             ADMIN_LAPSE        : VAR_TEXT_1;
-            MODIFIED_BY        : VAR_TEXT_15;
+            MODIFIED_BY        : VAR_TEXT_20;
             MODIFIED_ON        : VAR_TIMESTAMP;
             SF_SEQUENCE        : VAR_TEXT_50;
             MESSAGE_LOG        : VAR_TEXT_2000;
@@ -281,7 +281,7 @@ context CWNED {
     /********************************************* Consolidated Data Entity ***************************/
     entity OPWN_OTP_CONSOLIDATED_DATA {
         key SF_SEQUENCE      : VAR_TEXT_50;
-            STAFF_ID         : VAR_TEXT_15;
+            STAFF_ID         : VAR_TEXT_20;
             CURRENCY         : VAR_TEXT_5;
             WBS              : VAR_TEXT_20;
             REQ_REFERENCE_ID : VAR_TEXT_500;
@@ -291,7 +291,7 @@ context CWNED {
             PAYMENT_DATE_CAL : VAR_TIMESTAMP;
             VALUE            : VAR_DEC_10_2;
             POSTING_STATUS   : VAR_TEXT_2;
-            MODIFIED_BY      : VAR_TEXT_15;
+            MODIFIED_BY      : VAR_TEXT_20;
             MODIFIED_ON      : VAR_TIMESTAMP;
             MESSAGE_LOG      : VAR_TEXT_2000;
             MONTH            : VAR_TEXT_4;
@@ -301,7 +301,7 @@ context CWNED {
     /********************************************* Consolidated Error Data Entity ***************************/
     entity OPWN_OTP_CONSOLIDATED_ERR_DATA {
         key SF_SEQUENCE      : VAR_TEXT_50;
-            STAFF_ID         : VAR_TEXT_15;
+            STAFF_ID         : VAR_TEXT_20;
             CURRENCY         : VAR_TEXT_5;
             WBS              : VAR_TEXT_20;
             REQ_REFERENCE_ID : VAR_TEXT_500;
@@ -311,7 +311,7 @@ context CWNED {
             PAYMENT_DATE_CAL : VAR_TIMESTAMP;
             VALUE            : VAR_DEC_10_2;
             POSTING_STATUS   : VAR_TEXT_2;
-            MODIFIED_BY      : VAR_TEXT_15;
+            MODIFIED_BY      : VAR_TEXT_20;
             MODIFIED_ON      : VAR_TIMESTAMP;
             MESSAGE_LOG      : VAR_TEXT_2000;
             MONTH            : VAR_TEXT_4;
@@ -347,7 +347,7 @@ context UTILITY {
             MAIL_BODY      : VAR_TEXT_2000;
             CONTENT_TYPE   : VAR_TEXT_20;
             UPDATED_BY     : VAR_TEXT_20;
-            UPDATED_BY_NID : VAR_TEXT_20;
+            UPDATED_BY_NID : VAR_TEXT_100;
             UPDATED_ON     : VAR_DATE;
             PROCESS_CODE   : VAR_TEXT_20;
             TEMPLATE_DESC  : VAR_TEXT_500;
@@ -368,7 +368,7 @@ context UTILITY {
             EMAIL_STATUS   : VAR_TEXT_2;
             EMAIL_API_NAME : VAR_TEXT_100;
             UPDATED_BY     : VAR_TEXT_20;
-            UPDATED_BY_NID : VAR_TEXT_20;
+            UPDATED_BY_NID : VAR_TEXT_100;
             UPDATED_ON     : VAR_DATE;
             RECIPIENT_CC   : VAR_TEXT_100;
 
@@ -386,7 +386,7 @@ context UTILITY {
             FIELD_VALUE_PROP : VAR_TEXT_100;
             DISPLAY_SEQ      : VAR_INT;
             UPDATED_BY       : VAR_TEXT_20;
-            UPDATED_BY_NID   : VAR_TEXT_20;
+            UPDATED_BY_NID   : VAR_TEXT_100;
             UPDATED_ON       : VAR_DATE;
     };
 
@@ -424,11 +424,11 @@ context UTILITY {
             MEDIA_TYPE       : VAR_TEXT_250;
             EXPIRY_DATE      : VAR_TEXT_20;
             UPLOADED_BY      : VAR_TEXT_20;
-            UPDATED_BY_NID   : VAR_TEXT_20;
+            UPDATED_BY_NID   : VAR_TEXT_100;
             UPLOADED_ON      : VAR_TEXT_40;
             IS_DELETED       : VAR_TEXT_2; // Column added for soft deleting data
-            MODIFIED_BY      : VAR_TEXT_15;
-            MODIFIED_BY_NID  : VAR_TEXT_15;
+            MODIFIED_BY      : VAR_TEXT_20;
+            MODIFIED_BY_NID  : VAR_TEXT_100;
             MODIFIED_ON      : VAR_TIMESTAMP;
             IS_ZIP_PROCESSED : VAR_TEXT_2;
     };
@@ -443,8 +443,8 @@ context UTILITY {
             RECIPIENT_TYPE    : VAR_TEXT_1; //Store Group (G) or Role (R) or Individual (I)
             NOTIF_STATUS      : VAR_TEXT_1; //Success (S) or Error (E) or Critical (C)
             NOTIF_STATUS_MSG  : VAR_TEXT_500; //Capture the Notification Error or Success Message
-            SENT_BY           : VAR_TEXT_15; //Sent by Staff ID (User or Manual)
-            SENT_BY_NUSNET_ID : VAR_TEXT_15; //Capture NUSNET ID of the User who sent
+            SENT_BY           : VAR_TEXT_20; //Sent by Staff ID (User or Manual)
+            SENT_BY_NUSNET_ID : VAR_TEXT_100; //Capture NUSNET ID of the User who sent
             SENT_ON           : VAR_TIMESTAMP; // Timestamp of Notification Triggered
             PROCESS_CODE      : VAR_TEXT_15;
             TASK_NAME         : VAR_TEXT_50;
@@ -466,12 +466,12 @@ context UTILITY {
         key ID                : VAR_TEXT_20;
             REFERENCE_ID      : VAR_TEXT_20;
             REMARKS           : VAR_TEXT_5000;
-            STAFF_ID          : VAR_TEXT_15;
-            STAFF_NAME        : VAR_TEXT_50;
+            STAFF_ID          : VAR_TEXT_20;
+            STAFF_NAME        : VAR_TEXT_100;
             STAFF_USER_TYPE   : VAR_TEXT_40; // Capture user type, if Approver / Requestor / Verifier, etc.
             REMARKS_UPDATE_ON : VAR_TEXT_40; // Remarks entered timestamp
             REMARKS_TYPE      : VAR_TEXT_15; // Capture the action associated with that remark.
-            NUSNET_ID         : VAR_TEXT_15;
+            NUSNET_ID         : VAR_TEXT_100;
             IS_EDITABLE       : VAR_INT; //Flag to allow for edit of remarks on the screen
     };
 
@@ -482,8 +482,8 @@ context UTILITY {
             PROCESS_CODE         : VAR_TEXT_6; // Process code of the request
             PROCESS_STATUS       : VAR_TEXT_2; // Store code and reference from STATUS_CONFIG - PROCESS (StatusType)
             PROCESS_START_DATE   : VAR_TIMESTAMP; //Process Start Date
-            PROCESSED_BY         : VAR_TEXT_15; // Staff ID of the Requestor
-            PROCESSED_BY_NID     : VAR_TEXT_15; // NUSNET ID of the Requestor
+            PROCESSED_BY         : VAR_TEXT_20; // Staff ID of the Requestor
+            PROCESSED_BY_NID     : VAR_TEXT_100; // NUSNET ID of the Requestor
             PROCESS_EXPECTED_DOC : VAR_DATE; // Populate Process Expected Date of Completion
             PROCESS_ACTUAL_DOC   : VAR_DATE; // Actual Date of Completion of the process
     };
@@ -495,18 +495,18 @@ context UTILITY {
             TASK_NAME                : VAR_TEXT_40; // Task Technical Name
             TASK_STATUS              : VAR_TEXT_2; // Store code and reference from STATUS_CONFIG - TASK (StatusType)
             TASK_CREATED_ON          : VAR_TIMESTAMP; //Task Start Date
-            TASK_CREATED_BY          : VAR_TEXT_15; // Staff ID of the Requestor
-            TASK_ASSGN_TO            : VAR_TEXT_15; //Task Assigned to Staff ID
+            TASK_CREATED_BY          : VAR_TEXT_20; // Staff ID of the Requestor
+            TASK_ASSGN_TO            : VAR_TEXT_20; //Task Assigned to Staff ID
             TASK_ASSGN_GRP           : VAR_TEXT_40; // INDIVIDUAL or GROUP
-            TASK_COMPLETED_BY        : VAR_TEXT_15; //Task Assigned to Staff ID
-            TASK_COMPLETED_BY_NID    : VAR_TEXT_15;
+            TASK_COMPLETED_BY        : VAR_TEXT_20; //Task Assigned to Staff ID
+            TASK_COMPLETED_BY_NID    : VAR_TEXT_100;
             TASK_EXPECTED_DOC        : VAR_TIMESTAMP; // Populate Task Expected Date of Completion
             TASK_ACTUAL_DOC          : VAR_TIMESTAMP; // Actual Date of Completion of the task
             TASK_SEQUENCE            : VAR_INT; //Populate Current Task Sequence
             ACTION_CODE              : VAR_TEXT_40; //Action Code
             TO_BE_TASK_SEQUENCE      : VAR_INT; //Upon Taking Action, Populate TO be Task Sequence from Task Completion
-            TASK_ASSGN_TO_STF_NUMBER : VAR_TEXT_15; //Task Assigned to Staff ID
-            TASK_CREATED_BY_NID      : VAR_TEXT_15; //Task Created By NID
+            TASK_ASSGN_TO_STF_NUMBER : VAR_TEXT_20; //Task Assigned to Staff ID
+            TASK_CREATED_BY_NID      : VAR_TEXT_100; //Task Created By NID
     };
 
     /********************************************* Process Config Entity ***************************/
@@ -559,9 +559,9 @@ context UTILITY {
             CLAIM_TYPE_T         : VAR_TEXT_100;
             REQUESTOR_GRP        : VAR_TEXT_50;
             REQUEST_RANGE_MONTHS : VAR_INT;
-            CREATED_BY           : VAR_TEXT_100;
+            CREATED_BY           : VAR_TEXT_20;
             CREATED_ON           : VAR_DATE;
-            UPDATED_BY           : VAR_TEXT_100;
+            UPDATED_BY           : VAR_TEXT_20;
             UPDATED_ON           : VAR_DATE;
     };
 
@@ -570,12 +570,12 @@ context UTILITY {
         key PPNT_ID          : VAR_TEXT_15; // Primary key of Items Data (PPNT + YY + MM + 4 digit)
             REFERENCE_ID     : VAR_TEXT_15; // Populate the source Unique ID (Request ID or Item ID)
             USER_DESIGNATION : VAR_TEXT_20; // Populate applicable Task Names (Refer to Task Config Table) - Reference with Task Details based on TASK_NAME
-            STAFF_ID         : VAR_TEXT_15; // Participant's Staff ID
-            NUSNET_ID        : VAR_TEXT_15; // Participant NUSNET ID
-            UPDATED_BY       : VAR_TEXT_15; //Capture the logged in user name
-            UPDATED_BY_NID   : VAR_TEXT_15;
+            STAFF_ID         : VAR_TEXT_20; // Participant's Staff ID
+            NUSNET_ID        : VAR_TEXT_100; // Participant NUSNET ID
+            UPDATED_BY       : VAR_TEXT_20; //Capture the logged in user name
+            UPDATED_BY_NID   : VAR_TEXT_100;
             UPDATED_ON       : VAR_DATE; //Capture the timestamp of the action taken.
-            STAFF_FULL_NAME  : VAR_TEXT_50;
+            STAFF_FULL_NAME  : VAR_TEXT_100;
             IS_DELETED       : VAR_TEXT_2; // Column added for soft deleting data
     };
 
@@ -583,20 +583,20 @@ context UTILITY {
     entity TASK_DELEGATION_DETAILS {
         key ID                : VAR_TEXT_20;
             TASK_NAME         : VAR_TEXT_40; // Task Technical Name
-            DELEGATED_TO      : VAR_TEXT_15;
-            DELEGATED_TO_NID  : VAR_TEXT_15;
+            DELEGATED_TO      : VAR_TEXT_20;
+            DELEGATED_TO_NID  : VAR_TEXT_100;
             PROCESS_TYPE      : VAR_TEXT_20;
             VALID_FROM        : VAR_DATE; // Valid From
             VALID_TO          : VAR_DATE; // Valid To
-            CREATED_BY        : VAR_TEXT_100;
+            CREATED_BY        : VAR_TEXT_20;
             CREATED_ON        : VAR_DATE;
-            CREATED_BY_NID    : VAR_TEXT_15;
-            ASSIGNED_TO       : VAR_TEXT_15;
-            DELEGATED_FOR     : VAR_TEXT_15;
-            DELEGATED_FOR_NID : VAR_TEXT_15;
-            MODIFIED_BY       : VAR_TEXT_100;
+            CREATED_BY_NID    : VAR_TEXT_100;
+            ASSIGNED_TO       : VAR_TEXT_20;
+            DELEGATED_FOR     : VAR_TEXT_20;
+            DELEGATED_FOR_NID : VAR_TEXT_100;
+            MODIFIED_BY       : VAR_TEXT_20;
             MODIFIED_ON       : VAR_DATE;
-            MODIFIED_BY_NID   : VAR_TEXT_15;
+            MODIFIED_BY_NID   : VAR_TEXT_100;
             IS_DELETE         : VAR_TEXT_1;
             PROCESS_CODE      : VAR_TEXT_10;
     };
@@ -610,7 +610,7 @@ context UTILITY {
             CONFIG_VALUE     : VAR_TEXT_500;
             IS_MAINT_BY_USER : VAR_FLAG;
             UPDATED_BY       : VAR_TEXT_20;
-            UPDATED_BY_NID   : VAR_TEXT_15;
+            UPDATED_BY_NID   : VAR_TEXT_100;
             UPDATED_ON       : VAR_DATE;
     };
 
@@ -625,9 +625,9 @@ context UTILITY {
             CONFIG_DESC     : VAR_TEXT_100;
             CFG_TYPE        : VAR_TEXT_4; // A - Application, S - System, I - IT Team
             IS_ACTIVE       : VAR_TEXT_1;
-            CREATED_BY      : VAR_TEXT_15;
+            CREATED_BY      : VAR_TEXT_20;
             CREATED_ON      : VAR_TIMESTAMP;
-            MODIFIED_BY     : VAR_TEXT_15;
+            MODIFIED_BY     : VAR_TEXT_20;
             MODIFIED_ON     : VAR_TIMESTAMP;
     };
 
@@ -637,7 +637,7 @@ context UTILITY {
             ULU         : VAR_TEXT_15;
             GRP_EMAIL   : VAR_TEXT_50;
             IS_ACTIVE   : VAR_TEXT_1;
-            CREATED_BY  : VAR_TEXT_15;
+            CREATED_BY  : VAR_TEXT_20;
             CREATED_ON  : VAR_TIMESTAMP;
     };
 
@@ -648,7 +648,7 @@ context UTILITY {
             ROLE_CODE     : VAR_TEXT_50; // Store the Role Code configured
             ROLE_CODE_LBL : VAR_TEXT_100; // Store the Role Code Label configured
             IS_ACTIVE     : VAR_FLAG; // Is Active or not
-            MODIFIED_BY   : VAR_TEXT_15;
+            MODIFIED_BY   : VAR_TEXT_20;
             MODIFIED_ON   : VAR_TIMESTAMP;
     };
 
@@ -659,13 +659,13 @@ context UTILITY {
             ULU             : VAR_TEXT_15; // Store the ULU configured
             FDLU            : VAR_TEXT_15; // Store the FDLU configured
             STAFF_USER_GRP  : VAR_TEXT_50; // Store the Staff User Group
-            STAFF_NUSNET_ID : VAR_TEXT_15; // Staff NUSNET ID
-            STAFF_ID        : VAR_TEXT_15; //Staff ID
+            STAFF_NUSNET_ID : VAR_TEXT_100; // Staff NUSNET ID
+            STAFF_ID        : VAR_TEXT_20; //Staff ID
             VALID_FROM      : VAR_DATE; // Valid From
             VALID_TO        : VAR_DATE; // Valid To
             IS_EXCLUDED     : VAR_FLAG; //Exclusion Flag to provision the Excluding rule principal
-            UPDATED_BY      : VAR_TEXT_15; //Capture the logged in user name
-            UPDATED_BY_NID  : VAR_TEXT_15;
+            UPDATED_BY      : VAR_TEXT_20; //Capture the logged in user name
+            UPDATED_BY_NID  : VAR_TEXT_100;
             UPDATED_ON      : VAR_TIMESTAMP; //Capture the timestamp of the action taken.
             IS_DELETED      : VAR_TEXT_2; // Column added for soft deleting Approver Matrix data
             APM_VALID_FROM  : VAR_TIMESTAMP; // Calendar Instance Valid From
@@ -681,7 +681,7 @@ context UTILITY {
             ULU                : VAR_TEXT_15; // Store the ULU configured
             FDLU               : VAR_TEXT_15; // Store the FDLU configured
             IS_LOCKED          : VAR_TEXT_2; // X or empty or null
-            LOCKED_BY_USER_NID : VAR_TEXT_20; // NUSNET ID of the Requestor
+            LOCKED_BY_USER_NID : VAR_TEXT_100; // NUSNET ID of the Requestor
             VALID_FROM         : VAR_DATE; // Valid From - task delegation detail valid_from
             VALID_TO           : VAR_DATE; // Valid To - task delegation detail valid_To
             STAFF_USER_GRP     : VAR_TEXT_50; // Store the Staff User Group
@@ -699,8 +699,8 @@ context UTILITY {
             CONFIG_VALUE  : VAR_TEXT_500;
             FIELD_TYPE    : VAR_TEXT_100;
             IS_ACTIVE     : VAR_TEXT_1;
-            CREATED_BY    : VAR_TEXT_15;
-            MODIFIED_BY   : VAR_TEXT_15;
+            CREATED_BY    : VAR_TEXT_20;
+            MODIFIED_BY   : VAR_TEXT_20;
             CONFIG_DATA   : VAR_TEXT_250;
             PROCESS_CODE  : VAR_TEXT_20;
     };
@@ -708,12 +708,12 @@ context UTILITY {
     /*********************************************Feedback table for recording user feedback***************************/
     entity FEEDBACK_DETAILS {
         key SEQ_NO     : VAR_INT;
-            STF_NO     : VAR_TEXT_50;
-            STF_NAME   : VAR_TEXT_50;
+            STF_NO     : VAR_TEXT_20;
+            STF_NAME   : VAR_TEXT_100;
             ISSUE_DATE : VAR_TEXT_50;
             APP_NAME   : VAR_TEXT_50;
             REMARKS    : VAR_TEXT_1000;
-            CREATED_BY : VAR_TEXT_50;
+            CREATED_BY : VAR_TEXT_20;
             CREATED_ON : VAR_DATE;
     };
 
@@ -741,11 +741,11 @@ context UTILITY {
 
     /***External User Table and maintenance****/
     entity CHRS_EXTERNAL_USERS {
-        key STF_NUMBER     : VAR_TEXT_15;
-        key SF_STF_NUMBER  : VAR_TEXT_15;
+        key STF_NUMBER     : VAR_TEXT_20;
+        key SF_STF_NUMBER  : VAR_TEXT_20;
         key START_DATE     : VAR_DATE;
         key END_DATE       : VAR_DATE;
-            NUSNET_ID      : VAR_TEXT_15;
+            NUSNET_ID      : VAR_TEXT_100;
             FIRST_NM       : VAR_TEXT_50;
             LAST_NM        : VAR_TEXT_50;
             PREF_NM        : VAR_TEXT_50;
@@ -765,8 +765,8 @@ context UTILITY {
             SAP_DEPT_C     : VAR_TEXT_6;
             SAP_DEPT_T     : VAR_TEXT_50;
             EMAIL          : VAR_TEXT_100;
-            RM_NUSNET_ID   : VAR_TEXT_15;
-            RM_STF_N       : VAR_TEXT_15;
+            RM_NUSNET_ID   : VAR_TEXT_100;
+            RM_STF_N       : VAR_TEXT_20;
             WK_SCHD_C      : VAR_TEXT_20;
             WK_SCHD_T      : VAR_TEXT_50;
             STD_HOURS      : VAR_TEXT_6;
@@ -787,7 +787,7 @@ context UTILITY {
             PAYSCALE_GRP_C : VAR_TEXT_50;
             PAYSCALE_GRP_T : VAR_TEXT_50;
             CAPACITY_UTIL  : VAR_DEC_12_2;
-            MODIFIED_BY    : VAR_TEXT_15;
+            MODIFIED_BY    : VAR_TEXT_20;
             REMARKS        : VAR_TEXT_100;
             MODIFIED_ON    : VAR_TIMESTAMP;
     };
@@ -796,26 +796,26 @@ context UTILITY {
 context MASTER_DATA {
     /*********************************************Company Info Entity***************************/
     entity CHRS_COMP_INFO {
-        key SF_STF_NUMBER : VAR_TEXT_100;
+        key SF_STF_NUMBER : VAR_TEXT_20;
         key START_DATE    : VAR_DATE;
         key END_DATE      : VAR_DATE;
         key RATE_TYPE_C   : VAR_TEXT_100;
             RATE_TYPE_T   : VAR_TEXT_100;
             FREQUENCY     : VAR_TEXT_30;
-            STF_NUMBER    : VAR_TEXT_100;
+            STF_NUMBER    : VAR_TEXT_20;
             AMOUNT        : VAR_DEC_12_2;
             CURRENCY      : VAR_TEXT_10;
     };
 
     /*********************************************Eligibility Criteria Entity***************************/
     entity CHRS_ELIG_CRITERIA {
-        key STF_NUMBER          : VAR_TEXT_100;
-        key SF_STF_NUMBER       : VAR_TEXT_100;
+        key STF_NUMBER          : VAR_TEXT_20;
+        key SF_STF_NUMBER       : VAR_TEXT_20;
         key CLAIM_TYPE          : VAR_TEXT_100;
         key START_DATE          : VAR_DATE;
         key END_DATE            : VAR_DATE;
             SUBMISSION_END_DATE : VAR_DATE;
-            MODIFIED_BY         : VAR_TEXT_100;
+            MODIFIED_BY         : VAR_TEXT_20;
             REMARKS             : VAR_TEXT_150;
             MODIFIED_ON         : VAR_TEXT_50;
         key STF_CLAIM_TYPE_CAT  : VAR_TEXT_10 default 'NA';
@@ -825,8 +825,8 @@ context MASTER_DATA {
 
     /*********************************************Cost Distribution Entity***************************/
     entity CHRS_COST_DIST {
-        key STF_NUMBER    : VAR_TEXT_100;
-        key SF_STF_NUMBER : VAR_TEXT_100;
+        key STF_NUMBER    : VAR_TEXT_20;
+        key SF_STF_NUMBER : VAR_TEXT_20;
         key START_DATE    : VAR_DATE;
         key END_DATE      : VAR_DATE;
             COST_DIST_FLG : VAR_TEXT_10;
@@ -855,8 +855,8 @@ context MASTER_DATA {
 
     /*********************************************Payroll Area Entity***************************/
     entity CHRS_PAYROLL_AREA {
-        key STF_NUMBER    : VAR_TEXT_100;
-        key SF_STF_NUMBER : VAR_TEXT_100;
+        key STF_NUMBER    : VAR_TEXT_20;
+        key SF_STF_NUMBER : VAR_TEXT_20;
         key START_DATE    : VAR_DATE;
         key END_DATE      : VAR_DATE;
             PY_AREA_C     : VAR_TEXT_10;
@@ -865,8 +865,8 @@ context MASTER_DATA {
 
     /*********************************************HRP Info Entity***************************/
     entity CHRS_HRP_INFO {
-        key STF_NUMBER    : VAR_TEXT_100;
-        key SF_STF_NUMBER : VAR_TEXT_100;
+        key STF_NUMBER    : VAR_TEXT_20;
+        key SF_STF_NUMBER : VAR_TEXT_20;
         key START_DATE    : VAR_DATE;
         key END_DATE      : VAR_DATE;
             HRP_STF_N     : VAR_TEXT_100;
@@ -881,8 +881,8 @@ context MASTER_DATA {
 
     /*********************************************Job Info Entity***************************/
     entity CHRS_JOB_INFO {
-        key STF_NUMBER     : VAR_TEXT_100;
-        key SF_STF_NUMBER  : VAR_TEXT_100;
+        key STF_NUMBER     : VAR_TEXT_20;
+        key SF_STF_NUMBER  : VAR_TEXT_20;
         key SEQ_NUMBER     : VAR_TEXT_10;
         key START_DATE     : VAR_DATE;
         key END_DATE       : VAR_DATE;
@@ -907,7 +907,7 @@ context MASTER_DATA {
             SAP_DEPT_T     : VAR_TEXT_100;
             EMAIL          : VAR_TEXT_128;
             RM_NUSNET_ID   : VAR_TEXT_100;
-            RM_STF_N       : VAR_TEXT_100;
+            RM_STF_N       : VAR_TEXT_20;
             WK_SCHD_C      : VAR_TEXT_100;
             WK_SCHD_T      : VAR_TEXT_100;
             STD_HOURS      : VAR_TEXT_100;
@@ -968,8 +968,8 @@ context MASTER_DATA {
 
     /*********************************************Replication Job Info Entity***************************/
     entity CHRS_REPLICATION_JOB_INFO {
-        key STF_NUMBER     : VAR_TEXT_100;
-        key SF_STF_NUMBER  : VAR_TEXT_100;
+        key STF_NUMBER     : VAR_TEXT_20;
+        key SF_STF_NUMBER  : VAR_TEXT_20;
         key SEQ_NUMBER     : VAR_TEXT_10;
         key START_DATE     : VAR_DATE;
         key END_DATE       : VAR_DATE;
@@ -995,7 +995,7 @@ context MASTER_DATA {
             SAP_DEPT_T     : VAR_TEXT_100;
             EMAIL          : VAR_TEXT_128;
             RM_NUSNET_ID   : VAR_TEXT_100;
-            RM_STF_N       : VAR_TEXT_100;
+            RM_STF_N       : VAR_TEXT_20;
             WK_SCHD_C      : VAR_TEXT_100;
             WK_SCHD_T      : VAR_TEXT_100;
             STD_HOURS      : VAR_TEXT_100;
@@ -1027,20 +1027,20 @@ context MASTER_DATA {
 
     /*********************************************Replication HRP Info Entity***************************/
     entity CHRS_REPLICATION_HRP_INFO {
-        key STF_NUMBER    : VAR_TEXT_100;
-        key SF_STF_NUMBER : VAR_TEXT_100;
+        key STF_NUMBER    : VAR_TEXT_20;
+        key SF_STF_NUMBER : VAR_TEXT_20;
         key START_DATE    : VAR_DATE;
         key END_DATE      : VAR_DATE;
         key MODIFIED_ON   : VAR_TEXT_50;
-            HRP_STF_N     : VAR_TEXT_100;
+            HRP_STF_N     : VAR_TEXT_20;
             HRP_NUSNET_ID : VAR_TEXT_100;
-            MODIFIED_BY   : VAR_TEXT_100;
+            MODIFIED_BY   : VAR_TEXT_20;
             REMARKS       : VAR_TEXT_150;
     };
 
     /*********************************************Replication Company Info Entity***************************/
     entity CHRS_REPLICATION_COMP_INFO {
-        key SF_STF_NUMBER : VAR_TEXT_100;
+        key SF_STF_NUMBER : VAR_TEXT_20;
         key START_DATE    : VAR_DATE;
         key END_DATE      : VAR_DATE;
         key RATE_TYPE_C   : VAR_TEXT_100;
@@ -1050,19 +1050,19 @@ context MASTER_DATA {
             STF_NUMBER    : VAR_TEXT_100;
             AMOUNT        : VAR_DEC_12_2;
             CURRENCY      : VAR_TEXT_10;
-            MODIFIED_BY   : VAR_TEXT_100;
+            MODIFIED_BY   : VAR_TEXT_20;
             REMARKS       : VAR_TEXT_150;
     };
 
     /*********************************************Replication Cost Distribution Entity***************************/
     entity CHRS_REPLICATION_COST_DIST {
-        key STF_NUMBER    : VAR_TEXT_100;
-        key SF_STF_NUMBER : VAR_TEXT_100;
+        key STF_NUMBER    : VAR_TEXT_20;
+        key SF_STF_NUMBER : VAR_TEXT_20;
         key START_DATE    : VAR_DATE;
         key END_DATE      : VAR_DATE;
         key MODIFIED_ON   : VAR_TEXT_50;
             COST_DIST_FLG : VAR_TEXT_10;
-            MODIFIED_BY   : VAR_TEXT_100;
+            MODIFIED_BY   : VAR_TEXT_20;
             REMARKS       : VAR_TEXT_150;
     };
 
