@@ -44,6 +44,22 @@ module.exports = {
           };
 
           break;
+        case "CWS_DATA":
+        case "CWS_ASSISTANCE_DATA":
+        case "CWS_PAYMENT_DATA":
+        case "CWS_REPORT_EXTRACT_DATA":
+        case "CWS_WBS_DATA":
+        case "CWS_YEAR_SPLIT_DATA":
+        case "OPWN_OTP_CONSOLIDATED_DATA":
+        case "OPWN_OTP_CONSOLIDATED_ERR_DATA":
+        case "OPWN_PAYMENT_IMG_DATA":
+          relativePath += "fetchData";
+          oPayload = {
+            SCHEMA: "NUS_BTP_APPNS",
+            TABLE: "cwsned::Tables." + Tablename
+          };
+
+          break;
         case "CHRS_JOB_INFO":
         case "CHRS_COST_DIST":
         case "CHRS_HRP_INFO":
@@ -84,7 +100,7 @@ module.exports = {
 
       let credPassword = {
         name: "hana_login_password"
-    };
+      };
 
       let oRetCredential = await credStore.readCredential(credStoreBinding, "hana_db", "password", credPassword.name);
 
@@ -94,11 +110,11 @@ module.exports = {
       //end of credential store
 
       //setting the api config
-      if(!oRetCredential || !oRetCredential.metadata || !oRetCredential.username || !oRetCredential.value){
+      if (!oRetCredential || !oRetCredential.metadata || !oRetCredential.username || !oRetCredential.value) {
         const error = new Error("Client Credentials Not Available");
-          error.code = 400;
-          error.statusCode = 400;
-          throw error;
+        error.code = 400;
+        error.statusCode = 400;
+        throw error;
       }
       const url = oRetCredential.metadata + relativePath;
       const username = oRetCredential.username;
@@ -134,58 +150,6 @@ module.exports = {
           error.statusCode = 400;
           throw error;
         }
-
-        // switch (Tablename) {
-        //   case "ECLAIMS_DATA":
-        //     targetTableConfigHdrData =
-        //       TableConfig.getEclaimHeaderDataTableConfig(oConnection.srv);
-        //     upsertTargetTableDataResp = new UpsertHandler(
-        //       responseData,
-        //       oConnection,
-        //       targetTableConfigHdrData
-        //     );
-        //     return {
-        //       oUpsertEclaimHeaderDataResult:
-        //         await oUpsertEclaimHeaderData.handleRequest([]),
-        //     };
-        //     break;
-        //   case "ECLAIMS_ITEMS_DATA":
-        //     targetTableConfigHdrData =
-        //       TableConfig.getEclaimItemDataTableConfig(oConnection.srv);
-        //     const oUpsertEclaimItemData = new UpsertHandler(
-        //       responseData,
-        //       oConnection,
-        //       targetTableConfigHdrData
-        //     );
-        //     return {
-        //       oUpsertEclaimItemDataResult:
-        //         await oUpsertEclaimItemData.handleRequest([]),
-        //     };
-        //     break;
-        //   case "TAX_BFT_CLAIMS_GRP":
-        //     const oTableConfigTaxBenefitClaimGrpData =
-        //       TableConfig.getTaxBenefitClaimGrpDataTableConfig(oConnection.srv);
-        //     const oUpsertTaxBenefitClaimGrpData = new UpsertHandler(
-        //       responseData,
-        //       oConnection,
-        //       oTableConfigTaxBenefitClaimGrpData
-        //     );
-        //     return {
-        //       oUpsertTaxBenefitClaimGrpResult:
-        //         await oUpsertTaxBenefitClaimGrpData.handleRequest([]),
-        //     };
-        //     break;
-        //   case "CHRS_JOB_INFO":
-        //     break;
-        //   case "CHRS_COST_DIST":
-        //   case "CHRS_HRP_INFO":
-        //   case "CHRS_FDLU_ULU":
-        //   default:
-        //     const error = new Error("Invalid Tablename provided.");
-        //     error.code = 400;
-        //     error.statusCode = 400;
-        //     throw error;
-        // }
       }
     }
   },

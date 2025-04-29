@@ -318,6 +318,128 @@ context CWNED {
             YEAR             : VAR_TEXT_4;
     };
 
+    /******************************* Run Report Extract Data for CWS/NED/OPWN ***************************/
+    entity REPORT_EXTRACT_DATA {
+        key REP_EXTRACT_ID          : VAR_TEXT_20;
+        REQ_UNIQUE_ID   		    : VAR_TEXT_20;
+        PAYMENT_ID  		        : VAR_TEXT_20;
+		REQUEST_ID		    		: VAR_TEXT_20;
+		PROCESS_INST_ID     		: VAR_TEXT_12;
+		PROCESS_NAME				: VAR_TEXT_100;
+		PROCESS_TITLE				: VAR_TEXT_100;
+		PROCESS_CODE        		: VAR_TEXT_5;
+		TYPE                		: VAR_TEXT_20;
+		REQUEST_TYPE        		: VAR_TEXT_10;
+		START_DATE          		: VAR_DATE;
+		END_DATE            		: VAR_DATE; 
+		START_DATE_CAL      		: VAR_TIMESTAMP; //To populate UTC time of Start Date (can be used for OData Filter)
+		END_DATE_CAL        		: VAR_TIMESTAMP; //To populate UTC time of End Date (can be used for OData Filter)
+		FACULTY_C           		: VAR_TEXT_15; //Faculty Code on header data
+		FACULTY_T           		: VAR_TEXT_100;
+        DEPT_C              		: VAR_TEXT_15; // Department Code on header data
+        DEPT_T              		: VAR_TEXT_100;
+        DURATION_DAYS       		: VAR_DEC_05_2;
+		DURATION_HOURS      		: VAR_DEC_05_2;
+        SUB_TYPE            		: VAR_TEXT_20;
+        SUB_TYPE_T          		: VAR_TEXT_50;
+        CLIENT_NAME         		: VAR_TEXT_200;
+        LOCATION            		: VAR_TEXT_5;
+		LOCATION_T					: VAR_TEXT_50;
+        WORK_DETAILS        		: VAR_TEXT_5000;
+        WORK_HOURS          		: VAR_TEXT_5;
+		WORK_HOURS_T				: VAR_TEXT_20;
+        TIME_OFF_REQD       		: VAR_TEXT_10;
+        PROPERTY_USAGE      		: VAR_TEXT_40;
+		PROPERTY_USAGE_T			: VAR_TEXT_100;
+		PROPERTY_USAGE_R			: VAR_DEC_05_2;
+        PROPERTY_DETAILS    		: VAR_TEXT_255;
+        STAFF_ID            		: VAR_TEXT_20;
+        FULL_NM             		: VAR_TEXT_256;
+        CONCURRENT_STAFF_ID 		: VAR_TEXT_20;
+        RM_STF_N					: VAR_TEXT_20;
+		RMM_STF_N					: VAR_TEXT_20;
+		HRP_STF_N					: VAR_TEXT_20;
+        OFFLINE_APPROVAL    		: VAR_TEXT_1;
+        IS_REQUEST_CLOSED   		: VAR_TEXT_1;
+        REQUEST_STATUS      		: VAR_TEXT_2;
+		REQUEST_STATUS_ALIAS		: VAR_TEXT_50;
+		REQUEST_STATUS_COLOR_CODE	: VAR_INT;
+        REQUESTOR_GRP       		: VAR_TEXT_20;
+        SUBMITTED_ON        		: VAR_DATE;
+        MODIFIED_BY         		: VAR_TEXT_20;
+        MODIFIED_ON         		: VAR_TIMESTAMP;
+        STAFF_NUSNET_ID     		: VAR_TEXT_100;
+		ULU                 		: VAR_TEXT_15;
+		ULU_C                 		: VAR_TEXT_15;
+		ULU_T               		: VAR_TEXT_100;
+		ENG_ULU_T           		: VAR_TEXT_100;
+        FDLU                		: VAR_TEXT_15;
+        FDLU_C                		: VAR_TEXT_15;
+        FDLU_T              		: VAR_TEXT_100;
+		ENG_FDLU_T          		: VAR_TEXT_100;
+        SUBMITTED_ON_TS     		: VAR_TIMESTAMP;
+		SUBMITTED_BY        		: VAR_TEXT_20;
+        SUBMITTED_BY_NID    		: VAR_TEXT_100;
+		SUBMITTED_BY_FULLNAME		: VAR_TEXT_100;
+        SUBMISSION_TYPE     		: VAR_TEXT_10;
+        SUBMISSION_TYPE_T   		: VAR_TEXT_20;
+		SUBMISSION_TYPE_REF_T		: VAR_TEXT_50;
+        TO_DISPLAY          		: VAR_TEXT_1;
+        PROGRAM_NAME        		: VAR_TEXT_5000;
+		AMOUNT_PAYABLE				: VAR_DEC_10_2;
+        TOTAL_AMOUNT        		: VAR_DEC_10_2;
+		BALANCE_AMOUNT      		: VAR_DEC_10_2;
+		PAID_AMOUNT        			: VAR_DEC_10_2;
+        AGREED_AMOUNT       		: VAR_DEC_10_2;
+        CURRENCY            		: VAR_TEXT_5;
+        AGREED_CURRENCY     		: VAR_TEXT_5;
+        MIGRATED            		: VAR_TEXT_5;
+        MASS_REF_VAL        		: VAR_TEXT_20; //This is to link between Mass Upload Request and ZIP files
+        MASS_REF_UPLOAD_ID  		: VAR_TEXT_20; //ZIP Upload ID Reference for the Scheduled Program
+        SOURCE              		: VAR_TEXT_5;
+        IS_WAIVED           		: VAR_TEXT_1; //Y or N
+        IS_ZIP_PROCESSED    		: VAR_TEXT_2;
+		YEAR                		: VAR_TEXT_4;
+		PAYMENT_DATE        		: VAR_DATE;
+		PAYMENT_DATE_CAL    		: VAR_TIMESTAMP;
+		PAYMENT_REF_NO      		: VAR_TEXT_100;
+		REMUNERATION_TYPE   		: VAR_TEXT_10;
+		REMUNERATION_TYPE_T			: VAR_TEXT_50;
+		STOCK_QNTY          		: VAR_INT;
+		STOCK_OPTION_QNTY   		: VAR_INT;
+		UNIT_TYPE           		: VAR_TEXT_5;
+		UNIT_TYPE_T					: VAR_TEXT_20;
+		SHARES              		: VAR_DEC_10_2;
+		PAYMENT_CURRENCY    		: VAR_TEXT_5;
+		AMOUNT              		: VAR_DEC_10_2;
+		DESCRIPTION         		: VAR_TEXT_500;
+		LEVY_AMOUNT         		: VAR_DEC_10_2;
+		IS_PYMT_WAIVED      		: VAR_TEXT_1; //Y or N
+		BIZ_EXP_CRNCY       		: VAR_TEXT_5;
+		BIZ_EXP_AMT         		: VAR_DEC_10_2;
+		PAYMENT_REQ_STATUS  		: VAR_TEXT_2;
+		PAYMENT_REQ_STATUS_STATE  	: VAR_TEXT_20;
+		PAYMENT_REQ_STATUS_ALIAS  	: VAR_TEXT_50;
+		CREATED_BY          		: VAR_TEXT_20;
+        CREATED_ON          		: VAR_TIMESTAMP;
+        PAYMENT_TYPE        		: VAR_TEXT_2;
+		PAYMENT_TYPE_C      		: VAR_TEXT_10;
+		PAYMENT_TYPE_ALIAS  		: VAR_TEXT_50;
+        IS_DELETED          		: VAR_TEXT_1; // Column added for Soft Deletion
+        MONTH               		: VAR_TEXT_4;
+        AMENDED_WBS         		: VAR_TEXT_200;
+		AMENDED_ALLOT_VAL   		: VAR_TEXT_100;
+        OBJ_KEY 	    			: VAR_TEXT_20;
+        INVOICE_NO	    			: VAR_TEXT_20;
+		CLR_DOC_NO          		: VAR_TEXT_20;
+		OFFLINE_ADJUSTMENT  		: VAR_DEC_10_2;
+		FS_POSTED_ON        		: VAR_TIMESTAMP;
+		APPROVED_BY			   		: VAR_TEXT_20;
+		APPROVED_ON		     		: VAR_TIMESTAMP;
+		APPROVED_BY_FULL_NAME		: VAR_TEXT_100;
+        LAST_SYNCED_ON          	: VAR_TIMESTAMP;
+	};
+
 }
 
 context UTILITY {

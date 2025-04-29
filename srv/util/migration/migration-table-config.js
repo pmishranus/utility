@@ -12,6 +12,7 @@ module.exports = {
       exists: true
     };
 
+
     let contextName;
     switch (tablename) {
       case "ECLAIMS_DATA":
@@ -30,6 +31,54 @@ module.exports = {
         contextName = "ECLAIMS_";
         oTableConfig.aPrimaryKeys = ["BEN_TYPE"];
         oTableConfig.oTable = srv.entities.TAX_BFT_CLAIMS_GRP;
+        break;
+      case "CWS_DATA":
+        contextName = "CWNED_";
+        tablename = "HEADER_DATA";
+        oTableConfig.aPrimaryKeys = ["REQ_UNIQUE_ID"];
+        oTableConfig.oTable = srv.entities.CWS_HEADER_DATA;
+        break;
+      case "CWS_ASSISTANCE_DATA":
+        contextName = "CWNED_";
+        tablename = "ASSISTANCE_DATA";
+        oTableConfig.aPrimaryKeys = ["ASSISTANCE_ID"];
+        oTableConfig.oTable = srv.entities.CWS_ASSISTANCE_DATA;
+        break;
+      case "CWS_PAYMENT_DATA":
+        contextName = "CWNED_";
+        tablename = "PAYMENT_DATA";
+        oTableConfig.aPrimaryKeys = ["PAYMENT_ID"];
+        oTableConfig.oTable = srv.entities.CWS_PAYMENT_DATA;
+        break;
+      case "CWS_WBS_DATA":
+        contextName = "CWNED_";
+        tablename = "WBS_DATA";
+        oTableConfig.aPrimaryKeys = ["ID"];
+        oTableConfig.oTable = srv.entities.CWS_WBS_DATA;
+        break;
+      case "CWS_YEAR_SPLIT_DATA":
+        contextName = "CWNED_";
+        tablename = "YEAR_SPLIT_DATA";
+        oTableConfig.aPrimaryKeys = ["SPLIT_ID"];
+        oTableConfig.oTable = srv.entities.CWS_YEAR_SPLIT_DATA;
+        break;
+      case "OPWN_OTP_CONSOLIDATED_DATA":
+        contextName = "CWNED_";
+        tablename = "OPWN_OTP_CONSOLIDATED_DATA";
+        oTableConfig.aPrimaryKeys = ["SF_SEQUENCE"];
+        oTableConfig.oTable = srv.entities.OPWN_OTP_CONSOLIDATED_DATA;
+        break;
+      case "OPWN_OTP_CONSOLIDATED_ERR_DATA":
+        contextName = "CWNED_";
+        tablename = "OPWN_OTP_CONSOLIDATED_ERR_DATA";
+        oTableConfig.aPrimaryKeys = ["SF_SEQUENCE"];
+        oTableConfig.oTable = srv.entities.OPWN_OTP_CONSOLIDATED_ERR_DATA;
+        break;
+      case "OPWN_PAYMENT_IMG_DATA":
+        contextName = "CWNED_";
+        tablename = "OPWN_PAYMENT_IMG_DATA";
+        oTableConfig.aPrimaryKeys = ["PAYMENT_ID"];
+        oTableConfig.oTable = srv.entities.OPWN_PAYMENT_IMG_DATA;
         break;
       case "CHRS_JOB_INFO":
         contextName = "MASTER_DATA_";
