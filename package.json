@@ -40,7 +40,7 @@
     "start": "cds-serve",
     "approuter": "npm start --prefix app",
     "profile": "cds watch --profile hybrid",
-    "hanadeploy": "cds deploy --to hana:utility-db",
+    "hanadeploy": "cds build && cds deploy --to hana:utility-db",
     "currtcp": "lsof -i tcp:4004",
     "runlib": "npm install && cd app && npm install & cd ..",
     "deploy": "cds build && mbt build -t gen --mtar archive && cf deploy /home/user/projects/utility/gen/archive.mtar -f"

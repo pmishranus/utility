@@ -1120,7 +1120,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="LOCKED_USER_FULL_NM" source="LOCKED_USER_FULL_NM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LOCKED_BY_USER_NID$STF_NUMBER" source="STF_NUMBER"/>
     </input>
-  
     <joinAttribute name="JOIN$LOCKED_BY_USER_NID$STF_NUMBER"/>
   </calculationView>
 </calculationViews>
@@ -1454,18 +1453,6 @@
       <upperLeftCorner x="1220" y="30"/>
       <rectangleSize width="254"/>
     </shape>
-    <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="235" y="356"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape modelObjectName="Join_5" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="250"/>
-    </shape>
-    <shape modelObjectName="MASTER_ULU_FDLU" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="184.66796875"/>
-    </shape>
     <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="553" y="374"/>
       <rectangleSize height="30" width="160"/>
@@ -1481,18 +1468,6 @@
     <shape modelObjectName="ADD_APP_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="267"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Join_7" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="449" y="217"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape modelObjectName="Join_6" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="250"/>
-    </shape>
-    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="380" y="953"/>
-      <rectangleSize width="224.1552734375"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
@@ -1533,7 +1508,31 @@
     </shape>
     <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="758" y="30"/>
-      <rectangleSize width="238.001953125"/>
+      <rectangleSize width="238"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="235" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_5" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="MASTER_ULU_FDLU" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="184"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_7" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="449" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_6" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="380" y="953"/>
+      <rectangleSize width="224"/>
     </shape></shapes>
 </layout>
 </Calculation:scenario>

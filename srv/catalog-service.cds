@@ -105,7 +105,7 @@ service CatalogService @(path: '/catalog') {
   /******************************************************************** Calculation Views Exposed *********************************************************************************/
 
   @readonly
-  entity v_approval_maxtrix         as projection on APPROVAL_MATRIX;
+  // entity v_approval_maxtrix         as projection on APPROVAL_MATRIX;
   entity v_task_inbox               as projection on TASK_INBOX;
 
   /********************************************************************************************************************************************************************************/
