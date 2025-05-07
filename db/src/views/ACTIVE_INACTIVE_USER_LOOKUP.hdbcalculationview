@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="ACTIVE_INACTIVE_USER_LOOKUP" applyPrivilegeType="ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" defaultClient="$$client$$" outputViewType="Aggregation" calculationScenarioType="TREE_BASED" enforceSqlExecution="false">
 <descriptions defaultDescription="CHRS_JOB_INFO"/>
-<localVariables>
-  <variable id="IP_CURRENT_DATE" parameter="true">
-    <descriptions defaultDescription=""/>
-    <variableProperties datatype="DATE" mandatory="false" defaultExpressionLanguage="SQL">
-      <valueDomain type="empty"/>
-      <selection multiLine="false" type="SingleValue"/>
-      <defaultExpression>CURRENT_DATE</defaultExpression>
-    </variableProperties>
-  </variable>
-</localVariables>
+<localVariables/>
 <variableMappings/>
 <dataSources>
   <DataSource id="NUSEXT_UTILITY_CHRS_EXTERNAL_USERS">
@@ -101,8 +92,7 @@
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="NUSEXT_UTILITY_CHRS_EXTERNAL_USERS"/>
-    <filter>&quot;START_DATE&quot;&lt;= '$$IP_CURRENT_DATE$$' AND
-&quot;END_DATE&quot; &gt;= '$$IP_CURRENT_DATE$$'</filter>
+    <filter>&quot;START_DATE&quot;&lt;= now() AND &quot;END_DATE&quot;&gt;= now()</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="CHRS_Staff" filterExpressionLanguage="COLUMN_ENGINE">
     <viewAttributes>
@@ -132,8 +122,6 @@
       <viewAttribute id="JOIN_DATE"/>
       <viewAttribute id="LAST_NM"/>
       <viewAttribute id="LEAVING_DATE"/>
-      <viewAttribute id="MODIFIED_BY"/>
-      <viewAttribute id="MODIFIED_ON"/>
       <viewAttribute id="NUSNET_ID"/>
       <viewAttribute id="PAYSCALE_GRP_C"/>
       <viewAttribute id="PAYSCALE_GRP_T"/>
@@ -176,7 +164,7 @@
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="NUSEXT_MASTER_DATA_CHRS_JOB_INFO"/>
-    <filter>&quot;START_DATE&quot;&lt;= '$$IP_CURRENT_DATE$$'</filter>
+    <filter>&quot;START_DATE&quot;&lt;= now()</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="RMM_Staff" filterExpressionLanguage="COLUMN_ENGINE">
     <viewAttributes>
@@ -192,8 +180,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="RM_STF_N" source="SF_STF_NUMBER"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RMM_STF_SEQ_NO" source="SEQ_NUMBER"/>
     </input>
-    <filter>&quot;START_DATE&quot;&lt;= '$$IP_CURRENT_DATE$$' AND 
-&quot;END_DATE&quot;&gt;= '$$IP_CURRENT_DATE$$'</filter>
+    <filter>&quot;START_DATE&quot;&lt;= now() AND &quot;END_DATE&quot;&gt;= now()</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="HRP_Info_Proj">
     <viewAttributes>
@@ -235,8 +222,6 @@
       <viewAttribute id="JOIN_DATE"/>
       <viewAttribute id="LAST_NM"/>
       <viewAttribute id="LEAVING_DATE"/>
-      <viewAttribute id="MODIFIED_BY"/>
-      <viewAttribute id="MODIFIED_ON"/>
       <viewAttribute id="NUSNET_ID"/>
       <viewAttribute id="PAYSCALE_GRP_C"/>
       <viewAttribute id="PAYSCALE_GRP_T"/>
@@ -296,8 +281,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LAST_NM" source="LAST_NM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LEAVING_DATE" source="LEAVING_DATE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY" source="MODIFIED_BY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_ON" source="MODIFIED_ON"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="NUSNET_ID" source="NUSNET_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PAYSCALE_GRP_C" source="PAYSCALE_GRP_C"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PAYSCALE_GRP_T" source="PAYSCALE_GRP_T"/>
@@ -356,8 +339,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LAST_NM" source="LAST_NM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LEAVING_DATE" source="LEAVING_DATE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY" source="MODIFIED_BY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_ON" source="MODIFIED_ON"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="NUSNET_ID" source="NUSNET_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PAYSCALE_GRP_C" source="PAYSCALE_GRP_C"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PAYSCALE_GRP_T" source="PAYSCALE_GRP_T"/>
@@ -448,8 +429,6 @@
       <viewAttribute id="JOIN_DATE"/>
       <viewAttribute id="LAST_NM"/>
       <viewAttribute id="LEAVING_DATE"/>
-      <viewAttribute id="MODIFIED_BY"/>
-      <viewAttribute id="MODIFIED_ON"/>
       <viewAttribute id="NUSNET_ID"/>
       <viewAttribute id="PAYSCALE_GRP_C"/>
       <viewAttribute id="PAYSCALE_GRP_T"/>
@@ -516,8 +495,6 @@
       <viewAttribute id="JOIN_DATE"/>
       <viewAttribute id="LAST_NM"/>
       <viewAttribute id="LEAVING_DATE"/>
-      <viewAttribute id="MODIFIED_BY"/>
-      <viewAttribute id="MODIFIED_ON"/>
       <viewAttribute id="NUSNET_ID"/>
       <viewAttribute id="PAYSCALE_GRP_C"/>
       <viewAttribute id="PAYSCALE_GRP_T"/>
@@ -582,8 +559,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LAST_NM" source="LAST_NM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LEAVING_DATE" source="LEAVING_DATE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY" source="MODIFIED_BY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_ON" source="MODIFIED_ON"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="NUSNET_ID" source="NUSNET_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PAYSCALE_GRP_C" source="PAYSCALE_GRP_C"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PAYSCALE_GRP_T" source="PAYSCALE_GRP_T"/>
@@ -649,8 +624,6 @@
       <viewAttribute id="JOIN_DATE"/>
       <viewAttribute id="LAST_NM"/>
       <viewAttribute id="LEAVING_DATE"/>
-      <viewAttribute id="MODIFIED_BY"/>
-      <viewAttribute id="MODIFIED_ON"/>
       <viewAttribute id="NUSNET_ID"/>
       <viewAttribute id="PAYSCALE_GRP_C"/>
       <viewAttribute id="PAYSCALE_GRP_T"/>
@@ -688,8 +661,8 @@
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="STAFF_STATUS" datatype="VARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(daysbetween(&quot;START_DATE&quot;,'$$IP_CURRENT_DATE$$') &gt;= 0 and 
-daysbetween('$$IP_CURRENT_DATE$$',&quot;TEMP_LEAVING_DATE&quot;) &gt;= 0, 'A','I')</formula>
+        <formula>if(daysbetween(&quot;START_DATE&quot;,now()) &gt;= 0 and 
+daysbetween(now(),&quot;TEMP_LEAVING_DATE&quot;) &gt;= 0, 'A','I')</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="User_RM_Join">
@@ -719,8 +692,6 @@ daysbetween('$$IP_CURRENT_DATE$$',&quot;TEMP_LEAVING_DATE&quot;) &gt;= 0, 'A','I
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LAST_NM" source="LAST_NM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LEAVING_DATE" source="LEAVING_DATE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY" source="MODIFIED_BY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_ON" source="MODIFIED_ON"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="NUSNET_ID" source="NUSNET_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PAYSCALE_GRP_C" source="PAYSCALE_GRP_C"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PAYSCALE_GRP_T" source="PAYSCALE_GRP_T"/>
@@ -788,8 +759,6 @@ daysbetween('$$IP_CURRENT_DATE$$',&quot;TEMP_LEAVING_DATE&quot;) &gt;= 0, 'A','I
       <viewAttribute id="JOIN_DATE"/>
       <viewAttribute id="LAST_NM"/>
       <viewAttribute id="LEAVING_DATE"/>
-      <viewAttribute id="MODIFIED_BY"/>
-      <viewAttribute id="MODIFIED_ON"/>
       <viewAttribute id="NUSNET_ID"/>
       <viewAttribute id="PAYSCALE_GRP_C"/>
       <viewAttribute id="PAYSCALE_GRP_T"/>
@@ -940,144 +909,136 @@ daysbetween('$$IP_CURRENT_DATE$$',&quot;TEMP_LEAVING_DATE&quot;) &gt;= 0, 'A','I
       <descriptions defaultDescription="LEAVING_DATE"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="LEAVING_DATE"/>
     </attribute>
-    <attribute id="MODIFIED_BY" order="27" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="MODIFIED_BY"/>
-      <keyMapping columnObjectName="User_Detail_Rank" columnName="MODIFIED_BY"/>
-    </attribute>
-    <attribute id="MODIFIED_ON" order="28" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="MODIFIED_ON"/>
-      <keyMapping columnObjectName="User_Detail_Rank" columnName="MODIFIED_ON"/>
-    </attribute>
-    <attribute id="NUSNET_ID" order="29" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="NUSNET_ID" order="27" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NUSNET_ID"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="NUSNET_ID"/>
     </attribute>
-    <attribute id="PAYSCALE_GRP_C" order="30" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PAYSCALE_GRP_C" order="28" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PAYSCALE_GRP_C"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="PAYSCALE_GRP_C"/>
     </attribute>
-    <attribute id="PAYSCALE_GRP_T" order="31" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PAYSCALE_GRP_T" order="29" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PAYSCALE_GRP_T"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="PAYSCALE_GRP_T"/>
     </attribute>
-    <attribute id="PREF_NM" order="32" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PREF_NM" order="30" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PREF_NM"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="PREF_NM"/>
     </attribute>
-    <attribute id="RACE_C" order="33" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RACE_C" order="31" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RACE_C"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="RACE_C"/>
     </attribute>
-    <attribute id="RACE_T" order="34" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RACE_T" order="32" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RACE_T"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="RACE_T"/>
     </attribute>
-    <attribute id="RELIGION_C" order="35" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RELIGION_C" order="33" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RELIGION_C"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="RELIGION_C"/>
     </attribute>
-    <attribute id="RELIGION_T" order="36" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RELIGION_T" order="34" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RELIGION_T"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="RELIGION_T"/>
     </attribute>
-    <attribute id="REMARKS" order="37" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="REMARKS" order="35" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="REMARKS"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="REMARKS"/>
     </attribute>
-    <attribute id="RM_FLG" order="38" displayAttribute="false" attributeHierarchyActive="false" semanticType="empty">
+    <attribute id="RM_FLG" order="36" displayAttribute="false" attributeHierarchyActive="false" semanticType="empty">
       <descriptions defaultDescription="RM_FLG"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="RM_FLG"/>
     </attribute>
-    <attribute id="RM_NUSNET_ID" order="39" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RM_NUSNET_ID" order="37" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RM_NUSNET_ID"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="RM_NUSNET_ID"/>
     </attribute>
-    <attribute id="RM_STF_N" order="40" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RM_STF_N" order="38" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RM_STF_N"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="RM_STF_N"/>
     </attribute>
-    <attribute id="SAP_DEPT_C" order="41" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SAP_DEPT_C" order="39" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SAP_DEPT_C"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="SAP_DEPT_C"/>
     </attribute>
-    <attribute id="SAP_DEPT_T" order="42" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SAP_DEPT_T" order="40" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SAP_DEPT_T"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="SAP_DEPT_T"/>
     </attribute>
-    <attribute id="SAP_FAC_C" order="43" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SAP_FAC_C" order="41" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SAP_FAC_C"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="SAP_FAC_C"/>
     </attribute>
-    <attribute id="SAP_FAC_T" order="44" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SAP_FAC_T" order="42" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SAP_FAC_T"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="SAP_FAC_T"/>
     </attribute>
-    <attribute id="SF_STF_NUMBER" order="45" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SF_STF_NUMBER" order="43" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SF_STF_NUMBER"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="SF_STF_NUMBER"/>
     </attribute>
-    <attribute id="START_DATE" order="46" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="START_DATE" order="44" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="START_DATE"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="START_DATE"/>
     </attribute>
-    <attribute id="STD_HOURS" order="47" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="STD_HOURS" order="45" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_HOURS"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="STD_HOURS"/>
     </attribute>
-    <attribute id="STF_NUMBER" order="48" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="STF_NUMBER" order="46" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STF_NUMBER"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="STF_NUMBER"/>
     </attribute>
-    <attribute id="ULU_C" order="49" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ULU_C" order="47" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ULU_C"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="ULU_C"/>
     </attribute>
-    <attribute id="ULU_T" order="50" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ULU_T" order="48" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ULU_T"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="ULU_T"/>
     </attribute>
-    <attribute id="WK_SCHD_C" order="51" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WK_SCHD_C" order="49" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WK_SCHD_C"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="WK_SCHD_C"/>
     </attribute>
-    <attribute id="WK_SCHD_T" order="52" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WK_SCHD_T" order="50" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WK_SCHD_T"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="WK_SCHD_T"/>
     </attribute>
-    <attribute id="WORK_TITLE" order="53" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WORK_TITLE" order="51" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WORK_TITLE"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="WORK_TITLE"/>
     </attribute>
-    <attribute id="IS_EXTERNAL" order="56" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="IS_EXTERNAL" order="54" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="IS_EXTERNAL"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="IS_EXTERNAL"/>
     </attribute>
-    <attribute id="STF_SEQ_NO" order="57" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="STF_SEQ_NO" order="55" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STF_SEQ_NO"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="STF_SEQ_NO"/>
     </attribute>
-    <attribute id="RMM_STF_N" order="58" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RMM_STF_N" order="56" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RMM_STF_N"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="RMM_STF_N"/>
     </attribute>
-    <attribute id="HRP_STF_N" order="59" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="HRP_STF_N" order="57" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="HRP_STF_N"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="HRP_STF_N"/>
     </attribute>
-    <attribute id="STAFF_STATUS" order="60" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="STAFF_STATUS" order="58" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STAFF_STATUS"/>
       <keyMapping columnObjectName="User_Detail_Rank" columnName="STAFF_STATUS"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="START_DATE_CAL" order="54" aggregationType="min" measureType="simple">
+    <measure id="START_DATE_CAL" order="52" aggregationType="min" measureType="simple">
       <descriptions defaultDescription="START_DATE_CAL"/>
       <measureMapping columnObjectName="User_Detail_Rank" columnName="START_DATE_CAL"/>
     
       <exceptionAggregationMetadata/>
     </measure>
-    <measure id="END_DATE_CAL" order="55" aggregationType="min" measureType="simple">
+    <measure id="END_DATE_CAL" order="53" aggregationType="min" measureType="simple">
       <descriptions defaultDescription="END_DATE_CAL"/>
       <measureMapping columnObjectName="User_Detail_Rank" columnName="END_DATE_CAL"/>
     
