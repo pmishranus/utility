@@ -697,3 +697,36 @@ entity REQUEST_TASK_VIEW {
     key TASK_ASSGN_TO_FULLNAME    : String(256) @title: 'TASK_ASSGN_TO_FULLNAME: TASK_ASSGN_TO_FULLNAME';
     key TASK_STATUS               : String(10)  @title: 'TASK_STATUS: TASK_STATUS';
 };
+
+@cds.persistence.exists
+@cds.persistence.calcview
+entity TICKET_DETAILS_VIEW {
+    key CREATED_BY             : String(20)   @title: 'CREATED_BY: CREATED_BY';
+        CREATED_ON             : Timestamp    @title: 'CREATED_ON: CREATED_ON';
+    key IS_DELETED             : String(2)    @title: 'IS_DELETED: IS_DELETED';
+    key PROCESS_CODE           : String(6)    @title: 'PROCESS_CODE: PROCESS_CODE';
+    key REFERENCE_ID           : String(500)  @title: 'REFERENCE_ID: REFERENCE_ID';
+    key REFERENCE_TCKTNO       : String(50)   @title: 'REFERENCE_TCKTNO: REFERENCE_TCKTNO';
+    key TCKT_ASSGN_TO          : String(20)   @title: 'TCKT_ASSGN_TO: TCKT_ASSGN_TO';
+    key TCKT_ID                : String(20)   @title: 'TCKT_ID: TCKT_ID';
+    key TCKT_STATUS            : String(2)    @title: 'TCKT_STATUS: TCKT_STATUS';
+    key TCK_VALID_FROM         : Timestamp    @title: 'TCK_VALID_FROM: TCK_VALID_FROM';
+    key TCK_VALID_TO           : Timestamp    @title: 'TCK_VALID_TO: TCK_VALID_TO';
+    key TICKET_DESC            : String(1000) @title: 'TICKET_DESC: TICKET_DESC';
+    key UPDATED_BY             : String(20)   @title: 'UPDATED_BY: UPDATED_BY';
+    key UPDATED_ON             : Timestamp    @title: 'UPDATED_ON: UPDATED_ON';
+    key VALID_FROM             : Date         @title: 'VALID_FROM: VALID_FROM';
+    key VALID_TO               : Date         @title: 'VALID_TO: VALID_TO';
+    key TCKT_STATUS_ALIAS      : String(100)  @title: 'TCKT_STATUS_ALIAS: TCKT_STATUS_ALIAS';
+    key TCKT_STATUS_COLOR_CODE : Integer      @title: 'TCKT_STATUS_COLOR_CODE: TCKT_STATUS_COLOR_CODE';
+    key TCKT_STATUS_STATE      : String(20)   @title: 'TCKT_STATUS_STATE: TCKT_STATUS_STATE';
+    key TCKT_PROCESS_TITLE     : String(100)  @title: 'TCKT_PROCESS_TITLE: TCKT_PROCESS_TITLE';
+    key TCKT_PROCESS_NAME      : String(50)   @title: 'TCKT_PROCESS_NAME: TCKT_PROCESS_NAME';
+    key ASSGN_TO_FULL_NM       : String(256)  @title: 'ASSGN_TO_FULL_NM: ASSGN_TO_FULL_NM';
+    key ASSGN_TO_NUSNET_ID     : String(100)  @title: 'ASSGN_TO_NUSNET_ID: ASSGN_TO_NUSNET_ID';
+    key CREATED_BY_NUSNET_ID   : String(100)  @title: 'CREATED_BY_NUSNET_ID: CREATED_BY_NUSNET_ID';
+    key UPDATED_BY_FULL_NM     : String(256)  @title: 'UPDATED_BY_FULL_NM: UPDATED_BY_FULL_NM';
+    key UPDATED_BY_NUSNET_ID   : String(100)  @title: 'UPDATED_BY_NUSNET_ID: UPDATED_BY_NUSNET_ID';
+    key CREATED_BY_FULL_NM     : String(256)  @title: 'CREATED_BY_FULL_NM: CREATED_BY_FULL_NM';
+    key TCKT_IT_NOTES          : String(2500) @title: 'TCKT_IT_NOTES: TCKT_IT_NOTES';
+};
