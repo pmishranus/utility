@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="TICKET_DETAILS_VIEW" applyPrivilegeType="ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" defaultClient="$$client$$" outputViewType="Aggregation" calculationScenarioType="TREE_BASED" enforceSqlExecution="false">
+<descriptions defaultDescription="ECLAIMS_APPROVAL_MATRIX"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="ACTIVE_INACTIVE_USER_LOOKUP">
+    <resourceUri>ACTIVE_INACTIVE_USER_LOOKUP</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_UTILITY_TICKET_MGMT_DETAILS">
+    <resourceUri>NUSEXT_UTILITY_TICKET_MGMT_DETAILS</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_UTILITY_STATUS_CONFIG">
+    <resourceUri>NUSEXT_UTILITY_STATUS_CONFIG</resourceUri>
+  </DataSource>
+  <DataSource id="NUSEXT_UTILITY_PROCESS_CONFIG">
+    <resourceUri>NUSEXT_UTILITY_PROCESS_CONFIG</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="All_User_LookUp">
+    <viewAttributes>
+      <viewAttribute id="ASSGN_TO_FULL_NM"/>
+    
+    
+      <viewAttribute id="SF_STF_NUMBER"/>
+      <viewAttribute id="ASSGN_TO_NUSNET_ID"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="ACTIVE_INACTIVE_USER_LOOKUP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASSGN_TO_FULL_NM" source="FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASSGN_TO_NUSNET_ID" source="NUSNET_ID"/></input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Ticket_Details">
+    <viewAttributes>
+      <viewAttribute id="CREATED_BY"/>
+      <viewAttribute id="CREATED_ON"/>
+      <viewAttribute id="IS_DELETED"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="REFERENCE_TCKTNO"/>
+      <viewAttribute id="TCKT_ASSGN_TO"/>
+      <viewAttribute id="TCKT_ID"/>
+      <viewAttribute id="TCKT_STATUS"/>
+      <viewAttribute id="TCK_VALID_FROM"/>
+      <viewAttribute id="TCK_VALID_TO"/>
+      <viewAttribute id="TICKET_DESC"/>
+      <viewAttribute id="UPDATED_BY"/>
+      <viewAttribute id="UPDATED_ON"/>
+      <viewAttribute id="VALID_FROM"/>
+      <viewAttribute id="VALID_TO"/>
+    
+      <viewAttribute id="TCKT_IT_NOTES"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_UTILITY_TICKET_MGMT_DETAILS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Status_Config_Dtls">
+    <viewAttributes>
+      <viewAttribute id="TCKT_STATUS_ALIAS"/>
+      <viewAttribute id="TCKT_STATUS_COLOR_CODE"/>
+      <viewAttribute id="TCKT_STATUS_STATE"/>
+      <viewAttribute id="STATUS_CODE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_UTILITY_STATUS_CONFIG">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS_ALIAS" source="STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS_COLOR_CODE" source="STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS_STATE" source="STATUS_STATE"/></input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Process_Cfg">
+    <viewAttributes>
+      <viewAttribute id="TCKT_PROCESS_TITLE"/>
+      <viewAttribute id="TCKT_PROCESS_NAME"/>
+    
+      <viewAttribute id="PROCESS_CODE"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NUSEXT_UTILITY_PROCESS_CONFIG">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_PROCESS_TITLE" source="PROCESS_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_PROCESS_NAME" source="PROCESS_NAME"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Ticket_Status_Agg" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="CREATED_BY"/>
+      <viewAttribute id="CREATED_ON"/>
+      <viewAttribute id="IS_DELETED"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="REFERENCE_TCKTNO"/>
+      <viewAttribute id="TCKT_ASSGN_TO"/>
+      <viewAttribute id="TCKT_ID"/>
+      <viewAttribute id="TCKT_STATUS"/>
+      <viewAttribute id="TCK_VALID_FROM"/>
+      <viewAttribute id="TCK_VALID_TO"/>
+      <viewAttribute id="TICKET_DESC"/>
+      <viewAttribute id="UPDATED_BY"/>
+      <viewAttribute id="UPDATED_ON"/>
+      <viewAttribute id="VALID_FROM"/>
+      <viewAttribute id="VALID_TO"/>
+      <viewAttribute id="TCKT_STATUS_ALIAS"/>
+      <viewAttribute id="TCKT_STATUS_COLOR_CODE"/>
+      <viewAttribute id="TCKT_STATUS_STATE"/>
+    
+      <viewAttribute id="TCKT_IT_NOTES"/>
+    
+      <viewAttribute hidden="true" id="JOIN$TCKT_STATUS$STATUS_CODE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Ticket_Details">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_BY" source="CREATED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_ON" source="CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_DELETED" source="IS_DELETED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_TCKTNO" source="REFERENCE_TCKTNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_ASSGN_TO" source="TCKT_ASSGN_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_ID" source="TCKT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS" source="TCKT_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCK_VALID_FROM" source="TCK_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCK_VALID_TO" source="TCK_VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TICKET_DESC" source="TICKET_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_BY" source="UPDATED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_ON" source="UPDATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_FROM" source="VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_IT_NOTES" source="TCKT_IT_NOTES"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TCKT_STATUS$STATUS_CODE" source="TCKT_STATUS"/>
+    </input>
+    <input node="Status_Config_Dtls">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS_ALIAS" source="TCKT_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS_COLOR_CODE" source="TCKT_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS_STATE" source="TCKT_STATUS_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TCKT_STATUS$STATUS_CODE" source="STATUS_CODE"/>
+    </input>
+    <joinAttribute name="JOIN$TCKT_STATUS$STATUS_CODE"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Ticket_Process_Agg" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="CREATED_BY"/>
+      <viewAttribute id="CREATED_ON"/>
+      <viewAttribute id="IS_DELETED"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="REFERENCE_TCKTNO"/>
+      <viewAttribute id="TCKT_ASSGN_TO"/>
+      <viewAttribute id="TCKT_ID"/>
+      <viewAttribute id="TCKT_STATUS"/>
+      <viewAttribute id="TCK_VALID_FROM"/>
+      <viewAttribute id="TCK_VALID_TO"/>
+      <viewAttribute id="TICKET_DESC"/>
+      <viewAttribute id="UPDATED_BY"/>
+      <viewAttribute id="UPDATED_ON"/>
+      <viewAttribute id="VALID_FROM"/>
+      <viewAttribute id="VALID_TO"/>
+      <viewAttribute id="TCKT_STATUS_ALIAS"/>
+      <viewAttribute id="TCKT_STATUS_COLOR_CODE"/>
+      <viewAttribute id="TCKT_STATUS_STATE"/>
+      <viewAttribute id="TCKT_PROCESS_TITLE"/>
+      <viewAttribute id="TCKT_PROCESS_NAME"/>
+    
+      <viewAttribute id="TCKT_IT_NOTES"/>
+    
+      <viewAttribute hidden="true" id="JOIN$PROCESS_CODE$PROCESS_CODE"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Ticket_Status_Agg">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_BY" source="CREATED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_ON" source="CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_DELETED" source="IS_DELETED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_TCKTNO" source="REFERENCE_TCKTNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_ASSGN_TO" source="TCKT_ASSGN_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_ID" source="TCKT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS" source="TCKT_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCK_VALID_FROM" source="TCK_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCK_VALID_TO" source="TCK_VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TICKET_DESC" source="TICKET_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_BY" source="UPDATED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_ON" source="UPDATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_FROM" source="VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS_ALIAS" source="TCKT_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS_COLOR_CODE" source="TCKT_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS_STATE" source="TCKT_STATUS_STATE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_IT_NOTES" source="TCKT_IT_NOTES"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_CODE$PROCESS_CODE" source="PROCESS_CODE"/>
+    </input>
+    <input node="Process_Cfg">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_PROCESS_TITLE" source="TCKT_PROCESS_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_PROCESS_NAME" source="TCKT_PROCESS_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_CODE$PROCESS_CODE" source="PROCESS_CODE"/>
+    </input>
+    <joinAttribute name="JOIN$PROCESS_CODE$PROCESS_CODE"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Ticket_Staff_Dtls" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="CREATED_BY"/>
+      <viewAttribute id="CREATED_ON"/>
+      <viewAttribute id="IS_DELETED"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="REFERENCE_TCKTNO"/>
+      <viewAttribute id="TCKT_ASSGN_TO"/>
+      <viewAttribute id="TCKT_ID"/>
+      <viewAttribute id="TCKT_STATUS"/>
+      <viewAttribute id="TCK_VALID_FROM"/>
+      <viewAttribute id="TCK_VALID_TO"/>
+      <viewAttribute id="TICKET_DESC"/>
+      <viewAttribute id="UPDATED_BY"/>
+      <viewAttribute id="UPDATED_ON"/>
+      <viewAttribute id="VALID_FROM"/>
+      <viewAttribute id="VALID_TO"/>
+      <viewAttribute id="TCKT_STATUS_ALIAS"/>
+      <viewAttribute id="TCKT_STATUS_COLOR_CODE"/>
+      <viewAttribute id="TCKT_STATUS_STATE"/>
+      <viewAttribute id="TCKT_PROCESS_TITLE"/>
+      <viewAttribute id="TCKT_PROCESS_NAME"/>
+      <viewAttribute id="ASSGN_TO_FULL_NM"/>
+      <viewAttribute id="ASSGN_TO_NUSNET_ID"/>
+    
+      <viewAttribute id="TCKT_IT_NOTES"/>
+    
+      <viewAttribute hidden="true" id="JOIN$TCKT_ASSGN_TO$SF_STF_NUMBER"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Ticket_Process_Agg">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_BY" source="CREATED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_ON" source="CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_DELETED" source="IS_DELETED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_TCKTNO" source="REFERENCE_TCKTNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_ASSGN_TO" source="TCKT_ASSGN_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_ID" source="TCKT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS" source="TCKT_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCK_VALID_FROM" source="TCK_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCK_VALID_TO" source="TCK_VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TICKET_DESC" source="TICKET_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_BY" source="UPDATED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_ON" source="UPDATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_FROM" source="VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS_ALIAS" source="TCKT_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS_COLOR_CODE" source="TCKT_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS_STATE" source="TCKT_STATUS_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_PROCESS_TITLE" source="TCKT_PROCESS_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_PROCESS_NAME" source="TCKT_PROCESS_NAME"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_IT_NOTES" source="TCKT_IT_NOTES"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TCKT_ASSGN_TO$SF_STF_NUMBER" source="TCKT_ASSGN_TO"/>
+    </input>
+    <input node="All_User_LookUp">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASSGN_TO_FULL_NM" source="ASSGN_TO_FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASSGN_TO_NUSNET_ID" source="ASSGN_TO_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TCKT_ASSGN_TO$SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+    </input>
+    <joinAttribute name="JOIN$TCKT_ASSGN_TO$SF_STF_NUMBER"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Tckt_Creation_Dtls" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="CREATED_BY"/>
+      <viewAttribute id="CREATED_ON"/>
+      <viewAttribute id="IS_DELETED"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="REFERENCE_TCKTNO"/>
+      <viewAttribute id="TCKT_ASSGN_TO"/>
+      <viewAttribute id="TCKT_ID"/>
+      <viewAttribute id="TCKT_STATUS"/>
+      <viewAttribute id="TCK_VALID_FROM"/>
+      <viewAttribute id="TCK_VALID_TO"/>
+      <viewAttribute id="TICKET_DESC"/>
+      <viewAttribute id="UPDATED_BY"/>
+      <viewAttribute id="UPDATED_ON"/>
+      <viewAttribute id="VALID_FROM"/>
+      <viewAttribute id="VALID_TO"/>
+      <viewAttribute id="TCKT_STATUS_ALIAS"/>
+      <viewAttribute id="TCKT_STATUS_COLOR_CODE"/>
+      <viewAttribute id="TCKT_STATUS_STATE"/>
+      <viewAttribute id="TCKT_PROCESS_TITLE"/>
+      <viewAttribute id="TCKT_PROCESS_NAME"/>
+      <viewAttribute id="ASSGN_TO_FULL_NM"/>
+      <viewAttribute id="ASSGN_TO_NUSNET_ID"/>
+      <viewAttribute id="CREATED_BY_FULL_NM"/>
+      <viewAttribute id="CREATED_BY_NUSNET_ID"/>
+    
+      <viewAttribute id="TCKT_IT_NOTES"/>
+    
+      <viewAttribute hidden="true" id="JOIN$CREATED_BY$SF_STF_NUMBER"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Ticket_Staff_Dtls">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_BY" source="CREATED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_ON" source="CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_DELETED" source="IS_DELETED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_TCKTNO" source="REFERENCE_TCKTNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_ASSGN_TO" source="TCKT_ASSGN_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_ID" source="TCKT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS" source="TCKT_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCK_VALID_FROM" source="TCK_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCK_VALID_TO" source="TCK_VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TICKET_DESC" source="TICKET_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_BY" source="UPDATED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_ON" source="UPDATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_FROM" source="VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS_ALIAS" source="TCKT_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS_COLOR_CODE" source="TCKT_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS_STATE" source="TCKT_STATUS_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_PROCESS_TITLE" source="TCKT_PROCESS_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_PROCESS_NAME" source="TCKT_PROCESS_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASSGN_TO_FULL_NM" source="ASSGN_TO_FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASSGN_TO_NUSNET_ID" source="ASSGN_TO_NUSNET_ID"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_IT_NOTES" source="TCKT_IT_NOTES"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CREATED_BY$SF_STF_NUMBER" source="CREATED_BY"/>
+    </input>
+    <input node="All_User_LookUp">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_BY_FULL_NM" source="ASSGN_TO_FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_BY_NUSNET_ID" source="ASSGN_TO_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CREATED_BY$SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+    </input>
+    <joinAttribute name="JOIN$CREATED_BY$SF_STF_NUMBER"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Tckt_View" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="CREATED_BY"/>
+      <viewAttribute id="CREATED_ON"/>
+      <viewAttribute id="IS_DELETED"/>
+      <viewAttribute id="PROCESS_CODE"/>
+      <viewAttribute id="REFERENCE_ID"/>
+      <viewAttribute id="REFERENCE_TCKTNO"/>
+      <viewAttribute id="TCKT_ASSGN_TO"/>
+      <viewAttribute id="TCKT_ID"/>
+      <viewAttribute id="TCKT_STATUS"/>
+      <viewAttribute id="TCK_VALID_FROM"/>
+      <viewAttribute id="TCK_VALID_TO"/>
+      <viewAttribute id="TICKET_DESC"/>
+      <viewAttribute id="UPDATED_BY"/>
+      <viewAttribute id="UPDATED_ON"/>
+      <viewAttribute id="VALID_FROM"/>
+      <viewAttribute id="VALID_TO"/>
+      <viewAttribute id="TCKT_STATUS_ALIAS"/>
+      <viewAttribute id="TCKT_STATUS_COLOR_CODE"/>
+      <viewAttribute id="TCKT_STATUS_STATE"/>
+      <viewAttribute id="TCKT_PROCESS_TITLE"/>
+      <viewAttribute id="TCKT_PROCESS_NAME"/>
+      <viewAttribute id="ASSGN_TO_FULL_NM"/>
+      <viewAttribute id="ASSGN_TO_NUSNET_ID"/>
+      <viewAttribute id="CREATED_BY_NUSNET_ID"/>
+      <viewAttribute id="UPDATED_BY_FULL_NM"/>
+      <viewAttribute id="UPDATED_BY_NUSNET_ID"/>
+    
+      <viewAttribute id="CREATED_BY_FULL_NM"/>
+    
+      <viewAttribute id="TCKT_IT_NOTES"/>
+    
+      <viewAttribute hidden="true" id="JOIN$UPDATED_BY$SF_STF_NUMBER"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Tckt_Creation_Dtls">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_BY" source="CREATED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_ON" source="CREATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_DELETED" source="IS_DELETED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_ID" source="REFERENCE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REFERENCE_TCKTNO" source="REFERENCE_TCKTNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_ASSGN_TO" source="TCKT_ASSGN_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_ID" source="TCKT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS" source="TCKT_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCK_VALID_FROM" source="TCK_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCK_VALID_TO" source="TCK_VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TICKET_DESC" source="TICKET_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_BY" source="UPDATED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_ON" source="UPDATED_ON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_FROM" source="VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS_ALIAS" source="TCKT_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS_COLOR_CODE" source="TCKT_STATUS_COLOR_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_STATUS_STATE" source="TCKT_STATUS_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_PROCESS_TITLE" source="TCKT_PROCESS_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_PROCESS_NAME" source="TCKT_PROCESS_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASSGN_TO_FULL_NM" source="ASSGN_TO_FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASSGN_TO_NUSNET_ID" source="ASSGN_TO_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_BY_NUSNET_ID" source="CREATED_BY_NUSNET_ID"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_BY_FULL_NM" source="CREATED_BY_FULL_NM"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCKT_IT_NOTES" source="TCKT_IT_NOTES"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$UPDATED_BY$SF_STF_NUMBER" source="UPDATED_BY"/>
+    </input>
+    <input node="All_User_LookUp">
+      <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_BY_FULL_NM" source="ASSGN_TO_FULL_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UPDATED_BY_NUSNET_ID" source="ASSGN_TO_NUSNET_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$UPDATED_BY$SF_STF_NUMBER" source="SF_STF_NUMBER"/>
+    </input>
+    <joinAttribute name="JOIN$UPDATED_BY$SF_STF_NUMBER"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Tckt_View">
+  <attributes>
+    <attribute id="CREATED_BY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREATED_BY"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="CREATED_BY"/>
+    </attribute>
+    <attribute id="IS_DELETED" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="IS_DELETED"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="IS_DELETED"/>
+    </attribute>
+    <attribute id="PROCESS_CODE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_CODE"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="PROCESS_CODE"/>
+    </attribute>
+    <attribute id="REFERENCE_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REFERENCE_ID"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="REFERENCE_ID"/>
+    </attribute>
+    <attribute id="REFERENCE_TCKTNO" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REFERENCE_TCKTNO"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="REFERENCE_TCKTNO"/>
+    </attribute>
+    <attribute id="TCKT_ASSGN_TO" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TCKT_ASSGN_TO"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="TCKT_ASSGN_TO"/>
+    </attribute>
+    <attribute id="TCKT_ID" key="true" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TCKT_ID"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="TCKT_ID"/>
+    </attribute>
+    <attribute id="TCKT_STATUS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TCKT_STATUS"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="TCKT_STATUS"/>
+    </attribute>
+    <attribute id="TCK_VALID_FROM" order="10" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TCK_VALID_FROM"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="TCK_VALID_FROM"/>
+    </attribute>
+    <attribute id="TCK_VALID_TO" order="11" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TCK_VALID_TO"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="TCK_VALID_TO"/>
+    </attribute>
+    <attribute id="TICKET_DESC" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TICKET_DESC"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="TICKET_DESC"/>
+    </attribute>
+    <attribute id="UPDATED_BY" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="UPDATED_BY"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="UPDATED_BY"/>
+    </attribute>
+    <attribute id="UPDATED_ON" order="14" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="UPDATED_ON"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="UPDATED_ON"/>
+    </attribute>
+    <attribute id="VALID_FROM" order="15" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALID_FROM"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="VALID_FROM"/>
+    </attribute>
+    <attribute id="VALID_TO" order="16" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALID_TO"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="VALID_TO"/>
+    </attribute>
+    <attribute id="TCKT_STATUS_ALIAS" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TCKT_STATUS_ALIAS"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="TCKT_STATUS_ALIAS"/>
+    </attribute>
+    <attribute id="TCKT_STATUS_COLOR_CODE" order="18" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TCKT_STATUS_COLOR_CODE"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="TCKT_STATUS_COLOR_CODE"/>
+    </attribute>
+    <attribute id="TCKT_STATUS_STATE" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TCKT_STATUS_STATE"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="TCKT_STATUS_STATE"/>
+    </attribute>
+    <attribute id="TCKT_PROCESS_TITLE" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TCKT_PROCESS_TITLE"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="TCKT_PROCESS_TITLE"/>
+    </attribute>
+    <attribute id="TCKT_PROCESS_NAME" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TCKT_PROCESS_NAME"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="TCKT_PROCESS_NAME"/>
+    </attribute>
+    <attribute id="ASSGN_TO_FULL_NM" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ASSGN_TO_FULL_NM"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="ASSGN_TO_FULL_NM"/>
+    </attribute>
+    <attribute id="ASSGN_TO_NUSNET_ID" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ASSGN_TO_NUSNET_ID"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="ASSGN_TO_NUSNET_ID"/>
+    </attribute>
+    <attribute id="CREATED_BY_NUSNET_ID" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREATED_BY_NUSNET_ID"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="CREATED_BY_NUSNET_ID"/>
+    </attribute>
+    <attribute id="UPDATED_BY_FULL_NM" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="UPDATED_BY_FULL_NM"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="UPDATED_BY_FULL_NM"/>
+    </attribute>
+    <attribute id="UPDATED_BY_NUSNET_ID" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="UPDATED_BY_NUSNET_ID"/>
+      <keyMapping columnObjectName="Tckt_View" columnName="UPDATED_BY_NUSNET_ID"/>
+    </attribute>
+  
+    <attribute id="CREATED_BY_FULL_NM" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREATED_BY_FULL_NM"/>
+  
+      <keyMapping columnObjectName="Tckt_View" columnName="CREATED_BY_FULL_NM"/>
+  
+    </attribute>
+  
+    <attribute id="TCKT_IT_NOTES" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TCKT_IT_NOTES"/>
+  
+      <keyMapping columnObjectName="Tckt_View" columnName="TCKT_IT_NOTES"/>
+  
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="CREATED_ON" order="2" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="CREATED_ON"/>
+      <measureMapping columnObjectName="Tckt_View" columnName="CREATED_ON"/>
+    
+      <exceptionAggregationMetadata/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="156.4451797243463" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="All_User_LookUp" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92.00000000000006" y="696.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Ticket_Details" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="297.3957024376875" y="1016.9999940395355"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Status_Config_Dtls" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="507.39570243768753" y="1016.9999940395355"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Ticket_Status_Agg" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="418.3348547139526" y="856.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Ticket_Details" modelObjectNameSpace="Ticket_Status_Agg" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Status_Config_Dtls" modelObjectNameSpace="Ticket_Status_Agg" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Ticket_Process_Agg" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="696.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Ticket_Status_Agg" modelObjectNameSpace="Ticket_Process_Agg" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Process_Cfg" modelObjectNameSpace="Ticket_Process_Agg" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Process_Cfg" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="208.3348547139526" y="856.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Ticket_Staff_Dtls" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="222.20745332230717" y="536.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Ticket_Process_Agg" modelObjectNameSpace="Ticket_Staff_Dtls" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="All_User_LookUp" modelObjectNameSpace="Ticket_Staff_Dtls" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Tckt_Creation_Dtls" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="195.54078665564055" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Ticket_Staff_Dtls" modelObjectNameSpace="Tckt_Creation_Dtls" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="All_User_LookUp" modelObjectNameSpace="Tckt_Creation_Dtls" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Tckt_View" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="156.4451797243463" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape modelObjectName="Tckt_Creation_Dtls" modelObjectNameSpace="Tckt_View" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="All_User_LookUp" modelObjectNameSpace="Tckt_View" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
