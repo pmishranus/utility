@@ -45,7 +45,7 @@
     "hanadeploy": "cds build && cds deploy --to hana:utility-db",
     "currtcp": "lsof -i tcp:4004",
     "runlib": "npm install && cd app && npm install & cd ..",
-    "deploy": "cds build && mbt build -t gen --mtar archive && cf deploy /home/user/projects/utility/mta_archives/utility_1.0.0.mtar"
+    "deploy": "cds build && mbt build -t gen --mtar archive && cf deploy /home/user/projects/utility/gen/archive.mtar -f"
   },
   "cds": {
     "requires": {
