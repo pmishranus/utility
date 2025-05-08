@@ -25,8 +25,8 @@
   <DataSource id="ADD_APP_2$$$$NUSEXT_UTILITY_PROCESS_PARTICIPANTS$$">
     <resourceUri>NUSEXT_UTILITY_PROCESS_PARTICIPANTS</resourceUri>
   </DataSource>
-  <DataSource id="PROCESS_DETAILS">
-    <resourceUri>PROCESS_DETAILS</resourceUri>
+  <DataSource id="PROCESS_DETAILS_CV$$$$PROCESS_DETAILS_CV$$">
+    <resourceUri>PROCESS_DETAILS_CV</resourceUri>
   </DataSource>
   <DataSource id="NUSEXT_UTILITY_REQUEST_LOCK_DETAILS">
     <resourceUri>NUSEXT_UTILITY_REQUEST_LOCK_DETAILS</resourceUri>
@@ -187,22 +187,19 @@
     </input>
     <filter>&quot;ADDITIONAL_APP_2_USER_DESIGNATION&quot;='ADDITIONAL_APP_2' AND &quot;IS_DELETED&quot; = 'N'</filter>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="PROCESS_VIEW_DETAILS">
+  <calculationView xsi:type="Calculation:ProjectionView" id="PROCESS_DETAILS_CV">
     <viewAttributes>
       <viewAttribute id="PROCESS_CODE"/>
       <viewAttribute id="PROCESS_INST_ID"/>
       <viewAttribute id="REFERENCE_ID"/>
       <viewAttribute id="PROCESS_STATUS"/>
-    
-      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
-      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
       <viewAttribute id="PROCESS_ACTUAL_DOC"/>
+    
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="PROCESS_DETAILS">
-    
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROCESS_STATUS_COLOR_CODE" null="true"/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROCESS_STATUS_ALIAS" null="true"/></input>
+    <input node="PROCESS_DETAILS_CV$$$$PROCESS_DETAILS_CV$$"/>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3" filterExpressionLanguage="COLUMN_ENGINE">
     <viewAttributes>
@@ -277,7 +274,6 @@
       <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
     
       <viewAttribute id="APPOINTMENT_TRACK"/>
-    
       <viewAttribute hidden="true" id="JOIN$CLAIM_TYPE$CLAIM_TYPE_C"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -313,7 +309,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="STF_CLAIM_TYPE_CAT" source="STF_CLAIM_TYPE_CAT"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
-    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CLAIM_TYPE$CLAIM_TYPE_C" source="CLAIM_TYPE"/>
     </input>
     <input node="Master_Claim_Data">
@@ -372,7 +367,6 @@
       <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
     
       <viewAttribute id="APPOINTMENT_TRACK"/>
-    
       <viewAttribute hidden="true" id="JOIN$DRAFT_ID$VERIFIER_REFERENCE_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -418,7 +412,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="STF_CLAIM_TYPE_CAT" source="STF_CLAIM_TYPE_CAT"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
-    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$VERIFIER_REFERENCE_ID" source="DRAFT_ID"/>
     </input>
     <input node="VERIFIER">
@@ -480,7 +473,6 @@
       <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
     
       <viewAttribute id="APPOINTMENT_TRACK"/>
-    
       <viewAttribute hidden="true" id="JOIN$REQUEST_STATUS$STATUS_CODE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -517,7 +509,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="STF_CLAIM_TYPE_CAT" source="STF_CLAIM_TYPE_CAT"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
-    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$REQUEST_STATUS$STATUS_CODE" source="REQUEST_STATUS"/>
     </input>
     <input node="Request_Status">
@@ -585,7 +576,6 @@
       <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
     
       <viewAttribute id="APPOINTMENT_TRACK"/>
-    
       <viewAttribute hidden="true" id="JOIN$DRAFT_ID$ADD_APP_1_REFERENCE_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -638,7 +628,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="STF_CLAIM_TYPE_CAT" source="STF_CLAIM_TYPE_CAT"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
-    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$ADD_APP_1_REFERENCE_ID" source="DRAFT_ID"/>
     </input>
     <input node="ADD_APP_1">
@@ -651,121 +640,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$ADD_APP_1_REFERENCE_ID" source="ADD_APP_1_REFERENCE_ID"/>
     </input>
     <joinAttribute name="JOIN$DRAFT_ID$ADD_APP_1_REFERENCE_ID"/>
-  </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="ClaimAndUserData" joinType="inner">
-    <viewAttributes>
-      <viewAttribute id="CLAIM_MONTH"/>
-      <viewAttribute id="CLAIM_TYPE"/>
-      <viewAttribute id="CLAIM_YEAR"/>
-      <viewAttribute id="CONCURRENT_STAFF_ID"/>
-      <viewAttribute id="DATE_JOINED"/>
-      <viewAttribute id="DRAFT_ID"/>
-      <viewAttribute id="EMPLOYEE_GRP"/>
-      <viewAttribute id="EMP_RATE_TYPE"/>
-      <viewAttribute id="FDLU"/>
-      <viewAttribute id="REQUESTOR_GRP"/>
-      <viewAttribute id="REQUEST_ID"/>
-      <viewAttribute id="REQUEST_STATUS"/>
-      <viewAttribute id="STAFF_ID"/>
-      <viewAttribute id="STAFF_NUSNET_ID"/>
-      <viewAttribute id="SUBMITTED_BY"/>
-      <viewAttribute id="SUBMITTED_BY_NID"/>
-      <viewAttribute id="SUBMITTED_ON"/>
-      <viewAttribute id="ULU"/>
-      <viewAttribute id="CLAIM_TYPE_T"/>
-      <viewAttribute id="STATUS_ALIAS"/>
-      <viewAttribute id="STATUS_CODE"/>
-      <viewAttribute id="STATUS_COLOR_CODE"/>
-      <viewAttribute id="STATUS_TYPE"/>
-      <viewAttribute id="EMP_GP_C"/>
-      <viewAttribute id="EMP_GP_T"/>
-      <viewAttribute id="FDLU_C"/>
-      <viewAttribute id="FULL_NM"/>
-      <viewAttribute id="JOIN_DATE"/>
-      <viewAttribute id="SF_STF_NUMBER"/>
-    
-      <viewAttribute id="CREATED_ON"/>
-    
-      <viewAttribute id="CLAIM_REQUEST_TYPE"/>
-    
-      <viewAttribute id="MODIFIED_ON"/>
-      <viewAttribute id="MODIFIED_BY_NID"/>
-    
-      <viewAttribute id="WORKING_HOURS"/>
-    
-      <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
-    
-      <viewAttribute id="APPOINTMENT_TRACK"/>
-    
-      <viewAttribute hidden="true" id="JOIN$STAFF_ID$STF_NUMBER"/>
-      <viewAttribute hidden="true" id="JOIN$ULU$ULU_C"/>
-      <viewAttribute hidden="true" id="JOIN$FDLU$FDLU_C"/>
-      <viewAttribute hidden="true" id="JOIN$EMPLOYEE_GRP$EMP_GP_C"/>
-      <viewAttribute hidden="true" id="JOIN$CONCURRENT_STAFF_ID$SF_STF_NUMBER"/>
-    </viewAttributes>
-    <calculatedViewAttributes/>
-    <input node="Claim_Data_Status">
-      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_MONTH" source="CLAIM_MONTH"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE" source="CLAIM_TYPE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_YEAR" source="CLAIM_YEAR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CONCURRENT_STAFF_ID" source="CONCURRENT_STAFF_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_JOINED" source="DATE_JOINED"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="DRAFT_ID" source="DRAFT_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="EMPLOYEE_GRP" source="EMPLOYEE_GRP"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_RATE_TYPE" source="EMP_RATE_TYPE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU" source="FDLU"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="REQUESTOR_GRP" source="REQUESTOR_GRP"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_ID" source="REQUEST_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="REQUEST_STATUS" source="REQUEST_STATUS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_ID" source="STAFF_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STAFF_NUSNET_ID" source="STAFF_NUSNET_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY" source="SUBMITTED_BY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_BY_NID" source="SUBMITTED_BY_NID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON" source="SUBMITTED_ON"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ULU" source="ULU"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_TYPE_T" source="CLAIM_TYPE_T"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_ALIAS" source="STATUS_ALIAS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_CODE" source="STATUS_CODE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_COLOR_CODE" source="STATUS_COLOR_CODE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_TYPE" source="STATUS_TYPE"/>
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_ON" source="CREATED_ON"/>
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="CLAIM_REQUEST_TYPE" source="CLAIM_REQUEST_TYPE"/>
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_ON" source="MODIFIED_ON"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="MODIFIED_BY_NID" source="MODIFIED_BY_NID"/>
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="WORKING_HOURS" source="WORKING_HOURS"/>
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="STF_CLAIM_TYPE_CAT" source="STF_CLAIM_TYPE_CAT"/>
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$STAFF_ID$STF_NUMBER" source="STAFF_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ULU$ULU_C" source="ULU"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FDLU$FDLU_C" source="FDLU"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$EMPLOYEE_GRP$EMP_GP_C" source="EMPLOYEE_GRP"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CONCURRENT_STAFF_ID$SF_STF_NUMBER" source="CONCURRENT_STAFF_ID"/>
-    </input>
-    <input node="Chrs_Job_Info">
-      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_C" source="EMP_GP_C"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GP_T" source="EMP_GP_T"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FDLU_C" source="FDLU_C"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM" source="FULL_NM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_DATE" source="JOIN_DATE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="SF_STF_NUMBER" source="SF_STF_NUMBER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$STAFF_ID$STF_NUMBER" source="STF_NUMBER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ULU$ULU_C" source="ULU_C"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FDLU$FDLU_C" source="FDLU_C"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$EMPLOYEE_GRP$EMP_GP_C" source="EMP_GP_C"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CONCURRENT_STAFF_ID$SF_STF_NUMBER" source="SF_STF_NUMBER"/>
-    </input>
-    <joinAttribute name="JOIN$STAFF_ID$STF_NUMBER"/>
-    <joinAttribute name="JOIN$ULU$ULU_C"/>
-    <joinAttribute name="JOIN$FDLU$FDLU_C"/>
-    <joinAttribute name="JOIN$EMPLOYEE_GRP$EMP_GP_C"/>
-    <joinAttribute name="JOIN$CONCURRENT_STAFF_ID$SF_STF_NUMBER"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="ADD_APP_2_CLAIM_REQUEST" joinType="leftOuter">
     <viewAttributes>
@@ -829,7 +703,6 @@
       <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
     
       <viewAttribute id="APPOINTMENT_TRACK"/>
-    
       <viewAttribute hidden="true" id="JOIN$DRAFT_ID$ADDITIONAL_APP_2_REFERENCE_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -888,7 +761,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="STF_CLAIM_TYPE_CAT" source="STF_CLAIM_TYPE_CAT"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
-    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$ADDITIONAL_APP_2_REFERENCE_ID" source="DRAFT_ID"/>
     </input>
     <input node="ADD_APP_2">
@@ -964,13 +836,11 @@
       <viewAttribute id="WORKING_HOURS"/>
     
       <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
-    
-      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
-      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
       <viewAttribute id="PROCESS_ACTUAL_DOC"/>
     
       <viewAttribute id="APPOINTMENT_TRACK"/>
-    
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
       <viewAttribute hidden="true" id="JOIN$DRAFT_ID$REFERENCE_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -1034,16 +904,15 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="STF_CLAIM_TYPE_CAT" source="STF_CLAIM_TYPE_CAT"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
-    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$REFERENCE_ID" source="DRAFT_ID"/>
     </input>
-    <input node="PROCESS_VIEW_DETAILS">
+    <input node="PROCESS_DETAILS_CV">
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_INST_ID" source="PROCESS_INST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_CODE" source="PROCESS_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS" source="PROCESS_STATUS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$REFERENCE_ID" source="REFERENCE_ID"/>
     </input>
     <joinAttribute name="JOIN$DRAFT_ID$REFERENCE_ID"/>
@@ -1110,12 +979,12 @@
       <viewAttribute id="WORKING_HOURS"/>
     
       <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
-    
-      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
-      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
       <viewAttribute id="PROCESS_ACTUAL_DOC"/>
     
       <viewAttribute id="APPOINTMENT_TRACK"/>
+    
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="CAL_PROCESS_INST_ID" datatype="NVARCHAR" length="12" expressionLanguage="COLUMN_ENGINE">
@@ -1189,13 +1058,11 @@
       <viewAttribute id="WORKING_HOURS"/>
     
       <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
-    
-      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
-      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
       <viewAttribute id="PROCESS_ACTUAL_DOC"/>
     
       <viewAttribute id="APPOINTMENT_TRACK"/>
-    
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
       <viewAttribute hidden="true" id="JOIN$DRAFT_ID$REFERENCE_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -1260,13 +1127,11 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="WORKING_HOURS" source="WORKING_HOURS"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="STF_CLAIM_TYPE_CAT" source="STF_CLAIM_TYPE_CAT"/>
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
-    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$REFERENCE_ID" source="DRAFT_ID"/>
     </input>
     <input node="Projection_3">
@@ -1342,13 +1207,11 @@
       <viewAttribute id="WORKING_HOURS"/>
     
       <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
-    
-      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
-      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
       <viewAttribute id="PROCESS_ACTUAL_DOC"/>
     
       <viewAttribute id="APPOINTMENT_TRACK"/>
-    
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
       <viewAttribute hidden="true" id="JOIN$ULU$ULU_C"/>
       <viewAttribute hidden="true" id="JOIN$FDLU$FDLU_C"/>
     </viewAttributes>
@@ -1415,13 +1278,11 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="WORKING_HOURS" source="WORKING_HOURS"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="STF_CLAIM_TYPE_CAT" source="STF_CLAIM_TYPE_CAT"/>
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
-    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ULU$ULU_C" source="ULU"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FDLU$FDLU_C" source="FDLU"/>
     </input>
@@ -1500,13 +1361,11 @@
       <viewAttribute id="WORKING_HOURS"/>
     
       <viewAttribute id="STF_CLAIM_TYPE_CAT"/>
-    
-      <viewAttribute id="PROCESS_STATUS_COLOR_CODE"/>
-      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
       <viewAttribute id="PROCESS_ACTUAL_DOC"/>
     
       <viewAttribute id="APPOINTMENT_TRACK"/>
-    
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="min"/>
       <viewAttribute hidden="true" id="JOIN$LOCKED_BY_USER_NID$STF_NUMBER"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -1574,13 +1433,11 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="WORKING_HOURS" source="WORKING_HOURS"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="STF_CLAIM_TYPE_CAT" source="STF_CLAIM_TYPE_CAT"/>
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_ACTUAL_DOC" source="PROCESS_ACTUAL_DOC"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
-    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="PROCESS_STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="PROCESS_STATUS_COLOR_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LOCKED_BY_USER_NID$STF_NUMBER" source="LOCKED_BY_USER_NID"/>
     </input>
     <input node="Aggregation_1">
@@ -1839,18 +1696,16 @@
   
     </attribute>
   
-    <attribute id="PROCESS_STATUS_ALIAS" order="64" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="PROCESS_STATUS_ALIAS"/>
-  
-      <keyMapping columnObjectName="Join_4" columnName="PROCESS_STATUS_ALIAS"/>
-  
-    </attribute>
-  
-    <attribute id="APPOINTMENT_TRACK" order="66" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="APPOINTMENT_TRACK" order="64" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="APPOINTMENT_TRACK"/>
   
       <keyMapping columnObjectName="Join_4" columnName="APPOINTMENT_TRACK"/>
   
+    </attribute>
+  
+    <attribute id="PROCESS_STATUS_ALIAS" order="65" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_STATUS_ALIAS"/>
+      <keyMapping columnObjectName="Join_4" columnName="PROCESS_STATUS_ALIAS"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -1867,19 +1722,16 @@
     
       <exceptionAggregationMetadata/>
     </measure>
-  
-    <measure id="PROCESS_STATUS_COLOR_CODE" order="63" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="PROCESS_STATUS_COLOR_CODE"/>
-      <measureMapping columnObjectName="Join_4" columnName="PROCESS_STATUS_COLOR_CODE"/>
-    
-  
-      <exceptionAggregationMetadata/>
-  
-    </measure>
-    <measure id="PROCESS_ACTUAL_DOC" order="65" aggregationType="min" measureType="simple">
+    <measure id="PROCESS_ACTUAL_DOC" order="63" aggregationType="min" measureType="simple">
       <descriptions defaultDescription="PROCESS_ACTUAL_DOC"/>
       <measureMapping columnObjectName="Join_4" columnName="PROCESS_ACTUAL_DOC"/>
     
+      <exceptionAggregationMetadata/>
+    </measure>
+  
+    <measure id="PROCESS_STATUS_COLOR_CODE" order="66" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="PROCESS_STATUS_COLOR_CODE"/>
+      <measureMapping columnObjectName="Join_4" columnName="PROCESS_STATUS_COLOR_CODE"/>
       <exceptionAggregationMetadata/>
     </measure>
   </baseMeasures>
@@ -1890,13 +1742,63 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="607.8902015110045" y="112"/>
+      <upperLeftCorner x="607" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
+    <shape expanded="true" modelObjectName="EClaims_Data" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="664" y="1461"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Master_Claim_Data" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="454" y="1461"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Request_Status" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="782" y="1301"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Chrs_Job_Info" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="519" y="1141"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="VERIFIER" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="152" y="1461"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ADD_APP_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="362" y="1301"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ADD_APP_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91" y="1141"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="PROCESS_DETAILS_CV" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="383" y="981"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="444" y="696"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="MASTER_ULU_FDLU" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="536" y="536"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="746" y="536"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
   
     <shape expanded="true" modelObjectName="Claim_Data_ClaimType" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="572.1241406091596" y="1301.9999928474426"/>
+      <upperLeftCorner x="572" y="1301"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="EClaims_Data" modelObjectNameSpace="Claim_Data_ClaimType" modelObjectType="JoinNodeInput">
@@ -1907,55 +1809,8 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape expanded="true" modelObjectName="EClaims_Data" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="664.607177173066" y="1461.9999916553497"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Master_Claim_Data" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="454.60717717306613" y="1461.9999916553497"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="Claim_Data_Status" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="729.3683988363953" y="1141.9999940395355"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape modelObjectName="Claim_Data_ClaimType" modelObjectNameSpace="Claim_Data_Status" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="250"/>
-    </shape>
-    <shape modelObjectName="Request_Status" modelObjectNameSpace="Claim_Data_Status" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="250"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Request_Status" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="782.1241406091597" y="1301.9999928474426"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="Chrs_Job_Info" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="519.3683988363953" y="1141.9999940395355"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="ClaimAndUserData" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="619.8783896436327" y="981.9999952316284"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape modelObjectName="Claim_Data_Status" modelObjectNameSpace="ClaimAndUserData" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="250"/>
-    </shape>
-    <shape modelObjectName="Chrs_Job_Info" modelObjectNameSpace="ClaimAndUserData" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="250"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="VERIFIER" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="152.12414060915967" y="1461.9999916553497"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
     <shape expanded="true" modelObjectName="VERIFIER_CLAIM_REQUEST" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="152.12414060915967" y="1301.9999928474426"/>
+      <upperLeftCorner x="152" y="1301"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="BASE_ECLAIM_REQUEST_VIEW" modelObjectNameSpace="VERIFIER_CLAIM_REQUEST" modelObjectType="JoinNodeInput">
@@ -1966,12 +1821,25 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape expanded="true" modelObjectName="ADD_APP_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="362.12414060915955" y="1301.9999928474426"/>
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="694" y="394"/>
       <rectangleSize height="30" width="160"/>
     </shape>
+  
+    <shape expanded="true" modelObjectName="Claim_Data_Status" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="729" y="1141"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Claim_Data_ClaimType" modelObjectNameSpace="Claim_Data_Status" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Request_Status" modelObjectNameSpace="Claim_Data_Status" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
     <shape expanded="true" modelObjectName="ADD_APP_1_CLAIM_REQUEST" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="301.9999999999998" y="1141.9999940395355"/>
+      <upperLeftCorner x="301" y="1141"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="VERIFIER_CLAIM_REQUEST" modelObjectNameSpace="ADD_APP_1_CLAIM_REQUEST" modelObjectType="JoinNodeInput">
@@ -1982,12 +1850,8 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape expanded="true" modelObjectName="ADD_APP_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="91.99999999999977" y="1141.9999940395355"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
     <shape expanded="true" modelObjectName="ADD_APP_2_CLAIM_REQUEST" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="118.66666666666652" y="981.9999952316284"/>
+      <upperLeftCorner x="118" y="981"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="ADD_APP_1_CLAIM_REQUEST" modelObjectNameSpace="ADD_APP_2_CLAIM_REQUEST" modelObjectType="JoinNodeInput">
@@ -1998,34 +1862,24 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-  
-    <shape expanded="true" modelObjectName="PROCESS_VIEW_DETAILS" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="383.7916908762579" y="981.9999952316284"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="234.0266340631499" y="821.9999964237213"/>
+      <upperLeftCorner x="234" y="821"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="ADD_APP_2_CLAIM_REQUEST" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape modelObjectName="PROCESS_VIEW_DETAILS" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="PROCESS_DETAILS_CV" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Handling_DraftId_Instead_of_ProcessInstId" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="234.0266340631499" y="706.9999964237213"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="444.0266340631498" y="696.9999964237213"/>
+      <upperLeftCorner x="234" y="706"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="260.6933007298166" y="536.9999976158142"/>
+      <upperLeftCorner x="260" y="536"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Handling_DraftId_Instead_of_ProcessInstId" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
@@ -2036,13 +1890,8 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-  
-    <shape expanded="true" modelObjectName="MASTER_ULU_FDLU" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="536.9167491234442" y="536.9999976158142"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
     <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="353.58341579011085" y="376.9999988079071"/>
+      <upperLeftCorner x="353" y="376"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
@@ -2053,17 +1902,8 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-  
-    <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="746.9167491234443" y="536.9999976158142"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="694.3476942575028" y="394.4999988079071"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
     <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="607.8902015110045" y="217"/>
+      <upperLeftCorner x="607" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   

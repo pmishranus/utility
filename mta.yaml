@@ -21,42 +21,6 @@ modules:
       - npm root
     ignore:
       - node_modules/
-- name: eclaims-srv
-  type: nodejs
-  path: gen/eclaims
-  requires:
-  - name: utility-db
-  - name: utility-uaa
-  provides:
-  - name: eclaims-api
-    properties:
-      eclaims-url: ${default-url}
-  parameters:
-    buildpack: nodejs_buildpack
-  build-parameters:
-    builder: custom
-    commands:
-      - npm root
-    ignore:
-      - node_modules/
-- name: cws-srv
-  type: nodejs
-  path: gen/cws
-  requires:
-  - name: utility-db
-  - name: utility-uaa
-  provides:
-  - name: cws-api
-    properties:
-      cws-url: ${default-url}
-  parameters:
-    buildpack: nodejs_buildpack
-  build-parameters:
-    builder: custom
-    commands:
-      - npm root
-    ignore:
-      - node_modules/
 - name: utility-db-deployer
   type: hdb
   path: gen/db
@@ -81,18 +45,6 @@ modules:
       forwardAuthToken: true
       name: srv-api
       url: ~{srv-url}
-  - name: eclaims-api
-    group: destinations
-    properties:
-      forwardAuthToken: true
-      name: eclaims-api
-      url: ~{eclaims-url}
-  - name: cws-api
-    group: destinations
-    properties:
-      forwardAuthToken: true
-      name: cws-api
-      url: ~{cws-url}
   - name: utility-uaa
   parameters:
     disk-quota: 256M

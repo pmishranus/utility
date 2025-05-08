@@ -3,11 +3,13 @@
   "src/gen/**/*.hdbindex",
   "src/gen/**/*.hdbconstraint",
   "src/gen/**/*.hdbcalculationview",
+  "src/views/**/*.hdbcalculationview",
   "src/gen/**/*.hdbtable",
   "src/gen/**/*.hdbtabledata",
   "src/**/*.hdbview",
   "*.hdbcalculationview",
   "src/gen/**/*.hdbfunction",
+  "src/functions/**/*.hdbfunction",
   "*.hdbfunction",
   "src/gen/**/*.hdbprocedure",
   "*.hdbprocedure"

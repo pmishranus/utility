@@ -722,6 +722,7 @@ context UTILITY {
             MODIFIED_BY_NID   : VAR_TEXT_100;
             IS_DELETE         : VAR_TEXT_1;
             PROCESS_CODE      : VAR_TEXT_10;
+            DELIMIT_IND       : VAR_TEXT_10;
     };
 
     /********************************************* App Configs Entity ***************************/

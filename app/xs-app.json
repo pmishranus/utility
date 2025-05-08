@@ -23,20 +23,6 @@
       "destination": "srv-api",
       "authenticationType": "xsuaa",
       "csrfProtection": false
-    },
-    {
-      "source": "^/eclaims/(.*)$",
-      "target": "$1",
-      "destination": "eclaims-api",
-      "authenticationType": "xsuaa",
-      "csrfProtection": false
-    },
-    {
-      "source": "^/cws/(.*)$",
-      "target": "$1",
-      "destination": "cws-api",
-      "authenticationType": "xsuaa",
-      "csrfProtection": true
     }
   ]
 }

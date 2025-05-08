@@ -9,6 +9,8 @@
     "@sap/cds": "^8",
     "@sap/cds-hana": "^2",
     "@sap/cds-odata-v2-adapter-proxy": "1.9.21",
+    "@sap/hdi": "^4.7.0",
+    "@sap/hdi-deploy": "^5.4.2",
     "@sap/xsenv": "^5.5.0",
     "@sap/xssec": "^3.6.1",
     "cors": "^2.8.5",
@@ -43,89 +45,16 @@
     "hanadeploy": "cds build && cds deploy --to hana:utility-db",
     "currtcp": "lsof -i tcp:4004",
     "runlib": "npm install && cd app && npm install & cd ..",
-    "deploy": "cds build && mbt build -t gen --mtar archive && cf deploy /home/user/projects/utility/gen/archive.mtar -f"
+    "deploy": "cds build && mbt build -t gen --mtar archive && cf deploy /home/user/projects/utility/mta_archives/utility_1.0.0.mtar"
   },
   "cds": {
     "requires": {
       "db": {
-        "kind": "hana",
-        "model": [
-          "db",
-          "srv",
-          "eclaims",
-          "cws"
-        ]
-      },
-      "services": {
-        "ApproverMatrix": {
-          "kind": "odata",
-          "impl": "srv/approver-matrix.js"
-        },
-        "EclaimsService": {
-          "kind": "odata",
-          "impl": "srv/eclaims-service.js"
-        }
+        "kind": "hana"
       },
       "auth": {
         "kind": "xsuaa"
-      },
-      "srv": {
-        "model": [
-          "srv",
-          "db",
-          "eclaims",
-          "cws"
-        ]
       }
-    },
-    "build": {
-      "tasks": [
-        {
-          "for": "hana",
-          "src": "db",
-          "options": {
-            "model": [
-              "db",
-              "srv",
-              "eclaims",
-              "cws"
-            ]
-          }
-        },
-        {
-          "for": "nodejs",
-          "src": "srv",
-          "dest": "srv",
-          "options": {
-            "model": [
-              "db",
-              "srv"
-            ]
-          }
-        },
-        {
-          "for": "nodejs",
-          "src": "eclaims",
-          "dest": "eclaims",
-          "options": {
-            "model": [
-              "db",
-              "eclaims"
-            ]
-          }
-        },
-        {
-          "for": "nodejs",
-          "src": "cws",
-          "dest": "cws",
-          "options": {
-            "model": [
-              "db",
-              "cws"
-            ]
-          }
-        }
-      ]
     }
   }
 }

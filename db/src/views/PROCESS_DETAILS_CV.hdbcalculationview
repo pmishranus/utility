@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="PROCESS_DETAILS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="PROCESS_DETAILS_CV" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
 <descriptions defaultDescription="PROCESS_DETAILS"/>
 <localVariables/>
 <variableMappings/>
@@ -41,7 +41,7 @@
       <viewAttribute id="PROCESS_CODE"/>
       <viewAttribute id="PROCESS_STATUS"/>
       <viewAttribute id="PROCESS_ACTUAL_DOC"/>
-      <viewAttribute id="STATUS_ALIAS"/>
+      <viewAttribute id="PROCESS_STATUS_ALIAS"/>
       <viewAttribute id="PROCESS_STATUS_COLOR_CODE" aggregationType="sum"/>
       <viewAttribute hidden="true" id="JOIN$PROCESS_STATUS$STATUS_CODE"/>
     </viewAttributes>
@@ -55,7 +55,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_STATUS$STATUS_CODE" source="PROCESS_STATUS"/>
     </input>
     <input node="Projection_2">
-      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_ALIAS" source="STATUS_ALIAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_ALIAS" source="STATUS_ALIAS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_STATUS_COLOR_CODE" source="STATUS_COLOR_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_STATUS$STATUS_CODE" source="STATUS_CODE"/>
     </input>
@@ -85,9 +85,9 @@
       <descriptions defaultDescription="PROCESS_ACTUAL_DOC"/>
       <keyMapping columnObjectName="Join_1" columnName="PROCESS_ACTUAL_DOC"/>
     </attribute>
-    <attribute id="STATUS_ALIAS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PROCESS_STATUS_ALIAS" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STATUS_ALIAS"/>
-      <keyMapping columnObjectName="Join_1" columnName="STATUS_ALIAS"/>
+      <keyMapping columnObjectName="Join_1" columnName="PROCESS_STATUS_ALIAS"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>

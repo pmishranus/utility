@@ -106,12 +106,7 @@
       <viewAttribute id="APPOINTMENT_TRACK"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="ECLAIM_REQUEST_VIEW">
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ADDITIONAL_APP_2_USER_DESIGNATION" null="true"/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ADDITIONAL_APP_2_STAFF_ID" null="true"/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ADDITIONAL_APP_2_STAFF_FULL_NAME" null="true"/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ADDITIONAL_APP_2_REFERENCE_ID" null="true"/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ADDITIONAL_APP_2_NUSNET_ID" null="true"/></input>
+    <input node="ECLAIM_REQUEST_VIEW"/>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
     <viewAttributes>
@@ -294,6 +289,7 @@
       <viewAttribute id="OBJECT_ID"/>
       <viewAttribute id="OBJECT_TYPE"/>
       <viewAttribute id="APPOINTMENT_TRACK"/>
+    
       <viewAttribute hidden="true" id="JOIN$DRAFT_ID$DRAFT_ID"/>
     </viewAttributes>
     <calculatedViewAttributes>
@@ -361,6 +357,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="SUBMITTED_ON" source="SUBMITTED_ON"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$DRAFT_ID" source="DRAFT_ID"/>
     </input>
     <input node="NUSEXT_ECLAIMS_ITEMS_DATA">
@@ -571,6 +568,7 @@
       <viewAttribute id="APPOINTMENT_TRACK"/>
     
       <viewAttribute id="VERIFIED_ON"/>
+    
       <viewAttribute hidden="true" id="JOIN$PROCESS_INST_ID$PROCESS_INST_ID"/>
       <viewAttribute hidden="true" id="JOIN$VERIFIER_STAFF_ID$TASK_ASSGN_TO_STF_NUMBER"/>
     </viewAttributes>
@@ -661,6 +659,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="OBJECT_ID" source="OBJECT_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="OBJECT_TYPE" source="OBJECT_TYPE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_INST_ID$PROCESS_INST_ID" source="PROCESS_INST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$VERIFIER_STAFF_ID$TASK_ASSGN_TO_STF_NUMBER" source="VERIFIER_STAFF_ID"/>
     </input>
@@ -762,6 +761,7 @@
     
       <viewAttribute id="VERIFER_ON"/>
       <viewAttribute id="ADD_APRV_1_ON"/>
+    
       <viewAttribute hidden="true" id="JOIN$PROCESS_INST_ID$PROCESS_INST_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -853,6 +853,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="APPOINTMENT_TRACK" source="APPOINTMENT_TRACK"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="VERIFER_ON" source="VERIFIED_ON"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_INST_ID$PROCESS_INST_ID" source="PROCESS_INST_ID"/>
     </input>
     <input node="AddApp1Task">
@@ -952,6 +953,7 @@
       <viewAttribute id="VERIFER_ON"/>
       <viewAttribute id="ADD_APRV_1_ON"/>
       <viewAttribute id="ADD_APRV_2_ON"/>
+    
       <viewAttribute hidden="true" id="JOIN$PROCESS_INST_ID$PROCESS_INST_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -1044,6 +1046,7 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="VERIFER_ON" source="VERIFER_ON"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APRV_1_ON" source="ADD_APRV_1_ON"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_INST_ID$PROCESS_INST_ID" source="PROCESS_INST_ID"/>
     </input>
     <input node="AddApp2Task">
@@ -1145,6 +1148,7 @@
     
       <viewAttribute id="APPROVED_ON"/>
       <viewAttribute id="APPROVED_BY"/>
+    
       <viewAttribute hidden="true" id="JOIN$PROCESS_INST_ID$PROCESS_INST_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -1237,6 +1241,7 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="VERIFER_ON" source="VERIFER_ON"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ADD_APRV_1_ON" source="ADD_APRV_1_ON"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROCESS_INST_ID$PROCESS_INST_ID" source="PROCESS_INST_ID"/>
     </input>
     <input node="AppTaskGrouped">
@@ -1341,6 +1346,7 @@
       <viewAttribute id="APPROVED_BY"/>
     
       <viewAttribute id="APPROVED_ON"/>
+    
       <viewAttribute hidden="true" id="JOIN$DRAFT_ID$REFERENCE_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -1437,6 +1443,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_BY" source="APPROVED_BY"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_ON" source="APPROVED_ON"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$REFERENCE_ID" source="DRAFT_ID"/>
     </input>
     <input node="Remarks_CA">
@@ -1541,6 +1548,7 @@
       <viewAttribute id="APPROVED_BY"/>
     
       <viewAttribute id="APPROVED_ON"/>
+    
       <viewAttribute hidden="true" id="JOIN$DRAFT_ID$REFERENCE_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -1638,6 +1646,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_BY" source="APPROVED_BY"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_ON" source="APPROVED_ON"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$REFERENCE_ID" source="DRAFT_ID"/>
     </input>
     <input node="RemarksVerifier">
@@ -1743,6 +1752,7 @@
       <viewAttribute id="APPROVED_BY"/>
     
       <viewAttribute id="APPROVED_ON"/>
+    
       <viewAttribute hidden="true" id="JOIN$DRAFT_ID$REFERENCE_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -1841,6 +1851,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_BY" source="APPROVED_BY"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_ON" source="APPROVED_ON"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$REFERENCE_ID" source="DRAFT_ID"/>
     </input>
     <input node="RemarksAddApp1">
@@ -1947,6 +1958,7 @@
       <viewAttribute id="APPROVED_BY"/>
     
       <viewAttribute id="APPROVED_ON"/>
+    
       <viewAttribute hidden="true" id="JOIN$DRAFT_ID$REFERENCE_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -2046,6 +2058,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_BY" source="APPROVED_BY"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_ON" source="APPROVED_ON"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$REFERENCE_ID" source="DRAFT_ID"/>
     </input>
     <input node="RemarksAddApp2">
@@ -2153,6 +2166,7 @@
       <viewAttribute id="APPROVED_BY"/>
     
       <viewAttribute id="APPROVED_ON"/>
+    
       <viewAttribute hidden="true" id="JOIN$DRAFT_ID$REFERENCE_ID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -2253,6 +2267,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_BY" source="APPROVED_BY"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_ON" source="APPROVED_ON"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DRAFT_ID$REFERENCE_ID" source="DRAFT_ID"/>
     </input>
     <input node="RemarksApprover">
@@ -2360,6 +2375,7 @@
       <viewAttribute id="APPROVED_BY"/>
     
       <viewAttribute id="APPROVED_ON"/>
+    
       <viewAttribute hidden="true" id="JOIN$RATE_TYPE$RATE_CODE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -2460,6 +2476,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_BY" source="APPROVED_BY"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_ON" source="APPROVED_ON"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RATE_TYPE$RATE_CODE" source="RATE_TYPE"/>
     </input>
     <input node="Aggregation_1">
@@ -2568,6 +2585,7 @@
       <viewAttribute id="APPROVED_BY"/>
     
       <viewAttribute id="APPROVED_ON"/>
+    
       <viewAttribute hidden="true" id="JOIN$APPROVED_BY$STF_NUMBER"/>
     </viewAttributes>
     <calculatedViewAttributes>
@@ -2676,6 +2694,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_BY" source="APPROVED_BY"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_ON" source="APPROVED_ON"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$APPROVED_BY$STF_NUMBER" source="APPROVED_BY"/>
     </input>
     <input node="STAFF_LIST_VIEW">
@@ -2786,6 +2805,7 @@
       <viewAttribute id="APPROVED_BY"/>
     
       <viewAttribute id="APPROVED_ON"/>
+    
       <viewAttribute hidden="true" id="JOIN$RATE_TYPE$BEN_TYPE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -2887,6 +2907,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_BY" source="APPROVED_BY"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_ON" source="APPROVED_ON"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RATE_TYPE$BEN_TYPE" source="RATE_TYPE"/>
     </input>
     <input node="NUSEXT_ECLAIMS_TAX_BFT_CLAIMS_GRP">
@@ -3000,6 +3021,7 @@
       <viewAttribute id="APPROVED_BY"/>
     
       <viewAttribute id="APPROVED_ON"/>
+    
       <viewAttribute hidden="true" id="JOIN$OBJECT_ID$STF_NUMBER"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -3104,6 +3126,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_BY" source="APPROVED_BY"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="APPROVED_ON" source="APPROVED_ON"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$OBJECT_ID$STF_NUMBER" source="OBJECT_ID"/>
     </input>
     <input node="Join_5$$$$STAFF_LIST_VIEW$$">
@@ -3534,53 +3557,17 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="569" y="112"/>
+      <upperLeftCorner x="569.1526453712382" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="EclaimsRequestorView" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="721" y="2436"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="316" y="2541"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="ApproverTask" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="538" y="1956"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-  
-  
-    <shape expanded="true" modelObjectName="Remarks_CA" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="497" y="1636"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="RemarksVerifier" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="584" y="1476"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="RemarksAddApp1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="318" y="1316"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="RemarksAddApp2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="555" y="1156"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="RemarksApprover" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="245" y="996"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="RateTypeMaster" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="681" y="996"/>
+      <upperLeftCorner x="721.9999999999999" y="2436.9999845027924"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="ClaimHeaderAndItemData" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="721" y="2276"/>
+      <upperLeftCorner x="721.9999999999999" y="2276.9999856948853"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="EclaimsRequestorView" modelObjectNameSpace="ClaimHeaderAndItemData" modelObjectType="JoinNodeInput">
@@ -3591,33 +3578,9 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape expanded="true" modelObjectName="Group_Task_With_Latest_Record" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="316" y="2436"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="AppTaskGrouped" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="538" y="1814"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="605" y="854"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Verifier_Details" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="511" y="2284"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="AddApp1Task" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="301" y="2284"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="AddApp2Task" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="2284"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
   
     <shape expanded="true" modelObjectName="Verifier_On_Details" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="538" y="2116"/>
+      <upperLeftCorner x="538.6666666666665" y="2116.999986886978"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="ClaimHeaderAndItemData" modelObjectNameSpace="Verifier_On_Details" modelObjectType="JoinNodeInput">
@@ -3628,9 +3591,22 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
+    <shape expanded="true" modelObjectName="Verifier_Details" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="511.9999999999999" y="2284.4999856948853"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Group_Task_With_Latest_Record" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="316.80902995005124" y="2436.9999845027924"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="316.80902995005124" y="2541.9999845027924"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
   
     <shape expanded="true" modelObjectName="AdditonalApr1On" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="324" y="1956"/>
+      <upperLeftCorner x="324.1568137383765" y="1956.999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Verifier_On_Details" modelObjectNameSpace="AdditonalApr1On" modelObjectType="JoinNodeInput">
@@ -3641,8 +3617,12 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
+    <shape expanded="true" modelObjectName="AddApp1Task" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="301.9999999999999" y="2284.4999856948853"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
     <shape expanded="true" modelObjectName="AdditionalApr2_On" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="260" y="1796"/>
+      <upperLeftCorner x="260.58227233843263" y="1796.999989271164"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="AdditonalApr1On" modelObjectNameSpace="AdditionalApr2_On" modelObjectType="JoinNodeInput">
@@ -3653,9 +3633,13 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
+    <shape expanded="true" modelObjectName="AddApp2Task" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="2284.4999856948853"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
   
     <shape expanded="true" modelObjectName="Approved_On" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="287" y="1636"/>
+      <upperLeftCorner x="287.24893900509926" y="1636.9999904632568"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="AdditionalApr2_On" modelObjectNameSpace="Approved_On" modelObjectType="JoinNodeInput">
@@ -3666,8 +3650,23 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
+    <shape expanded="true" modelObjectName="AppTaskGrouped" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="538.381626867819" y="1814.499989271164"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="ApproverTask" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="538.381626867819" y="1956.999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+  
+    <shape expanded="true" modelObjectName="Remarks_CA" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="497.24893900509915" y="1636.9999904632568"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
     <shape expanded="true" modelObjectName="RemarksCAJoin" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="313" y="1476"/>
+      <upperLeftCorner x="313.9156056717659" y="1476.9999916553497"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Approved_On" modelObjectNameSpace="RemarksCAJoin" modelObjectType="JoinNodeInput">
@@ -3678,8 +3677,12 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
+    <shape expanded="true" modelObjectName="RemarksVerifier" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="584.1540821311183" y="1476.9999916553497"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
     <shape expanded="true" modelObjectName="RemarksVerifierJoin" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="557" y="1316"/>
+      <upperLeftCorner x="557.4874154644516" y="1316.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="RemarksCAJoin" modelObjectNameSpace="RemarksVerifierJoin" modelObjectType="JoinNodeInput">
@@ -3690,8 +3693,12 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
+    <shape expanded="true" modelObjectName="RemarksAddApp1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="318.4090336757296" y="1316.9999928474426"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
     <shape expanded="true" modelObjectName="RemarksAddApp1Join" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="345" y="1156"/>
+      <upperLeftCorner x="345.07570034239626" y="1156.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="RemarksVerifierJoin" modelObjectNameSpace="RemarksAddApp1Join" modelObjectType="JoinNodeInput">
@@ -3702,8 +3709,12 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
+    <shape expanded="true" modelObjectName="RemarksAddApp2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="555.0757003423962" y="1156.9999940395355"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
     <shape expanded="true" modelObjectName="RemarksAddApp2Join" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="471" y="996"/>
+      <upperLeftCorner x="471.85696680634135" y="996.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="RemarksAddApp1Join" modelObjectNameSpace="RemarksAddApp2Join" modelObjectType="JoinNodeInput">
@@ -3714,8 +3725,12 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
+    <shape expanded="true" modelObjectName="RemarksApprover" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="245.24403605825523" y="996.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
     <shape expanded="true" modelObjectName="RemarksApproverJoin" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="271" y="836"/>
+      <upperLeftCorner x="271.91070272492186" y="836.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="RemarksAddApp2Join" modelObjectNameSpace="RemarksApproverJoin" modelObjectType="JoinNodeInput">
@@ -3726,8 +3741,16 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
+    <shape expanded="true" modelObjectName="RateTypeMaster" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="681.8569668063412" y="996.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="605.5571349376106" y="854.4999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="532" y="676"/>
+      <upperLeftCorner x="532.1553921159589" y="676.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="RemarksApproverJoin" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
@@ -3740,7 +3763,7 @@
     </shape>
   
     <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="532" y="536"/>
+      <upperLeftCorner x="532.1553921159589" y="536.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
@@ -3753,7 +3776,7 @@
     </shape>
   
     <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="562" y="376"/>
+      <upperLeftCorner x="562.2685069633915" y="376.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
@@ -3766,7 +3789,7 @@
     </shape>
   
     <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="562" y="236"/>
+      <upperLeftCorner x="562.2685069633915" y="236.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_4" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
