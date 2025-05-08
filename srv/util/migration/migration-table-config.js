@@ -80,6 +80,12 @@ module.exports = {
         oTableConfig.aPrimaryKeys = ["PAYMENT_ID"];
         oTableConfig.oTable = srv.entities.OPWN_PAYMENT_IMG_DATA;
         break;
+      case "CWS_REPORT_EXTRACT_DATA":
+        contextName = "CWNED_";
+        tablename = "CWS_REPORT_EXTRACT_DATA";
+        oTableConfig.aPrimaryKeys = ["REP_EXTRACT_ID"];
+        oTableConfig.oTable = srv.entities.REP_EXTRACT_ID;
+        break;
       case "CHRS_JOB_INFO":
         contextName = "MASTER_DATA_";
         oTableConfig.aPrimaryKeys = ["STF_NUMBER", "SF_STF_NUMBER", "SEQ_NUMBER", "START_DATE", "END_DATE"];
@@ -97,7 +103,7 @@ module.exports = {
         break;
       case "CHRS_COMP_INFO":
         contextName = "MASTER_DATA_";
-        oTableConfig.aPrimaryKeys = ["FDLU", "START_DATE", "END_DATE", "RATE_TYPE_C"];
+        oTableConfig.aPrimaryKeys = ["SF_STF_NUMBER", "START_DATE", "END_DATE", "RATE_TYPE_C"];
         oTableConfig.oTable = srv.entities.CHRS_COMP_INFO;
         break;
       case "CHRS_FDLU_ULU":
@@ -120,6 +126,71 @@ module.exports = {
         oTableConfig.aPrimaryKeys = ["STF_NUMBER", "SF_STF_NUMBER", "START_DATE", "END_DATE"];
         oTableConfig.oTable = srv.entities.CHRS_EXTERNAL_USERS;
         break;
+      case "CHRS_REPLICATION_JOB_INFO":
+        contextName = "MASTER_DATA_";
+        oTableConfig.aPrimaryKeys = ["STF_NUMBER", "SF_STF_NUMBER", "SEQ_NUMBER", "START_DATE", "END_DATE", "MODIFIED_ON"];
+        oTableConfig.oTable = srv.entities.CHRS_REPLICATION_JOB_INFO;
+        break;
+      case "CHRS_REPLICATION_COMP_INFO":
+        contextName = "MASTER_DATA_";
+        oTableConfig.aPrimaryKeys = ["SF_STF_NUMBER", "START_DATE", "END_DATE", "RATE_TYPE_C", "MODIFIED_ON"];
+        oTableConfig.oTable = srv.entities.CHRS_REPLICATION_COMP_INFO;
+        break;
+      case "CHRS_REPLICATION_HRP_INFO":
+        contextName = "MASTER_DATA_";
+        oTableConfig.aPrimaryKeys = ["STF_NUMBER", "SF_STF_NUMBER", "START_DATE", "END_DATE", "MODIFIED_ON"];
+        oTableConfig.oTable = srv.entities.CHRS_REPLICATION_HRP_INFO;
+        break;
+      case "CHRS_REPLICATION_COST_DIST":
+        contextName = "MASTER_DATA_";
+        oTableConfig.aPrimaryKeys = ["STF_NUMBER", "SF_STF_NUMBER", "START_DATE", "END_DATE", "MODIFIED_ON"];
+        oTableConfig.oTable = srv.entities.CHRS_REPLICATION_COST_DIST;
+        break;
+      case "CHRS_PARAM_ENTRIES":
+        contextName = "MASTER_DATA_";
+        oTableConfig.aPrimaryKeys = ["REF_KEY"];
+        oTableConfig.oTable = srv.entities.CHRS_PARAM_ENTRIES;
+        break;
+      case "BTP_CREDENTIALS":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["CID"];
+        oTableConfig.oTable = srv.entities.BTP_CREDENTIALS;
+        break;
+      case "EMAIL_TEMPLATES":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["TEMPLATE_NAME"];
+        oTableConfig.oTable = srv.entities.EMAIL_TEMPLATES;
+        break;
+      case "EMAIL_CONFIGS":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["ECONFIG_ID"];
+        oTableConfig.oTable = srv.entities.EMAIL_CONFIGS;
+        break;
+      case "EMAIL_PLACEHOLDER_CONFIG":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["EPH_ID"];
+        oTableConfig.oTable = srv.entities.EMAIL_PLACEHOLDER_CONFIG;
+        break;
+      case "AUDIT_LOG_DATA":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["AUDIT_ID"];
+        oTableConfig.oTable = srv.entities.AUDIT_LOG_DATA;
+        break;
+      case "ATTACHMENTS_DATA":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["ATTCHMNT_ID"];
+        oTableConfig.oTable = srv.entities.ATTACHMENTS_DATA;
+        break;
+      case "NOTIFICATION_LOG_DATA":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["NOTIF_ID"];
+        oTableConfig.oTable = srv.entities.NOTIFICATION_LOG_DATA;
+        break;
+      case "STATUS_CONFIG":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["STATUS_CODE"];
+        oTableConfig.oTable = srv.entities.STATUS_CONFIG;
+        break;
       case "PROCESS_CONFIG":
         contextName = "UTILITY_";
         oTableConfig.aPrimaryKeys = ["PROCESS_CODE"];
@@ -134,6 +205,11 @@ module.exports = {
         contextName = "UTILITY_";
         oTableConfig.aPrimaryKeys = ["CWS_ACFG_ID"];
         oTableConfig.oTable = srv.entities.CWS_APP_CONFIGS;
+        break;
+      case "REQUEST_LOCK_DETAILS":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["LOCK_INST_ID"];
+        oTableConfig.oTable = srv.entities.REQUEST_LOCK_DETAILS;
         break;
       case "CHRS_APPROVER_MATRIX":
         contextName = "UTILITY_";
@@ -155,10 +231,55 @@ module.exports = {
         oTableConfig.aPrimaryKeys = ["TASK_INST_ID"];
         oTableConfig.oTable = srv.entities.TASK_DETAILS;
         break;
+      case "TASKS_CONFIG":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["TCFG_ID"];
+        oTableConfig.oTable = srv.entities.TASKS_CONFIG;
+        break;
+      case "TASK_ACTION_CONFIG":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["TACTION_ID"];
+        oTableConfig.oTable = srv.entities.TASK_ACTION_CONFIG;
+        break;
+      case "CLAIM_REQUEST_DURATION_CONFIG":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["CONFIG_ID"];
+        oTableConfig.oTable = srv.entities.CLAIM_REQUEST_DURATION_CONFIG;
+        break;
+      case "PROCESS_PARTICIPANTS":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["PPNT_ID"];
+        oTableConfig.oTable = srv.entities.PROCESS_PARTICIPANTS;
+        break;
       case "DASHBOARD_CONFIG":
         contextName = "UTILITY_";
         oTableConfig.aPrimaryKeys = ["DS_ACFG_ID"];
         oTableConfig.oTable = srv.entities.DASHBOARD_CONFIG;
+        break;
+      case "FEEDBACK_DETAILS":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["SEQ_NO"];
+        oTableConfig.oTable = srv.entities.FEEDBACK_DETAILS;
+        break;
+      case "NUS_CHRS_HOLIDAYS":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["SEQ_NO"];
+        oTableConfig.oTable = srv.entities.NUS_CHRS_HOLIDAYS;
+        break;
+      case "DATE_TO_WEEK":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["WEEK"];
+        oTableConfig.oTable = srv.entities.DATE_TO_WEEK;
+        break;
+      case "TASK_DELEGATION_DETAILS":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["ID"];
+        oTableConfig.oTable = srv.entities.TASK_DELEGATION_DETAILS;
+        break;
+      case "TICKET_MGMT_DETAILS":
+        contextName = "UTILITY_";
+        oTableConfig.aPrimaryKeys = ["TCKT_ID"];
+        oTableConfig.oTable = srv.entities.TICKET_MGMT_DETAILS;
         break;
       default:
         oTableConfig.exists = false;

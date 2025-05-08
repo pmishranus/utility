@@ -45,11 +45,11 @@ module.exports = {
 
           break;
         case "CWS_DATA":
+        case "CWS_YEAR_SPLIT_DATA":
+        case "CWS_WBS_DATA":
         case "CWS_ASSISTANCE_DATA":
         case "CWS_PAYMENT_DATA":
         case "CWS_REPORT_EXTRACT_DATA":
-        case "CWS_WBS_DATA":
-        case "CWS_YEAR_SPLIT_DATA":
         case "OPWN_OTP_CONSOLIDATED_DATA":
         case "OPWN_OTP_CONSOLIDATED_ERR_DATA":
         case "OPWN_PAYMENT_IMG_DATA":
@@ -61,10 +61,21 @@ module.exports = {
 
           break;
         case "CHRS_JOB_INFO":
+        case "CHRS_COMP_INFO":
         case "CHRS_COST_DIST":
         case "CHRS_HRP_INFO":
         case "CHRS_FDLU_ULU":
         case "MASTER_CLAIM_TYPE":
+        case "CHRS_ELIG_CRITERIA":
+        case "CHRS_ULU_FDLU_PA_PSA":
+        case "CHRS_PAYROLL_AREA":
+        case "RATE_TYPE_MASTER_DATA":
+        case "EMPLOYEE_LISTING_CONCUR":
+        case "CHRS_REPLICATION_JOB_INFO":
+        case "CHRS_REPLICATION_HRP_INFO":
+        case "CHRS_REPLICATION_COMP_INFO":
+        case "CHRS_REPLICATION_COST_DIST":
+        case "CHRS_PARAM_ENTRIES":
           relativePath += "fetchData";
           oPayload = {
             SCHEMA: "NUS_BTP_EC_MASTERDATA",
@@ -81,6 +92,25 @@ module.exports = {
         case "PROCESS_DETAILS":
         case "TASK_DETAILS":
         case "DASHBOARD_CONFIG":
+        case "BTP_CREDENTIALS":
+        case "EMAIL_TEMPLATES":
+        case "EMAIL_CONFIGS":
+        case "EMAIL_PLACEHOLDER_CONFIG":
+        case "AUDIT_LOG_DATA":
+        case "ATTACHMENTS_DATA":
+        case "NOTIFICATION_LOG_DATA":
+        case "STATUS_CONFIG":
+        case "TASKS_CONFIG":
+        case "TASK_ACTION_CONFIG":
+        case "CLAIM_REQUEST_DURATION_CONFIG":
+        case "PROCESS_PARTICIPANTS":
+        case "TASK_DELEGATION_DETAILS":
+        case "CWS_ULU_EMAIL_CONFIG":
+        case "REQUEST_LOCK_DETAILS":
+        case "FEEDBACK_DETAILS":
+        case "NUS_CHRS_HOLIDAYS":
+        case "DATE_TO_WEEK":
+        case "TICKET_MGMT_DETAILS":
           relativePath += "fetchData";
           oPayload = {
             SCHEMA: "NUS_BTP_UTILS",
