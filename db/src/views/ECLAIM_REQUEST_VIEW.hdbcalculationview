@@ -1705,7 +1705,9 @@
   
     <attribute id="PROCESS_STATUS_ALIAS" order="65" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PROCESS_STATUS_ALIAS"/>
+  
       <keyMapping columnObjectName="Join_4" columnName="PROCESS_STATUS_ALIAS"/>
+  
     </attribute>
   </attributes>
   <calculatedAttributes/>
