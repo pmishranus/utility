@@ -9,6 +9,7 @@ modules:
   requires:
   - name: utility-db
   - name: utility-uaa
+  - name: claim_destination_srv
   provides:
   - name: srv-api
     properties:
@@ -69,6 +70,11 @@ resources:
     path: ./xs-security.json
     service: xsuaa
     service-plan: application
+- name: claim_destination_srv
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-plan: lite
 parameters:
   enable-parallel-deployments: true
 build-parameters:

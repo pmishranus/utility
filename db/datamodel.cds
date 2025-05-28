@@ -673,6 +673,10 @@ context UTILITY {
             DISPLAY_REQD          : VAR_TEXT_1; // "Y" - Display in Inbox, "N" - Not required in Inbox
             PROCESS_CODE          : VAR_TEXT_6; // Populate Process Code for each Project Type
             ACTION_ALIAS          : VAR_TEXT_100; //Alias name of the action
+            SUBMISSION_TYPE       : VAR_TEXT_15;
+            UPDATED_BY            : VAR_TEXT_20;
+            UPDATED_BY_NID        : VAR_TEXT_100;
+            UPDATED_ON             : VAR_TIMESTAMP;
     };
 
     /********************************************* Claim Request Duration Config Entity ***************************/

@@ -1,0 +1,60 @@
+@xsuaaHostname = https://nus-ariba-dev-px55m7l5.authentication.eu10.hana.ondemand.com
+@xsuaaClient = sb-utility!t169063
+@xsuaaSecret = 8f6e922d-4d5d-4fe6-910f-000dce2b4638$tk1PCoekKMDcX4OIh88nJSgmdU2bERyXw_RLMtfY_vA=
+@host = localhost:4004
+@protocol = https
+@unsecureProtocol = http
+
+### Request-1 Get xsuaa token
+#==================================================================#
+# @name getXsuaaToken
+
+POST {{xsuaaHostname}}/oauth/token
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic {{xsuaaClient}}:{{xsuaaSecret}}
+
+client_id={{xsuaaClient}}
+&client_secret={{xsuaaSecret}}
+&grant_type=client_credentials
+
+### Store access token 
+@access_token = {{getXsuaaToken.response.body.$.access_token}}
+
+### Request-1 Get eclaims header data
+#==================================================================#
+POST {{unsecureProtocol}}://{{host}}/task/taskactions
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "data": [
+        {
+            "REQUEST_ID": "CM2502000017",
+            "DRAFT_ID": "DT2502000025",
+            "TASK_INST_ID": "T2502000031",
+            "ACTION_CODE": "VERIFY",
+            "REJECT_REMARKS": "",
+            "PROCESS_CODE": "103",
+            "staffId": [
+                "151292"
+            ],
+            "loggedInStaffId": "913437"
+        }
+    ]
+}
+
+### Request-1 Get eclaims header data
+#==================================================================#
+POST {{unsecureProtocol}}://{{host}}/task/sendEmail
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "data": {
+            "emailSubject": "SAP BTP CAPM Email Test",
+            "emailContent": "<h2>This is a test email sent from SAP BTP CAPM Node.js using Office365 and OAuth2!</h2><p>If you received this, the setup works.</p>",
+            "mailMap": {"to": "pankaj.mishra@nus.edu.sg", "cc": "soniarun@nus.edu.sg,ccev2901@partner.nus.edu.sg"},
+            "setPriority": true
+        }
+}

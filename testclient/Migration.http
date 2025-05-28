@@ -1,6 +1,6 @@
 @xsuaaHostname = https://nus-ariba-dev-px55m7l5.authentication.eu10.hana.ondemand.com
 @xsuaaClient = sb-utility!t169063
-@xsuaaSecret = fbd8f6c6-127b-45ab-9c94-a77344cb35b4$l8kKwMdOMjse8xNNLtcBnNu6r2tMh-Ljq9Tr4cd6_PU=
+@xsuaaSecret = 8f6e922d-4d5d-4fe6-910f-000dce2b4638$tk1PCoekKMDcX4OIh88nJSgmdU2bERyXw_RLMtfY_vA=
 @host = localhost:4004
 @protocol = https
 @unsecureProtocol = http
@@ -29,7 +29,7 @@ Authorization: Bearer {{access_token}}
 
 ### Request-2 MASTER_CLAIM_TYPE
 #==================================================================#
-GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='MASTER_CLAIM_TYPE')
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='TASK_ACTION_CONFIG')
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
@@ -55,7 +55,7 @@ Authorization: Bearer {{access_token}}
 
 ### Request-3 PROCESS_DETAILS
 #==================================================================#
-GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='PROCESS_DETAILS')
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='STATUS_CONFIG')
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 

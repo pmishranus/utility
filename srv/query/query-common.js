@@ -2,8 +2,8 @@ const cds = require("@sap/cds");
 const { SELECT, UPSERT } = require("@sap/cds/lib/ql/cds-ql");
 
 module.exports = {
-    fetchSequenceNumber: function (pattern, counter) {
-        let fetchSequenceNumber = cds.run(
+    fetchSequenceNumber: async function (pattern, counter) {
+        let fetchSequenceNumber = await cds.run(
             `CALL SEQ_NUMBER_GENERATION(PATTERN => '${pattern}',COUNTER => ${counter},RUNNINGNORESULT => ?)`
         );
         return fetchSequenceNumber;
