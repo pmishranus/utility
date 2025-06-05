@@ -82,6 +82,33 @@ GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='TASK
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
+### Request-3 TASKS_CONFIG
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='TASKS_CONFIG')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-3 PROCESS_CONFIG
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='PROCESS_CONFIG')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+
+
+### Request-3 STATUS_CONFIG
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='STATUS_CONFIG')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Request-3 PROCESS_PARTICIPANTS
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='PROCESS_PARTICIPANTS')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
 ### Request-3 DASHBOARD_CONFIG
 #==================================================================#
 GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='DASHBOARD_CONFIG')
