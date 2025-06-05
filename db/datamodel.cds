@@ -31,6 +31,7 @@ type VAR_TEXT_255  : String(255);
 type VAR_TEXT_256  : String(256);
 type VAR_TEXT_500  : String(500);
 type VAR_TEXT_1000 : String(1000);
+type VAR_TEXT_1500 : String(1500);
 type VAR_TEXT_2000 : String(2000);
 type VAR_TEXT_2500 : String(2500);
 type VAR_TEXT_5000 : String(5000);
@@ -516,17 +517,17 @@ context UTILITY {
     /********************************************* Audit Log Config Entity ***************************/
     entity AUDIT_LOG_DATA {
         key AUDIT_ID       : VAR_INT;
-            REFERENCE_ID   : VAR_TEXT_20;
+            REFERENCE_ID   : VAR_TEXT_100;
             CHANGED_ON     : VAR_TIMESTAMP;
             CHANGED_BY     : VAR_TEXT_20;
             SECTION        : VAR_TEXT_100;
             IDENTITY       : VAR_TEXT_100;
             SUB_SECTION    : VAR_TEXT_100;
             FIELD_LABEL    : VAR_TEXT_100;
-            OLD_VALUE      : VAR_TEXT_500;
-            OLD_VALUE_DESC : VAR_TEXT_1000;
-            NEW_VALUE      : VAR_TEXT_500;
-            NEW_VALUE_DESC : VAR_TEXT_1000;
+            OLD_VALUE      : VAR_TEXT_1500;
+            OLD_VALUE_DESC : VAR_TEXT_1500;
+            NEW_VALUE      : VAR_TEXT_1500;
+            NEW_VALUE_DESC : VAR_TEXT_1500;
             FIELD_TYPE     : VAR_TEXT_20;
             ACTION_TYPE    : VAR_TEXT_10;
             CUSTOM_ATTR_1  : VAR_TEXT_100;
@@ -1089,7 +1090,7 @@ context MASTER_DATA {
     entity RATE_TYPE_MASTER_DATA {
         key ID        : VAR_TEXT_10;
             RATE_CODE : VAR_TEXT_5;
-            RATE_DESC : VAR_TEXT_20;
+            RATE_DESC : VAR_TEXT_50;
             WAGE_CODE : VAR_TEXT_20;
             FREQUENCY : VAR_TEXT_30;
             MAX_LIMIT : VAR_TEXT_10;

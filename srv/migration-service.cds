@@ -24,6 +24,7 @@ service MigrationService {
     entity CHRS_REPLICATION_COMP_INFO     as select * from db.MASTER_DATA.CHRS_REPLICATION_COMP_INFO;
     entity CHRS_REPLICATION_COST_DIST     as select * from db.MASTER_DATA.CHRS_REPLICATION_COST_DIST;
     entity CHRS_PARAM_ENTRIES             as select * from db.MASTER_DATA.CHRS_PARAM_ENTRIES;
+    entity CHRS_ELIG_CRITERIA             as select * from db.MASTER_DATA.CHRS_ELIG_CRITERIA;
     entity HEADER_DATA                    as select * from db.ECLAIMS.HEADER_DATA;
     entity ITEMS_DATA                     as select * from db.ECLAIMS.ITEMS_DATA;
     entity TAX_BFT_CLAIMS_GRP             as select * from db.ECLAIMS.TAX_BFT_CLAIMS_GRP;
@@ -65,7 +66,7 @@ service MigrationService {
     entity TASK_DETAILS                   as select * from db.UTILITY.TASK_DETAILS;
     entity DASHBOARD_CONFIG               as select * from db.UTILITY.DASHBOARD_CONFIG;
     entity TICKET_MGMT_DETAILS            as select * from db.UTILITY.TICKET_MGMT_DETAILS;
-
+    entity RATE_TYPE_MASTER_DATA          as select * from db.MASTER_DATA.RATE_TYPE_MASTER_DATA;
 
     @open
     type object {};

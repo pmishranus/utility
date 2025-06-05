@@ -33,13 +33,19 @@ GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='TASK
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
+### Request-2 CHRS_COMP_INFO
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='CHRS_COMP_INFO')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
 ### Request-3 ECLAIMS_DATA
 #==================================================================#
 GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='ECLAIMS_DATA')
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
-### Request-3 ECLAIMS_DATA
+### Request-3 ECLAIMS_ITEMS_DATA
 #==================================================================#
 GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='ECLAIMS_ITEMS_DATA')
 Content-Type: application/json
@@ -52,10 +58,27 @@ GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='REMA
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
+### Request-3 ATTACHMENTS_DATA
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='ATTACHMENTS_DATA')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-3 AUDIT_LOG_DATA
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='AUDIT_LOG_DATA')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
 ### Request-3 PROCESS_DETAILS
 #==================================================================#
-GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='STATUS_CONFIG')
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='PROCESS_DETAILS')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-3 TASK_DETAILS
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='TASK_DETAILS')
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
@@ -64,10 +87,81 @@ Authorization: Bearer {{access_token}}
 GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='DASHBOARD_CONFIG')
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
+
+### Request-3 CHRS_APPROVER_MATRIX
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='CHRS_APPROVER_MATRIX')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-3 APP_CONFIGS
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='APP_CONFIGS')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-3 CWS_APP_CONFIGS
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='CWS_APP_CONFIGS')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
 ### Request-4 Get User Detail
 #==================================================================#
 GET {{unsecureProtocol}}://{{host}}/util/getUserDetails()
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
+### Request-5 CHRS_ELIG_CRITERIA
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='CHRS_ELIG_CRITERIA')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
+### Request-5 RATE_TYPE_MASTER_DATA
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='RATE_TYPE_MASTER_DATA')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-3 CWS DATA
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='CWS_DATA')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-3 CWS_PAYMENT_DATA
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='CWS_PAYMENT_DATA')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-3 OPWN_PAYMENT_IMG_DATA
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='OPWN_PAYMENT_IMG_DATA')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-3 OPWN_OTP_CONSOLIDATED_DATA
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='OPWN_OTP_CONSOLIDATED_DATA')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-3 CWS_ASSISTANCE_DATA
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='CWS_ASSISTANCE_DATA')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-3 CWS_WBS_DATA
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='CWS_WBS_DATA')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-3 CWS_YEAR_SPLIT_DATA
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='CWS_YEAR_SPLIT_DATA')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}

@@ -91,6 +91,11 @@ module.exports = {
         oTableConfig.aPrimaryKeys = ["STF_NUMBER", "SF_STF_NUMBER", "SEQ_NUMBER", "START_DATE", "END_DATE"];
         oTableConfig.oTable = srv.entities.CHRS_JOB_INFO;
         break;
+      case "RATE_TYPE_MASTER_DATA":
+        contextName = "MASTER_DATA_";
+        oTableConfig.aPrimaryKeys = ["ID"];
+        oTableConfig.oTable = srv.entities.RATE_TYPE_MASTER_DATA;
+        break;
       case "CHRS_COST_DIST":
         contextName = "MASTER_DATA_";
         oTableConfig.aPrimaryKeys = ["STF_NUMBER", "SF_STF_NUMBER", "START_DATE", "END_DATE"];
@@ -150,6 +155,11 @@ module.exports = {
         contextName = "MASTER_DATA_";
         oTableConfig.aPrimaryKeys = ["REF_KEY"];
         oTableConfig.oTable = srv.entities.CHRS_PARAM_ENTRIES;
+        break;
+      case "CHRS_ELIG_CRITERIA":
+        contextName = "MASTER_DATA_";
+        oTableConfig.aPrimaryKeys = ["STF_NUMBER", "SF_STF_NUMBER", "START_DATE", "END_DATE", "CLAIM_TYPE", "STF_CLAIM_TYPE_CAT"];
+        oTableConfig.oTable = srv.entities.CHRS_ELIG_CRITERIA;
         break;
       case "BTP_CREDENTIALS":
         contextName = "UTILITY_";
