@@ -1,6 +1,6 @@
 const cds = require("@sap/cds");
 const { SELECT, DELETE } = require("@sap/cds/lib/ql/cds-ql");
-const {ApplicationConstants} = require("../util/constant").default;
+const {ApplicationConstants} = require("../util/constant");
 
 async function fetchLockedRequestsByDraftId(draftId) {
     const fetchLockedRequestsByDraftId = await cds.run(

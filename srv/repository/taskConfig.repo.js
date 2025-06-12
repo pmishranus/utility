@@ -1,6 +1,4 @@
 const cds = require("@sap/cds");
-const { SELECT } = require("@sap/cds/lib/ql/cds-ql");
-const { ApplicationConstants } = require("../util/constant").default
 
 async function fetchCurrentTaskConfig(processCode, requestorGroup, taskName) {
      const fetchCurrentTaskConfig = await cds.run(

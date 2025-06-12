@@ -513,7 +513,7 @@ const ApplicationConstants = {
   
   
   
-  export default {
+  module.exports = {
     ApplicationConstants, MessageConstants
   }
   

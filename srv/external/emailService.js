@@ -1,7 +1,7 @@
 const ProcessConfigType = require("../enum/processConfigType");
 const EmailResponseDto = require('../dto/EmailResponseDto');
 const AppConfigRepo = require("../repository/appConfig.repo");
-const { ApplicationConstants, MessageConstants } = require("../util/constant").default;
+const { ApplicationConstants, MessageConstants } = require("../util/constant");
 const EmailConfigRepo = require("../repository/emailConfig.repo")
 const EmailPlaceholderConfigRepo = require("../repository/emailPlaceholderConfig.repo")
 const CommonUtils = require("../util/commonUtil");

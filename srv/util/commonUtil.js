@@ -1,5 +1,4 @@
 const _ = require('lodash');
-const { MESSAGE } = require('./constant').default;
 function frameResponse(sourceObj, errorCode, message) {
 
   sourceObj.STATUS_CODE = errorCode;

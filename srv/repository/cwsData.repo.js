@@ -1,6 +1,6 @@
 const cds = require("@sap/cds");
 const { SELECT } = require("@sap/cds/lib/ql/cds-ql");
-const { ApplicationConstants } = require("../util/constant").default
+const { ApplicationConstants } = require("../util/constant")
 
 async function fetchByUniqueId(uniqueID) {
     const fetchByUniqueId = await cds.run(

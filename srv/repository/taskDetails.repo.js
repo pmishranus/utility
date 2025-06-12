@@ -1,7 +1,4 @@
 const cds = require("@sap/cds");
-const { SELECT } = require("@sap/cds/lib/ql/cds-ql")
-// const {getEntityFields } = require("../util/databaseOperations/querySelector")
-const { ApplicationConstants } = require("../util/constant").default
 async function fetchByTaskInstanceId(taskInstanceId) {
     const fetchByTaskInstanceId = await cds.run(
         SELECT.one.from('NUSEXT_UTILITY_TASK_DETAILS').where({ TASK_INST_ID: taskInstanceId })
@@ -9,7 +6,6 @@ async function fetchByTaskInstanceId(taskInstanceId) {
     return fetchByTaskInstanceId || null;
 }
 async function fetchProcessDetailsByTaskInstId(taskInstanceId) {
-    // const columns = getEntityFields("PROCESS_DETAILS")
     const fetchProcessDetailsByTaskInstId = await cds.run(
         SELECT
             .one
