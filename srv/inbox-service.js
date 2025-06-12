@@ -13,8 +13,6 @@ class InboxService extends cds.ApplicationService {
 
       this.on('sendEmail', async (req) => {
         const { emailSubject, emailContent, mailMap, setPriority } = req.data.data;
-        // let mailMap = req.data.data;
-        // try { mailMap = JSON.parse(mailIdMap); } catch (e) { return 'Error parsing mailIdMap JSON'; }
 
         // === 1. Get Destination from BTP Destination Service ===
         const destinationName = 'BTP_EMAIL_OAUTH';
@@ -93,7 +91,7 @@ class InboxService extends cds.ApplicationService {
 
         try {
          let emailResponse =  await transporter.sendMail(mailOptions);
-          return "Email sent successfully";
+          return emailResponse;
         } catch (error) {
           return "Error sending email: " + error.message;
         }
