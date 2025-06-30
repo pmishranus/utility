@@ -733,3 +733,65 @@ entity TICKET_DETAILS_VIEW {
     key CREATED_BY_FULL_NM     : String(256)  @title: 'CREATED_BY_FULL_NM: CREATED_BY_FULL_NM';
     key TCKT_IT_NOTES          : String(2500) @title: 'TCKT_IT_NOTES: TCKT_IT_NOTES';
 };
+
+
+@cds.persistence.exists 
+@cds.persistence.calcview 
+Entity CHRS_JOB_INFO {
+key     STF_NUMBER: String(100)  @title: 'STF_NUMBER: STF_NUMBER' ; 
+key     SF_STF_NUMBER: String(100)  @title: 'SF_STF_NUMBER: SF_STF_NUMBER' ; 
+key     SEQ_NUMBER: String(10)  @title: 'SEQ_NUMBER: SEQ_NUMBER' ; 
+key     START_DATE: Date  @title: 'START_DATE: START_DATE' ; 
+key     END_DATE: Date  @title: 'END_DATE: END_DATE' ; 
+key     FIRST_NM: String(128)  @title: 'FIRST_NM: FIRST_NM' ; 
+key     LAST_NM: String(128)  @title: 'LAST_NM: LAST_NM' ; 
+key     PREF_NM: String(128)  @title: 'PREF_NM: PREF_NM' ; 
+key     FULL_NM: String(256)  @title: 'FULL_NM: FULL_NM' ; 
+key     NUSNET_ID: String(100)  @title: 'NUSNET_ID: NUSNET_ID' ; 
+key     EMP_GP_C: String(100)  @title: 'EMP_GP_C: EMP_GP_C' ; 
+key     EMP_GP_T: String(100)  @title: 'EMP_GP_T: EMP_GP_T' ; 
+key     EMP_CAT_C: String(100)  @title: 'EMP_CAT_C: EMP_CAT_C' ; 
+key     EMP_CAT_T: String(100)  @title: 'EMP_CAT_T: EMP_CAT_T' ; 
+key     ULU_C: String(100)  @title: 'ULU_C: ULU_C' ; 
+key     ULU_T: String(100)  @title: 'ULU_T: ULU_T' ; 
+key     FDLU_C: String(100)  @title: 'FDLU_C: FDLU_C' ; 
+key     FDLU_T: String(100)  @title: 'FDLU_T: FDLU_T' ; 
+key     COMPANY_C: String(100)  @title: 'COMPANY_C: COMPANY_C' ; 
+key     COMPANY_T: String(100)  @title: 'COMPANY_T: COMPANY_T' ; 
+key     SAP_FAC_C: String(100)  @title: 'SAP_FAC_C: SAP_FAC_C' ; 
+key     SAP_FAC_T: String(100)  @title: 'SAP_FAC_T: SAP_FAC_T' ; 
+key     SAP_DEPT_C: String(100)  @title: 'SAP_DEPT_C: SAP_DEPT_C' ; 
+key     SAP_DEPT_T: String(100)  @title: 'SAP_DEPT_T: SAP_DEPT_T' ; 
+key     EMAIL: String(128)  @title: 'EMAIL: EMAIL' ; 
+key     RM_NUSNET_ID: String(100)  @title: 'RM_NUSNET_ID: RM_NUSNET_ID' ; 
+key     RM_STF_N: String(20)  @title: 'RM_STF_N: RM_STF_N' ; 
+key     WK_SCHD_C: String(100)  @title: 'WK_SCHD_C: WK_SCHD_C' ; 
+key     WK_SCHD_T: String(100)  @title: 'WK_SCHD_T: WK_SCHD_T' ; 
+key     STD_HOURS: String(100)  @title: 'STD_HOURS: STD_HOURS' ; 
+key     APPT_TRACK_C: String(100)  @title: 'APPT_TRACK_C: APPT_TRACK_C' ; 
+key     APPT_TRACK_T: String(100)  @title: 'APPT_TRACK_T: APPT_TRACK_T' ; 
+key     JOB_LVL_C: String(100)  @title: 'JOB_LVL_C: JOB_LVL_C' ; 
+key     JOB_LVL_T: String(100)  @title: 'JOB_LVL_T: JOB_LVL_T' ; 
+key     RELIGION_C: String(100)  @title: 'RELIGION_C: RELIGION_C' ; 
+key     RELIGION_T: String(100)  @title: 'RELIGION_T: RELIGION_T' ; 
+key     RACE_C: String(100)  @title: 'RACE_C: RACE_C' ; 
+key     RACE_T: String(100)  @title: 'RACE_T: RACE_T' ; 
+key     JOB_GRD_C: String(100)  @title: 'JOB_GRD_C: JOB_GRD_C' ; 
+key     JOB_GRD_T: String(100)  @title: 'JOB_GRD_T: JOB_GRD_T' ; 
+key     WORK_TITLE: String(256)  @title: 'WORK_TITLE: WORK_TITLE' ; 
+key     EMPL_STS_C: String(100)  @title: 'EMPL_STS_C: EMPL_STS_C' ; 
+key     EMPL_STS_T: String(100)  @title: 'EMPL_STS_T: EMPL_STS_T' ; 
+key     CONTEXP_DATE: Date  @title: 'CONTEXP_DATE: CONTEXP_DATE' ; 
+key     LEAVING_DATE: Date  @title: 'LEAVING_DATE: LEAVING_DATE' ; 
+key     BANK_INFO_FLG: String(10)  @title: 'BANK_INFO_FLG: BANK_INFO_FLG' ; 
+key     RM_FLG: String(10)  @title: 'RM_FLG: RM_FLG' ; 
+key     PAYSCALE_GRP_C: String(100)  @title: 'PAYSCALE_GRP_C: PAYSCALE_GRP_C' ; 
+key     PAYSCALE_GRP_T: String(100)  @title: 'PAYSCALE_GRP_T: PAYSCALE_GRP_T' ; 
+        CAPACITY_UTIL: Decimal(12)  @title: 'CAPACITY_UTIL: CAPACITY_UTIL' ; 
+key     MODIFIED_BY: String(100)  @title: 'MODIFIED_BY: MODIFIED_BY' ; 
+key     REMARKS: String(150)  @title: 'REMARKS: REMARKS' ; 
+key     MODIFIED_ON: String(50)  @title: 'MODIFIED_ON: MODIFIED_ON' ; 
+key     JOIN_DATE: Date  @title: 'JOIN_DATE: JOIN_DATE' ; 
+        START_DATE_CAL: Timestamp  @title: 'START_DATE_CAL: START_DATE_CAL' ; 
+        END_DATE_CAL: Timestamp  @title: 'END_DATE_CAL: END_DATE_CAL' ; 
+}

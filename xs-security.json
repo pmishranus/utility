@@ -3,12 +3,21 @@
   "tenant-mode": "dedicated",
   "scopes": [
     {
+      "name": "uaa.user",
+      "description": "UAA"
+    },
+    {
       "name": "$XSAPPNAME.Admin",
       "description": "Admin"
     }
   ],
   "attributes": [],
   "role-templates": [
+    {
+      "name": "Token_Exchange",
+      "description": "UAA",
+      "scope-references": ["uaa.user"]
+    },
     {
       "name": "Admin",
       "description": "generated",

@@ -189,6 +189,12 @@ Authorization: Bearer {{access_token}}
 
 ### Request-3 CWS_YEAR_SPLIT_DATA
 #==================================================================#
-GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='CWS_YEAR_SPLIT_DATA')
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='DATE_TO_WEEK')
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### Request-3 CWS_YEAR_SPLIT_DATA
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='NUS_CHRS_HOLIDAYS')
 Content-Type: application/json
 Authorization: Bearer {{access_token}}

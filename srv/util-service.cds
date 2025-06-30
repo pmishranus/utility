@@ -103,6 +103,8 @@ using {nusext as db} from '../db/datamodel';
 
 
 service UtilService @(path: '/util') {
+  @open
+  type object {};
 
   entity CHRS_JOB_INFO       as select * from db.MASTER_DATA.CHRS_JOB_INFO;
   entity CHRS_EXTERNAL_USERS as select * from db.UTILITY.CHRS_EXTERNAL_USERS;
@@ -111,9 +113,9 @@ service UtilService @(path: '/util') {
   // entity CHECK_COST_DIST_EXISTS(nusnetId : String, startDate: Date, endDate : Date)
   //  as select * from CHECK_COST_DIST_EXISTS_F where NUSNET_ID = :nusnetId and START_DATE <= :endDate and END_DATE >= :startDate;
 
-  function userInfo()       returns userType;
-  function getUserDetails(userId : String) returns UtilResponse;
-
-  action appConfigCreateEntry(data : appConfigurationRequests) returns String;
+  function userInfo()                                            returns userType;
+  function iasUserInfo()                                         returns {};
+  function getUserDetails(userId : String)                       returns UtilResponse;
+  action   appConfigCreateEntry(data : appConfigurationRequests) returns String;
 
 }
