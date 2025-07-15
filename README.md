@@ -27,6 +27,7 @@ hana-cli inspectView -o cds  //this will give option to write the exact name of 
 - hana-cli inspectView -v OT_VERIFIER_APPROVER_LIST -o cds
 - hana-cli inspectFunction -f CHECK_COST_DIST_EXIST_F -o
 - hana-cli inspectView -v CHRS_JOB_INFO -o cds
+- hana-cli inspectView -v TASK_ACTION_CONFIG -o cds
 
 
 # 8. Get the active port
