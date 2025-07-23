@@ -815,3 +815,13 @@ entity TASK_ACTION_CONFIG {
 }
 
 define view PRJ_TASK_ACTION_CONFIG as select * from TASK_ACTION_CONFIG;
+
+@cds.persistence.exists 
+@cds.persistence.calcview 
+Entity AGG_HOURS_DAY_TYPE {
+key     DRAFT_ID: String(15)  @title: 'DRAFT_ID: DRAFT_ID' ; 
+        HOURS_UNIT: Decimal(5)  @title: 'HOURS_UNIT: HOURS_UNIT' ; 
+     CLAIM_DAY_TYPE: String(20)  @title: 'CLAIM_DAY_TYPE: CLAIM_DAY_TYPE' ; 
+}
+
+define view PRJ_AGG_HOURS_DAY_TYPE as select * from AGG_HOURS_DAY_TYPE;
