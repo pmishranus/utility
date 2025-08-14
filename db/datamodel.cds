@@ -72,6 +72,17 @@ context ECLAIMS {
             WORKING_HOURS       : VAR_TEXT_100;
             STF_CLAIM_TYPE_CAT  : VAR_TEXT_10;
             APPOINTMENT_TRACK   : VAR_TEXT_10;
+            ItsItemData         : Association to many ITEMS_DATA
+                                    on ItsItemData.DRAFT_ID = $self.DRAFT_ID;
+            ItsAttachmentData   : Association to many UTILITY.ATTACHMENTS_DATA
+                                    on ItsAttachmentData.REFERENCE_ID = $self.DRAFT_ID;
+            ItsRequestStatus           : Association to one UTILITY.STATUS_CONFIG
+                                    on ItsRequestStatus.STATUS_CODE = $self.REQUEST_STATUS; 
+            ItsRemarksData      : Association to many UTILITY.REMARKS_DATA
+                                    on ItsRemarksData.REFERENCE_ID = $self.DRAFT_ID;
+            ItsProcessData      : Association to one UTILITY.PROCESS_DETAILS
+            on ItsProcessData.REFERENCE_ID = $self.DRAFT_ID;
+
     };
 
     /********************************************* Items Data Entity ***************************/
@@ -111,6 +122,7 @@ context ECLAIMS {
     };
 
     /********************************************* Tax Benefits Claims Entity ***************************/
+    @cds.autoexpose
     entity TAX_BFT_CLAIMS_GRP {
         key BEN_TYPE   : VAR_TEXT_2;
             START_DATE : VAR_DATE;
@@ -610,6 +622,12 @@ context UTILITY {
             PROCESSED_BY_NID     : VAR_TEXT_100; // NUSNET ID of the Requestor
             PROCESS_EXPECTED_DOC : VAR_DATE; // Populate Process Expected Date of Completion
             PROCESS_ACTUAL_DOC   : VAR_DATE; // Actual Date of Completion of the process
+            ItsTaskDetails      : Association to many TASK_DETAILS
+            on ItsTaskDetails.PROCESS_INST_ID = $self.PROCESS_INST_ID;
+            ItsClaimData        : Association to one ECLAIMS.HEADER_DATA
+            on ItsClaimData.DRAFT_ID = $self.REFERENCE_ID;
+            ItsProcessStatus : Association to one STATUS_CONFIG
+            on ItsProcessStatus.STATUS_CODE = $self.PROCESS_STATUS;
     };
 
     /********************************************* Task Details Config Entity ***************************/
@@ -631,6 +649,10 @@ context UTILITY {
             TO_BE_TASK_SEQUENCE      : VAR_INT; //Upon Taking Action, Populate TO be Task Sequence from Task Completion
             TASK_ASSGN_TO_STF_NUMBER : VAR_TEXT_20; //Task Assigned to Staff ID
             TASK_CREATED_BY_NID      : VAR_TEXT_100; //Task Created By NID
+            ItsProcessData              : Association to one PROCESS_DETAILS
+            on ItsProcessData.PROCESS_INST_ID = $self.PROCESS_INST_ID;
+            ItsTaskStatus : Association to one STATUS_CONFIG
+            on ItsTaskStatus.STATUS_CODE = $self.TASK_STATUS;
     };
 
     /********************************************* Process Config Entity ***************************/

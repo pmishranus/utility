@@ -22,7 +22,7 @@ Utility Module
 
 # 7. Proxy entity for the calculation view
 hana-cli inspectView -o cds  //this will give option to write the exact name of the database view
-- hana-cli inspectView -v APPROVAL_MATRIX -o cds
+- hana-cli inspectView -v APPROVAL_MATRIX_UTIL -o cds
 - hana-cli inspectView -v ECLAIM_REQUEST_VIEW -o cds
 - hana-cli inspectView -v OT_VERIFIER_APPROVER_LIST -o cds
 - hana-cli inspectFunction -f CHECK_COST_DIST_EXIST_F -o
