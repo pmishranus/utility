@@ -513,6 +513,9 @@ module.exports = {
         entityName = tableName;
       }
 
+      // Convert to uppercase and replace dots with underscores
+      entityName = entityName.toUpperCase().replace(/\./g, '_');
+
       console.log(`Deleting from entity: ${entityName} for table: ${tableName}`);
 
       // Delete all records from the table using CAP's DELETE operation
@@ -603,6 +606,9 @@ module.exports = {
         // Fallback: use the table name as entity name
         entityName = tableName;
       }
+
+      // Convert to uppercase and replace dots with underscores
+      entityName = entityName.toUpperCase().replace(/\./g, '_');
 
       console.log(`Inserting into entity: ${entityName} for table: ${tableName}`);
 
