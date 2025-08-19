@@ -4,7 +4,8 @@ const credStore = require("../common/credStore");
 const Connection = require("../../util/request/connection.class");
 const UpsertHandler = require("../databaseOperations/upsert-handler.class");
 const TableConfig = require("../migration/migration-table-config");
-const { DELETE, INSERT } = require("@sap/cds");
+const cds = require("@sap/cds");
+const { SELECT, DELETE, UPDATE, INSERT } = require("@sap/cds/lib/ql/cds-ql");
 
 module.exports = {
   /**
@@ -581,18 +582,35 @@ module.exports = {
 
     // Get the valid columns from the entity definition
     const validColumns = new Set();
+    const requiredColumns = new Set();
+    const keyColumns = new Set();
+
     if (entity.elements) {
       Object.keys(entity.elements).forEach(columnName => {
+        const element = entity.elements[columnName];
         validColumns.add(columnName.toUpperCase());
+
+        // Check if column is required (not nullable)
+        if (element && !element.nullable && !element.default) {
+          requiredColumns.add(columnName.toUpperCase());
+        }
+
+        // Check if column is a key
+        if (element && element.key) {
+          keyColumns.add(columnName.toUpperCase());
+        }
       });
     }
 
     console.log(`Valid columns for ${tableName}:`, Array.from(validColumns));
+    console.log(`Required columns for ${tableName}:`, Array.from(requiredColumns));
+    console.log(`Key columns for ${tableName}:`, Array.from(keyColumns));
 
-    // Transform each record to only include valid columns
-    return data.map(record => {
+    // Transform each record to only include valid columns and handle missing required columns
+    return data.map((record, index) => {
       const transformedRecord = {};
 
+      // First, add all valid columns from the source data
       Object.keys(record).forEach(columnName => {
         const upperColumnName = columnName.toUpperCase();
         if (validColumns.has(upperColumnName)) {
@@ -600,6 +618,49 @@ module.exports = {
           transformedRecord[columnName] = record[columnName];
         } else {
           console.log(`Filtering out invalid column: ${columnName} for table: ${tableName}`);
+        }
+      });
+
+      // Then, handle missing required columns
+      requiredColumns.forEach(requiredColumn => {
+        const originalColumnName = Object.keys(entity.elements).find(col =>
+          col.toUpperCase() === requiredColumn
+        );
+
+        if (!transformedRecord[originalColumnName]) {
+          // Handle specific required columns
+          if (requiredColumn === 'ID') {
+            // Generate a unique ID for cuid fields
+            transformedRecord[originalColumnName] = `migration_${tableName}_${Date.now()}_${index}`;
+            console.log(`Generated ID for record ${index} in table ${tableName}: ${transformedRecord[originalColumnName]}`);
+          } else if (requiredColumn === 'CREATEDAT' || requiredColumn === 'MODIFIEDAT') {
+            // Set timestamp for managed fields
+            transformedRecord[originalColumnName] = new Date().toISOString();
+            console.log(`Set timestamp for ${originalColumnName} in table ${tableName}`);
+          } else if (requiredColumn === 'CREATEDBY' || requiredColumn === 'MODIFIEDBY') {
+            // Set default user for managed fields
+            transformedRecord[originalColumnName] = 'MIGRATION_SYSTEM';
+            console.log(`Set default user for ${originalColumnName} in table ${tableName}`);
+          } else {
+            // For other required columns, set a default value based on type
+            const element = entity.elements[originalColumnName];
+            if (element && element.type) {
+              if (element.type.includes('String')) {
+                transformedRecord[originalColumnName] = 'DEFAULT';
+              } else if (element.type.includes('Integer') || element.type.includes('Decimal')) {
+                transformedRecord[originalColumnName] = 0;
+              } else if (element.type.includes('Date')) {
+                transformedRecord[originalColumnName] = new Date().toISOString().split('T')[0];
+              } else if (element.type.includes('Timestamp')) {
+                transformedRecord[originalColumnName] = new Date().toISOString();
+              } else {
+                transformedRecord[originalColumnName] = 'DEFAULT';
+              }
+            } else {
+              transformedRecord[originalColumnName] = 'DEFAULT';
+            }
+            console.log(`Set default value for required column ${originalColumnName} in table ${tableName}`);
+          }
         }
       });
 
