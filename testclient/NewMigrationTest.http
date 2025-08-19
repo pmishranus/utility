@@ -1,0 +1,75 @@
+@xsuaaHostname = https://nus-ariba-dev-px55m7l5.authentication.eu10.hana.ondemand.com
+@xsuaaClient = sb-utility!t169063
+@xsuaaSecret = 8f6e922d-4d5d-4fe6-910f-000dce2b4638$tk1PCoekKMDcX4OIh88nJSgmdU2bERyXw_RLMtfY_vA=
+@host = localhost:4004
+@protocol = https
+@unsecureProtocol = http
+
+### Request-1 Get xsuaa token
+#==================================================================#
+# @name getXsuaaToken
+
+POST {{xsuaaHostname}}/oauth/token
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic {{xsuaaClient}}:{{xsuaaSecret}}
+
+client_id={{xsuaaClient}}
+&client_secret={{xsuaaSecret}}
+&grant_type=client_credentials
+
+### Store access token 
+@access_token = {{getXsuaaToken.response.body.$.access_token}}
+
+### Test REDESIGNED loadMultipleTableData - DELETE ONLY (Test deletion first)
+POST {{unsecureProtocol}}://{{host}}/rest/migration/loadMultipleTableData
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "tableNames": [
+    "CHRS_JOB_INFO",
+    "APP_CONFIGS"
+  ],
+  "deleteOnly": true
+}
+
+### Test REDESIGNED loadMultipleTableData - DELETE AND RECREATE (Full operation)
+POST {{unsecureProtocol}}://{{host}}/rest/migration/loadMultipleTableData
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "tableNames": [
+    "CHRS_JOB_INFO",
+    "APP_CONFIGS",
+    "EMAIL_TEMPLATES"
+  ],
+  "deleteOnly": false
+}
+
+### Test REDESIGNED loadMultipleTableData - Multiple tables with error handling
+POST {{unsecureProtocol}}://{{host}}/rest/migration/loadMultipleTableData
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "tableNames": [
+    "CHRS_JOB_INFO",
+    "INVALID_TABLE",
+    "APP_CONFIGS"
+  ],
+  "deleteOnly": false
+}
+
+### Test REDESIGNED loadMultipleTableData - Single table test
+POST {{unsecureProtocol}}://{{host}}/rest/migration/loadMultipleTableData
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "tableNames": [
+    "CHRS_JOB_INFO"
+  ],
+  "deleteOnly": false
+}
