@@ -6,7 +6,7 @@ const UpsertHandler = require("../databaseOperations/upsert-handler.class");
 const TableConfig = require("../migration/migration-table-config");
 const cds = require("@sap/cds");
 const { SELECT, DELETE, UPDATE, INSERT } = require("@sap/cds/lib/ql/cds-ql");
-
+const { v4: uuidv4 } = require('uuid');
 module.exports = {
   /**
    * Original method for backward compatibility
@@ -135,7 +135,7 @@ module.exports = {
   getTableConfiguration: function (tableName, srv) {
     // Validate service object and entities
     if (!srv || !srv.entities) {
-      console.error(`Service object or entities not available for table: ${tableName}`);
+      //console.error(`Service object or entities not available for table: ${tableName}`);
       throw new Error(`Service object or entities not available for table: ${tableName}`);
     }
 
@@ -471,7 +471,7 @@ module.exports = {
 
     // Validate that the entity exists for the requested table
     if (config && !config.entity) {
-      console.error(`Entity not found for table: ${tableName}. Available entities:`, Object.keys(srv.entities));
+      //console.error(`Entity not found for table: ${tableName}. Available entities:`, Object.keys(srv.entities));
       throw new Error(`Entity not found for table: ${tableName}. Please check if the entity is properly defined in the service.`);
     }
 
@@ -497,7 +497,7 @@ module.exports = {
 
       // Validate entity
       if (!entity) {
-        console.error(`Entity is undefined for table: ${tableName}. Table config:`, tableConfig);
+        //console.error(`Entity is undefined for table: ${tableName}. Table config:`, tableConfig);
         throw new Error(`Entity is undefined for table: ${tableName}. Please check the table configuration.`);
       }
 
@@ -517,14 +517,14 @@ module.exports = {
       // Convert to uppercase and replace dots with underscores
       entityName = entityName.toUpperCase().replace(/\./g, '_');
 
-      console.log(`Deleting from entity: ${entityName} for table: ${tableName}`);
+      //console.log(`Deleting from entity: ${entityName} for table: ${tableName}`);
 
       // Delete all records from the table using CAP's DELETE operation
-      const deleteResult = await db.run(DELETE.from(entityName));
+      const deleteResult = await cds.run(DELETE.from(entityName));
 
       return deleteResult.affectedRows || 0;
     } catch (error) {
-      console.error(`Error deleting data from table ${tableName}:`, error);
+      //console.error(`Error deleting data from table ${tableName}:`, error);
       throw new Error(`Failed to delete data from table ${tableName}: ${error.message}`);
     }
   },
@@ -563,7 +563,7 @@ module.exports = {
 
       return response.data.result;
     } catch (error) {
-      console.error(`Error fetching data for table ${tableName}:`, error);
+      //console.error(`Error fetching data for table ${tableName}:`, error);
       throw new Error(`Failed to fetch data for table ${tableName}: ${error.message}`);
     }
   },
@@ -591,7 +591,7 @@ module.exports = {
 
         // Skip association fields (they are not actual database columns)
         if (element && (element.isAssociation || element.isComposition || element.target)) {
-          console.log(`Skipping association field: ${columnName} for table: ${tableName}`);
+          //console.log(`Skipping association field: ${columnName} for table: ${tableName}`);
           return;
         }
 
@@ -609,9 +609,9 @@ module.exports = {
       });
     }
 
-    console.log(`Valid columns for ${tableName}:`, Array.from(validColumns));
-    console.log(`Required columns for ${tableName}:`, Array.from(requiredColumns));
-    console.log(`Key columns for ${tableName}:`, Array.from(keyColumns));
+    //console.log(`Valid columns for ${tableName}:`, Array.from(validColumns));
+    //console.log(`Required columns for ${tableName}:`, Array.from(requiredColumns));
+    //console.log(`Key columns for ${tableName}:`, Array.from(keyColumns));
 
     // Transform each record to only include valid columns and handle missing required columns
     return data.map((record, index) => {
@@ -624,7 +624,7 @@ module.exports = {
           // Use the original column name (preserve case)
           transformedRecord[columnName] = record[columnName];
         } else {
-          console.log(`Filtering out invalid column: ${columnName} for table: ${tableName}`);
+          //console.log(`Filtering out invalid column: ${columnName} for table: ${tableName}`);
         }
       });
 
@@ -638,22 +638,22 @@ module.exports = {
           // Handle specific required columns
           if (requiredColumn === 'ID') {
             // Generate a unique ID for cuid fields
-            transformedRecord[originalColumnName] = `migration_${tableName}_${Date.now()}_${index}`;
-            console.log(`Generated ID for record ${index} in table ${tableName}: ${transformedRecord[originalColumnName]}`);
+            transformedRecord[originalColumnName] = uuidv4();
+            //console.log(`Generated ID for record ${index} in table ${tableName}: ${transformedRecord[originalColumnName]}`);
           } else if (requiredColumn === 'CREATEDAT' || requiredColumn === 'MODIFIEDAT') {
             // Set timestamp for managed fields
             transformedRecord[originalColumnName] = new Date().toISOString();
-            console.log(`Set timestamp for ${originalColumnName} in table ${tableName}`);
+            //console.log(`Set timestamp for ${originalColumnName} in table ${tableName}`);
           } else if (requiredColumn === 'CREATEDBY' || requiredColumn === 'MODIFIEDBY') {
             // Set default user for managed fields
             transformedRecord[originalColumnName] = 'MIGRATION_SYSTEM';
-            console.log(`Set default user for ${originalColumnName} in table ${tableName}`);
+            //console.log(`Set default user for ${originalColumnName} in table ${tableName}`);
           } else {
             // For other required columns, set a default value based on type
             const element = entity.elements[originalColumnName];
             if (element && element.type) {
               if (element.type.includes('String')) {
-                transformedRecord[originalColumnName] = 'DEFAULT';
+                transformedRecord[originalColumnName] = '';
               } else if (element.type.includes('Integer') || element.type.includes('Decimal')) {
                 transformedRecord[originalColumnName] = 0;
               } else if (element.type.includes('Date')) {
@@ -661,12 +661,12 @@ module.exports = {
               } else if (element.type.includes('Timestamp')) {
                 transformedRecord[originalColumnName] = new Date().toISOString();
               } else {
-                transformedRecord[originalColumnName] = 'DEFAULT';
+                transformedRecord[originalColumnName] = '';
               }
             } else {
-              transformedRecord[originalColumnName] = 'DEFAULT';
+              transformedRecord[originalColumnName] = '';
             }
-            console.log(`Set default value for required column ${originalColumnName} in table ${tableName}`);
+            //console.log(`Set default value for required column ${originalColumnName} in table ${tableName}`);
           }
         }
       });
@@ -699,7 +699,7 @@ module.exports = {
 
       // Validate entity
       if (!entity) {
-        console.error(`Entity is undefined for table: ${tableName}. Table config:`, tableConfig);
+        //console.error(`Entity is undefined for table: ${tableName}. Table config:`, tableConfig);
         throw new Error(`Entity is undefined for table: ${tableName}. Please check the table configuration.`);
       }
 
@@ -707,7 +707,7 @@ module.exports = {
       const transformedData = this.transformDataForSchema(data, entity, tableName);
 
       if (transformedData.length === 0) {
-        console.log(`No valid data to insert for table: ${tableName}`);
+        //console.log(`No valid data to insert for table: ${tableName}`);
         return 0;
       }
 
@@ -726,7 +726,7 @@ module.exports = {
       // Convert to uppercase and replace dots with underscores
       entityName = entityName.toUpperCase().replace(/\./g, '_');
 
-      console.log(`Inserting into entity: ${entityName} for table: ${tableName}`);
+      //console.log(`Inserting into entity: ${entityName} for table: ${tableName}`);
 
       // Insert data in batches to avoid memory issues
       const batchSize = 1000;
@@ -736,13 +736,13 @@ module.exports = {
         const batch = transformedData.slice(i, i + batchSize);
 
         // Insert batch using CAP's INSERT operation
-        const insertResult = await db.run(INSERT.into(entityName).entries(batch));
+        const insertResult = await cds.run(INSERT.into(entityName).entries(batch));
         totalInserted += batch.length;
       }
 
       return totalInserted;
     } catch (error) {
-      console.error(`Error inserting data into table ${tableName}:`, error);
+      //console.error(`Error inserting data into table ${tableName}:`, error);
       throw new Error(`Failed to insert data into table ${tableName}: ${error.message}`);
     }
   },
@@ -773,7 +773,7 @@ module.exports = {
         auth: auth
       };
     } catch (error) {
-      console.error("Error getting credentials:", error);
+      //console.error("Error getting credentials:", error);
       throw new Error("Failed to get credentials: " + error.message);
     }
   },

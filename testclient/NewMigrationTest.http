@@ -28,10 +28,9 @@ Authorization: Bearer {{access_token}}
 
 {
   "tableNames": [
-    "CHRS_JOB_INFO",
-    "APP_CONFIGS"
+    "BTP_CREDENTIALS"
   ],
-  "deleteOnly": true
+  "deleteOnly": false
 }
 
 ### Test REDESIGNED loadMultipleTableData - DELETE AND RECREATE (Full operation)
@@ -41,9 +40,35 @@ Authorization: Bearer {{access_token}}
 
 {
   "tableNames": [
-    "CHRS_JOB_INFO",
+    "BTP_CREDENTIALS",
+    "EMAIL_CONFIGS",
+    "EMAIL_PLACEHOLDER_CONFIG",
+    "AUDIT_LOG_DATA",
+    "ATTACHMENTS_DATA",
+    "NOTIFICATION_LOG_DATA",
+    "STATUS_CONFIG",
+    "TASKS_CONFIG",
+    "TASK_ACTION_CONFIG",
+    "CLAIM_REQUEST_DURATION_CONFIG",
+    "PROCESS_PARTICIPANTS",
+    "TASK_DELEGATION_DETAILS",
+    "REQUEST_LOCK_DETAILS",
+    "FEEDBACK_DETAILS",
+    "NUS_CHRS_HOLIDAYS",
+    "DATE_TO_WEEK",
     "APP_CONFIGS",
-    "EMAIL_TEMPLATES"
+    "CWS_APP_CONFIGS",
+    "CHRS_APPROVER_MATRIX",
+    "CHRS_EXTERNAL_USERS",
+    "CHRS_ROLE_MASTER",
+    "PROCESS_CONFIG",
+    "MASTER_CLAIM_TYPE",
+    "REMARKS_DATA",
+    "PROCESS_DETAILS",
+    "TASK_DETAILS",
+    "DASHBOARD_CONFIG",
+    "TICKET_MGMT_DETAILS",
+    "RATE_TYPE_MASTER_DATA"
   ],
   "deleteOnly": false
 }
@@ -55,9 +80,7 @@ Authorization: Bearer {{access_token}}
 
 {
   "tableNames": [
-    "CHRS_JOB_INFO",
-    "INVALID_TABLE",
-    "APP_CONFIGS"
+    "ECLAIMS_DATA"
   ],
   "deleteOnly": false
 }
