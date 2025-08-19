@@ -93,8 +93,8 @@ context ECLAIMS {
             ItsNotificationLogData : Association to many UTILITY.ATTACHMENTS_DATA
                                          on ItsNotificationLogData.REFERENCE_ID = $self.DRAFT_ID
                                          or ItsNotificationLogData.REFERENCE_ID = $self.REQUEST_ID;
-            ItsRequestLockData      : Association to many UTILITY.REQUEST_LOCK_DETAILS
-            on ItsRequestLockData.REFERENCE_ID = $self.DRAFT_ID;
+            ItsRequestLockData     : Association to many UTILITY.REQUEST_LOCK_DETAILS
+                                         on ItsRequestLockData.REFERENCE_ID = $self.DRAFT_ID;
 
     };
 
@@ -486,11 +486,11 @@ context UTILITY {
             ACC_TYPE      : VAR_TEXT_20;
             END_POINT     : VAR_TEXT_100;
             ACC_NAME      : VAR_TEXT_50;
-            ACC_SECRET    : VAR_TEXT_100;
-            CUSTOM_ATTR_1 : VAR_TEXT_100;
-            CUSTOM_ATTR_2 : VAR_TEXT_100;
-            CUSTOM_ATTR_3 : VAR_TEXT_100;
-            CUSTOM_ATTR_4 : VAR_TEXT_100;
+            ACC_SECRET    : VAR_TEXT_1000;
+            CUSTOM_ATTR_1 : VAR_TEXT_1500;
+            CUSTOM_ATTR_2 : VAR_TEXT_1500;
+            CUSTOM_ATTR_3 : VAR_TEXT_1500;
+            CUSTOM_ATTR_4 : VAR_TEXT_1500;
     };
 
     /********************************************* Email Templates Config Entity ***************************/
@@ -792,7 +792,7 @@ context UTILITY {
             CONFIG_KEY      : VAR_TEXT_50;
             CONFIG_VALUE    : VAR_TEXT_250;
             REFERENCE_VALUE : VAR_TEXT_50;
-            CONFIG_DESC     : VAR_TEXT_100;
+            CONFIG_DESC     : VAR_TEXT_1000;
             CFG_TYPE        : VAR_TEXT_4; // A - Application, S - System, I - IT Team
             IS_ACTIVE       : VAR_TEXT_1;
             CREATED_BY      : VAR_TEXT_20;
@@ -1125,6 +1125,7 @@ context MASTER_DATA {
             MODIFIED_BY    : VAR_TEXT_100;
             REMARKS        : VAR_TEXT_150;
             MODIFIED_ON    : VAR_TEXT_50;
+            WORKING_HOURS  : VAR_TEXT_100;
     };
 
     /*********************************************Rate Type Master Entity***************************/

@@ -71,6 +71,23 @@ service MigrationService {
     @open
     type object {};
 
-    function loadTableData(Tablename : String) returns object;
+    // Original function for backward compatibility
+    function loadTableData(Tablename : String)                                                       returns object;
+
+    // New action for handling multiple tables
+    action   loadMultipleTableData(tableNames : array of String, deleteOnly : Boolean default false) returns {
+        success : Boolean;
+        totalTables : Integer;
+        processedTables : Integer;
+        failedTables : Integer;
+        results : array of {
+            tableName : String;
+            success : Boolean;
+            message : String;
+            result : object;
+            error : String;
+        };
+        summary : String;
+    };
 
 }
