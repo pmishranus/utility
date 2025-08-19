@@ -39,3 +39,5 @@ app/.env
 .env
 # auto generated wildcard
 db/.env
+
+java/
