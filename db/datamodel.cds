@@ -1,8 +1,13 @@
+using {
+    managed,
+    temporal,
+    cuid
+} from '@sap/cds/common';
+
+using {nusext.util.aspects as la} from './util/Aspect';
+
 namespace nusext;
 
-context REUSE_CONTEXT_TYPES {
-
-}
 
 type VAR_DATE      : Date;
 type VAR_FLAG      : Integer;
@@ -43,50 +48,58 @@ type VAR_DEC_12_2  : Decimal(12, 2);
 context ECLAIMS {
 
     /********************************************* Header Data Entity ***************************/
-    entity HEADER_DATA {
-        key DRAFT_ID            : VAR_TEXT_15;
-            REQUEST_ID          : VAR_TEXT_15;
-            CLAIM_TYPE          : VAR_TEXT_6;
-            STAFF_ID            : VAR_TEXT_20;
-            STAFF_NUSNET_ID     : VAR_TEXT_100;
-            CONCURRENT_STAFF_ID : VAR_TEXT_20;
-            ULU                 : VAR_TEXT_15;
-            FDLU                : VAR_TEXT_15;
-            EMPLOYEE_GRP        : VAR_TEXT_20;
-            DATE_JOINED         : VAR_TEXT_25;
-            EMP_RATE_TYPE       : VAR_TEXT_10;
-            CLAIM_YEAR          : VAR_TEXT_4;
-            CLAIM_MONTH         : VAR_TEXT_2;
-            REQUEST_STATUS      : VAR_TEXT_2;
-            SUBMITTED_ON        : VAR_DATE;
-            SUBMITTED_BY        : VAR_TEXT_20;
-            SUBMITTED_BY_NID    : VAR_TEXT_100;
-            REQUESTOR_GRP       : VAR_TEXT_50; // Identify the source user group
-            CREATED_ON          : VAR_TIMESTAMP;
-            ULU_T               : VAR_TEXT_100;
-            FULL_NM             : VAR_TEXT_250;
-            CLAIM_REQUEST_TYPE  : VAR_TEXT_10;
-            MODIFIED_BY         : VAR_TEXT_20;
-            MODIFIED_BY_NID     : VAR_TEXT_100;
-            MODIFIED_ON         : VAR_TIMESTAMP;
-            WORKING_HOURS       : VAR_TEXT_100;
-            STF_CLAIM_TYPE_CAT  : VAR_TEXT_10;
-            APPOINTMENT_TRACK   : VAR_TEXT_10;
-            ItsItemData         : Association to many ITEMS_DATA
-                                    on ItsItemData.DRAFT_ID = $self.DRAFT_ID;
-            ItsAttachmentData   : Association to many UTILITY.ATTACHMENTS_DATA
-                                    on ItsAttachmentData.REFERENCE_ID = $self.DRAFT_ID;
-            ItsRequestStatus           : Association to one UTILITY.STATUS_CONFIG
-                                    on ItsRequestStatus.STATUS_CODE = $self.REQUEST_STATUS; 
-            ItsRemarksData      : Association to many UTILITY.REMARKS_DATA
-                                    on ItsRemarksData.REFERENCE_ID = $self.DRAFT_ID;
-            ItsProcessData      : Association to one UTILITY.PROCESS_DETAILS
-            on ItsProcessData.REFERENCE_ID = $self.DRAFT_ID;
+    @cds.autoexpose
+    entity HEADER_DATA : cuid, managed {
+        key DRAFT_ID               : VAR_TEXT_15;
+            REQUEST_ID             : VAR_TEXT_15;
+            CLAIM_TYPE             : VAR_TEXT_6;
+            STAFF_ID               : VAR_TEXT_20;
+            STAFF_NUSNET_ID        : VAR_TEXT_100;
+            CONCURRENT_STAFF_ID    : VAR_TEXT_20;
+            ULU                    : VAR_TEXT_15;
+            FDLU                   : VAR_TEXT_15;
+            EMPLOYEE_GRP           : VAR_TEXT_20;
+            DATE_JOINED            : VAR_TEXT_25;
+            EMP_RATE_TYPE          : VAR_TEXT_10;
+            CLAIM_YEAR             : VAR_TEXT_4;
+            CLAIM_MONTH            : VAR_TEXT_2;
+            REQUEST_STATUS         : VAR_TEXT_2;
+            SUBMITTED_ON           : VAR_DATE;
+            SUBMITTED_BY           : VAR_TEXT_20;
+            SUBMITTED_BY_NID       : VAR_TEXT_100;
+            REQUESTOR_GRP          : VAR_TEXT_50; // Identify the source user group
+            CREATED_ON             : VAR_TIMESTAMP;
+            ULU_T                  : VAR_TEXT_100;
+            FULL_NM                : VAR_TEXT_250;
+            CLAIM_REQUEST_TYPE     : VAR_TEXT_10;
+            MODIFIED_BY            : VAR_TEXT_20;
+            MODIFIED_BY_NID        : VAR_TEXT_100;
+            MODIFIED_ON            : VAR_TIMESTAMP;
+            WORKING_HOURS          : VAR_TEXT_100;
+            STF_CLAIM_TYPE_CAT     : VAR_TEXT_10;
+            APPOINTMENT_TRACK      : VAR_TEXT_10;
+            ItsItemData            : Association to many ITEMS_DATA
+                                         on ItsItemData.DRAFT_ID = $self.DRAFT_ID;
+            ItsAttachmentData      : Association to many UTILITY.ATTACHMENTS_DATA
+                                         on ItsAttachmentData.REFERENCE_ID = $self.DRAFT_ID;
+            ItsRequestStatus       : Association to one UTILITY.STATUS_CONFIG
+                                         on ItsRequestStatus.STATUS_CODE = $self.REQUEST_STATUS;
+            ItsRemarksData         : Association to many UTILITY.REMARKS_DATA
+                                         on ItsRemarksData.REFERENCE_ID = $self.DRAFT_ID;
+            ItsProcessData         : Association to one UTILITY.PROCESS_DETAILS
+                                         on ItsProcessData.REFERENCE_ID = $self.DRAFT_ID;
+            ItsParticipantsData    : Association to many UTILITY.PROCESS_PARTICIPANTS
+                                         on ItsParticipantsData.REFERENCE_ID = $self.DRAFT_ID;
+            ItsNotificationLogData : Association to many UTILITY.ATTACHMENTS_DATA
+                                         on ItsNotificationLogData.REFERENCE_ID = $self.DRAFT_ID
+                                         or ItsNotificationLogData.REFERENCE_ID = $self.REQUEST_ID;
+            ItsRequestLockData      : Association to many UTILITY.REQUEST_LOCK_DETAILS
+            on ItsRequestLockData.REFERENCE_ID = $self.DRAFT_ID;
 
     };
 
     /********************************************* Items Data Entity ***************************/
-    entity ITEMS_DATA {
+    entity ITEMS_DATA : managed, la.common {
         key ITEM_ID              : VAR_TEXT_15; // Primary key of Items Data (DRAFT ID + 2 digit sequence no.)
             DRAFT_ID             : VAR_TEXT_15; // Foreign reference with the parent table
             CLAIM_START_DATE     : VAR_TEXT_15; // Claim Start Date selection
@@ -119,11 +132,15 @@ context ECLAIMS {
             WAGE_CODE            : VAR_TEXT_20;
             OBJECT_ID            : VAR_TEXT_15;
             OBJECT_TYPE          : VAR_TEXT_20;
+            ItsHeaderData        : Association to one HEADER_DATA
+                                       on ItsHeaderData.DRAFT_ID = $self.DRAFT_ID;
+            ItsTaxBenType        : Association to one TAX_BFT_CLAIMS_GRP
+                                       on ItsTaxBenType.BEN_TYPE = $self.OBJECT_TYPE;
     };
 
     /********************************************* Tax Benefits Claims Entity ***************************/
     @cds.autoexpose
-    entity TAX_BFT_CLAIMS_GRP {
+    entity TAX_BFT_CLAIMS_GRP : managed {
         key BEN_TYPE   : VAR_TEXT_2;
             START_DATE : VAR_DATE;
             END_DATE   : VAR_DATE;
@@ -464,7 +481,7 @@ context UTILITY {
     };
 
     /********************************************* BTP Credentials Config Entity ***************************/
-    entity BTP_CREDENTIALS {
+    entity BTP_CREDENTIALS : managed {
         key CID           : VAR_TEXT_15;
             ACC_TYPE      : VAR_TEXT_20;
             END_POINT     : VAR_TEXT_100;
@@ -477,7 +494,7 @@ context UTILITY {
     };
 
     /********************************************* Email Templates Config Entity ***************************/
-    entity EMAIL_TEMPLATES {
+    entity EMAIL_TEMPLATES : managed {
         key TEMPLATE_NAME  : VAR_TEXT_100;
             MAIL_SUBJECT   : VAR_TEXT_250;
             MAIL_BODY      : VAR_TEXT_2000;
@@ -490,7 +507,7 @@ context UTILITY {
     };
 
     /********************************************* Email Configs Entity ***************************/
-    entity EMAIL_CONFIGS {
+    entity EMAIL_CONFIGS : managed {
         key ECONFIG_ID     : VAR_TEXT_20;
             TEMPLATE_NAME  : VAR_TEXT_100;
             EMAIL_DESC     : VAR_TEXT_200;
@@ -511,7 +528,7 @@ context UTILITY {
     };
 
     /********************************************* Email Placeholder Config Entity ***************************/
-    entity EMAIL_PLACEHOLDER_CONFIG {
+    entity EMAIL_PLACEHOLDER_CONFIG : managed {
         key EPH_ID           : VAR_TEXT_20;
             TEMPLATE_NAME    : VAR_TEXT_100;
             TASK_NAME        : VAR_TEXT_40;
@@ -527,7 +544,7 @@ context UTILITY {
     };
 
     /********************************************* Audit Log Config Entity ***************************/
-    entity AUDIT_LOG_DATA {
+    entity AUDIT_LOG_DATA : managed {
         key AUDIT_ID       : VAR_INT;
             REFERENCE_ID   : VAR_TEXT_100;
             CHANGED_ON     : VAR_TIMESTAMP;
@@ -570,7 +587,7 @@ context UTILITY {
     };
 
     /********************************************* Notification Log Data Entity ***************************/
-    entity NOTIFICATION_LOG_DATA {
+    entity NOTIFICATION_LOG_DATA : managed {
         key NOTIF_ID          : VAR_TEXT_20; //Patter NTYYMM<4 digit seq no>
             REFERENCE_ID      : VAR_TEXT_20; //Unique Request No. of the source request
             NOTIF_TEMPLATE_ID : VAR_TEXT_50; // Notification Template ID triggered from EMAIL_TEMPLATES table
@@ -598,7 +615,7 @@ context UTILITY {
     };
 
     /********************************************* Remarks Data Entity ***************************/
-    entity REMARKS_DATA {
+    entity REMARKS_DATA : managed {
         key ID                : VAR_TEXT_20;
             REFERENCE_ID      : VAR_TEXT_20;
             REMARKS           : VAR_TEXT_5000;
@@ -612,7 +629,7 @@ context UTILITY {
     };
 
     /********************************************* Process Details Entity ***************************/
-    entity PROCESS_DETAILS {
+    entity PROCESS_DETAILS : managed {
         key PROCESS_INST_ID      : VAR_TEXT_12; //Process Instance ID in the format of PS<YY><MM><6 digit no.>
             REFERENCE_ID         : VAR_TEXT_15; //Reference ID of the Process Request triggered in the system. eg. CR220600001
             PROCESS_CODE         : VAR_TEXT_6; // Process code of the request
@@ -622,16 +639,18 @@ context UTILITY {
             PROCESSED_BY_NID     : VAR_TEXT_100; // NUSNET ID of the Requestor
             PROCESS_EXPECTED_DOC : VAR_DATE; // Populate Process Expected Date of Completion
             PROCESS_ACTUAL_DOC   : VAR_DATE; // Actual Date of Completion of the process
-            ItsTaskDetails      : Association to many TASK_DETAILS
-            on ItsTaskDetails.PROCESS_INST_ID = $self.PROCESS_INST_ID;
-            ItsClaimData        : Association to one ECLAIMS.HEADER_DATA
-            on ItsClaimData.DRAFT_ID = $self.REFERENCE_ID;
-            ItsProcessStatus : Association to one STATUS_CONFIG
-            on ItsProcessStatus.STATUS_CODE = $self.PROCESS_STATUS;
+            ItsTaskDetails       : Association to many TASK_DETAILS
+                                       on ItsTaskDetails.PROCESS_INST_ID = $self.PROCESS_INST_ID;
+            ItsClaimData         : Association to one ECLAIMS.HEADER_DATA
+                                       on ItsClaimData.DRAFT_ID = $self.REFERENCE_ID;
+            ItsProcessStatus     : Association to one STATUS_CONFIG
+                                       on ItsProcessStatus.STATUS_CODE = $self.PROCESS_STATUS;
+            ItsProcessConfig     : Association to one PROCESS_CONFIG
+                                       on ItsProcessConfig.PROCESS_CODE = $self.PROCESS_CODE;
     };
 
     /********************************************* Task Details Config Entity ***************************/
-    entity TASK_DETAILS {
+    entity TASK_DETAILS : cuid, managed {
         key TASK_INST_ID             : VAR_TEXT_12; //Task Instance ID in the format of TK<YY><MM><6 digit no.>
             PROCESS_INST_ID          : VAR_TEXT_12; //Process Instance ID in the format of PS<YY><MM><6 digit no.>
             TASK_NAME                : VAR_TEXT_40; // Task Technical Name
@@ -649,14 +668,14 @@ context UTILITY {
             TO_BE_TASK_SEQUENCE      : VAR_INT; //Upon Taking Action, Populate TO be Task Sequence from Task Completion
             TASK_ASSGN_TO_STF_NUMBER : VAR_TEXT_20; //Task Assigned to Staff ID
             TASK_CREATED_BY_NID      : VAR_TEXT_100; //Task Created By NID
-            ItsProcessData              : Association to one PROCESS_DETAILS
-            on ItsProcessData.PROCESS_INST_ID = $self.PROCESS_INST_ID;
-            ItsTaskStatus : Association to one STATUS_CONFIG
-            on ItsTaskStatus.STATUS_CODE = $self.TASK_STATUS;
+            ItsProcessData           : Association to one PROCESS_DETAILS
+                                           on ItsProcessData.PROCESS_INST_ID = $self.PROCESS_INST_ID;
+            ItsTaskStatus            : Association to one STATUS_CONFIG
+                                           on ItsTaskStatus.STATUS_CODE = $self.TASK_STATUS;
     };
 
     /********************************************* Process Config Entity ***************************/
-    entity PROCESS_CONFIG {
+    entity PROCESS_CONFIG : managed {
         key PROCESS_CODE     : VAR_TEXT_6;
             PROCESS_NAME     : VAR_TEXT_50;
             PROCESS_TITLE    : VAR_TEXT_100;
@@ -665,7 +684,7 @@ context UTILITY {
     };
 
     /********************************************* Tasks Config Entity ***************************/
-    entity TASKS_CONFIG {
+    entity TASKS_CONFIG : managed {
         key TCFG_ID             : VAR_TEXT_15; //Primary Key for Table - stored in the pattern of TSKCFG<2 digit no.>
             PROCESS_CODE        : VAR_TEXT_6; // Populate Process Code for each Project Type
             REQUESTOR_GRP       : VAR_TEXT_50; // Identify the source user group
@@ -680,7 +699,7 @@ context UTILITY {
     };
 
     /********************************************* Task Action Config Entity ***************************/
-    entity TASK_ACTION_CONFIG {
+    entity TASK_ACTION_CONFIG : managed {
         key TACTION_ID            : VAR_TEXT_15; //Primary Key for Table - stored in the pattern of TACTCFG<2 digit no.>
             REQUESTOR_GRP         : VAR_TEXT_50; //Identify the source user group
             TASK_NAME             : VAR_TEXT_40; // Task Technical Name
@@ -699,7 +718,7 @@ context UTILITY {
             SUBMISSION_TYPE       : VAR_TEXT_15;
             UPDATED_BY            : VAR_TEXT_20;
             UPDATED_BY_NID        : VAR_TEXT_100;
-            UPDATED_ON             : VAR_TIMESTAMP;
+            UPDATED_ON            : VAR_TIMESTAMP;
     };
 
     /********************************************* Claim Request Duration Config Entity ***************************/
@@ -716,7 +735,7 @@ context UTILITY {
     };
 
     /********************************************* Process Participants Entity ***************************/
-    entity PROCESS_PARTICIPANTS { // Populate Additional Approver and Verifier Details - Allowed for selection on the UI
+    entity PROCESS_PARTICIPANTS : managed { // Populate Additional Approver and Verifier Details - Allowed for selection on the UI
         key PPNT_ID          : VAR_TEXT_15; // Primary key of Items Data (PPNT + YY + MM + 4 digit)
             REFERENCE_ID     : VAR_TEXT_15; // Populate the source Unique ID (Request ID or Item ID)
             USER_DESIGNATION : VAR_TEXT_20; // Populate applicable Task Names (Refer to Task Config Table) - Reference with Task Details based on TASK_NAME
@@ -730,7 +749,7 @@ context UTILITY {
     };
 
     /********************************************* Task Delegation Entity ***************************/
-    entity TASK_DELEGATION_DETAILS {
+    entity TASK_DELEGATION_DETAILS : managed {
         key ID                : VAR_TEXT_20;
             TASK_NAME         : VAR_TEXT_40; // Task Technical Name
             DELEGATED_TO      : VAR_TEXT_20;
@@ -753,7 +772,7 @@ context UTILITY {
     };
 
     /********************************************* App Configs Entity ***************************/
-    entity APP_CONFIGS {
+    entity APP_CONFIGS : managed {
         key ACFG_ID          : VAR_TEXT_10;
             PROCESS_CODE     : VAR_TEXT_10;
             CONFIG_DESC      : VAR_TEXT_500;
@@ -804,7 +823,7 @@ context UTILITY {
     };
 
     /********************************************* Approver Matrix Entity ***************************/
-    entity CHRS_APPROVER_MATRIX { //CHRS Approver Matrix Table
+    entity CHRS_APPROVER_MATRIX : managed, cuid { //CHRS Approver Matrix Table
         key AUTH_ID         : VAR_TEXT_15; //Authorization ID will be in patter AUTHYY<4 digit sequence no.>
             PROCESS_CODE    : VAR_TEXT_6; // Claim Type Code Configuration
             ULU             : VAR_TEXT_15; // Store the ULU configured
@@ -825,7 +844,7 @@ context UTILITY {
     };
 
     /********************************************* Request LOCK Entity ***************************/
-    entity REQUEST_LOCK_DETAILS {
+    entity REQUEST_LOCK_DETAILS : managed {
         key LOCK_INST_ID       : VAR_TEXT_15; //Lock Instance ID in the format of LOCK<YY><MM><4 digit no.>
             REFERENCE_ID       : VAR_TEXT_15; //Reference ID of the Process Request triggered in the system. eg. DT220800001
             PROCESS_CODE       : VAR_TEXT_20; // Process code of the request
@@ -841,7 +860,7 @@ context UTILITY {
     };
 
     /*********************************************Dashboard table for listing all dashboard config***************************/
-    entity DASHBOARD_CONFIG {
+    entity DASHBOARD_CONFIG : managed {
         key DS_ACFG_ID    : VAR_TEXT_10;
             ACCESS_ROLE   : VAR_TEXT_50;
             REFERENCE_KEY : VAR_TEXT_50;
@@ -943,7 +962,7 @@ context UTILITY {
             MODIFIED_ON    : VAR_TIMESTAMP;
     };
 
-    entity TICKET_MGMT_DETAILS {
+    entity TICKET_MGMT_DETAILS : managed, cuid {
         key TCKT_ID          : VAR_TEXT_20; //Pattern TCKT<4digit seq no>
             PROCESS_CODE     : VAR_TEXT_6; // Process code of the request
             REFERENCE_TCKTNO : VAR_TEXT_50; //Reference Ticket No. from Remedy System
@@ -966,7 +985,7 @@ context UTILITY {
 
 context MASTER_DATA {
     /*********************************************Company Info Entity***************************/
-    entity CHRS_COMP_INFO {
+    entity CHRS_COMP_INFO : managed {
         key SF_STF_NUMBER : VAR_TEXT_100;
         key START_DATE    : VAR_DATE;
         key END_DATE      : VAR_DATE;
@@ -979,7 +998,7 @@ context MASTER_DATA {
     };
 
     /*********************************************Eligibility Criteria Entity***************************/
-    entity CHRS_ELIG_CRITERIA {
+    entity CHRS_ELIG_CRITERIA : managed {
         key STF_NUMBER          : VAR_TEXT_100;
         key SF_STF_NUMBER       : VAR_TEXT_100;
         key CLAIM_TYPE          : VAR_TEXT_100;
@@ -995,7 +1014,7 @@ context MASTER_DATA {
     };
 
     /*********************************************Cost Distribution Entity***************************/
-    entity CHRS_COST_DIST {
+    entity CHRS_COST_DIST : managed {
         key STF_NUMBER    : VAR_TEXT_100;
         key SF_STF_NUMBER : VAR_TEXT_100;
         key START_DATE    : VAR_DATE;
@@ -1004,7 +1023,7 @@ context MASTER_DATA {
     };
 
     /*********************************************ULU & FDLU Info Entity***************************/
-    entity CHRS_FDLU_ULU {
+    entity CHRS_FDLU_ULU : managed {
         key FDLU_C : VAR_TEXT_20;
             FDLU_T : VAR_TEXT_100;
             ULU_C  : VAR_TEXT_20;
@@ -1012,7 +1031,7 @@ context MASTER_DATA {
     };
 
     /*********************************************ULU, FDLU, PA and PSA Entity***************************/
-    entity CHRS_ULU_FDLU_PA_PSA {
+    entity CHRS_ULU_FDLU_PA_PSA : managed {
         key EXTERNAL_CODE : VAR_TEXT_20;
         key START_DATE    : VAR_DATE;
         key END_DATE      : VAR_DATE;
@@ -1025,7 +1044,7 @@ context MASTER_DATA {
     };
 
     /*********************************************Payroll Area Entity***************************/
-    entity CHRS_PAYROLL_AREA {
+    entity CHRS_PAYROLL_AREA : managed {
         key STF_NUMBER    : VAR_TEXT_100;
         key SF_STF_NUMBER : VAR_TEXT_100;
         key START_DATE    : VAR_DATE;
@@ -1035,7 +1054,7 @@ context MASTER_DATA {
     };
 
     /*********************************************HRP Info Entity***************************/
-    entity CHRS_HRP_INFO {
+    entity CHRS_HRP_INFO : managed {
         key STF_NUMBER    : VAR_TEXT_100;
         key SF_STF_NUMBER : VAR_TEXT_100;
         key START_DATE    : VAR_DATE;
@@ -1045,13 +1064,13 @@ context MASTER_DATA {
     };
 
     /*********************************************Master Claim Type Entity***************************/
-    entity MASTER_CLAIM_TYPE {
+    entity MASTER_CLAIM_TYPE : managed {
         key CLAIM_TYPE_C : VAR_TEXT_100;
             CLAIM_TYPE_T : VAR_TEXT_100;
     };
 
     /*********************************************Job Info Entity***************************/
-    entity CHRS_JOB_INFO {
+    entity CHRS_JOB_INFO : managed {
         key STF_NUMBER     : VAR_TEXT_100;
         key SF_STF_NUMBER  : VAR_TEXT_100;
         key SEQ_NUMBER     : VAR_TEXT_10;
@@ -1109,7 +1128,7 @@ context MASTER_DATA {
     };
 
     /*********************************************Rate Type Master Entity***************************/
-    entity RATE_TYPE_MASTER_DATA {
+    entity RATE_TYPE_MASTER_DATA : managed {
         key ID        : VAR_TEXT_10;
             RATE_CODE : VAR_TEXT_5;
             RATE_DESC : VAR_TEXT_50;
@@ -1119,7 +1138,7 @@ context MASTER_DATA {
     };
 
     /*********************************************Employee Listing Concur Entity***************************/
-    entity EMPLOYEE_LISTING_CONCUR {
+    entity EMPLOYEE_LISTING_CONCUR : managed {
         key CONCUR_EMPLOYEE_NUMBER : Integer;
             EMPLOYEE_NUMBER        : Integer;
             BURSTING_ID            : VAR_TEXT_12;
@@ -1138,7 +1157,7 @@ context MASTER_DATA {
     }
 
     /*********************************************Replication Job Info Entity***************************/
-    entity CHRS_REPLICATION_JOB_INFO {
+    entity CHRS_REPLICATION_JOB_INFO : managed {
         key STF_NUMBER     : VAR_TEXT_100;
         key SF_STF_NUMBER  : VAR_TEXT_100;
         key SEQ_NUMBER     : VAR_TEXT_10;
@@ -1197,7 +1216,7 @@ context MASTER_DATA {
 
 
     /*********************************************Replication HRP Info Entity***************************/
-    entity CHRS_REPLICATION_HRP_INFO {
+    entity CHRS_REPLICATION_HRP_INFO : managed {
         key STF_NUMBER    : VAR_TEXT_100;
         key SF_STF_NUMBER : VAR_TEXT_100;
         key START_DATE    : VAR_DATE;
@@ -1210,7 +1229,7 @@ context MASTER_DATA {
     };
 
     /*********************************************Replication Company Info Entity***************************/
-    entity CHRS_REPLICATION_COMP_INFO {
+    entity CHRS_REPLICATION_COMP_INFO : managed {
         key SF_STF_NUMBER : VAR_TEXT_20;
         key START_DATE    : VAR_DATE;
         key END_DATE      : VAR_DATE;
@@ -1226,7 +1245,7 @@ context MASTER_DATA {
     };
 
     /*********************************************Replication Cost Distribution Entity***************************/
-    entity CHRS_REPLICATION_COST_DIST {
+    entity CHRS_REPLICATION_COST_DIST : managed {
         key STF_NUMBER    : VAR_TEXT_100;
         key SF_STF_NUMBER : VAR_TEXT_100;
         key START_DATE    : VAR_DATE;
@@ -1238,7 +1257,7 @@ context MASTER_DATA {
     };
 
     /*********************************************Param Entitites Info Entity***************************/
-    entity CHRS_PARAM_ENTRIES {
+    entity CHRS_PARAM_ENTRIES : managed {
         key REF_KEY : VAR_TEXT_100;
             REF_VAL : VAR_TEXT_50;
     };
