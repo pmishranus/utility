@@ -588,6 +588,13 @@ module.exports = {
     if (entity.elements) {
       Object.keys(entity.elements).forEach(columnName => {
         const element = entity.elements[columnName];
+
+        // Skip association fields (they are not actual database columns)
+        if (element && (element.isAssociation || element.isComposition || element.target)) {
+          console.log(`Skipping association field: ${columnName} for table: ${tableName}`);
+          return;
+        }
+
         validColumns.add(columnName.toUpperCase());
 
         // Check if column is required (not nullable)
