@@ -199,7 +199,7 @@ GET {{unsecureProtocol}}://{{host}}/rest/migration/loadTableData(Tablename='NUS_
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
-### Test the new loadMultipleTableData action with ALL defined entities
+### Test the new loadMultipleTableData action with ALL defined entities (delete and recreate)
 POST {{unsecureProtocol}}://{{host}}/rest/migration/loadMultipleTableData
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
@@ -259,7 +259,22 @@ Authorization: Bearer {{access_token}}
     "DASHBOARD_CONFIG",
     "TICKET_MGMT_DETAILS",
     "RATE_TYPE_MASTER_DATA"
-  ]
+  ],
+  "deleteOnly": false
+}
+
+### Test DELETE ONLY functionality (no data recreation)
+POST {{unsecureProtocol}}://{{host}}/rest/migration/loadMultipleTableData
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "tableNames": [
+    "CHRS_JOB_INFO",
+    "APP_CONFIGS",
+    "EMAIL_TEMPLATES"
+  ],
+  "deleteOnly": true
 }
 
 ### Test with invalid table names to see error handling

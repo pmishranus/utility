@@ -30,7 +30,7 @@ module.exports = {
    * @returns {Promise<Object>} Result of multiple table processing
    */
   loadMultipleTableData: async function (request, db, srv) {
-    const { tableNames } = request.data;
+    const { tableNames, deleteOnly = false } = request.data;
 
     if (!tableNames || !Array.isArray(tableNames) || tableNames.length === 0) {
       const error = new Error("Please provide a valid array of table names.");
@@ -48,7 +48,10 @@ module.exports = {
       try {
         // Create a mock request object for each table
         const mockRequest = {
-          data: { Tablename: tableName },
+          data: {
+            Tablename: tableName,
+            deleteOnly: deleteOnly
+          },
           user: request.user,
           tenant: request.tenant
         };
@@ -58,10 +61,11 @@ module.exports = {
 
         processedTables++;
 
+        const operationType = deleteOnly ? "deleted only" : "deleted and recreated";
         return {
           tableName: tableName,
           success: true,
-          message: `Successfully processed table: ${tableName} (deleted and recreated)`,
+          message: `Successfully processed table: ${tableName} (${operationType})`,
           result: result,
           error: null
         };
@@ -85,7 +89,8 @@ module.exports = {
     // Generate summary
     const totalTables = tableNames.length;
     const success = failedTables === 0;
-    const summary = `Processed ${totalTables} tables. ${processedTables} successful, ${failedTables} failed.`;
+    const operationType = deleteOnly ? "delete-only" : "delete-and-recreate";
+    const summary = `Processed ${totalTables} tables (${operationType}). ${processedTables} successful, ${failedTables} failed.`;
 
     return {
       success: success,
@@ -265,7 +270,7 @@ module.exports = {
    * @returns {Promise<Object>} Result of the operation
    */
   handleTableDataUpdateWithDeleteAndRecreate: async function (oConnection) {
-    const { Tablename } = oConnection.request.data;
+    const { Tablename, deleteOnly = false } = oConnection.request.data;
     let oPayload = {};
     let relativePath = "/eclaims/services/migration_node.xsjs?cmd=";
 
@@ -358,13 +363,49 @@ module.exports = {
           };
           break;
         default:
-          const error = new Error("Invalid Tablename provided.");
+          const error = new Error(`Invalid Tablename provided: "${Tablename}". Please check the table name and ensure it exists in the supported tables list.`);
           error.code = 400;
           error.statusCode = 400;
           throw error;
       }
 
-      // Get credentials
+      // Get table configuration first to validate table exists
+      const targetTableConfigHdrData = TableConfig.getTargetTableConfig(oConnection.srv, Tablename);
+
+      if (!targetTableConfigHdrData.exists) {
+        const error = new Error(`Invalid Tablename provided: "${Tablename}". Table configuration not found.`);
+        error.code = 400;
+        error.statusCode = 400;
+        throw error;
+      }
+
+      // If deleteOnly is true, skip fetching data and just delete
+      if (deleteOnly) {
+        // Create a modified table config that forces hard delete
+        const deleteConfig = { ...targetTableConfigHdrData };
+        deleteConfig.sDelete = "hard"; // Force hard delete
+
+        // Delete all existing data
+        const deleteHandler = new UpsertHandler(
+          [], // Empty data array to trigger deletion of all existing records
+          oConnection,
+          deleteConfig
+        );
+
+        // Delete all existing records
+        const deleteResult = await deleteHandler.deleteExistingData();
+
+        return {
+          result: {
+            deletedRecords: deleteResult.iDeletedEntries || 0,
+            insertedRecords: 0,
+            operation: "delete_only",
+            tableName: Tablename
+          }
+        };
+      }
+
+      // Get credentials for fetching data
       let credStoreBinding = JSON.parse(process.env.VCAP_SERVICES).credstore[0].credentials;
       let credPassword = {
         name: "hana_login_password"
@@ -394,46 +435,42 @@ module.exports = {
       let responseData = response.data.result;
 
       if (responseData) {
-        const targetTableConfigHdrData = TableConfig.getTargetTableConfig(oConnection.srv, Tablename);
+        // Create a modified table config that forces hard delete
+        const deleteAndRecreateConfig = { ...targetTableConfigHdrData };
+        deleteAndRecreateConfig.sDelete = "hard"; // Force hard delete
 
-        if (targetTableConfigHdrData.exists) {
-          // Create a modified table config that forces hard delete
-          const deleteAndRecreateConfig = { ...targetTableConfigHdrData };
-          deleteAndRecreateConfig.sDelete = "hard"; // Force hard delete
+        // First, delete all existing data
+        const deleteHandler = new UpsertHandler(
+          [], // Empty data array to trigger deletion of all existing records
+          oConnection,
+          deleteAndRecreateConfig
+        );
 
-          // First, delete all existing data
-          const deleteHandler = new UpsertHandler(
-            [], // Empty data array to trigger deletion of all existing records
-            oConnection,
-            deleteAndRecreateConfig
-          );
+        // Delete all existing records
+        const deleteResult = await deleteHandler.deleteExistingData();
 
-          // Delete all existing records
-          const deleteResult = await deleteHandler.deleteExistingData();
+        // Then, insert all new data
+        const insertHandler = new UpsertHandler(
+          responseData,
+          oConnection,
+          targetTableConfigHdrData
+        );
 
-          // Then, insert all new data
-          const insertHandler = new UpsertHandler(
-            responseData,
-            oConnection,
-            targetTableConfigHdrData
-          );
+        const insertResult = await insertHandler.insertData(responseData);
 
-          const insertResult = await insertHandler.insertData(responseData);
-
-          return {
-            result: {
-              deletedRecords: deleteResult.iDeletedEntries || 0,
-              insertedRecords: insertResult || 0,
-              operation: "delete_and_recreate",
-              tableName: Tablename
-            }
-          };
-        } else {
-          const error = new Error("Invalid Tablename provided.");
-          error.code = 400;
-          error.statusCode = 400;
-          throw error;
-        }
+        return {
+          result: {
+            deletedRecords: deleteResult.iDeletedEntries || 0,
+            insertedRecords: insertResult || 0,
+            operation: "delete_and_recreate",
+            tableName: Tablename
+          }
+        };
+      } else {
+        const error = new Error(`No data received from external source for table: "${Tablename}"`);
+        error.code = 400;
+        error.statusCode = 400;
+        throw error;
       }
     }
   },

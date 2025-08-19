@@ -41,9 +41,17 @@ POST /rest/migration/loadMultipleTableData
     "ECLAIMS_ITEMS_DATA",
     "CHRS_JOB_INFO",
     "APP_CONFIGS"
-  ]
+  ],
+  "deleteOnly": false
 }
 ```
+
+#### Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `tableNames` | Array of String | Yes | - | Array of table names to process |
+| `deleteOnly` | Boolean | No | `false` | If `true`, only deletes existing data without recreating it |
 
 ### Response Format
 
@@ -110,17 +118,19 @@ POST /rest/migration/loadMultipleTableData
 
 ### Individual Table Errors
 
-- **Invalid table names**: Tables with invalid names will fail individually but won't stop other tables
+- **Invalid table names**: Tables with invalid names will fail individually but won't stop other tables. Error messages now include the specific table name for easier debugging
 - **Network errors**: Connection issues are captured per table
 - **Credential errors**: Authentication failures are logged per table
 - **Data processing errors**: Any errors during data processing are captured
 - **Delete operation errors**: If deletion fails, the operation stops for that table to prevent data inconsistency
+- **No data received**: If external source returns no data, operation fails with specific table name
 
 ## Example Usage
 
 ### JavaScript/Node.js
 
 ```javascript
+// Delete and recreate (default behavior)
 const response = await fetch('/rest/migration/loadMultipleTableData', {
   method: 'POST',
   headers: {
@@ -128,7 +138,21 @@ const response = await fetch('/rest/migration/loadMultipleTableData', {
     'Authorization': 'Bearer ' + accessToken
   },
   body: JSON.stringify({
-    tableNames: ['ECLAIMS_DATA', 'CHRS_JOB_INFO', 'APP_CONFIGS']
+    tableNames: ['ECLAIMS_DATA', 'CHRS_JOB_INFO', 'APP_CONFIGS'],
+    deleteOnly: false
+  })
+});
+
+// Delete only (no recreation)
+const deleteOnlyResponse = await fetch('/rest/migration/loadMultipleTableData', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + accessToken
+  },
+  body: JSON.stringify({
+    tableNames: ['ECLAIMS_DATA', 'CHRS_JOB_INFO'],
+    deleteOnly: true
   })
 });
 
@@ -149,12 +173,24 @@ result.results.forEach(tableResult => {
 ### cURL
 
 ```bash
+# Delete and recreate (default behavior)
 curl -X POST \
   http://localhost:4004/rest/migration/loadMultipleTableData \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer YOUR_ACCESS_TOKEN' \
   -d '{
-    "tableNames": ["ECLAIMS_DATA", "CHRS_JOB_INFO", "APP_CONFIGS"]
+    "tableNames": ["ECLAIMS_DATA", "CHRS_JOB_INFO", "APP_CONFIGS"],
+    "deleteOnly": false
+  }'
+
+# Delete only (no recreation)
+curl -X POST \
+  http://localhost:4004/rest/migration/loadMultipleTableData \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer YOUR_ACCESS_TOKEN' \
+  -d '{
+    "tableNames": ["ECLAIMS_DATA", "CHRS_JOB_INFO"],
+    "deleteOnly": true
   }'
 ```
 
@@ -172,10 +208,20 @@ Use the provided test cases in `testclient/Migration.http`:
 
 The new `loadMultipleTableData` action implements a **delete-and-recreate** strategy for data migration:
 
-1. **Fetch Fresh Data**: Retrieves the latest data from external HANA DB sources
+1. **Fetch Fresh Data**: Retrieves the latest data from external HANA DB sources (skipped if `deleteOnly=true`)
 2. **Delete Existing Data**: Completely removes all existing records from the target table
-3. **Insert New Data**: Inserts all fresh data from the external source
+3. **Insert New Data**: Inserts all fresh data from the external source (skipped if `deleteOnly=true`)
 4. **Return Results**: Provides detailed information about deleted and inserted record counts
+
+### Delete-Only Mode
+
+When `deleteOnly=true` is specified:
+
+- **Skip Data Fetching**: No external API calls are made
+- **Delete Only**: Only existing data is deleted from the target tables
+- **No Recreation**: No new data is inserted
+- **Faster Execution**: Significantly faster as it skips external data fetching
+- **Testing**: Useful for testing delete functionality or cleaning up data
 
 ### Benefits of Delete-and-Recreate
 
@@ -190,6 +236,8 @@ The new `loadMultipleTableData` action implements a **delete-and-recreate** stra
 - **Complete Data Overhaul**: When you need to completely refresh table contents
 - **Data Cleanup**: Removing accumulated stale or duplicate records
 - **System Migration**: Moving data between environments
+- **Testing Delete Functionality**: Use `deleteOnly=true` to test deletion without recreating data
+- **Data Cleanup Only**: Use `deleteOnly=true` when you only want to remove existing data
 
 ## Backward Compatibility
 
