@@ -132,6 +132,12 @@ module.exports = {
    * @returns {object|null} Table configuration or null if not found
    */
   getTableConfiguration: function (tableName, srv) {
+    // Validate service object and entities
+    if (!srv || !srv.entities) {
+      console.error(`Service object or entities not available for table: ${tableName}`);
+      throw new Error(`Service object or entities not available for table: ${tableName}`);
+    }
+
     const configs = {
       // ECLAIMS Tables
       "ECLAIMS_DATA": {
@@ -188,37 +194,25 @@ module.exports = {
         schema: "NUS_BTP_APPNS",
         table: "cwsned::Tables.OPWN_PAYMENT_IMG_DATA",
         entity: srv.entities.OPWN_PAYMENT_IMG_DATA,
-        primaryKeys: ["PAYMENT_ID"]
+        primaryKeys: ["ID"]
       },
       "OPWN_OTP_CONSOLIDATED_DATA": {
         schema: "NUS_BTP_APPNS",
         table: "cwsned::Tables.OPWN_OTP_CONSOLIDATED_DATA",
         entity: srv.entities.OPWN_OTP_CONSOLIDATED_DATA,
-        primaryKeys: ["SF_SEQUENCE"]
+        primaryKeys: ["ID"]
       },
       "OPWN_OTP_CONSOLIDATED_ERR_DATA": {
         schema: "NUS_BTP_APPNS",
         table: "cwsned::Tables.OPWN_OTP_CONSOLIDATED_ERR_DATA",
         entity: srv.entities.OPWN_OTP_CONSOLIDATED_ERR_DATA,
-        primaryKeys: ["SF_SEQUENCE"]
+        primaryKeys: ["ID"]
       },
       "CWS_REPORT_EXTRACT_DATA": {
         schema: "NUS_BTP_APPNS",
         table: "cwsned::Tables.CWS_REPORT_EXTRACT_DATA",
         entity: srv.entities.CWS_REPORT_EXTRACT_DATA,
-        primaryKeys: ["REP_EXTRACT_ID"]
-      },
-      "HEADER_DATA": {
-        schema: "NUS_BTP_APPNS",
-        table: "eclaims::Tables.HEADER_DATA",
-        entity: srv.entities.HEADER_DATA,
-        primaryKeys: ["DRAFT_ID"]
-      },
-      "ITEMS_DATA": {
-        schema: "NUS_BTP_APPNS",
-        table: "eclaims::Tables.ITEMS_DATA",
-        entity: srv.entities.ITEMS_DATA,
-        primaryKeys: ["ITEM_ID"]
+        primaryKeys: ["ID"]
       },
 
       // CHRS Tables
@@ -472,7 +466,15 @@ module.exports = {
       }
     };
 
-    return configs[tableName] || null;
+    const config = configs[tableName];
+
+    // Validate that the entity exists for the requested table
+    if (config && !config.entity) {
+      console.error(`Entity not found for table: ${tableName}. Available entities:`, Object.keys(srv.entities));
+      throw new Error(`Entity not found for table: ${tableName}. Please check if the entity is properly defined in the service.`);
+    }
+
+    return config || null;
   },
 
   /**
@@ -484,11 +486,37 @@ module.exports = {
    */
   deleteTableData: async function (tableName, tableConfig, db) {
     try {
+      // Validate table configuration
+      if (!tableConfig) {
+        throw new Error(`Table configuration is missing for table: ${tableName}`);
+      }
+
       // Use the entity from table config to delete all records
       const entity = tableConfig.entity;
 
+      // Validate entity
+      if (!entity) {
+        console.error(`Entity is undefined for table: ${tableName}. Table config:`, tableConfig);
+        throw new Error(`Entity is undefined for table: ${tableName}. Please check the table configuration.`);
+      }
+
+      // For CAP DELETE operations, we need to use the entity name as a string
+      // The entity object contains the query information, but DELETE.from expects the entity name
+      let entityName;
+
+      // Extract entity name from the entity object
+      if (entity.query && entity.query.SELECT && entity.query.SELECT.from && entity.query.SELECT.from.ref) {
+        // Get the entity name from the ref array
+        entityName = entity.query.SELECT.from.ref[0];
+      } else {
+        // Fallback: use the table name as entity name
+        entityName = tableName;
+      }
+
+      console.log(`Deleting from entity: ${entityName} for table: ${tableName}`);
+
       // Delete all records from the table using CAP's DELETE operation
-      const deleteResult = await db.run(DELETE.from(entity));
+      const deleteResult = await db.run(DELETE.from(entityName));
 
       return deleteResult.affectedRows || 0;
     } catch (error) {
@@ -550,8 +578,33 @@ module.exports = {
         return 0;
       }
 
+      // Validate table configuration
+      if (!tableConfig) {
+        throw new Error(`Table configuration is missing for table: ${tableName}`);
+      }
+
       // Use the entity from table config
       const entity = tableConfig.entity;
+
+      // Validate entity
+      if (!entity) {
+        console.error(`Entity is undefined for table: ${tableName}. Table config:`, tableConfig);
+        throw new Error(`Entity is undefined for table: ${tableName}. Please check the table configuration.`);
+      }
+
+      // For CAP INSERT operations, we need to use the entity name as a string
+      let entityName;
+
+      // Extract entity name from the entity object
+      if (entity.query && entity.query.SELECT && entity.query.SELECT.from && entity.query.SELECT.from.ref) {
+        // Get the entity name from the ref array
+        entityName = entity.query.SELECT.from.ref[0];
+      } else {
+        // Fallback: use the table name as entity name
+        entityName = tableName;
+      }
+
+      console.log(`Inserting into entity: ${entityName} for table: ${tableName}`);
 
       // Insert data in batches to avoid memory issues
       const batchSize = 1000;
@@ -561,7 +614,7 @@ module.exports = {
         const batch = data.slice(i, i + batchSize);
 
         // Insert batch using CAP's INSERT operation
-        const insertResult = await db.run(INSERT.into(entity).entries(batch));
+        const insertResult = await db.run(INSERT.into(entityName).entries(batch));
         totalInserted += batch.length;
       }
 
