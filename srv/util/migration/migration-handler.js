@@ -568,6 +568,46 @@ module.exports = {
   },
 
   /**
+   * Transform data to match target database schema
+   * @param {Array} data Array of data records
+   * @param {object} entity Entity definition from CAP
+   * @param {string} tableName Name of the table
+   * @returns {Array} Transformed data array
+   */
+  transformDataForSchema: function (data, entity, tableName) {
+    if (!data || data.length === 0) {
+      return data;
+    }
+
+    // Get the valid columns from the entity definition
+    const validColumns = new Set();
+    if (entity.elements) {
+      Object.keys(entity.elements).forEach(columnName => {
+        validColumns.add(columnName.toUpperCase());
+      });
+    }
+
+    console.log(`Valid columns for ${tableName}:`, Array.from(validColumns));
+
+    // Transform each record to only include valid columns
+    return data.map(record => {
+      const transformedRecord = {};
+
+      Object.keys(record).forEach(columnName => {
+        const upperColumnName = columnName.toUpperCase();
+        if (validColumns.has(upperColumnName)) {
+          // Use the original column name (preserve case)
+          transformedRecord[columnName] = record[columnName];
+        } else {
+          console.log(`Filtering out invalid column: ${columnName} for table: ${tableName}`);
+        }
+      });
+
+      return transformedRecord;
+    });
+  },
+
+  /**
    * Insert data into a table
    * @param {string} tableName Name of the table
    * @param {object} tableConfig Table configuration
@@ -595,6 +635,14 @@ module.exports = {
         throw new Error(`Entity is undefined for table: ${tableName}. Please check the table configuration.`);
       }
 
+      // Transform data to match the target schema
+      const transformedData = this.transformDataForSchema(data, entity, tableName);
+
+      if (transformedData.length === 0) {
+        console.log(`No valid data to insert for table: ${tableName}`);
+        return 0;
+      }
+
       // For CAP INSERT operations, we need to use the entity name as a string
       let entityName;
 
@@ -616,8 +664,8 @@ module.exports = {
       const batchSize = 1000;
       let totalInserted = 0;
 
-      for (let i = 0; i < data.length; i += batchSize) {
-        const batch = data.slice(i, i + batchSize);
+      for (let i = 0; i < transformedData.length; i += batchSize) {
+        const batch = transformedData.slice(i, i + batchSize);
 
         // Insert batch using CAP's INSERT operation
         const insertResult = await db.run(INSERT.into(entityName).entries(batch));

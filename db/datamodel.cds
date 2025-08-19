@@ -93,8 +93,8 @@ context ECLAIMS {
             ItsNotificationLogData : Association to many UTILITY.ATTACHMENTS_DATA
                                          on ItsNotificationLogData.REFERENCE_ID = $self.DRAFT_ID
                                          or ItsNotificationLogData.REFERENCE_ID = $self.REQUEST_ID;
-            ItsRequestLockData      : Association to many UTILITY.REQUEST_LOCK_DETAILS
-            on ItsRequestLockData.REFERENCE_ID = $self.DRAFT_ID;
+            ItsRequestLockData     : Association to many UTILITY.REQUEST_LOCK_DETAILS
+                                         on ItsRequestLockData.REFERENCE_ID = $self.DRAFT_ID;
 
     };
 
@@ -1125,6 +1125,7 @@ context MASTER_DATA {
             MODIFIED_BY    : VAR_TEXT_100;
             REMARKS        : VAR_TEXT_150;
             MODIFIED_ON    : VAR_TEXT_50;
+            WORKING_HOURS  : VAR_TEXT_100;
     };
 
     /*********************************************Rate Type Master Entity***************************/
