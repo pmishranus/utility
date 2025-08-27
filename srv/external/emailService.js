@@ -63,7 +63,7 @@ async function handleOnDemandEmailsForEClaims(
     if (CommonUtils.isNotBlank(role)) {
         tempTaskName = await AppConfigRepo.fetchConfigValue(role, processCode);
     }
-    tempTaskName = CommonUtils.isNotBlank(tempTaskName) ? tempTaskName : taskName;
+    tempTaskName = CommonUtils.isNotBlank(tempTaskName) ? tempTaskName[0].CONFIG_VALUE : taskName;
 
     // Handle Rejection Emails
     if (CommonUtils.isNotBlank(actionCode) &&

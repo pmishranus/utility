@@ -58,3 +58,181 @@ Authorization: Bearer {{access_token}}
             "setPriority": true
         }
 }
+
+
+### Request-3 Test Verifier Action
+#==================================================================#
+POST {{unsecureProtocol}}://{{host}}/task/taskactions
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+	"data": {
+		"loggedInUserDetails": {
+			"CREATEDAT": "2025-08-19T05:02:03.989",
+			"CREATEDBY": "MIGRATION_SYSTEM",
+			"MODIFIEDAT": "2025-08-19T05:02:03.989",
+			"MODIFIEDBY": "MIGRATION_SYSTEM",
+			"STF_NUMBER": "52819",
+			"SF_STF_NUMBER": "52819",
+			"SEQ_NUMBER": "1",
+			"START_DATE": "2022-01-01",
+			"END_DATE": "9999-12-31",
+			"FIRST_NM": "Darien",
+			"LAST_NM": "Huffman",
+			"PREF_NM": "Darien Huffman",
+			"FULL_NM": "Darien Huffman",
+			"NUSNET_ID": "PTT_VF5",
+			"EMP_GP_C": "A",
+			"EMP_GP_T": "Regular Full-Time",
+			"EMP_CAT_C": "31",
+			"EMP_CAT_T": "Executive & Administrative",
+			"ULU_C": "0500037300",
+			"ULU_T": "Ctr for English Language Communication",
+			"FDLU_C": "0003730001",
+			"FDLU_T": "Ctr for English Language Communication",
+			"COMPANY_C": "N001",
+			"COMPANY_T": "NUS",
+			"SAP_FAC_C": "9500",
+			"SAP_FAC_T": "NON-FACULTY-BASED DEPARTMENTS",
+			"SAP_DEPT_C": "0373",
+			"SAP_DEPT_T": "CELC",
+			"EMAIL": "cceengg@nus.edu.sg",
+			"RM_NUSNET_ID": "PTT_AAP5_2",
+			"RM_STF_N": "42891",
+			"WK_SCHD_C": "5-DAY WK",
+			"WK_SCHD_T": "5D Mon-Fri",
+			"STD_HOURS": "42.0",
+			"APPT_TRACK_C": "26",
+			"APPT_TRACK_T": "E&A (Executive)",
+			"JOB_LVL_C": "A3",
+			"JOB_LVL_T": "A3",
+			"RELIGION_C": "DEFAULT",
+			"RELIGION_T": "DEFAULT",
+			"RACE_C": "DEFAULT",
+			"RACE_T": "DEFAULT",
+			"JOB_GRD_C": "MA012",
+			"JOB_GRD_T": "Management Assistant Officer Grade 2",
+			"WORK_TITLE": "Senior Executive",
+			"EMPL_STS_C": "A",
+			"EMPL_STS_T": "Active",
+			"CONTEXP_DATE": "9999-12-31",
+			"JOIN_DATE": "2015-03-23",
+			"LEAVING_DATE": "2025-08-19",
+			"BANK_INFO_FLG": "X",
+			"RM_FLG": "DEFAULT",
+			"PAYSCALE_GRP_C": "SGP/99/99/80",
+			"PAYSCALE_GRP_T": "Annual Based Salary",
+			"CAPACITY_UTIL": "1.00",
+			"MODIFIED_BY": "CPIDEVADMIN",
+			"REMARKS": "NUS_EC_To_BTP_Job_Info_QA_AdRun_StaffID",
+			"MODIFIED_ON": "2024-12-19T04:02:37",
+			"WORKING_HOURS": "42.0"
+		},
+		"requestOfSource": [
+			{
+				"CLAIM_TYPE": "101",
+				"CLAIM_REQUEST_TYPE": "Daily",
+				"CLAIM_MONTH": "11-2024",
+				"TOTAL_AMOUNT": " ",
+				"WBS": " ",
+				"ULU": "0500037300",
+				"FDLU": "0003730001",
+				"DRAFT_ID": "DT2505000027",
+				"VERIFIER": [
+					{
+						"PPNT_ID": "PPNT25050014",
+						"STAFF_ID": "52819",
+						"NUSNET_ID": "PTT_VF5",
+						"ULU": "",
+						"FDLU": "",
+						"STAFF_FULL_NAME": "Darien Huffman"
+					}
+				],
+				"ADDTIONAL_APPROVER_1": [
+					{
+						"PPNT_ID": "",
+						"STAFF_ID": "",
+						"NUSNET_ID": "",
+						"ULU": "",
+						"FDLU": "",
+						"STAFF_FULL_NAME": ""
+					}
+				],
+				"ADDTIONAL_APPROVER_2": [
+					{
+						"PPNT_ID": "",
+						"STAFF_ID": "",
+						"NUSNET_ID": "",
+						"ULU": "",
+						"FDLU": "",
+						"STAFF_FULL_NAME": ""
+					}
+				],
+				"ATTACHMENTS": [],
+				"REMARKS": [],
+				"REQUEST_STATUS": "03",
+				"isMassUpload": "N",
+				"ACTION": "VERIFY",
+				"ROLE": "VERIFIER",
+				"REQUEST_ID": "",
+				"selectedClaimDates": [
+					{
+						"ITEM_ID": "DT2505000027001",
+						"CLAIM_START_DATE": "2024-11-07",
+						"CLAIM_END_DATE": "2024-11-07",
+						"START_TIME": "10:00",
+						"END_TIME": "20:00",
+						"CLAIM_START_DATE_DISPLAY": "07 Nov, 2024",
+						"CLAIM_DAY": "Thursday",
+						"HOURS_UNIT": "9.00",
+						"RATE_TYPE": "10",
+						"CLAIM_REQUEST_TYPE_NUMBER": "10",
+						"CLAIM_DAY_TYPE": "Workday",
+						"WBS": "",
+						"WAGE_CODE": "",
+						"REMARKS": "",
+						"TOTAL_AMOUNT": "180.00",
+						"IS_DISCREPENCY": 0,
+						"RATE_TYPE_AMOUNT": "20.00",
+						"DISC_RATETYPE_AMOUNT": "0.00",
+						"OT_COMMENCE_AFT_HRS": ""
+					},
+					{
+						"ITEM_ID": "DT2505000027002",
+						"CLAIM_START_DATE": "2024-11-08",
+						"CLAIM_END_DATE": "2024-11-08",
+						"START_TIME": "10:00",
+						"END_TIME": "20:00",
+						"CLAIM_START_DATE_DISPLAY": "08 Nov, 2024",
+						"CLAIM_DAY": "Friday",
+						"HOURS_UNIT": "9.00",
+						"RATE_TYPE": "10",
+						"CLAIM_REQUEST_TYPE_NUMBER": "10",
+						"CLAIM_DAY_TYPE": "Workday",
+						"WBS": "",
+						"WAGE_CODE": "",
+						"REMARKS": "",
+						"TOTAL_AMOUNT": "180.00",
+						"IS_DISCREPENCY": 0,
+						"RATE_TYPE_AMOUNT": "20.00",
+						"DISC_RATETYPE_AMOUNT": "0.00",
+						"OT_COMMENCE_AFT_HRS": ""
+					}
+				]
+			}
+		],
+		"internalCall": true,
+		"payload": [
+			{
+				"DRAFT_ID": "DT2505000027",
+				"ROLE": "VERIFIER",
+				"IS_REMARKS_UPDATE": true,
+				"REQUEST_ID": "CM2507000009",
+				"PROCESS_CODE": "101",
+				"ACTION_CODE": "VERIFY",
+				"TASK_INST_ID": "T2507000022"
+			}
+		]
+	}
+}

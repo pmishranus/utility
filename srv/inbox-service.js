@@ -14,7 +14,8 @@ class InboxService extends cds.ApplicationService {
       this.on('echo', async (req) => {
         // Simple echo for connectivity testing
         req.data.data.Pankaj = {
-          "name" : "Pankaj"
+          "name" : "Pankaj",
+          "id": req.user.id
         }
         return req.data && req.data.data ? req.data.data : req.data;
       }),

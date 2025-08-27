@@ -12,22 +12,34 @@ const CwsDataRepo = require("../repository/cwsData.repo");
 const EclaimsHeaderDataRepo = require("../repository/eclaimsData.repo");
 const ProcessParticipantsRepo = require("../repository/processParticipants.repo");
 const EmailService = require("../external/emailService")
-async function massTaskAction(request, systemUserName,action) {
+async function massTaskAction(request, systemUserName, action) {
   let approveTasksRes = [];
   try {
     const tx = cds.tx(request);
-    const user = request.user.id;
-    const userName = "PTT_CA1";
-    const upperNusNetId = userName.toUpperCase();
-    let userInfoDetails = await CommonRepo.fetchUserInfo(upperNusNetId);
-    if (!userName) {
-      throw new Error("User not found..!!");
+    const oRequestData = request.data.data;
+    let user = request.user.id;
+    let userName = "PTT_CA1";
+    let upperNusNetId = userName.toUpperCase();
+    let userInfoDetails = {};
+    let taskApprovalDtoList = [];
+    if (oRequestData.internalCall) {
+      user = oRequestData.loggedInUserDetails.NUSNET_ID;
+      userName = oRequestData.loggedInUserDetails.NUSNET_ID;
+      upperNusNetId = oRequestData.loggedInUserDetails.NUSNET_ID.toUpperCase();
+      userInfoDetails = oRequestData.loggedInUserDetails;
+      taskApprovalDtoList = oRequestData.payload;
+    } else {
+      userInfoDetails = await CommonRepo.fetchUserInfo(upperNusNetId);
+      if (!userName) {
+        throw new Error("User not found..!!");
+      }
+      taskApprovalDtoList = request.data.data ? request.data.data : []
     }
 
 
     // let taskApprovalDtoList = [{ "REQUEST_ID": "CM2502000017", "DRAFT_ID": "DT2502000025", "TASK_INST_ID": "T2505000008", "ACTION_CODE": "APPROVE", "REJECT_REMARKS": "", "PROCESS_CODE": "103", "staffId": ["151292"], "loggedInStaffId": "913437" }]
 
-    let taskApprovalDtoList = request.data.data ? request.data.data : [];
+    // let taskApprovalDtoList = request.data.data ? request.data.data : [];
 
     if (!Array.isArray(taskApprovalDtoList) || taskApprovalDtoList.length === 0) {
       throw new Error("Task Approval Request is not valid.");
@@ -228,7 +240,7 @@ async function deleteLock(requestDto, tx) {
 
   return responseDto;
 }
-function generateResponseMessageWithActionCode(dto, status, actionCode, ApplicationConstants) {
+function generateResponseMessageWithActionCode(dto, status, actionCode) {
   dto.STATUS = status;
   let message = ApplicationConstants.ackMessageApprove;
 
@@ -462,7 +474,7 @@ async function initializeNextTask(
     taskAssignedToStaffId && CommonUtils.isNotBlank(taskAssignedToStaffId)
       ? taskAssignedToStaffId
       : ApplicationConstants.ALL;
-
+  updatedTaskDetails.ID = CommonUtils.generateUUID();
   updatedTaskDetails.TASK_INST_ID = taskInstId;
   updatedTaskDetails.PROCESS_INST_ID = processInstId;
   updatedTaskDetails.TASK_NAME = taskName;
