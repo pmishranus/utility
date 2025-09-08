@@ -37,3 +37,42 @@ Content-Type: application/json
 GET {{host}}/util/releaseLockedRequests()
 Authorization: Bearer {{token}}
 Content-Type: application/json
+
+### Test requestLock endpoint for eClaims process (PTT)
+### Note: NUSNET_ID will be extracted from XSUAA (request.user.id)
+POST {{host}}/util/requestLock
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "DRAFT_ID": "DT2502000025",
+  "PROCESS_CODE": "101",
+  "REQUEST_STATUS": "LOCK",
+  "REQUESTOR_GRP": "ESS"
+}
+
+### Test requestLock endpoint for CWS process
+### Note: NUSNET_ID will be extracted from XSUAA (request.user.id)
+POST {{host}}/util/requestLock
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "DRAFT_ID": "CWS2502000025",
+  "PROCESS_CODE": "201",
+  "REQUEST_STATUS": "LOCK",
+  "REQUESTOR_GRP": "ESS"
+}
+
+### Test requestLock endpoint to unlock
+### Note: NUSNET_ID will be extracted from XSUAA (request.user.id)
+POST {{host}}/util/requestLock
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "DRAFT_ID": "DT2502000025",
+  "PROCESS_CODE": "101",
+  "REQUEST_STATUS": "UNLOCK",
+  "REQUESTOR_GRP": "ESS"
+}
