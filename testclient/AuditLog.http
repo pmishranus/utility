@@ -27,3 +27,13 @@ Content-Type: application/json
 GET {{host}}/util/getAuditLogData(referenceId='DT2502000026',processCode='102')
 Authorization: Bearer {{token}}
 Content-Type: application/json
+
+### Test releaseLockedRequests endpoint with specific draft ID
+GET {{host}}/util/releaseLockedRequests(draftId='DT2502000025')
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### Test releaseLockedRequests endpoint without draft ID (unlocks all)
+GET {{host}}/util/releaseLockedRequests()
+Authorization: Bearer {{token}}
+Content-Type: application/json

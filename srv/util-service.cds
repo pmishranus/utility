@@ -135,6 +135,12 @@ type auditMainResponse {
   eClaimsItemsList : array of eClaimsItemDataResDto;
 }
 
+type responseDto {
+  isError    : Boolean;
+  message    : String;
+  statusCode : String;
+}
+
 type appConfigurationRequests {
   ACFG_ID          : String;
   CWS_ACFG_ID      : String;
@@ -190,5 +196,6 @@ service UtilService @(path: '/util') {
   function getUserDetails(userId : String)                             returns UtilResponse;
   action   appConfigCreateEntry(data : appConfigurationRequests)       returns String;
   function getAuditLogData(referenceId : String, processCode : String) returns auditMainResponse;
+  function releaseLockedRequests(draftId : String)                     returns responseDto;
 
 }
