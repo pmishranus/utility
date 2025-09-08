@@ -1,5 +1,12 @@
 const cds = require("@sap/cds");
 const taskActionsCtrl = require("./controller/taskActions.controller")
+const TaskDetailsRepo = require("./repository/taskDetails.repo");
+const EclaimsDataRepo = require('./repository/eclaimsData.repo');
+const CwsDataRepo = require('./repository/cwsData.repo');
+const CommonRepo = require('./repository/util.repo');
+const TasksConfigRepo = require('./repository/tasksConfig.repo');
+const { fromValue } = require('./enum/processConfigType');
+const { ApplicationConstants } = require('./util/constant');
 const nodemailer = require('nodemailer');
 const { retrieveJwt, getDestination } = require('@sap-cloud-sdk/connectivity'); // 
 const axios = require('axios');
@@ -14,10 +21,121 @@ class InboxService extends cds.ApplicationService {
       this.on('echo', async (req) => {
         // Simple echo for connectivity testing
         req.data.data.Pankaj = {
-          "name" : "Pankaj",
+          "name": "Pankaj",
           "id": req.user.id
         }
         return req.data && req.data.data ? req.data.data : req.data;
+      }),
+
+      this.on('fetchTasksByProcessInstId', async (req) => {
+        try {
+          const { processInstId } = req.data;
+
+          if (!processInstId) {
+            return {
+              taskHistoryList: [],
+              changeHistoryMap: {},
+              requestMap: {},
+              isError: true,
+              message: "Process Inst Id is null/empty",
+              statusCode: "ERROR"
+            };
+          }
+
+          const taskDetails = await TaskDetailsRepo.fetchByProcessInstId(processInstId);
+
+          return {
+            taskHistoryList: taskDetails,
+            changeHistoryMap: {},
+            requestMap: {},
+            isError: false,
+            message: "Task details fetched successfully",
+            statusCode: "SUCCESS"
+          };
+        } catch (error) {
+          console.error('Error in fetchTasksByProcessInstId:', error);
+          return {
+            taskHistoryList: [],
+            changeHistoryMap: {},
+            requestMap: {},
+            isError: true,
+            message: error.message || "Generic Exception",
+            statusCode: "ERROR"
+          };
+        }
+      }),
+
+      this.on('getProcessTrackerDetails', async (req) => {
+        try {
+          const { draftId, processCode } = req.data;
+
+          if (!draftId || !processCode) {
+            return {
+              taskHistoryList: [],
+              changeHistoryMap: "{}",
+              requestMap: "{}",
+              isError: true,
+              message: "draftId/processCode is empty",
+              statusCode: "ERROR"
+            };
+          }
+
+          // Retrieve Existing Task Details
+          const existingTaskDetailList = await TaskDetailsRepo.fetchByReferenceId(draftId);
+          let taskDetailsHistoryList = [];
+          let requestData = null;
+
+          const pType = fromValue(processCode);
+          switch (pType) {
+            case 'PTT':
+            case 'CW':
+            case 'OT':
+            case 'HM':
+            case 'TB':
+              requestData = await amendEClaimRequestData(draftId);
+              taskDetailsHistoryList = await frameExistingTasksData(draftId, requestData.REQUESTOR_GRP,
+                requestData.PROCESS_CODE, requestData.TASK_POSITION, requestData.STAFF_ID,
+                existingTaskDetailList, requestData);
+              taskDetailsHistoryList.unshift(requestData);
+              break;
+            case 'CWS':
+            case 'NED':
+              requestData = await amendCwsRequestData(draftId);
+              taskDetailsHistoryList = await frameExistingTasksData(draftId, requestData.REQUESTOR_GRP,
+                requestData.PROCESS_CODE, requestData.TASK_POSITION, requestData.STAFF_ID,
+                existingTaskDetailList, requestData);
+              taskDetailsHistoryList.unshift(requestData);
+              break;
+            case 'OPWN':
+              requestData = await amendCwsRequestData(draftId);
+              taskDetailsHistoryList = await frameExistingTasksData(draftId, requestData.REQUESTOR_GRP,
+                requestData.PROCESS_CODE, requestData.TASK_POSITION, requestData.TASK_USER_STAFF_ID,
+                existingTaskDetailList, requestData);
+              taskDetailsHistoryList.unshift(requestData);
+              break;
+            default:
+              break;
+          }
+
+          return {
+            taskHistoryList: taskDetailsHistoryList,
+            changeHistoryMap: "{}",
+            requestMap: "{}",
+            isError: false,
+            message: "The Task history Details are retrieved successfully",
+            statusCode: "SUCCESS"
+          };
+        } catch (error) {
+          console.error('Error in getProcessTrackerDetails:', error);
+          return {
+            taskHistoryList: [],
+            changeHistoryMap: "{}",
+            requestMap: "{}",
+            isError: true,
+            message: error.message || "Generic Exception",
+            statusCode: "ERROR"
+          };
+        }
       }),
 
       this.on('sendEmail', async (req) => {
@@ -106,6 +224,156 @@ class InboxService extends cds.ApplicationService {
         }
       });
     return super.init()
+  }
+
+  // Helper function to amend EClaims request data
+  async amendEClaimRequestData(draftId) {
+    const requestData = {};
+
+    try {
+      const eClaimData = await EclaimsDataRepo.fetchHeaderByDraftId(draftId);
+      if (!eClaimData || !eClaimData.DRAFT_ID) {
+        requestData.MESSAGE = "No Data exists for this EClaim Request";
+        return requestData;
+      }
+
+      const taskPosition = 1;
+
+      requestData.TASK_NAME = eClaimData.REQUESTOR_GRP === ApplicationConstants.NUS_CHRS_ECLAIMS_ESS ? "CLAIMANT" : "CLAIM_ASSISTANT";
+      requestData.TASK_ACTUAL_DOC = eClaimData.CREATED_ON;
+
+      // Retrieve the submission time from the first Task Created On
+      const taskCreatedOnList = await TaskDetailsRepo.fetchTaskCreatedOnList(draftId);
+      if (taskCreatedOnList && taskCreatedOnList.length > 0) {
+        requestData.TASK_ACTUAL_DOC = taskCreatedOnList[0];
+      }
+
+      requestData.TASK_COMPLETED_BY = eClaimData.SUBMITTED_BY;
+      requestData.TASK_COMPLETED_BY_NID = eClaimData.SUBMITTED_BY_NID;
+
+      // Get user details
+      const userInfoDetails = await CommonRepo.fetchUserInfo(eClaimData.SUBMITTED_BY);
+
+      requestData.TASK_USER_NID = eClaimData.SUBMITTED_BY_NID;
+      requestData.TASK_USER_STAFF_ID = eClaimData.SUBMITTED_BY;
+      requestData.TASK_USER_FULLNAME = userInfoDetails ? userInfoDetails.FULL_NM : "";
+
+      // Get task alias name
+      const taskNameAliasList = await TasksConfigRepo.fetchTaskAliasName(eClaimData.CLAIM_TYPE, eClaimData.REQUESTOR_GRP, requestData.TASK_NAME);
+      requestData.TASK_ALIAS_NAME = (taskNameAliasList && taskNameAliasList.length > 0) ? taskNameAliasList[0] : "";
+
+      requestData.TASK_ICON_TYPE = "sap-icon://time-overtime";
+      requestData.ACTION_CODE = "SUBMIT";
+      requestData.TASK_ASSGN_GRP = eClaimData.REQUESTOR_GRP;
+      requestData.TASK_POSITION = taskPosition;
+      requestData.TASK_SEQUENCE = taskPosition - 1;
+      requestData.TASK_STATUS = ApplicationConstants.STATUS_TASK_COMPLETED;
+
+      requestData.REQUESTOR_GRP = eClaimData.REQUESTOR_GRP;
+      requestData.PROCESS_CODE = eClaimData.CLAIM_TYPE;
+      requestData.STAFF_ID = eClaimData.STAFF_ID;
+
+      // Additional fields for response
+      requestData.SUBMISSION_TYPE = eClaimData.SUBMISSION_TYPE;
+      requestData.SUBMISSION_TYPE_ALIAS = eClaimData.SUBMISSION_TYPE;
+      requestData.SUBMITTED_ON_TS = eClaimData.SUBMITTED_ON_TS;
+      requestData.REQ_STATUS = eClaimData.REQUEST_STATUS;
+      requestData.REQ_STATUS_ALIAS = eClaimData.REQUEST_STATUS;
+      requestData.REQUEST_ID = eClaimData.REQUEST_ID;
+
+    } catch (error) {
+      console.error('Error in amendEClaimRequestData:', error);
+      requestData.MESSAGE = "Error in Task User Information Retrieval: " + error.message;
+      requestData.TASK_USER_FULLNAME = ApplicationConstants.NO_USER_INFO;
+    }
+
+    return requestData;
+  }
+
+  // Helper function to amend CWS request data
+  async amendCwsRequestData(reqUniqueId) {
+    const requestData = {};
+
+    try {
+      const cwsData = await CwsDataRepo.fetchHeaderByUniqueId(reqUniqueId);
+      if (!cwsData || !cwsData.REQ_UNIQUE_ID) {
+        requestData.MESSAGE = "No Data exists for this CW Request";
+        return requestData;
+      }
+
+      const taskPosition = 1;
+
+      requestData.TASK_NAME = cwsData.REQUESTOR_GRP;
+      requestData.TASK_ACTUAL_DOC = cwsData.SUBMITTED_ON_TS;
+
+      // Retrieve the submission time from the first Task Created On
+      const taskCreatedOnList = await TaskDetailsRepo.fetchTaskCreatedOnList(reqUniqueId);
+      if (taskCreatedOnList && taskCreatedOnList.length > 0) {
+        requestData.TASK_ACTUAL_DOC = taskCreatedOnList[0];
+      }
+
+      requestData.TASK_COMPLETED_BY = cwsData.SUBMITTED_BY;
+      requestData.TASK_COMPLETED_BY_NID = cwsData.SUBMITTED_BY_NID;
+      requestData.STAFF_ID = cwsData.STAFF_ID;
+
+      // Get task alias name
+      const taskNameAliasList = await TasksConfigRepo.fetchTaskAliasName(cwsData.PROCESS_CODE, cwsData.REQUESTOR_GRP, requestData.TASK_NAME);
+      requestData.TASK_ALIAS_NAME = (taskNameAliasList && taskNameAliasList.length > 0) ? taskNameAliasList[0] : "";
+
+      requestData.TASK_ICON_TYPE = "sap-icon://per-diem";
+      requestData.ACTION_CODE = ApplicationConstants.ACTION_SUBMIT;
+      requestData.TASK_ASSGN_GRP = cwsData.REQUESTOR_GRP;
+      requestData.TASK_POSITION = taskPosition;
+      requestData.TASK_SEQUENCE = taskPosition - 1;
+      requestData.TASK_STATUS = ApplicationConstants.STATUS_TASK_COMPLETED;
+
+      requestData.REQUESTOR_GRP = cwsData.REQUESTOR_GRP;
+      requestData.PROCESS_CODE = cwsData.PROCESS_CODE;
+      requestData.TASK_USER_STAFF_ID = cwsData.STAFF_ID;
+
+      // Additional fields for response
+      requestData.SUBMISSION_TYPE = cwsData.SUBMISSION_TYPE;
+      requestData.SUBMISSION_TYPE_ALIAS = cwsData.SUBMISSION_TYPE;
+      requestData.SUBMITTED_ON_TS = cwsData.SUBMITTED_ON_TS;
+      requestData.REQ_STATUS = cwsData.REQUEST_STATUS;
+      requestData.REQ_STATUS_ALIAS = cwsData.REQUEST_STATUS;
+      requestData.REQUEST_ID = cwsData.REQUEST_ID;
+
+    } catch (error) {
+      console.error('Error in amendCwsRequestData:', error);
+      requestData.MESSAGE = "Error in CW Request Data Retrieval: " + error.message;
+    }
+
+    return requestData;
+  }
+
+  // Helper function to frame existing tasks data
+  async frameExistingTasksData(referenceId, requestorGroup, processCode, taskPosition, staffId, existingTaskDetailList, requestData) {
+    const taskDetailsHistoryList = [];
+
+    try {
+      // Current Task List from TaskDetails
+      for (const tDetailDto of existingTaskDetailList) {
+        // Get task alias name
+        const taskNameAliasList = await TasksConfigRepo.fetchTaskAliasName(processCode, requestorGroup, tDetailDto.TASK_NAME);
+        tDetailDto.TASK_ALIAS_NAME = (taskNameAliasList && taskNameAliasList.length > 0) ? taskNameAliasList[0] : "";
+
+        // Set submission type for CWS processes
+        let submissionType = "";
+        if (['OPWN', 'CWS', 'NED'].includes(processCode)) {
+          submissionType = await CwsDataRepo.fetchSubmissionType(requestorGroup);
+        }
+
+        // Set completed by full name
+        tDetailDto.COMPLETED_BY_FULL_NAME = "";
+
+        taskDetailsHistoryList.push(tDetailDto);
+      }
+    } catch (error) {
+      console.error('Error in frameExistingTasksData:', error);
+    }
+
+    return taskDetailsHistoryList;
   }
 }
 module.exports = InboxService;

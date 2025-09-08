@@ -43,8 +43,34 @@ async function fetchByDraftId(draftId) {
     }
 }
 
+async function fetchHeaderByDraftId(draftId) {
+    try {
+        const header = await cds.run(
+            SELECT
+                .one
+                .from('NUSEXT_ECLAIMS_HEADER_DATA')
+                .where({ DRAFT_ID: draftId })
+                .columns([
+                    'DRAFT_ID',
+                    'REQUEST_ID',
+                    'REQUEST_STATUS',
+                    'REQUESTOR_GRP',
+                    'PROCESS_CODE',
+                    'STAFF_ID',
+                    'SUBMISSION_TYPE',
+                    'SUBMITTED_ON_TS'
+                ])
+        );
+        return header || null;
+    } catch (error) {
+        console.error('Error fetching eClaims header by draft ID:', error);
+        throw error;
+    }
+}
+
 module.exports = {
     fetchStaffId,
     updateEClaimsDataOnTaskCompletion,
-    fetchByDraftId
+    fetchByDraftId,
+    fetchHeaderByDraftId
 }

@@ -88,11 +88,37 @@ async function fetchSubmissionType(REQ_UNIQUE_ID) {
     return fetchSubmissionType || null;
 }
 
+async function fetchHeaderByUniqueId(REQ_UNIQUE_ID) {
+    try {
+        const header = await cds.run(
+            SELECT
+                .one
+                .from('NUSEXT_CWNED_HEADER_DATA')
+                .where({ REQ_UNIQUE_ID })
+                .columns([
+                    'REQ_UNIQUE_ID',
+                    'REQUEST_ID',
+                    'REQUEST_STATUS',
+                    'REQUESTOR_GRP',
+                    'PROCESS_CODE',
+                    'STAFF_ID',
+                    'SUBMISSION_TYPE',
+                    'SUBMITTED_ON_TS'
+                ])
+        );
+        return header || null;
+    } catch (error) {
+        console.error('Error fetching CWS header by unique ID:', error);
+        throw error;
+    }
+}
+
 module.exports = {
     fetchByUniqueId,
     updateCwsRequestStatus,
     updateOldReqToDisplayOnTaskCompletion,
     updateCurReqToDisplayOnTaskCompletion,
     fetchSubmissionType,
-    getUniqueIdsForChangeRequests
+    getUniqueIdsForChangeRequests,
+    fetchHeaderByUniqueId
 };

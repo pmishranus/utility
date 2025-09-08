@@ -236,3 +236,21 @@ Authorization: Bearer {{access_token}}
 		]
 	}
 }
+
+### Test fetchTasksByProcessInstId endpoint
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/task/fetchTasksByProcessInstId(processInstId='P2502000001')
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+### Test fetchTasksByProcessInstId endpoint with different process instance ID
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/task/fetchTasksByProcessInstId(processInstId='P2502000002')
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+### Test fetchTasksByProcessInstId endpoint with empty process instance ID (should return error)
+#==================================================================#
+GET {{unsecureProtocol}}://{{host}}/task/fetchTasksByProcessInstId(processInstId='')
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
