@@ -1,5 +1,5 @@
 const cds = require("@sap/cds");
-const { SELECT } = require("@sap/cds/lib/ql/cds-ql");
+const { SELECT, UPDATE } = require("@sap/cds/lib/ql/cds-ql");
 const { ApplicationConstants } = require("../util/constant")
 
 async function fetchByUniqueId(uniqueID) {
@@ -19,6 +19,21 @@ async function updateCwsRequestStatus(tx, requestStatus, REQ_UNIQUE_ID, modified
             })
             .where({ REQ_UNIQUE_ID })
     );
+}
+
+async function getUniqueIdsForChangeRequests(requestId) {
+    try {
+        const uniqueIds = await cds.run(
+            SELECT.from('NUSEXT_CWNED_HEADER_DATA')
+                .columns('REQ_UNIQUE_ID')
+                .where({ REQUEST_ID: requestId })
+                .orderBy('SUBMITTED_ON_TS', 'desc')
+        );
+        return uniqueIds.map(item => item.REQ_UNIQUE_ID) || [];
+    } catch (error) {
+        console.error('Error fetching unique IDs for change requests:', error);
+        throw error;
+    }
 }
 
 async function updateCurReqToDisplayOnTaskCompletion(tx, requestId,
@@ -74,5 +89,10 @@ async function fetchSubmissionType(REQ_UNIQUE_ID) {
 }
 
 module.exports = {
-    fetchByUniqueId, updateCwsRequestStatus,updateOldReqToDisplayOnTaskCompletion,updateCurReqToDisplayOnTaskCompletion,fetchSubmissionType
+    fetchByUniqueId,
+    updateCwsRequestStatus,
+    updateOldReqToDisplayOnTaskCompletion,
+    updateCurReqToDisplayOnTaskCompletion,
+    fetchSubmissionType,
+    getUniqueIdsForChangeRequests
 };

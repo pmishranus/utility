@@ -1,6 +1,7 @@
 const cds = require("@sap/cds");
 const userDetails = require("./util/userinfo/getUserDetails");
-const appConfig = require("./impl/app-config-request")
+const appConfig = require("./impl/app-config-request");
+const AuditLogController = require("./controller/auditLog.controller");
 
 module.exports = cds.service.impl(async (srv) => {
   const db = await cds.connect.to("db");
@@ -41,5 +42,10 @@ module.exports = cds.service.impl(async (srv) => {
     return await appConfig.createConfigEntry(request, db, srv);
   });
 
-  
+  srv.on("getAuditLogData", async (request) => {
+    const { referenceId, processCode } = request.data;
+    return await AuditLogController.retrieveAuditLogEntries(request, referenceId, processCode);
+  });
+
+
 });
