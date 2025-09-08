@@ -1,0 +1,29 @@
+### Test getAuditLogData endpoint
+GET {{host}}/util/getAuditLogData(referenceId='DT2502000025',processCode='101')
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### Test getAuditLogData endpoint with CWS process
+GET {{host}}/util/getAuditLogData(referenceId='CR2502000017',processCode='201')
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### Test getAuditLogData endpoint with NED process
+GET {{host}}/util/getAuditLogData(referenceId='CR2502000018',processCode='202')
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### Test getAuditLogData endpoint with OPWN process
+GET {{host}}/util/getAuditLogData(referenceId='CR2502000019',processCode='203')
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### Test getAuditLogData endpoint with PTT process (should include eClaims items)
+GET {{host}}/util/getAuditLogData(referenceId='DT2502000025',processCode='101')
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### Test getAuditLogData endpoint with CW process (should include eClaims items)
+GET {{host}}/util/getAuditLogData(referenceId='DT2502000026',processCode='102')
+Authorization: Bearer {{token}}
+Content-Type: application/json

@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const { v4: uuidv4 } = require('uuid');
 function frameResponse(sourceObj, errorCode, message) {
 
   sourceObj.STATUS_CODE = errorCode;
@@ -173,6 +174,10 @@ function convertListToString(arr, key) {
   return uniqueValues.map(v => `'${v}'`).join(',');
 }
 
+function generateUUID(){
+  return uuidv4();
+}
+
 
 
 
@@ -199,5 +204,6 @@ module.exports = {
   groupBy,
   frameValidationMessage,
   convertListToString,
-  isBlank
+  isBlank,
+  generateUUID
 };

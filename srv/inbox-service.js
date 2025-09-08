@@ -11,6 +11,15 @@ class InboxService extends cds.ApplicationService {
       return taskActionsCtrl.massTaskAction(req, systemUserName, null);
     }),
 
+      this.on('echo', async (req) => {
+        // Simple echo for connectivity testing
+        req.data.data.Pankaj = {
+          "name" : "Pankaj",
+          "id": req.user.id
+        }
+        return req.data && req.data.data ? req.data.data : req.data;
+      }),
+
       this.on('sendEmail', async (req) => {
         const { emailSubject, emailContent, mailMap, setPriority } = req.data.data;
 
@@ -48,7 +57,7 @@ class InboxService extends cds.ApplicationService {
           refresh_token: '1.AVQAXu-lWwkxd06Fvc_rDTR-gkRWDqXjWitPsiUvftZYfWhUAPdUAA.AgABAwEAAABVrSpeuWamRam2jAF1XRQEAwDs_wUA9P8NqSTlxiEfVD4fAi2iTso9w3Cw5rtUnLrx5yWCqiu6msEdc4pEaP743tKgTpMyaRBhHr4p1drCCFy1dkZPGuAsAdgqRM9YJvf6B-U0g2XkUoc7F5yNlr1H5Hcg1p9YVpmrFRLQnjbqSIHzqfK74TBgIplxu96ZrWr2GUQ0MRxFSyOcgm9aoWf5DvhMcYSM2BEQ9Qhm2BygC66FXpWM2E8PozwvJXVz35uzrKF-4Q7mZ_ps6d7nCFsjE4XqH6gteacvQX3H-z1VOuv41dwpWihGxf_aa-EjbF92Wvs3e1rY1ZBvYzL8hRqSodOrS9fjlzKbov-42EPV2ie4gUdl2YG6E6iQPARBeDVoleS48HLVWCRQOHr73_8YzQx8ASvepny0Yo0jbIOfCQL7kXeqVnyP4SAGSOD6xZSMkcKzWR6mSUV2EDgqjPbQLe1nYJXxTaEx-g_cK_bk5kJ2hpON3Ql900TCTzn-CakbCFGpDTHmeTOt9bJtOprcKyM2st80FG4hTES92qf0qmZ-2OzIpYOGnCA77LGyqIVXd2nxSIzPRx-0OTeg-mPAH9Rjn24huryDykZh4Nc74OaSNZt_QXtBOwNZOEzEhso_EcaLkqENnKsXWFR8wkUNk8nMwALeNhFQMRJDBqo4f7ThxBVlBC9yMaV31pou9VivLVb6xPRb0uLcxd4vF9onhiWodS_WmA5rYrnrA_fC8feDKU7suv5f5QA72o43n53ZtLctNNKg45QkenDTp-U3gVwQBkZ3icf8JnEnHXtD2M3qj6GlyxKBeyjIGFMj1VlUn7wiNS_rwTNbLz1n3Cy-7ppKh1wsg1XtNB_LAAEzHyATDGF2i6o4',
           client_secret: oDestinationConfiguration.clientSecret,
         };
-      
+
 
         const accessTokenResponse = await axios.post(oDestinationConfiguration.tokenServiceURL, qs.stringify(data), {
           headers: {
@@ -90,7 +99,7 @@ class InboxService extends cds.ApplicationService {
         }
 
         try {
-         let emailResponse =  await transporter.sendMail(mailOptions);
+          let emailResponse = await transporter.sendMail(mailOptions);
           return emailResponse;
         } catch (error) {
           return "Error sending email: " + error.message;

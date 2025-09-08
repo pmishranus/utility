@@ -28,7 +28,7 @@ Authorization: Bearer {{access_token}}
 
 {
   "tableNames": [
-    "BTP_CREDENTIALS"
+    "ECLAIMS_ITEMS_DATA"
   ],
   "deleteOnly": false
 }

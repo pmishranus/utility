@@ -1,24 +1,24 @@
 const cds = require("@sap/cds");
-const { SELECT } = require("@sap/cds/lib/ql/cds-ql");
+const { SELECT, UPDATE } = require("@sap/cds/lib/ql/cds-ql");
 
 
 async function fetchStaffId(draftId) {
-      const fetchStaffId = await cds.run(
-                SELECT
-                .one
-                    .from('NUSEXT_ECLAIMS_HEADER_DATA')
-                    .where({ 
-                        DRAFT_ID : draftId
-                    })
-                    .columns('STAFF_NUSNET_ID')
-            );
-            return fetchStaffId.STAFF_NUSNET_ID || ''; 
+    const fetchStaffId = await cds.run(
+        SELECT
+            .one
+            .from('NUSEXT_ECLAIMS_HEADER_DATA')
+            .where({
+                DRAFT_ID: draftId
+            })
+            .columns('STAFF_NUSNET_ID')
+    );
+    return fetchStaffId.STAFF_NUSNET_ID || '';
 }
 
 
-async function updateEClaimsDataOnTaskCompletion(tx,requestStatus,DRAFT_ID, modifiedBy, modifiedByNid, modifiedOn) {
+async function updateEClaimsDataOnTaskCompletion(tx, requestStatus, DRAFT_ID, modifiedBy, modifiedByNid, modifiedOn) {
     await tx.run(
-            UPDATE('NUSEXT_ECLAIMS_HEADER_DATA')
+        UPDATE('NUSEXT_ECLAIMS_HEADER_DATA')
             .set({
                 REQUEST_STATUS: requestStatus,
                 MODIFIED_BY: modifiedBy,
@@ -26,8 +26,25 @@ async function updateEClaimsDataOnTaskCompletion(tx,requestStatus,DRAFT_ID, modi
                 MODIFIED_ON: modifiedOn // should be a JS Date object
             })
             .where({ DRAFT_ID })
-        );
+    );
 }
+
+async function fetchByDraftId(draftId) {
+    try {
+        const eClaimsItems = await cds.run(
+            SELECT.from('NUSEXT_ECLAIMS_ITEMS_DATA')
+                .where({ DRAFT_ID: draftId })
+                .orderBy('ITEM_ID')
+        );
+        return eClaimsItems || [];
+    } catch (error) {
+        console.error('Error fetching eClaims items by draft ID:', error);
+        throw error;
+    }
+}
+
 module.exports = {
-    fetchStaffId,updateEClaimsDataOnTaskCompletion
+    fetchStaffId,
+    updateEClaimsDataOnTaskCompletion,
+    fetchByDraftId
 }
