@@ -141,6 +141,41 @@ type responseDto {
   statusCode : String;
 }
 
+type requestDto {
+  NUSNET_ID           : String;
+  STAFF_ID            : String;
+  CLAIM_MONTH         : String;
+  TASK_NAME           : String;
+  DELEGATED_TO        : String;
+  DELEGATED_TO_NID    : String;
+  PROCESS_TYPE        : String;
+  VALID_FROM          : Date;
+  VALID_TO            : Date;
+  POSTED_ON           : Date;
+  CREATED_BY          : String;
+  CREATED_BY_NID      : String;
+  ASSIGNED_TO         : String;
+  DELEGATED_FOR       : String;
+  DELEGATED_FOR_NID   : String;
+  ULU                 : String;
+  FDLU                : String;
+  PROCESS_CODE        : String;
+  REQUEST_STATUS      : String;
+  DRAFT_ID            : String;
+  REQUEST_ID          : String;
+  STAFF_USER_GRP      : String;
+  IS_LOCKED           : String;
+  CONFIG_KEY          : String;
+  CONFIG_VALUE        : String;
+  TASK_ALIAS          : String;
+  TASK_REQUEST_STATUS : String;
+  TASK_GROUP          : String;
+  REQUESTOR_GRP       : String;
+  LOCKED_BY_NUSNET_ID : String;
+  PROCESS_CODE_DESC   : String;
+  requestorFormFlow   : Boolean;
+}
+
 type appConfigurationRequests {
   ACFG_ID          : String;
   CWS_ACFG_ID      : String;
@@ -197,5 +232,6 @@ service UtilService @(path: '/util') {
   action   appConfigCreateEntry(data : appConfigurationRequests)       returns String;
   function getAuditLogData(referenceId : String, processCode : String) returns auditMainResponse;
   function releaseLockedRequests(draftId : String)                     returns responseDto;
+  action   requestLock(data : requestDto)                              returns responseDto;
 
 }

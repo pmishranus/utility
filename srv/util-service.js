@@ -3,6 +3,7 @@ const userDetails = require("./util/userinfo/getUserDetails");
 const appConfig = require("./impl/app-config-request");
 const AuditLogController = require("./controller/auditLog.controller");
 const ReleaseLockedRequestsController = require("./controller/releaseLockedRequests.controller");
+const RequestLockController = require("./controller/requestLock.controller");
 
 module.exports = cds.service.impl(async (srv) => {
   const db = await cds.connect.to("db");
@@ -51,6 +52,11 @@ module.exports = cds.service.impl(async (srv) => {
   srv.on("releaseLockedRequests", async (request) => {
     const { draftId } = request.data;
     return await ReleaseLockedRequestsController.unlockRequests(request, draftId);
+  });
+
+  srv.on("requestLock", async (request) => {
+    const requestDto = request.data;
+    return await RequestLockController.requestLock(request, requestDto);
   });
 
 
