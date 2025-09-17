@@ -8,7 +8,7 @@
     // "tab",
     // "tsv"
   ],
-  "SAP HANA Database Artifacts.lastSelectedTargetPath": "/home/user/projects/utility/db/src/views",
+  "SAP HANA Database Artifacts.lastSelectedTargetPath": "/home/user/projects/utility/db/src/triggers",
   "SAP HANA Project Explorer.bind.confirm existing service": false,
   "SAP HANA Project Explorer.bind.confirm automatic undeployment": false,
   "SAP HANA SQLScript LSP.URL": "https://cf-eu10-004.cf.hana-tooling.ingress.orchestration.prod-eu10.hanacloud.ondemand.com/hrtt-service",

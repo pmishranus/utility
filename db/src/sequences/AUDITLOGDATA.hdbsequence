@@ -1,0 +1,7 @@
+increment_by= 1;
+maxvalue= 100000000;
+nomaxvalue= false;
+minvalue= 1;
+nominvalue=true;
+cycles= false;
+depends_on_table= "NUSEXT_UTILITY_AUDIT_LOG_DATA";

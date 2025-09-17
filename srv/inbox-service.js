@@ -172,7 +172,7 @@ class InboxService extends cds.ApplicationService {
         const data = {
           client_id: oDestinationConfiguration.clientId,
           grant_type: 'refresh_token',
-          refresh_token: '1.AVQAXu-lWwkxd06Fvc_rDTR-gkRWDqXjWitPsiUvftZYfWhUAPdUAA.AgABAwEAAABVrSpeuWamRam2jAF1XRQEAwDs_wUA9P8NqSTlxiEfVD4fAi2iTso9w3Cw5rtUnLrx5yWCqiu6msEdc4pEaP743tKgTpMyaRBhHr4p1drCCFy1dkZPGuAsAdgqRM9YJvf6B-U0g2XkUoc7F5yNlr1H5Hcg1p9YVpmrFRLQnjbqSIHzqfK74TBgIplxu96ZrWr2GUQ0MRxFSyOcgm9aoWf5DvhMcYSM2BEQ9Qhm2BygC66FXpWM2E8PozwvJXVz35uzrKF-4Q7mZ_ps6d7nCFsjE4XqH6gteacvQX3H-z1VOuv41dwpWihGxf_aa-EjbF92Wvs3e1rY1ZBvYzL8hRqSodOrS9fjlzKbov-42EPV2ie4gUdl2YG6E6iQPARBeDVoleS48HLVWCRQOHr73_8YzQx8ASvepny0Yo0jbIOfCQL7kXeqVnyP4SAGSOD6xZSMkcKzWR6mSUV2EDgqjPbQLe1nYJXxTaEx-g_cK_bk5kJ2hpON3Ql900TCTzn-CakbCFGpDTHmeTOt9bJtOprcKyM2st80FG4hTES92qf0qmZ-2OzIpYOGnCA77LGyqIVXd2nxSIzPRx-0OTeg-mPAH9Rjn24huryDykZh4Nc74OaSNZt_QXtBOwNZOEzEhso_EcaLkqENnKsXWFR8wkUNk8nMwALeNhFQMRJDBqo4f7ThxBVlBC9yMaV31pou9VivLVb6xPRb0uLcxd4vF9onhiWodS_WmA5rYrnrA_fC8feDKU7suv5f5QA72o43n53ZtLctNNKg45QkenDTp-U3gVwQBkZ3icf8JnEnHXtD2M3qj6GlyxKBeyjIGFMj1VlUn7wiNS_rwTNbLz1n3Cy-7ppKh1wsg1XtNB_LAAEzHyATDGF2i6o4',
+          refresh_token: '1.AVQAXu-lWwkxd06Fvc_rDTR-gkRWDqXjWitPsiUvftZYfWhUAPdUAA.AgABAwEAAABVrSpeuWamRam2jAF1XRQEAwDs_wUA9P-D0KKjjo9fBWbIA2hk9HnPpOaVVUnl_CsHzyF6Uowl6PmiZ9gVp0SPnm4wokxJ2H6bf5d1OksGGlNMFK60GCJuAiFGQtcXOqSxoWrSkuxAOQCByK7y1X9V2Vq_13vMsmMZk--xvZH6VIgxMw0peZaZG7SIyJjExymlIPvYFnhsJeuXMdiZQ_yKQnOXJsErlID76UirWBUcjlz7uW23idKXSQNxoqVAEHSy9t8IYXwwwkqmPCZ4h011sw_r9PJR0PcRg5xuO14wB1R9uBgppu1SjhQhXSt5jZDGmHs6KqtayVLIsvOKL-BjkzQfSuR9GMfE_TsfYnyQyCU9aKzunEPVah37AQoifa4wdxIUSICQl2XzAY_0nB8ZuEOfxION2amAEN_RTEVe_r0pfBfbekiIs0PGsXxwFxTwxaj-T1YV-7wJl-oXQWdNc9X0XVn89M3u6op3GYrzc5e-OWjkS_fcavDLKgWTC3BXw1_BF3ykIbsZARPIoTdPG0H8kSLtOHP-YI7OH8YlBE65Vb0qyh5pkvICLw9slShnd-isxuGi_ZBGkWsCm9zDQfOcdGX2JEKgE0YzyFGIJenG0acGUPHbOJaH1wETPSnLZWa2npAw7empmIjTkUifNouJnxZbSFsSq-ODm-rpsOqkeHAS16BV87OeqRE6zPnqOTD0taEwzYvbh86ppH3KvsciDmtAtJnyMfna-d63iIhwhTgBIzc-s7Gw9a4u2tM5hSZ_yYhqkpkZpaeQs7AG1THjJldWwGWkyhelNlFEi_XOymKrpUWzwWytN7UjSXBUzYe1xzrG_cPShm7U0FH6m-0Bt2Pjr9Q1N8xiAUtQ8kDQ1ajLGaYKVeEA_6WMh39VmwiMEGtrlMzk7mFF3F9LmJjd0pxa1x4NMHvncCYoB9V0GewmhY61ga8',
           client_secret: oDestinationConfiguration.clientSecret,
         };
 
@@ -223,7 +223,7 @@ class InboxService extends cds.ApplicationService {
           return "Error sending email: " + error.message;
         }
       });
-    return super.init()
+    // return super.init()
   }
 
   // Helper function to amend EClaims request data
