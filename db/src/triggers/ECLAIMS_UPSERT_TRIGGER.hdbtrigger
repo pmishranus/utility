@@ -1,0 +1,207 @@
+TRIGGER "ECLAIMS_UPSERT_TRIGGER" AFTER UPDATE ON "NUSEXT_ECLAIMS_HEADER_DATA" 
+REFERENCING OLD ROW OLD_ROW, NEW ROW NEW_ROW 
+FOR EACH ROW 
+BEGIN 
+    DECLARE audit_id INTEGER;
+    DECLARE request_id VARCHAR(20);
+    DECLARE draft_id VARCHAR(20);
+    DECLARE request_status VARCHAR(2);
+    DECLARE old_value_ref VARCHAR(100);
+    DECLARE new_value_ref VARCHAR(100);
+    
+    -- Retrieve Request ID and Draft ID to save it in the Log Table
+    SELECT TOP 1 REQUEST_ID, REQUEST_STATUS, DRAFT_ID 
+    INTO request_id, request_status, draft_id 
+    FROM "NUSEXT_ECLAIMS_HEADER_DATA" 
+    WHERE DRAFT_ID = :NEW_ROW.DRAFT_ID;
+        
+    -- Log of Request Status Change
+    IF :draft_id IS NOT NULL AND :draft_id <> '' THEN
+    
+        -- Log when Request Status is changed
+        IF :NEW_ROW.REQUEST_STATUS <> :OLD_ROW.REQUEST_STATUS THEN
+
+            SELECT "NUSEXT_SEQ_AUDIT_LOG_DATA".NEXTVAL INTO audit_id FROM SYS.DUMMY;
+        
+            SELECT TOP 1 STATUS_ALIAS INTO old_value_ref 
+            FROM "NUSEXT_UTILITY_STATUS_CONFIG" 
+            WHERE STATUS_CODE = :OLD_ROW.REQUEST_STATUS;
+
+            SELECT TOP 1 STATUS_ALIAS INTO new_value_ref 
+            FROM "NUSEXT_UTILITY_STATUS_CONFIG" 
+            WHERE STATUS_CODE = :NEW_ROW.REQUEST_STATUS;
+    
+            INSERT INTO "NUSEXT_UTILITY_AUDIT_LOG_DATA"
+            VALUES (
+                :audit_id,
+                :draft_id, 
+                CURRENT_TIMESTAMP, 
+                :NEW_ROW.MODIFIED_BY,
+                'HeaderData',
+                :request_id,
+                'REQUEST STATUS',
+                'Request Status',
+                :old_value_ref,
+                :OLD_ROW.REQUEST_STATUS, 
+                :new_value_ref,
+                :NEW_ROW.REQUEST_STATUS, 
+                'String',
+                'MODIFIED',
+                '',
+                ''
+            );
+        END IF; 
+
+    END IF;
+
+    -- Check for Draft ID and Request ID exists
+    IF (:draft_id IS NOT NULL AND :draft_id <> '') AND (:request_id IS NOT NULL AND :request_id <> '') THEN
+
+        -- Log when ULU is changed
+        IF :NEW_ROW.ULU <> :OLD_ROW.ULU THEN
+
+            SELECT "NUSEXT_SEQ_AUDIT_LOG_DATA".NEXTVAL INTO audit_id FROM SYS.DUMMY;
+        
+            SELECT TOP 1 ULU_T INTO old_value_ref 
+            FROM "NUSEXT_MASTER_DATA_CHRS_FDLU_ULU" 
+            WHERE ULU_C = :OLD_ROW.ULU;
+
+            SELECT TOP 1 ULU_T INTO new_value_ref 
+            FROM "NUSEXT_MASTER_DATA_CHRS_FDLU_ULU" 
+            WHERE ULU_C = :NEW_ROW.ULU;
+    
+            INSERT INTO "NUSEXT_UTILITY_AUDIT_LOG_DATA"
+            VALUES (
+                :audit_id,
+                :draft_id, 
+                CURRENT_TIMESTAMP, 
+                :NEW_ROW.MODIFIED_BY,
+                'HeaderData', 
+                :request_id,
+                'ULU Selection',
+                'ULU',
+                :OLD_ROW.ULU,
+                :old_value_ref,
+                :NEW_ROW.ULU, 
+                :new_value_ref, 
+                'String',
+                'MODIFIED',
+                '',
+                ''
+            );
+        END IF; 
+
+        -- Log when FDLU is changed
+        IF :NEW_ROW.FDLU <> :OLD_ROW.FDLU THEN
+
+            SELECT "NUSEXT_SEQ_AUDIT_LOG_DATA".NEXTVAL INTO audit_id FROM SYS.DUMMY;
+        
+            SELECT TOP 1 ULU_T INTO old_value_ref 
+            FROM "NUSEXT_MASTER_DATA_CHRS_FDLU_ULU" 
+            WHERE ULU_C = :OLD_ROW.FDLU;
+
+            SELECT TOP 1 ULU_T INTO new_value_ref 
+            FROM "NUSEXT_MASTER_DATA_CHRS_FDLU_ULU" 
+            WHERE ULU_C = :NEW_ROW.FDLU;
+    
+            INSERT INTO "NUSEXT_UTILITY_AUDIT_LOG_DATA"
+            VALUES (
+                :audit_id,
+                :draft_id, 
+                CURRENT_TIMESTAMP, 
+                :NEW_ROW.MODIFIED_BY,
+                'HeaderData', 
+                :request_id,
+                'ULU FDLU Selection',
+                'FDLU',
+                :OLD_ROW.FDLU,
+                :old_value_ref,
+                :NEW_ROW.FDLU, 
+                :new_value_ref, 
+                'String',
+                'MODIFIED',
+                '',
+                ''
+            );
+        END IF; 
+
+        -- Log when Claim Year and Month is changed
+        IF :NEW_ROW.CLAIM_MONTH <> :OLD_ROW.CLAIM_MONTH THEN
+
+            SELECT "NUSEXT_SEQ_AUDIT_LOG_DATA".NEXTVAL INTO audit_id FROM SYS.DUMMY;
+               
+            INSERT INTO "NUSEXT_UTILITY_AUDIT_LOG_DATA"
+            VALUES (
+                :audit_id,
+                :draft_id, 
+                CURRENT_TIMESTAMP, 
+                :NEW_ROW.MODIFIED_BY,
+                'HeaderData', 
+                :request_id,
+                'Claim Year and Month',
+                'Claim Month',
+                :OLD_ROW.CLAIM_MONTH,
+                :OLD_ROW.CLAIM_YEAR,
+                :NEW_ROW.CLAIM_MONTH, 
+                :NEW_ROW.CLAIM_YEAR, 
+                'String',
+                'MODIFIED',
+                '',
+                ''
+            );
+        END IF; 
+    
+        -- Log for Claim Request Type
+        IF :NEW_ROW.CLAIM_REQUEST_TYPE <> :OLD_ROW.CLAIM_REQUEST_TYPE THEN
+
+            SELECT "NUSEXT_SEQ_AUDIT_LOG_DATA".NEXTVAL INTO audit_id FROM SYS.DUMMY;
+               
+            INSERT INTO "NUSEXT_UTILITY_AUDIT_LOG_DATA"
+            VALUES (
+                :audit_id,
+                :draft_id, 
+                CURRENT_TIMESTAMP, 
+                :NEW_ROW.MODIFIED_BY,
+                'HeaderData', 
+                :request_id,
+                'Claim Request Type',
+                'Claim Request Type',
+                :OLD_ROW.CLAIM_REQUEST_TYPE,
+                '',
+                :NEW_ROW.CLAIM_REQUEST_TYPE, 
+                '', 
+                'String',
+                'MODIFIED',
+                '',
+                ''
+            );
+        END IF; 
+    
+        -- Log for Rate Type
+        IF :OLD_ROW.EMP_RATE_TYPE IS NOT NULL AND :NEW_ROW.EMP_RATE_TYPE IS NOT NULL AND :NEW_ROW.EMP_RATE_TYPE <> :OLD_ROW.EMP_RATE_TYPE THEN
+
+            SELECT "NUSEXT_SEQ_AUDIT_LOG_DATA".NEXTVAL INTO audit_id FROM SYS.DUMMY;
+               
+            INSERT INTO "NUSEXT_UTILITY_AUDIT_LOG_DATA"
+            VALUES (
+                :audit_id,
+                :draft_id, 
+                CURRENT_TIMESTAMP, 
+                :NEW_ROW.MODIFIED_BY,
+                'HeaderData', 
+                :request_id,
+                'Employee Rate Type',
+                'Employee Rate Type',
+                :OLD_ROW.EMP_RATE_TYPE,
+                '',
+                :NEW_ROW.EMP_RATE_TYPE, 
+                '', 
+                'String',
+                'MODIFIED',
+                '',
+                ''
+            );
+        END IF;   
+               
+    END IF; 
+END

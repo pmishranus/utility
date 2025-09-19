@@ -1,0 +1,93 @@
+CREATE TRIGGER "NUS_BTP_APPNS"."NUS_BTP_APPNS::ECLAIMS_UPSERT_TRIGGER" AFTER UPDATE ON "NUS_BTP_APPNS"."eclaims::Tables.ECLAIMS_DATA" REFERENCING OLD ROW OLD_ROW, NEW ROW NEW_ROW FOR EACH ROW 
+BEGIN 
+    DECLARE audit_id Integer;
+    DECLARE request_id VARCHAR(20);
+    DECLARE draft_id VARCHAR(20);
+    DECLARE request_status VARCHAR(2);
+	DECLARE old_value_ref VARCHAR(100);
+	DECLARE new_value_ref VARCHAR(100);
+    
+	-- Retrieve Request ID and Draft ID to save it in the Log Table
+    SELECT top 1 REQUEST_ID,REQUEST_STATUS,DRAFT_ID INTO request_id, request_status,draft_id FROM
+        "NUS_BTP_APPNS"."eclaims::Tables.ECLAIMS_DATA" WHERE DRAFT_ID = :new_row.DRAFT_ID;
+		
+	-- Log of Request Status Change
+	IF :draft_id <> NULL OR :draft_id <> '' THEN
+	
+		-- Log when Request Status is changed
+			IF :new_row.REQUEST_STATUS <> :old_row.REQUEST_STATUS THEN
+
+				SELECT top 1 "NUS_BTP_UTILS"."utilities.sequences::AuditLogData".NEXTVAL INTO audit_id FROM DUMMY;
+			
+				SELECT top 1 STATUS_ALIAS INTO old_value_ref from "NUSEXT_UTILITY_STATUS_CONFIG" WHERE STATUS_CODE = :old_row.REQUEST_STATUS;
+
+				SELECT top 1 STATUS_ALIAS INTO new_value_ref from "NUSEXT_UTILITY_STATUS_CONFIG" WHERE STATUS_CODE = :new_row.REQUEST_STATUS;
+        
+				INSERT INTO "NUSEXT_UTILITY_AUDIT_LOG_DATA"
+				VALUES
+					(:audit_id,:draft_id, CURRENT_TIMESTAMP, :new_row.MODIFIED_BY,'HeaderData',:request_id,'REQUEST STATUS','Request Status',:old_value_ref,:old_row.REQUEST_STATUS, :new_value_ref,:new_row.REQUEST_STATUS, 'String','MODIFIED','','');
+			END IF; 
+	
+	END IF;
+ 
+    -- Check for Draft ID and Request ID exists
+    IF :draft_id <> NULL OR :draft_id <> '' AND :request_id <> NULL OR :request_id <> '' THEN
+	
+			-- Log when ULU is changed
+			IF :new_row.ULU <> :old_row.ULU THEN
+
+				SELECT top 1 "NUS_BTP_UTILS"."utilities.sequences::AuditLogData".NEXTVAL INTO audit_id FROM DUMMY;
+			
+				SELECT top 1 ULU_T INTO old_value_ref from "NUS_BTP_EC_MASTERDATA"."nusmasterdata::Tables.CHRS_FDLU_ULU" WHERE ULU_C = :old_row.ULU;
+
+				SELECT top 1 ULU_T INTO new_value_ref from "NUS_BTP_EC_MASTERDATA"."nusmasterdata::Tables.CHRS_FDLU_ULU" WHERE ULU_C = :new_row.ULU;
+        
+				INSERT INTO "NUSEXT_UTILITY_AUDIT_LOG_DATA"
+				VALUES
+					(:audit_id,:draft_id, CURRENT_TIMESTAMP, :new_row.MODIFIED_BY,'HeaderData', :request_id,'ULU Selection','ULU',:old_row.ULU,:old_value_ref,:new_row.ULU, :new_value_ref, 'String','MODIFIED','','');
+			END IF; 
+	
+			-- Log when FDLU is changed
+			IF :new_row.FDLU <> :old_row.FDLU THEN
+
+				SELECT top 1 "NUS_BTP_UTILS"."utilities.sequences::AuditLogData".NEXTVAL INTO audit_id FROM DUMMY;
+			
+				SELECT top 1 ULU_T INTO old_value_ref from "NUS_BTP_EC_MASTERDATA"."nusmasterdata::Tables.CHRS_FDLU_ULU" WHERE ULU_C = :old_row.FDLU;
+
+				SELECT top 1 ULU_T INTO old_value_ref from "NUS_BTP_EC_MASTERDATA"."nusmasterdata::Tables.CHRS_FDLU_ULU" WHERE ULU_C = :new_row.FDLU;
+        
+				INSERT INTO "NUSEXT_UTILITY_AUDIT_LOG_DATA"
+				VALUES
+					(:audit_id,:draft_id, CURRENT_TIMESTAMP, :new_row.MODIFIED_BY,'HeaderData', :request_id,'ULU FDLU Selection','FDLU',:old_row.FDLU,:old_value_ref,:new_row.FDLU, :new_value_ref, 'String','MODIFIED','','');
+			END IF; 
+	
+			-- Log when Claim Year and Month is changed
+			IF :new_row.CLAIM_MONTH <> :old_row.CLAIM_MONTH THEN
+
+				SELECT top 1 "NUS_BTP_UTILS"."utilities.sequences::AuditLogData".NEXTVAL INTO audit_id FROM DUMMY;
+			       
+				INSERT INTO "NUSEXT_UTILITY_AUDIT_LOG_DATA"
+				VALUES(:audit_id,:draft_id, CURRENT_TIMESTAMP, :new_row.MODIFIED_BY,'HeaderData', :request_id,'Claim Year and Month','Claim Month',:old_row.CLAIM_MONTH,:old_row.CLAIM_YEAR,:new_row.CLAIM_MONTH, :new_row.CLAIM_YEAR, 'String','MODIFIED','','');
+			END IF; 
+		
+			-- Log for Claim Request Type
+			IF :new_row.CLAIM_REQUEST_TYPE <> :old_row.CLAIM_REQUEST_TYPE THEN
+
+				SELECT top 1 "NUS_BTP_UTILS"."utilities.sequences::AuditLogData".NEXTVAL INTO audit_id FROM DUMMY;
+			       
+				INSERT INTO "NUSEXT_UTILITY_AUDIT_LOG_DATA"
+				VALUES(:audit_id,:draft_id, CURRENT_TIMESTAMP, :new_row.MODIFIED_BY,'HeaderData', :request_id,'Claim Request Type','Claim Request Type',:old_row.CLAIM_REQUEST_TYPE,'',:new_row.CLAIM_REQUEST_TYPE, '', 'String','MODIFIED','','');
+			END IF; 
+		
+			-- Log for Rate Type
+			IF :old_row.EMP_RATE_TYPE <> NULL AND :new_row.EMP_RATE_TYPE <> NULL AND :new_row.EMP_RATE_TYPE <> :old_row.CLAIM_REQUEST_TYPE THEN
+
+				SELECT top 1 "NUS_BTP_UTILS"."utilities.sequences::AuditLogData".NEXTVAL INTO audit_id FROM DUMMY;
+			       
+				INSERT INTO "NUSEXT_UTILITY_AUDIT_LOG_DATA"
+				VALUES(:audit_id,:draft_id, CURRENT_TIMESTAMP, :new_row.MODIFIED_BY,'HeaderData', :request_id,'Employee Rate Type','Employee Rate Type',:old_row.EMP_RATE_TYPE,'',:new_row.EMP_RATE_TYPE, '', 'String','MODIFIED','','');
+			END IF;	
+			
+				   
+	END IF; 
+ END
