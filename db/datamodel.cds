@@ -491,7 +491,10 @@ context UTILITY {
             CUSTOM_ATTR_2 : VAR_TEXT_1500;
             CUSTOM_ATTR_3 : VAR_TEXT_1500;
             CUSTOM_ATTR_4 : VAR_TEXT_1500;
-    };
+            UPDATED_BY      : VAR_TEXT_20;
+            UPDATED_BY_NID : VAR_TEXT_100;
+            UPDATED_ON : VAR_TIMESTAMP;
+        };
 
     /********************************************* Email Templates Config Entity ***************************/
     entity EMAIL_TEMPLATES : managed {
