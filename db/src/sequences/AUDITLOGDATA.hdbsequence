@@ -1,7 +1,4 @@
-increment_by= 1;
-maxvalue= 100000000;
-nomaxvalue= false;
-minvalue= 1;
-nominvalue=true;
-cycles= false;
-depends_on_table= "NUSEXT_UTILITY_AUDIT_LOG_DATA";
+SEQUENCE "NUSEXT_SEQ_AUDIT_LOG_DATA" START 
+WITH 1 MAXVALUE 2999999999 RESET BY
+SELECT IFNULL(MAX("AUDIT_ID"), 2000000500) + 1
+FROM "NUSEXT_UTILITY_AUDIT_LOG_DATA"

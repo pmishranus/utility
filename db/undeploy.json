@@ -12,5 +12,7 @@
   "src/functions/**/*.hdbfunction",
   "*.hdbfunction",
   "src/gen/**/*.hdbprocedure",
-  "*.hdbprocedure"
+  "*.hdbprocedure",
+  "src/sequences/**/*.hdbsequence",
+  "src/triggers/**/*.hdbtrigger"
 ]
