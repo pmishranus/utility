@@ -1,0 +1,59 @@
+TRIGGER "ECLAIMS_ITEMS_DELETE_TRIGGER"
+AFTER DELETE ON "NUSEXT_ECLAIMS_ITEMS_DATA"
+REFERENCING OLD ROW OLD_ROW
+FOR EACH ROW
+BEGIN
+	DECLARE audit_id INTEGER;
+	DECLARE request_id VARCHAR(20);
+	DECLARE claim_req_type VARCHAR(20);
+	DECLARE item_ref VARCHAR(50);
+	DECLARE custom_attr1 VARCHAR(50);
+	DECLARE custom_attr2 VARCHAR(50);
+	DECLARE identity_ref VARCHAR(50);
+
+	-- Get Request ID and Claim Request Type from Header Data
+	SELECT TOP 1 
+		REQUEST_ID,
+		CLAIM_REQUEST_TYPE
+	INTO 
+		request_id,
+		claim_req_type
+	FROM "NUSEXT_ECLAIMS_HEADER_DATA"
+	WHERE DRAFT_ID = :OLD_ROW.DRAFT_ID;
+
+	-- Log when Item is Deleted
+	IF :OLD_ROW.DRAFT_ID IS NOT NULL
+		AND :OLD_ROW.DRAFT_ID <> ''
+		AND :request_id IS NOT NULL
+		AND :request_id <> '' THEN
+
+		-- Prepare the Item Reference by Claim Start Date and Unique Item Id
+		item_ref := CONCAT(:OLD_ROW.CLAIM_START_DATE, ': Ref#');
+		item_ref := CONCAT(:item_ref, SUBSTRING(:OLD_ROW.ITEM_ID, LENGTH(:OLD_ROW.ITEM_ID) - 1, 2));
+
+		custom_attr1 := :OLD_ROW.CLAIM_START_DATE;
+		custom_attr2 := '';
+		identity_ref := :custom_attr1;
+
+		-- Maintain Attributes for Claim Request Type Period
+		IF :claim_req_type IS NOT NULL
+			AND :claim_req_type <> ''
+			AND UPPER(:claim_req_type) = 'PERIOD' THEN
+
+			-- Prepare the Item Reference by Claim Start Date and Unique Item Id
+			-- item_ref := concat(:OLD_ROW.CLAIM_START_DATE,' : Ref#');
+			-- item_ref := concat(:item_ref,SUBSTRING(:OLD_ROW.ITEM_ID, length(:OLD_ROW.ITEM_ID)-1,2));
+			item_ref := CONCAT('Ref# ', SUBSTRING(:OLD_ROW.ITEM_ID, LENGTH(:OLD_ROW.ITEM_ID) - 2, 3));
+
+			custom_attr1 := :OLD_ROW.CLAIM_START_DATE;
+			custom_attr2 := '';
+			identity_ref := :custom_attr1;
+
+		END IF;
+
+		INSERT INTO "NUSEXT_UTILITY_AUDIT_LOG_DATA"("AUDIT_ID", "REFERENCE_ID", "CHANGED_ON", "CHANGED_BY", "SECTION", "IDENTITY", "SUB_SECTION", "FIELD_LABEL", "OLD_VALUE", "OLD_VALUE_DESC", "NEW_VALUE", "NEW_VALUE_DESC", "FIELD_TYPE", "ACTION_TYPE", "CUSTOM_ATTR_1", "CUSTOM_ATTR_2")
+		VALUES("NUSEXT_SEQ_AUDIT_LOG_DATA".NEXTVAL, :OLD_ROW.DRAFT_ID, CURRENT_TIMESTAMP, :OLD_ROW.UPDATED_BY, 'EClaims Items', :identity_ref, :item_ref, 'Claim Date', :OLD_ROW.CLAIM_START_DATE, '', '', '', 'Date', 'DELETED', :custom_attr1, :custom_attr2);
+
+	END IF;
+
+END;

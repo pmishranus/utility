@@ -14,5 +14,8 @@
   "src/gen/**/*.hdbprocedure",
   "*.hdbprocedure",
   "src/sequences/**/*.hdbsequence",
-  "src/triggers/**/*.hdbtrigger"
+  "src/triggers/**/*.hdbtrigger",
+  "src/triggers/eclaims/**/*.hdbtrigger",
+  "src/triggers/cwned/**/*.hdbtrigger",
+  "src/triggers/utility/**/*.hdbtrigger"
 ]
