@@ -283,6 +283,10 @@ context CWNED {
             OBJ_KEY            : VAR_TEXT_20;
             INVOICE_NO         : VAR_TEXT_20;
             CLR_DOC_NO         : VAR_TEXT_20;
+            OFFLINE_ADJUSTMENT : VAR_DEC_10_2;
+            FS_POSTED_ON       : VAR_TIMESTAMP;
+            ALLOTMENT_VAL      : VAR_DEC_05_2;
+            LEVY_PAYMENT_DATE  : VAR_DATE;
     };
 
     /********************************************* Payment Image Data Entity ***************************/
